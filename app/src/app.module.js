@@ -13,8 +13,8 @@ angular
         'isteven-multi-select',
         'openDeskApp.init',
         'openDeskApp.auth',
-        'openDeskApp.sites',
-        'openDeskApp.site',
+        //'openDeskApp.sites',
+        //'openDeskApp.site',
         'openDeskApp.translations.init',
         'openDeskApp.header',
         'openDeskApp.dashboard',
@@ -32,10 +32,11 @@ angular
         'm43nu.auto-height',
         'dcbImgFallback',
         'openDeskApp.notifications',
-        'openDeskApp.discussion',
+        //'openDeskApp.discussion',
         'openDeskApp.chat',
         'openDeskApp.user',
         'openDeskApp.menu',
+        'openDeskApp.declaration',
 
         /*DO NOT REMOVE MODULES PLACEHOLDER!!!*/ //openDesk-modules
         /*LAST*/ 'openDeskApp.translations']) //TRANSLATIONS IS ALWAYS LAST!

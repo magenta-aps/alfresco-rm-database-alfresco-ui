@@ -15,8 +15,8 @@ function NotificationsSettingsController($mdDialog, $translate, $state, preferen
             return data[preferenceFilter];
         });
     }
-    vm.loadNotificationPreferences = loadNotificationPreferences;
-    vm.loadNotificationPreferences();
+    //vm.loadNotificationPreferences = loadNotificationPreferences;
+    //vm.loadNotificationPreferences();
 
     function setNotificationPreferences() {
         var preferences = { "dk.magenta.sites.receiveNotifications" : vm.receiveNotifications };

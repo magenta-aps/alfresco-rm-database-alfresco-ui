@@ -293,3 +293,8 @@ dl {
     }
   }
 }
+
+md-list-item, md-list-item .md-list-item-inner {
+  min-height: 20px;
+  height: 25px;
+}

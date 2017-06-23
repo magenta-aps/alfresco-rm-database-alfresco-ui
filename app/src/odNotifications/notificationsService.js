@@ -97,7 +97,7 @@
         };
 
         function startUpdate(updateNotifications) {
-            update = $interval(updateNotifications, 10000);
+            //update = $interval(updateNotifications, 10000);
         }
 
         function stopUpdate() {
