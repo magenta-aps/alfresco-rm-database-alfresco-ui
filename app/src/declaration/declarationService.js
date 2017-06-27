@@ -6,6 +6,8 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
 
     var _currentSiteType = "";
 
+    var declarationController = null;
+
     return {
 
 
@@ -25,16 +27,34 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
             });
         },
 
-        createCase : function() {
+        createCase : function(properties) {
             return $http.post("/alfresco/s/entry", {"type":"forensicPsychiatryDeclaration",
-                                                    "siteShortname" : "retspsyk"}, {"properties" : [{"test" : "test2"}]}).then(function (response) {
-                console.log("response");
-                console.log(response);
+                                                    "siteShortName" : "retspsyk",
+                                                    "properties" : properties}).then(function (response) {
                 return response.data;
 
             });
+        },
 
-        }
+        setDeclarationController: function (controller) {
+            declarationController = controller;
+        },
+
+
+
+        //
+        //createCase : function(properties) {
+        //    return $http.post("/alfresco/s/entry", {"type":"forensicPsychiatryDeclaration",
+        //        "siteShortName" : "retspsyk",
+        //        "properties" : {"firstName" : firstName,
+        //            "lastName" : lastname}}).then(function (response) {
+        //        console.log("response");
+        //        console.log(response);
+        //        return response.data;
+        //
+        //    });
+        //
+        //}
 
     };
 });
