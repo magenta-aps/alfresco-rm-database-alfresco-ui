@@ -37,6 +37,7 @@ function DeclarationController($scope, authService, declarationService) {
         $scope.currentCaseNumber = number;
         loadCase();
 
-    };;
+    };
+
 
 }
