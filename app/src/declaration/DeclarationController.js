@@ -2,23 +2,13 @@ angular
     .module('openDeskApp.declaration')
     .controller('DeclarationController', DeclarationController);
 
-function DeclarationController($scope, authService, declarationService) {
+function DeclarationController($scope, declarationService) {
     var vm = this;
 
-
+    $scope.contents = [];
     $scope.currentCaseNumber = "";
 
     $scope.case = "tom";
-
-    vm.newDeclaration = function newDeclaration() {
-        alert("test");
-    }
-
-    vm.test = function test() {
-        alert("test");
-    }
-
-
 
     function loadCase() {
 
@@ -26,17 +16,25 @@ function DeclarationController($scope, authService, declarationService) {
 
             declarationService.getCase($scope.currentCaseNumber).then(function (response) {
                 $scope.case = response[0];
+                vm.loadFiles($scope.case["node-uuid"]);
             });
-
         }
     }
 
     $scope.getCase = function (number) {
-        console.log("number")
-        console.log(number)
         $scope.currentCaseNumber = number;
         loadCase();
+    };
 
+    vm.loadFiles = function (node) {
+        declarationService.getContents(node).then(function (response) {
+            $scope.contents = response;
+            console.log(response)
+            //$scope.contents.forEach(function (contentTypeList) {
+            //    $scope.contentLength += contentTypeList.length;
+            //    //vm.addThumbnailUrl(contentTypeList);
+            //});
+        });
     };
 
 

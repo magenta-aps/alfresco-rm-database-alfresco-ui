@@ -49,23 +49,13 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
 
         setDeclarationController: function (controller) {
             declarationController = controller;
+        },
+
+        getContents: function (node) {
+            return $http.get("/alfresco/service/contents?node=" + node).then(function(response) {
+                //console.log(response.data);
+                return response.data;
+            });
         }
-
-
-
-        //
-        //createCase : function(properties) {
-        //    return $http.post("/alfresco/s/entry", {"type":"forensicPsychiatryDeclaration",
-        //        "siteShortName" : "retspsyk",
-        //        "properties" : {"firstName" : firstName,
-        //            "lastName" : lastname}}).then(function (response) {
-        //        console.log("response");
-        //        console.log(response);
-        //        return response.data;
-        //
-        //    });
-        //
-        //}
-
     };
 });
