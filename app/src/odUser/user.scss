@@ -5,7 +5,7 @@
 
 .od-user-header-menu {
   position: fixed;
-  right: $u * 3;
+  right: 0;
   top: 0;
   z-index: 1;
 
@@ -20,7 +20,7 @@
   }
 
   .od-user-admin {
-    padding-right: $u * 4;
+    padding-right: $u * 3;
   }
 }
 

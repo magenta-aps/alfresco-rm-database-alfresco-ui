@@ -1,0 +1,39 @@
+<md-card>
+    <md-card-title>
+        <md-card-title-text>
+            <span class="md-headline">Stamdata</span>
+        </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+        <md-input-container class="md-block">
+            <label>Sagsnummer</label>
+            <input ng-model="case.number" disabled>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>CPR</label>
+            <input ng-model="case.cprNumber" disabled>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Fornavn</label>
+            <input ng-model="case.firstName">
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Efternavn</label>
+            <input ng-model="case.lastName">
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Adresse</label>
+            <input ng-model="case.address">
+        </md-input-container>
+        <div layout="row">
+            <md-input-container flex="25">
+                <label>Postnr.</label>
+                <input ng-model="case.postbox" ng-pattern="/^[0-9]{5}$/">
+            </md-input-container>
+            <md-input-container flex>
+                <label>By</label>
+                <input ng-model="case.city">
+            </md-input-container>
+        </div>
+    </md-card-content>
+</md-card>
