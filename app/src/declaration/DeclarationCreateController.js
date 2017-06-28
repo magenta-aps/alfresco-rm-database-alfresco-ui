@@ -36,9 +36,13 @@ function DeclarationCreateController($q, $mdDialog, $state, $mdToast, $scope, de
     }
 
 
-    $scope.submit = function (firstName, lastName, address, postbox,city,ethnicity, motherEthnicity, fatherEthnicity, referingAgency, mainCharge,placement,sanctionProposal,verdictDate,petitionDate,creationDate,observationDate,declarationDate,endedWithoutDeclaration,declaration,sentTo,forensicDoctorCouncil,forensicDoctorCouncilText,finalVerdict,verdict,remarks,consent,doctor1,doctor2,psychologist,socialWorker,secretary,mainDiagnosis,biDiagnoses ) {
+    $scope.submit = function (cpr, firstName, lastName, address, postbox,city,ethnicity, motherEthnicity, fatherEthnicity, referingAgency, mainCharge,placement,sanctionProposal,verdictDate,petitionDate,creationDate,observationDate,declarationDate,endedWithoutDeclaration,declaration,sentTo,forensicDoctorCouncil,forensicDoctorCouncilText,finalVerdict,verdict,remarks,consent,doctor1,doctor2,psychologist,socialWorker,secretary,mainDiagnosis,biDiagnoses ) {
 
         var properties = {};
+
+        if (cpr != undefined) {
+            properties.cpr = cpr;
+        }
 
         if (firstName != undefined) {
             properties.firstName = firstName;
