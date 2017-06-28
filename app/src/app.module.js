@@ -37,6 +37,7 @@ angular
         'openDeskApp.user',
         'openDeskApp.menu',
         'openDeskApp.declaration',
+        'md.data.table',
 
         /*DO NOT REMOVE MODULES PLACEHOLDER!!!*/ //openDesk-modules
         /*LAST*/ 'openDeskApp.translations']) //TRANSLATIONS IS ALWAYS LAST!

@@ -7,32 +7,32 @@
     <md-card-content>
         <md-input-container class="md-block">
             <label>Sagsnummer</label>
-            <input ng-model="case.number" disabled>
+            <input ng-model="case.number" ng-disabled="!editPatientData">
         </md-input-container>
         <md-input-container class="md-block">
             <label>CPR</label>
-            <input ng-model="case.cprNumber" disabled>
+            <input ng-model="case.cprNumber" ng-disabled="!editPatientData">
         </md-input-container>
         <md-input-container class="md-block">
             <label>Fornavn</label>
-            <input ng-model="case.firstName">
+            <input ng-model="case.firstName" ng-disabled="!editPatientData">
         </md-input-container>
         <md-input-container class="md-block">
             <label>Efternavn</label>
-            <input ng-model="case.lastName">
+            <input ng-model="case.lastName" ng-disabled="!editPatientData">
         </md-input-container>
         <md-input-container class="md-block">
             <label>Adresse</label>
-            <input ng-model="case.address">
+            <input ng-model="case.address" ng-disabled="!editPatientData">
         </md-input-container>
         <div layout="row">
             <md-input-container flex="25">
                 <label>Postnr.</label>
-                <input ng-model="case.postbox" ng-pattern="/^[0-9]{5}$/">
+                <input ng-model="case.postbox" ng-pattern="/^[0-9]{5}$/" ng-disabled="!editPatientData">
             </md-input-container>
             <md-input-container flex>
                 <label>By</label>
-                <input ng-model="case.city">
+                <input ng-model="case.city" ng-disabled="!editPatientData">
             </md-input-container>
         </div>
     </md-card-content>

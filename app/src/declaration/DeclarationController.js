@@ -2,13 +2,27 @@ angular
     .module('openDeskApp.declaration')
     .controller('DeclarationController', DeclarationController);
 
-function DeclarationController($scope, declarationService) {
+function DeclarationController($scope, $state, $stateParams, declarationService, documentToolbarService, patientInfoToolbarService) {
     var vm = this;
+
+    $scope.toolbarService = documentToolbarService;
+    $scope.patientToolbarService = patientInfoToolbarService;
 
     $scope.contents = [];
     $scope.currentCaseNumber = "";
 
     $scope.case = "tom";
+
+    $scope.editPatientData = false;
+    $scope.tableView = false;
+
+    $scope.$watch('toolbarService.getDocumentView()', function (newVal) {
+        $scope.tableView = newVal;
+    });
+
+    $scope.$watch('patientToolbarService.isEditing()', function (newVal) {
+        $scope.editPatientData = newVal;
+    });
 
     function loadCase() {
 
@@ -25,6 +39,18 @@ function DeclarationController($scope, declarationService) {
         $scope.currentCaseNumber = number;
         loadCase();
     };
+
+    $scope.viewDocuments = function () {
+        $state.go('declaration.documents');
+    }
+
+    $scope.editDocuments = function () {
+        $state.go('declaration.documents.edit');
+    }
+
+    $scope.viewPatientData = function () {
+        $state.go('declaration.patientdata');
+    }
 
     vm.loadFiles = function (node) {
         declarationService.getContents(node).then(function (response) {

@@ -1,0 +1,16 @@
+<span style="border-right:1px solid white" ng-if="'declaration.documents.edit' | isState">
+    <md-button class="md-icon-button" aria-label="edit">
+        <md-icon>remove_red_eye</md-icon>
+    </md-button>
+    <md-button class="md-icon-button" aria-label="edit">
+        <md-icon>delete</md-icon>
+    </md-button>
+</span>
+
+<md-button class="md-text-icon-button" aria-label="edit">
+    <md-icon>file_upload</md-icon> Nyt dokument
+</md-button>
+
+<md-button class="md-icon-button" aria-label="view" ng-click="toggleDocumentView()">
+    <md-icon>{{toggleIcon}}</md-icon>
+</md-button>

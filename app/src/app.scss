@@ -298,3 +298,10 @@ md-list-item, md-list-item .md-list-item-inner {
   min-height: 20px;
   height: 25px;
 }
+
+//hover checkboxes in patient documents
+.document-checkbox {
+  left: $u * .5;
+  position: absolute;
+  top: $u * .5;
+}
