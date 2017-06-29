@@ -6,15 +6,12 @@
 
     <od-user></od-user>
 
-    <span class="md-toolbar-tools" flex><h2>Retspsykologiske erklæringer</h2></span>
+    <span class="md-toolbar-tools" flex>
+        <h2>Retspsykologiske erklæringer</h2>
+    </span>
     <span class="md-toolbar-tools" layout="row">
-        
-        <md-button class="md-icon-button" aria-label="Back">
-            <md-icon>arrow_back</md-icon>
-        </md-button>
-
-        <h2>Johnny Madsen (060775-3421)</h2>
+        <ui-view name="toolbar-label"></ui-view>
         <span flex></span>
-        <div ui-view="toolbar-tools"></div>
+        <ui-view name="toolbar-tools"></ui-view>
     </span>
 </md-toolbar>

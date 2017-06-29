@@ -8,8 +8,17 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
 
     var declarationController = null;
 
+    var newCase = {};
+
     return {
 
+        updateNewCase: function(caseUpdate) {
+            newCase = caseUpdate;
+        },
+
+        getNewCaseInfo: function() {
+            return newCase;
+        },
 
         setType: function (t){
             _currentSiteType = t;

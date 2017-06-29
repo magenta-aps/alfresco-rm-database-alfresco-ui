@@ -11,7 +11,7 @@ function DeclarationController($scope, $state, $stateParams, declarationService,
     $scope.contents = [];
     $scope.currentCaseNumber = "";
 
-    $scope.case = "tom";
+    $scope.case = {};
 
     $scope.editPatientData = false;
     $scope.tableView = false;

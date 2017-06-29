@@ -1,0 +1,443 @@
+<md-dialog aria-label="{{'COMMON.NEW' | translate}} {{'COMMON.FOLDER' | translate | lowercase}}">
+    <form name="createDeclaration" ng-submit="submit(cpr, firstName, lastName, address, postbox,city,ethnicity, motherEthnicity, fatherEthnicity, referingAgency,mainCharge,placement,sanctionProposal,verdictDate,petitionDate,creationDate,observationDate,declarationDate,endedWithoutDeclaration,declaration,sentTo,forensicDoctorCouncil,forensicDoctorCouncilText,finalVerdict,verdict,remarks,consent,doctor1,doctor2,psychologist,socialWorker,secretary,mainDiagnosis,biDiagnoses);">
+
+        <div class="od-create-declarations">
+            <div layout-gt-sm="row">
+                <md-dialog-content class="md-padding">
+                    <md-card flex-gt-sm="100%">
+                        <md-card-content>
+                            <md-tabs md-selected="tab.selectedcreate" md-dynamic-height md-border-bottom flex-gt-sm="100">
+                                <md-tab ui-sref="create">
+                                    <md-tab-label>
+                                        <i class="material-icons icon-small">library_books</i> stamdata
+                                    </md-tab-label>
+                                    <md-tab-body>
+                                        <md-card-content>
+                                            <md-list>
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member">CPR</a>
+                                                        </div>
+                                                        <div flex="20" class="od-secondary">
+                                                            <input type="text" name="cpr" ng-model="cpr" md-autofocus>
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Fornavn</a>
+                                                        </div>
+                                                        <div flex="20" class="od-secondary">
+                                                            <input type="text" name="firstName" ng-model="firstName" md-autofocus>
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Efternavn</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="lastName" ng-model="lastName" md-autofocus>
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Adresse</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="address" ng-model="address" md-autofocus>
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Postnr.</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="postbox" ng-model="postbox" md-autofocus>
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">By</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="city" ng-model="city" md-autofocus>
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Etnicitet</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="ethnicity" ng-model="ethnicity" md-autofocus>
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Mors etnicitet</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="motherEthnicity" ng-model="motherEthnicity" md-autofocus>
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Fars etnicitet</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="fatherEthnicity" ng-model="fatherEthnicity" md-autofocus>
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Henvisende Ins</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="referingAgency" ng-model="referingAgency" md-autofocus>
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+
+                                                <md-list-item>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Hovedsigte</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="mainCharge" ng-model="mainCharge" md-autofocus>
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Placering</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="placement" ng-model="placement" md-autofocus>
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Sanktionsfors</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="sanctionProposal" ng-model="sanctionProposal" md-autofocus>
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+                                            </md-list>
+                                        </md-card-content>
+
+
+                                    </md-tab-body>
+                                </md-tab>
+
+
+                                <!--history---------------------------------------------------------------->
+
+                                <md-tab ui-sref="project.discussions">
+                                    <md-tab-label>
+                                        <i class="material-icons icon-small">chat_bubble_outline</i> Historik
+                                    </md-tab-label>
+                                    <md-tab-body>
+                                        <md-card-content>
+                                            <md-list>
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Kendelsedato</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="verdictDate" ng-model="verdictDate">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Begæringsdato</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="petitionDate" ng-model="petitionDate">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Sagen oprettet</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="creationDate" ng-model="creationDate">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Observation på</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="observationDate" ng-model="observationDate">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Erklæring afgivet</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="declarationDate" ng-model="declarationDate">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Afsluttet uden erklæring</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="endedWithoutDeclaration" ng-model="endedWithoutDeclaration">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Sendt til</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="sentTo" ng-model="sentTo">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Samtykke</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="consent" ng-model="consent">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Retslægeråd</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="forensicDoctorCouncilText" ng-model="forensicDoctorCouncilText">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Endelig dom</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="finalVerdict" ng-model="finalVerdict">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Dom</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="verdict" ng-model="verdict">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Bemærkning</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="remarks" ng-model="remarks">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+                                            </md-list>
+                                        </md-card-content>
+                                    </md-tab-body>
+                                </md-tab>
+
+                                <!--erklæring afgivet af ---------------------------------------------------------------->
+
+
+                                <md-tab ui-sref="project.discussions">
+                                    <md-tab-label>
+                                        <i class="material-icons icon-small">chat_bubble_outline</i> Erklæring afgivet af
+                                    </md-tab-label>
+                                    <md-tab-body>
+                                        <md-card-content>
+                                            <md-list>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Læge 1</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="doctor1" ng-model="doctor1">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Læge 2</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="doctor2" ng-model="doctor2">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Psykolog</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="psychologist" ng-model="psychologist">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Socialrådgiver</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="socialWorker" ng-model="socialWorker">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Sekretær</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="secretary" ng-model="secretary">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+                                        </md-card-content>
+                                    </md-tab-body>
+                                </md-tab>
+
+                                <md-tab ui-sref="project.discussions">
+                                    <md-tab-label>
+                                        <i class="material-icons icon-small">chat_bubble_outline</i> ICD-10 diagnose
+                                    </md-tab-label>
+                                    <md-tab-body>
+                                        <md-card-content>
+                                            <md-list>
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Hoveddiagnose</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="mainDiagnosis" ng-model="mainDiagnosis">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+
+                                                <md-list-item>
+                                                    <div class="md-no-style md-list-item-inner">
+                                                        <div flex="50">
+                                                            <a class="member" ng-click="vm.openMemberInfo(member)">Bidiagnose</a>
+                                                        </div>
+                                                        <div flex="15" class="od-secondary">
+                                                            <input type="text" name="biDiagnoses" ng-model="biDiagnoses">
+                                                        </div>
+                                                    </div>
+                                                </md-list-item>
+                                            </md-list>
+                                        </md-card-content>
+                                    </md-tab-body>
+                                </md-tab>
+                            </md-tabs>
+                        </md-card-content>
+
+                    </md-card>
+                </md-dialog-content>
+
+                <md-dialog-actions>
+                    <md-button type="Submit" class="md-primary">{{'COMMON.ADD' | translate}} </md-button>
+                </md-dialog-actions>
+
+                <div flex="25" ng-if="vm.project.type != vm.strings.templateProject">
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</md-dialog>

@@ -8,13 +8,34 @@ function config($stateProvider, USER_ROLES) {
             url: '/erklaeringer',
             views: {
                 'content@': {
-                    templateUrl: 'app/src/declaration/view/info.html',
+                    templateUrl: 'app/src/declaration/view/search.html',
                     controller: 'DeclarationController',
                     controllerAs: 'vm'
                 },
+                'toolbar-tools@site': {
+                    templateUrl: 'app/src/declaration/view/search-toolbar.html',
+                    controller: 'SearchToolbarController',
+                },
             }
-
         })
+        .state('declaration.create', {
+            url: '/opret',
+            views: {
+                'content@': {
+                    templateUrl: 'app/src/declaration/view/create.html',
+                    controller: 'DeclarationCreateController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools@site': {
+                    templateUrl: 'app/src/declaration/view/create-toolbar.html',
+                    controller: 'DeclarationCreateToolbarController',
+                },
+                'toolbar-label@site': {
+                    template: "<h2>Opret ny erklæring</h2>"
+                }
+            }
+        })
+
         .state('declaration.documents', {
             url: '/dokumenter',
             views: {
@@ -27,6 +48,9 @@ function config($stateProvider, USER_ROLES) {
                     templateUrl: 'app/src/declaration/view/document-toolbar.html',
                     controller: 'DocumentToolbarController',
                     controllerAs: 'vm'
+                },
+                'toolbar-label@site': {
+                    templateUrl: 'app/src/declaration/view/patient-toolbar.html',
                 }
             }
         })
@@ -45,6 +69,9 @@ function config($stateProvider, USER_ROLES) {
                     templateUrl: 'app/src/declaration/view/patient-info-toolbar.html',
                     controller: 'PatientInfoToolbarController',
                     controllerAs: 'vm'
+                },
+                'toolbar-label@site': {
+                    templateUrl: 'app/src/declaration/view/patient-toolbar.html',
                 }
             }
         })
