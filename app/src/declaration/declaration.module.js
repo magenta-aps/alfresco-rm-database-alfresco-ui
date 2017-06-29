@@ -9,7 +9,7 @@ function config($stateProvider, USER_ROLES) {
             views: {
                 'content@': {
                     templateUrl: 'app/src/declaration/view/search.html',
-                    controller: 'DeclarationController',
+                    controller: 'DeclarationSearchController',
                     controllerAs: 'vm'
                 },
                 'toolbar-tools@site': {
@@ -43,14 +43,8 @@ function config($stateProvider, USER_ROLES) {
                     controller: 'DeclarationController',
                     controllerAs: 'vm'
                 },
-                'toolbar-tools@site': {
-                    templateUrl: 'app/src/declaration/view/create-toolbar.html',
-                    controller: 'DeclarationCreateToolbarController',
-                },
-                'toolbar-label@site': {
-                    template: "<h2>Opret ny erklæring</h2>"
-                }
-            }
+            },
+            redirectTo: 'declaration.show.patientdata'
         })
         .state('declaration.show.documents', {
             url: '/dokumenter',
@@ -67,11 +61,12 @@ function config($stateProvider, USER_ROLES) {
                 },
                 'toolbar-label@site': {
                     templateUrl: 'app/src/declaration/view/patient-toolbar.html',
+                    controller: 'PatientInfoToolbarController',
                 }
             }
         })
         .state('declaration.show.documents.edit', {
-
+            url: '/rediger'
         })
         .state('declaration.show.patientdata', {
             url: '/patientdata',
@@ -88,8 +83,12 @@ function config($stateProvider, USER_ROLES) {
                 },
                 'toolbar-label@site': {
                     templateUrl: 'app/src/declaration/view/patient-toolbar.html',
+                    controller: 'PatientInfoToolbarController',
                 }
             }
+        })
+        .state('declaration.show.patientdata.edit', {
+            url: '/rediger'
         })
 
 };

@@ -9,7 +9,6 @@ function DeclarationController($scope, $state, $stateParams, declarationService,
     $scope.patientToolbarService = patientInfoToolbarService;
 
     $scope.contents = [];
-    $scope.currentCaseNumber = "";
 
     $scope.case = {};
 
@@ -24,26 +23,19 @@ function DeclarationController($scope, $state, $stateParams, declarationService,
         $scope.editPatientData = newVal;
     });
 
-    $scope.$watch('case', function (newVal, oldVal) {
-        // console.log(newVal);
+    $scope.$watch('case', function (newVal) {
         declarationService.updateNewCase(newVal);
     }, true);
 
-    function loadCase() {
-
-        if ($scope.currentCaseNumber != "") {
-            declarationService.getCase($scope.currentCaseNumber).then(function (response) {
+    function loadCase(caseid) {
+        if (caseid) {
+            declarationService.getCase(caseid).then(function (response) {
                 $scope.case = response[0];
                 vm.loadFiles($scope.case["node-uuid"]);
             });
         }
     }
-
-    function getCase(number) {
-        $scope.currentCaseNumber = number;
-        loadCase();
-    };
-    getCase($stateParams.caseid);
+    loadCase($stateParams.caseid);
 
     $scope.viewDocuments = function () {
         $state.go('declaration.show.documents');

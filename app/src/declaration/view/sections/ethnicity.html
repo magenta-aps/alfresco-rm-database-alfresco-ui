@@ -7,15 +7,15 @@
     <md-card-content>
         <md-input-container class="md-block">
             <label>Etnicitet</label>
-            <input ng-model="case.ethnicity">
+            <input ng-model="case.ethnicity" ng-disabled="!editPatientData">
         </md-input-container>
         <md-input-container class="md-block">
             <label>Mors etnicitet</label>
-            <input ng-model="case.motherEthnicity">
+            <input ng-model="case.motherEthnicity" ng-disabled="!editPatientData">
         </md-input-container>
         <md-input-container class="md-block">
             <label>Fars etnicitet</label>
-            <input ng-model="case.fatherEthnicity">
+            <input ng-model="case.fatherEthnicity" ng-disabled="!editPatientData">
         </md-input-container>
     </md-card-content>
 </md-card>

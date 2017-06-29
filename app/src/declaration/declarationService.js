@@ -2,13 +2,13 @@
 
 angular.module('openDeskApp.declaration').factory('declarationService', function ($http, $window, alfrescoNodeUtils) {
 
-    var restBaseUrl = '/alfresco/s/api/';
-
-    var _currentSiteType = "";
-
-    var declarationController = null;
-
     var newCase = {};
+
+    var caseTitle = '';
+
+    function setCaseTitle(newCase) {
+        caseTitle = newCase.firstName + ' ' + newCase.lastName + ' (Sag nr. ' + newCase.caseNumber + ')';
+    }
 
     return {
 
@@ -20,10 +20,14 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
             return newCase;
         },
 
+        getCaseTitle: function() {
+            return caseTitle;
+        },
+
         getCase : function(caseNumber) {
             return $http.get("/alfresco/s/entry?type=forensicPsychiatryDeclaration&entryKey=caseNumber&entryValue=" + caseNumber, {}).then(function (response) {
+                setCaseTitle(response.data[0]);
                 return response.data;
-
             });
         },
 

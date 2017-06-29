@@ -5,7 +5,7 @@
         </md-card-title-text>
     </md-card-title>
     <md-card-content>
-        <md-radio-group ng-model="case.forensicDoctorCouncil">
+        <md-radio-group ng-model="case.forensicDoctorCouncil" ng-disabled="!editPatientData">
 
             <md-radio-button value="Ikke forelagt">Ikke forelagt</md-radio-button>
             <md-radio-button value="Enig"> Enig </md-radio-button>
@@ -14,7 +14,7 @@
         </md-radio-group>
         <md-input-container class="md-block">
             <label>Tekst</label>
-            <textarea ng-model="case.forensicDoctorCouncilText" rows="3" md-select-on-focus></textarea>
+            <textarea ng-model="case.forensicDoctorCouncilText" rows="3" md-select-on-focus ng-disabled="!editPatientData"></textarea>
         </md-input-container>
     </md-card-content>
 </md-card>

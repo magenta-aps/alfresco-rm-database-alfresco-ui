@@ -7,16 +7,16 @@
     <md-card-content>
         <md-input-container class="md-block">
             <label>Hoveddiagnose</label>
-            <input ng-model="case.ethnicity">
+            <input ng-model="case.ethnicity" ng-disabled="!editPatientData">
         </md-input-container>
         <md-input-container class="md-block">
             <label>Bidiagnoser</label>
-            <input ng-model="case.ethnicity">
+            <input ng-model="case.ethnicity" ng-disabled="!editPatientData">
         </md-input-container>
     </md-card-content>
     <md-card-actions layout="row">
         <span flex></span>
-        <md-button class="md-icon-button md-accent" aria-label="Favorite">
+        <md-button class="md-icon-button md-accent" ng-disabled="!editPatientData">
             <md-icon>add</md-icon>
         </md-button>
     </md-card-actions>

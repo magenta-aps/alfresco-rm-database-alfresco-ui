@@ -7,15 +7,15 @@
     <md-card-content>
         <md-input-container class="md-block">
             <label>Endelig dom</label>
-            <input ng-model="case.finalVerdict">
+            <input ng-model="case.finalVerdict" ng-disabled="!editPatientData">
         </md-input-container>
         <md-input-container class="md-block">
             <label>Dom</label>
-            <textarea ng-model="case.verdict" rows="5" md-select-on-focus></textarea>
+            <textarea ng-model="case.verdict" rows="5" md-select-on-focus ng-disabled="!editPatientData"></textarea>
         </md-input-container>
         <md-input-container class="md-block">
             <label>Bemærkninger</label>
-            <textarea ng-model="case.remarks" rows="3" md-select-on-focus></textarea>
+            <textarea ng-model="case.remarks" rows="3" md-select-on-focus ng-disabled="!editPatientData"></textarea>
         </md-input-container>
     </md-card-content>
 </md-card>
