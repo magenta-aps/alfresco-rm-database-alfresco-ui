@@ -9,6 +9,7 @@ function DeclarationCreateToolbarController($scope, $state, declarationService) 
         console.log(newCase);
         declarationService.createCase(newCase).then(function (response) {
             console.log(response);
+            $state.go('declaration.show.patientdata', {caseid: response.caseNumber});
         })
     }
 }

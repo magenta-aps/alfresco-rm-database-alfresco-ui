@@ -35,8 +35,24 @@ function config($stateProvider, USER_ROLES) {
                 }
             }
         })
-
-        .state('declaration.documents', {
+        .state('declaration.show', {
+            url: '/:caseid',
+            views: {
+                'content@': {
+                    templateUrl: 'app/src/declaration/view/info.html',
+                    controller: 'DeclarationController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools@site': {
+                    templateUrl: 'app/src/declaration/view/create-toolbar.html',
+                    controller: 'DeclarationCreateToolbarController',
+                },
+                'toolbar-label@site': {
+                    template: "<h2>Opret ny erklæring</h2>"
+                }
+            }
+        })
+        .state('declaration.show.documents', {
             url: '/dokumenter',
             views: {
                 'declarations': {
@@ -54,10 +70,10 @@ function config($stateProvider, USER_ROLES) {
                 }
             }
         })
-        .state('declaration.documents.edit', {
+        .state('declaration.show.documents.edit', {
 
         })
-        .state('declaration.patientdata', {
+        .state('declaration.show.patientdata', {
             url: '/patientdata',
             views: {
                 'declarations': {

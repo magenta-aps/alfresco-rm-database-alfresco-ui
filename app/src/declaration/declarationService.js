@@ -20,15 +20,6 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
             return newCase;
         },
 
-        setType: function (t){
-            _currentSiteType = t;
-        },
-        getType: function() {
-
-            console.log("flot")
-
-            return _currentSiteType;
-        },
         getCase : function(caseNumber) {
             return $http.get("/alfresco/s/entry?type=forensicPsychiatryDeclaration&entryKey=caseNumber&entryValue=" + caseNumber, {}).then(function (response) {
                 return response.data;
@@ -54,10 +45,6 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
                 return response.data;
 
             });
-        },
-
-        setDeclarationController: function (controller) {
-            declarationController = controller;
         },
 
         getContents: function (node) {

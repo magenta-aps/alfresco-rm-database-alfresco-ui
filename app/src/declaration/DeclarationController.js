@@ -24,10 +24,14 @@ function DeclarationController($scope, $state, $stateParams, declarationService,
         $scope.editPatientData = newVal;
     });
 
+    $scope.$watch('case', function (newVal, oldVal) {
+        // console.log(newVal);
+        declarationService.updateNewCase(newVal);
+    }, true);
+
     function loadCase() {
 
         if ($scope.currentCaseNumber != "") {
-
             declarationService.getCase($scope.currentCaseNumber).then(function (response) {
                 $scope.case = response[0];
                 vm.loadFiles($scope.case["node-uuid"]);
@@ -35,31 +39,28 @@ function DeclarationController($scope, $state, $stateParams, declarationService,
         }
     }
 
-    $scope.getCase = function (number) {
+    function getCase(number) {
         $scope.currentCaseNumber = number;
         loadCase();
     };
+    getCase($stateParams.caseid);
 
     $scope.viewDocuments = function () {
-        $state.go('declaration.documents');
+        $state.go('declaration.show.documents');
     }
 
     $scope.editDocuments = function () {
-        $state.go('declaration.documents.edit');
+        $state.go('declaration.show.documents.edit');
     }
 
     $scope.viewPatientData = function () {
-        $state.go('declaration.patientdata');
+        $state.go('declaration.show.patientdata');
     }
 
     vm.loadFiles = function (node) {
         declarationService.getContents(node).then(function (response) {
             $scope.contents = response;
             console.log(response)
-            //$scope.contents.forEach(function (contentTypeList) {
-            //    $scope.contentLength += contentTypeList.length;
-            //    //vm.addThumbnailUrl(contentTypeList);
-            //});
         });
     };
 
