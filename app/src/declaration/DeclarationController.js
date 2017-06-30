@@ -2,11 +2,11 @@ angular
     .module('openDeskApp.declaration')
     .controller('DeclarationController', DeclarationController);
 
-function DeclarationController($scope, $state, $stateParams, declarationService, documentToolbarService, patientInfoToolbarService) {
+function DeclarationController($scope, $state, $stateParams, declarationService, documentToolbarService) {
     var vm = this;
 
     $scope.toolbarService = documentToolbarService;
-    $scope.patientToolbarService = patientInfoToolbarService;
+    $scope.declarationService = declarationService;
 
     $scope.contents = [];
 
@@ -15,11 +15,15 @@ function DeclarationController($scope, $state, $stateParams, declarationService,
     $scope.editPatientData = false;
     $scope.tableView = false;
 
+    //sets the margin to the width of sidenav
+    var sidebar = $(".md-sidenav-left");
+    $(".od-info-declarations").css("margin-left", sidebar.width()+"px");
+
     $scope.$watch('toolbarService.getDocumentView()', function (newVal) {
         $scope.tableView = newVal;
     });
 
-    $scope.$watch('patientToolbarService.isEditing()', function (newVal) {
+    $scope.$watch('declarationService.isEditing()', function (newVal) {
         $scope.editPatientData = newVal;
     });
 
@@ -55,6 +59,5 @@ function DeclarationController($scope, $state, $stateParams, declarationService,
             console.log(response)
         });
     };
-
 
 }

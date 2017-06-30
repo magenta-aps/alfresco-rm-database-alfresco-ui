@@ -2,13 +2,13 @@ angular
     .module('openDeskApp.declaration')
     .controller('DeclarationSearchController', DeclarationSearchController);
 
-function DeclarationSearchController($scope, $stateParams) {
+function DeclarationSearchController($scope, $stateParams, declarationService) {
 
     $scope.editMode = false;
 
     $scope.toggleEdit = function() {
         $scope.editMode = !$scope.editMode;
-        patientInfoToolbarService.toggleEdit();
+        declarationService.toggleEdit();
     }
 
     $scope.saveEdit = function() {

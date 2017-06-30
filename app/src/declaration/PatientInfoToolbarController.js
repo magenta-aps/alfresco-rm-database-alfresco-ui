@@ -2,7 +2,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('PatientInfoToolbarController', PatientInfoToolbarController);
 
-function PatientInfoToolbarController($scope, $state, $stateParams, patientInfoToolbarService, declarationService) {
+function PatientInfoToolbarController($scope, $state, $stateParams, declarationService) {
 
     $scope.declarationService = declarationService;
 
@@ -16,7 +16,7 @@ function PatientInfoToolbarController($scope, $state, $stateParams, patientInfoT
 
     $scope.toggleEdit = function() {
         $scope.editMode = !$scope.editMode;
-        patientInfoToolbarService.toggleEdit();
+        declarationService.toggleEdit();
 
         if($scope.editMode) {
             $state.go('declaration.show.patientdata.edit');

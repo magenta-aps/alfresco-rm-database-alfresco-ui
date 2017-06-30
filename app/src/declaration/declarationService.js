@@ -2,8 +2,8 @@
 
 angular.module('openDeskApp.declaration').factory('declarationService', function ($http, $window, alfrescoNodeUtils) {
 
+    var edit = false;
     var newCase = {};
-
     var caseTitle = '';
 
     function setCaseTitle(newCase) {
@@ -11,6 +11,13 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
     }
 
     return {
+        toggleEdit: function() {
+            edit = !edit;
+        },
+
+        isEditing: function() {
+            return edit;
+        },
 
         updateNewCase: function(caseUpdate) {
             newCase = caseUpdate;

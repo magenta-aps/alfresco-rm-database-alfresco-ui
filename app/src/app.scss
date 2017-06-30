@@ -305,3 +305,10 @@ md-list-item, md-list-item .md-list-item-inner {
   position: absolute;
   top: $u * .5;
 }
+
+.sidenav-fixed {
+  background-color: transparent;
+  bottom: 0;
+  position: fixed !important;
+  top: $u * 8;
+}
