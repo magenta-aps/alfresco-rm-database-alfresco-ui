@@ -1,0 +1,31 @@
+<md-dialog aria-label="Lås sagen" ng-cloak>
+    <form name="lockDeclarationForm" ng-submit="">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Lås sagen</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="vm.cancel()">
+                    <i class="material-icons" aria-label="Luk dialogboks">close</i>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content class="md-padding">
+            <span style="color:red">
+                <p>Når du låser sagen kan den ikke åbnes igen.</p>
+                <p>Indtast dit kodeord for at bekræfte.</p>
+                </span>
+            <md-input-container>
+                <label>{{'LOGIN.PASSWORD' |translate}}</label> 
+                <input type="password" name="password" required ng-model="password" md-autofocus>
+            </md-input-container>
+        </md-dialog-content>
+
+        <md-dialog-actions>
+            <md-button ng-disabled="lockDeclarationForm.$invalid" type="submit" class="md-primary md-text-icon-button">
+                <md-icon>lock</md-icon> Lås
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

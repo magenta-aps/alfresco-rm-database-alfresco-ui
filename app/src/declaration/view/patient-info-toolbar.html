@@ -1,7 +1,18 @@
-<md-button class="md-text-icon-button" aria-label="edit" ng-click="toggleEdit()" ng-show="!editMode">
-    <md-icon>edit</md-icon> rediger
-</md-button>
+<span ng-show="!editMode">
+    <md-button class="md-text-icon-button" aria-label="lås sagen" ng-click="lockCase()">
+        <md-icon>lock</md-icon> lås sagen
+    </md-button>
+    <md-button class="md-text-icon-button" aria-label="edit" ng-click="toggleEdit()">
+        <md-icon>edit</md-icon> rediger
+    </md-button>
+</span>
 
-<md-button class="md-text-icon-button" aria-label="edit" ng-click="toggleEdit(); saveEdit()" ng-show="editMode">
-    <md-icon>save</md-icon> gem
-</md-button>
+<span ng-show="editMode">
+    <md-button class="md-text-icon-button" aria-label="lås sagen" ng-click="lockCase()">
+        <md-icon>lock</md-icon> gem og lås sagen
+    </md-button>
+
+    <md-button class="md-text-icon-button" aria-label="edit" ng-click="toggleEdit(); saveEdit()">
+        <md-icon>save</md-icon> gem
+    </md-button>
+</span>
