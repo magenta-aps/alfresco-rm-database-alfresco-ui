@@ -8,7 +8,7 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
     var caseTitle = '';
 
     function setCaseTitle(newCase) {
-        caseTitle = newCase.firstName + ' ' + newCase.lastName + ' (Sag nr. ' + newCase.caseNumber + ')';
+        caseTitle = newCase.firstName + ' ' + newCase.lastName + ' (Sag #' + newCase.caseNumber + ')';
     }
 
     return {

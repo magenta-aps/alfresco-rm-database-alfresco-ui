@@ -9,6 +9,7 @@ function DocumentController($scope, $state, declarationService, documentToolbarS
     $scope.declarationService = declarationService;
 
     $scope.contents = [];
+    $scope.contentLength = 0;
 
     $scope.case = {};
 
@@ -32,6 +33,9 @@ function DocumentController($scope, $state, declarationService, documentToolbarS
     function loadFiles(node) {
         declarationService.getContents(node).then(function (response) {
             $scope.contents = response;
+            $scope.contents.forEach(function (contentTypeList) {
+                $scope.contentLength += contentTypeList.length;
+            });
             console.log(response)
         });
     };

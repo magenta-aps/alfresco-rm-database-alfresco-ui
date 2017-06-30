@@ -8,7 +8,6 @@
     </md-card>
 </div>
 
-
 <md-card ng-show="tableView">
     <md-card-content>
         <md-table-container>
@@ -32,3 +31,8 @@
         </md-table-container>
     </md-card-content>
 </md-card>
+
+<div layout="column" ng-show="contentLength == 0">
+    <md-icon class="md-icon--large">insert_drive_file</md-icon>
+    <p class="md-display-1" style="text-align:center">Ingen dokumenter tilknyttet denne sag endnu.</p>
+</div>
