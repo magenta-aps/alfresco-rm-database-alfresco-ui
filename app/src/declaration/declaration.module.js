@@ -13,8 +13,8 @@ function config($stateProvider, USER_ROLES) {
                     controllerAs: 'vm'
                 },
                 'toolbar-tools@site': {
-                    templateUrl: 'app/src/declaration/view/search-toolbar.html',
-                    controller: 'SearchToolbarController',
+                    templateUrl: 'app/src/declaration/view/create-toolbar.html',
+                    controller: 'DeclarationCreateToolbarController',
                 },
             }
         })
@@ -22,7 +22,7 @@ function config($stateProvider, USER_ROLES) {
             url: '/opret',
             views: {
                 'content@': {
-                    templateUrl: 'app/src/declaration/view/create.html',
+                    templateUrl: 'app/src/declaration/view/info-cards.html',
                     controller: 'DeclarationCreateController',
                     controllerAs: 'vm'
                 },
@@ -39,7 +39,7 @@ function config($stateProvider, USER_ROLES) {
             url: '/:caseid',
             views: {
                 'content@': {
-                    templateUrl: 'app/src/declaration/view/info.html',
+                    templateUrl: 'app/src/declaration/view/declaration.html',
                     controller: 'DeclarationController',
                     controllerAs: 'vm'
                 },
@@ -51,7 +51,7 @@ function config($stateProvider, USER_ROLES) {
             views: {
                 'declarations': {
                     templateUrl: 'app/src/declaration/view/documents.html',
-                    controller: 'DeclarationController',
+                    controller: 'DocumentController',
                     controllerAs: 'vm'
                 },
                 'toolbar-tools@site': {
@@ -73,7 +73,7 @@ function config($stateProvider, USER_ROLES) {
             views: {
                 'declarations': {
                     templateUrl: 'app/src/declaration/view/info-cards.html',
-                    controller: 'DeclarationController',
+                    controller: 'PatientInfoController',
                     controllerAs: 'vm'
                 },
                 'toolbar-tools@site': {

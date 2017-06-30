@@ -1,9 +1,9 @@
 <div layout="row" layout-wrap ng-show="!tableView">
-    <md-card ng-repeat="content in contents" flex-gt-sm="15" flex='45'>
+    <md-card ng-repeat="i in [1,2,3,4,5,6,7,8,9,10]" flex-gt-sm="15" flex='45'>
         <md-checkbox class="document-checkbox" aria-label="Checkbox {{i}}" ng-click="editDocuments()"></md-checkbox>
-        <img ng-src="https://placehold.it/190" class="md-card-image" alt="Washed Out">
+        <img ng-src="https://placehold.it/190" class="md-card-image">
         <md-card-content>
-            <span class="md-subhead">document title {{content.length}}</span>
+            <span class="md-subhead">document title {{i}}</span>
         </md-card-content>
     </md-card>
 </div>

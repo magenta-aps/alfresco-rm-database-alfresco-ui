@@ -5,9 +5,7 @@ angular
 function PatientInfoToolbarController($scope, $state, $stateParams, declarationService) {
 
     $scope.declarationService = declarationService;
-
     $scope.editMode = false;
-
     $scope.caseTitle = '';
 
     $scope.$watch('declarationService.getCaseTitle()', function (newVal) {

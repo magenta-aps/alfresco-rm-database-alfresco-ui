@@ -4,6 +4,7 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
 
     var edit = false;
     var newCase = {};
+    var currentCase = {};
     var caseTitle = '';
 
     function setCaseTitle(newCase) {
@@ -17,6 +18,14 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
 
         isEditing: function() {
             return edit;
+        },
+
+        setCurrentCase: function(newCase) {
+            currentCase = newCase;
+        },
+
+        getCurrentCase: function() {
+            return currentCase;
         },
 
         updateNewCase: function(caseUpdate) {

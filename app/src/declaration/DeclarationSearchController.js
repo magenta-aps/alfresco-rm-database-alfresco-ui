@@ -2,19 +2,12 @@ angular
     .module('openDeskApp.declaration')
     .controller('DeclarationSearchController', DeclarationSearchController);
 
-function DeclarationSearchController($scope, $stateParams, declarationService) {
+function DeclarationSearchController($scope, $state, $stateParams) {
 
-    $scope.editMode = false;
+    $scope.caseid;
 
-    $scope.toggleEdit = function() {
-        $scope.editMode = !$scope.editMode;
-        declarationService.toggleEdit();
-    }
-
-    $scope.saveEdit = function() {
-        var newCase = declarationService.getNewCaseInfo();
-        declarationService.updateCase($stateParams.caseid,newCase).then(function(response) {
-            console.log(response);
-        });
+    $scope.search = function() {
+        console.log('soeg efter ' + $scope.caseid);
+        $state.go('declaration.show', {caseid: $scope.caseid});
     }
 }

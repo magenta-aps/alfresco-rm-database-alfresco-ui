@@ -1,6 +1,7 @@
 angular.module('openDeskApp.declaration').factory('documentToolbarService', function () {
     var tableView = false;
     var toggleIcon = 'list';
+    var currentCase = {};
 
     return {
         toggleDocumentView: function() {
@@ -15,7 +16,7 @@ angular.module('openDeskApp.declaration').factory('documentToolbarService', func
 
         getDocumentView: function() {
             return tableView;
-        }
+        },
     }
 
 });
