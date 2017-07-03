@@ -69,7 +69,6 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
 
         getContents: function (node) {
             return $http.get("/alfresco/service/contents?node=" + node).then(function(response) {
-                //console.log(response.data);
                 return response.data;
             });
         }

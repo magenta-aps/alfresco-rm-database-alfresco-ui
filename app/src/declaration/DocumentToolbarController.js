@@ -7,17 +7,20 @@ function DocumentToolbarController($scope, $mdDialog, declarationService, docume
 
     $scope.case;
 
-    $scope.toggleDocumentView = function() {
+    $scope.toggleDocumentView = function () {
         documentToolbarService.toggleDocumentView();
         $scope.toggleIcon = documentToolbarService.getToggleIcon();
     }
 
     $scope.uploadDocumentsDialog = function (event) {
-        var caseNodeRef = declarationService.getCurrentCase()["node-uuid"];
+        var caseData = declarationService.getCurrentCase();
+        var caseNodeRef = caseData['store-protocol'] + '://' + caseData['store-identifier'] + '/' + caseData['node-uuid'];
         $mdDialog.show({
             controller: 'SiteController',
             controllerAs: 'vm',
-            locals: { folderNodeRef: caseNodeRef },
+            locals: {
+                folderNodeRef: caseNodeRef
+            },
             templateUrl: 'app/src/sites/view/uploadDocuments.tmpl.html',
             parent: angular.element(document.body),
             targetEvent: event,
@@ -26,4 +29,22 @@ function DocumentToolbarController($scope, $mdDialog, declarationService, docume
             clickOutsideToClose: true
         });
     };
+
+    $scope.deleteDocumentsDialog = function (event) {
+        var caseData = declarationService.getCurrentCase();
+        var caseNodeRef = caseData['store-protocol'] + '://' + caseData['store-identifier'] + '/' + caseData['node-uuid'];
+        $mdDialog.show({
+            controller: 'SiteController',
+            controllerAs: 'vm',
+            locals: {
+                folderNodeRef: caseNodeRef
+            },
+            templateUrl: 'app/src/sites/view/deleteFile.tmpl.html',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            scope: $scope, // use parent scope in template
+            preserveScope: true, // do not forget this if use parent scope
+            clickOutsideToClose: true
+        });
+    }
 }

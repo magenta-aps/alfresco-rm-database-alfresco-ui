@@ -1,11 +1,13 @@
-<div layout="row" layout-wrap ng-show="!tableView">
-    <md-card ng-repeat="i in [1,2,3,4,5,6,7,8,9,10]" flex-gt-sm="15" flex='45'>
-        <md-checkbox class="document-checkbox" aria-label="Checkbox {{i}}" ng-click="editDocuments()"></md-checkbox>
-        <img ng-src="https://placehold.it/190" class="md-card-image">
-        <md-card-content>
-            <span class="md-subhead">document title {{i}}</span>
-        </md-card-content>
-    </md-card>
+<div layout="row" layout-wrap ng-repeat="content in contents" ng-if="!tableView">
+        <md-card ng-repeat="c in content" flex-gt-sm="15" flex='45'>
+            <md-checkbox class="document-checkbox" aria-label="Checkbox {{c.shortRef}}" ng-click="selectedFile(c)"></md-checkbox>
+            <span ng-click="!isEditing ? openFile(c) : null">
+            <img ng-src="https://placehold.it/190" class="md-card-image">
+            <md-card-content class="document-filename">
+                <span class="md-subhead">{{isEditing}} {{c.name}}</span>
+            </md-card-content>
+            </span>
+        </md-card>
 </div>
 
 <md-card ng-show="tableView">
@@ -19,11 +21,11 @@
                         <th md-column md-numeric>Modified by</th>
                     </tr>
                 </thead>
-                <tbody md-body>
-                    <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="i in [1,2,3,4,5,6,7,8,9,10]">
-                        <td md-cell>document title {{i}}</td>
-                        <td md-cell>7. maj 2017</td>
-                        <td md-cell>Peter Jensen</td>
+                <tbody md-body ng-repeat="content in contents">
+                    <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="c in content">
+                        <td md-cell>{{c.name}}</td>
+                        <td md-cell>{{c.lastChanged | customDate}}</td>
+                        <td md-cell>{{c.lastChangedBy}}</td>
 
                     </tr>
                 </tbody>

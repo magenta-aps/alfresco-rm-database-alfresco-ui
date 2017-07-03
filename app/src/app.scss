@@ -312,3 +312,10 @@ md-list-item, md-list-item .md-list-item-inner {
   position: fixed !important;
   top: $u * 8;
 }
+
+
+.document-filename {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
