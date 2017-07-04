@@ -65,6 +65,17 @@ function config($stateProvider, USER_ROLES) {
                 }
             }
         })
+        .state('declaration.show.documents.view-file', {
+            url: '/:nodeid',
+            views: {
+                'declarations@declaration.show': {
+                    templateUrl: 'app/src/declaration/view/document-view.html'
+                },
+                'toolbar-tools@site': {
+                    template: '',
+                }
+            }
+        })
         .state('declaration.show.documents.edit', {
             url: '/rediger'
         })

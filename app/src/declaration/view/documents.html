@@ -1,7 +1,7 @@
 <div layout="row" layout-wrap ng-repeat="content in contents" ng-if="!tableView">
     <md-card ng-repeat="c in content" flex-gt-sm="15" flex='45'>
         <md-checkbox class="document-checkbox" aria-label="Checkbox {{c.shortRef}}" ng-click="selectedFile(c)"></md-checkbox>
-        <span ng-click="!isEditing ? openFile(c) : null">
+        <span ng-click="!isEditing ? viewFile(c) : null">
             <img ng-src="https://placehold.it/190" class="md-card-image">
             <md-card-content class="document-filename">
                 <span class="md-subhead">{{c.name}}</span>
@@ -16,6 +16,7 @@
             <table md-table md-row-select multiple>
                 <thead md-head>
                     <tr md-row>
+                        <th md-column></th>
                         <th md-column>Name</th>
                         <th md-column md-numeric>Date modified</th>
                         <th md-column md-numeric>Modified by</th>
@@ -23,6 +24,7 @@
                 </thead>
                 <tbody md-body ng-repeat="content in contents">
                     <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="c in content">
+                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-click="selectedFile(c)"></md-checkbox></td>
                         <td md-cell>{{c.name}}</td>
                         <td md-cell>{{c.lastChanged | customDate}}</td>
                         <td md-cell>{{c.lastChangedBy}}</td>

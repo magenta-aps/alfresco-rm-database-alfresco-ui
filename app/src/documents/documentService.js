@@ -1,13 +1,17 @@
 angular.module('openDeskApp.documents')
-       .factory('documentService', documentService);
+    .factory('documentService', documentService);
 
-function documentService($http) {
+function documentService($http, alfrescoNodeUtils) {
 
     var selectedFiles = [];
+    var caseFiles = [];
 
     var service = {
         setSelectedFiles: setSelectedFiles,
         getSelectedFiles: getSelectedFiles,
+        resetSelectedFiles: resetSelectedFiles,
+        setCaseFiles: setCaseFiles,
+        getCaseFiles: getCaseFiles,
         getDocument: getDocument,
         getPath: getPath,
         getHistory: getHistory,
@@ -16,7 +20,9 @@ function documentService($http) {
         createThumbnail: createThumbnail,
         cleanupThumbnail: cleanupThumbnail,
         revertToVersion: revertToVersion,
-        getPDFLink: getPDFLink
+        getPDFLink: getPDFLink,
+        deleteFile: deleteFile,
+        uploadFiles: uploadFiles
     };
 
     return service;
@@ -27,6 +33,18 @@ function documentService($http) {
 
     function getSelectedFiles() {
         return selectedFiles;
+    }
+
+    function resetSelectedFiles() {
+        selectedFiles = [];
+    }
+
+    function setCaseFiles(files) {
+        caseFiles = files;
+    }
+
+    function getCaseFiles() {
+        return caseFiles;
     }
 
     function getDocument(documentNodeRef) {
@@ -90,7 +108,9 @@ function documentService($http) {
 
         return $http.post("/api/upload", formData, {
             transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
+            headers: {
+                'Content-Type': undefined
+            }
         }).then(function (response) {
             return response;
         });
@@ -104,19 +124,43 @@ function documentService($http) {
      */
     function revertToVersion(description, majorVersion, nodeRef, version) {
         return $http.post("/api/revert", {
-            description : description,
+            description: description,
             majorVersion: majorVersion,
             nodeRef: nodeRef,
             version: version
         }).then(function (response) {
             response.data.success ? console.log("Doc was successfully reverted") : console.log("Unable to revert document");
-			console.log("response = " +  response);
-			return response;
+            console.log("response = " + response);
+            return response;
         });
     }
 
     function getPDFLink(nodeRef) {
         return "/alfresco/service/api/node/" + nodeRef + "/content/thumbnails/pdf"
+    }
+
+
+    function deleteFile(nodeRef) {
+        var url = '/slingshot/doclib/action/file/node/' + alfrescoNodeUtils.processNodeRef(nodeRef).uri;
+        return $http.delete(url).then(function (result) {
+            return result.data;
+        });
+    }
+
+    function uploadFiles(file, destination, extras) {
+        var formData = new FormData();
+        formData.append("filedata", file);
+        formData.append("filename", file.name);
+        formData.append("destination", destination ? destination : null);
+
+        return $http.post("/api/upload", formData, {
+            transformRequest: angular.identity,
+            headers: {
+                'Content-Type': undefined
+            }
+        }).then(function (response) {
+            return response;
+        });
     }
 
 }

@@ -2,12 +2,14 @@ angular
     .module('openDeskApp.declaration')
     .controller('DocumentController', DocumentController);
 
-function DocumentController($scope, $state, $mdDialog, declarationService, documentToolbarService, siteService, documentService) {
+function DocumentController($scope, $state, $mdDialog, declarationService, documentToolbarService, 
+                            siteService, documentService) {
     var vm = this;
 
     $scope.selectedFiles = documentService.getSelectedFiles();
     $scope.isEditing = false;
 
+    $scope.documentService = documentService;
     $scope.documentToolbarService = documentToolbarService;
     $scope.declarationService = declarationService;
 
@@ -26,8 +28,15 @@ function DocumentController($scope, $state, $mdDialog, declarationService, docum
     //load files using the current case
     $scope.$watch('declarationService.getCurrentCase()', function (newVal) {
         $scope.case = newVal;
-        if (newVal['node-uuid'])
+        if (newVal['node-uuid']) {
             loadFiles($scope.case['node-uuid']);
+        }
+    });
+
+    //refresh contents
+    $scope.$watch('documentService.getCaseFiles()', function (newVal) {
+        $scope.contents = newVal;
+        documentService.resetSelectedFiles();
     });
 
     //change view
@@ -51,41 +60,21 @@ function DocumentController($scope, $state, $mdDialog, declarationService, docum
         }
     }
 
-    $scope.openFile = function (file) {
-        console.log('open the file');
+    $scope.viewFile = function (file) {
+        $state.go('declaration.show.documents.view-file', {nodeid:  file.shortRef});
     }
 
     function loadFiles(node) {
+        console.log('load files');
         declarationService.getContents(node).then(function (response) {
+            documentService.setCaseFiles(response);
             $scope.contents = response;
             $scope.contents.forEach(function (contentTypeList) {
                 $scope.contentLength += contentTypeList.length;
-
-                // contentTypeList.forEach(function(file) {
-                //     console.log(file);
-                //     getThumbnail(file);
-                // });
             });
-            console.log(response)
-        });
-    };
-
-    function getThumbnail(node) {
-        documentService.createThumbnail(node.parentNodeRef, node.nodeRef).then(function (response) {
+            $scope.selectedFiles = []; //reset selected files
             console.log(response);
         });
-    }
-
-    vm.deleteFiles = function () {
-        var files = documentService.getSelectedFiles();
-        files.forEach(function (file) {
-            console.log(file);
-            siteService.deleteFile(file.nodeRef).then(function (response) {
-                console.log(response);
-                //loadFiles($scope.case['node-uuid']);
-            });
-        })
-        $mdDialog.hide();
-    }
+    };
 
 }

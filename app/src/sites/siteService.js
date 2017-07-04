@@ -159,12 +159,16 @@ angular.module('openDeskApp.sites').factory('siteService', function ($http, $win
                 return result.data;
             });
         },
+
+        //TODO: deprecated, moved to documentservice.
         deleteFile: function (nodeRef) {
             var url = '/slingshot/doclib/action/file/node/' + alfrescoNodeUtils.processNodeRef(nodeRef).uri;
             return $http.delete(url).then(function (result) {
                 return result.data;
             });
         },
+
+        //TODO: deprecated, moved to documentservice.
         uploadFiles: function (file, destination, extras) {
                 var formData = new FormData();
                 formData.append("filedata", file);

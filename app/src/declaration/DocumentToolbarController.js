@@ -2,7 +2,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('DocumentToolbarController', DocumentToolbarController);
 
-function DocumentToolbarController($scope, $mdDialog, declarationService, documentToolbarService) {
+function DocumentToolbarController($scope, $mdDialog, documentToolbarService) {
     $scope.toggleIcon = 'list';
 
     $scope.case;
@@ -13,14 +13,9 @@ function DocumentToolbarController($scope, $mdDialog, declarationService, docume
     }
 
     $scope.uploadDocumentsDialog = function (event) {
-        var caseData = declarationService.getCurrentCase();
-        var caseNodeRef = caseData['store-protocol'] + '://' + caseData['store-identifier'] + '/' + caseData['node-uuid'];
         $mdDialog.show({
-            controller: 'SiteController',
+            controller: 'DocumentActionController',
             controllerAs: 'vm',
-            locals: {
-                folderNodeRef: caseNodeRef
-            },
             templateUrl: 'app/src/sites/view/uploadDocuments.tmpl.html',
             parent: angular.element(document.body),
             targetEvent: event,
@@ -32,7 +27,7 @@ function DocumentToolbarController($scope, $mdDialog, declarationService, docume
 
     $scope.deleteDocumentsDialog = function (event) {
         $mdDialog.show({
-            controller: 'DocumentController',
+            controller: 'DocumentActionController',
             controllerAs: 'vm',
             templateUrl: 'app/src/declaration/view/deleteFiles.tmpl.html',
             parent: angular.element(document.body),
