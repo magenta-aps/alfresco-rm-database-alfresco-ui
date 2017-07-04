@@ -56,6 +56,18 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
                 //console.log(response.data);
                 return response.data;
             });
+        },
+        getDropDownGroups: function() {
+            return $http.get("/alfresco/service/conf?method=getDropDownColumnGroupNames").then(function(response) {
+                console.log(response.data);
+                return response.data;
+            });
         }
+
+
+
+
+
+
     };
 });

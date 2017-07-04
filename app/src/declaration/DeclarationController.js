@@ -10,6 +10,8 @@ function DeclarationController($scope, declarationService) {
 
     $scope.case = "tom";
 
+    declarationService.getDropDownGroups();
+
     function loadCase() {
 
         if ($scope.currentCaseNumber != "") {
