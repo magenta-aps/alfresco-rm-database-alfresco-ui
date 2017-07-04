@@ -3,7 +3,11 @@ angular.module('openDeskApp.documents')
 
 function documentService($http) {
 
+    var selectedFiles = [];
+
     var service = {
+        setSelectedFiles: setSelectedFiles,
+        getSelectedFiles: getSelectedFiles,
         getDocument: getDocument,
         getPath: getPath,
         getHistory: getHistory,
@@ -16,6 +20,14 @@ function documentService($http) {
     };
 
     return service;
+
+    function setSelectedFiles(files) {
+        selectedFiles = files;
+    }
+
+    function getSelectedFiles() {
+        return selectedFiles;
+    }
 
     function getDocument(documentNodeRef) {
         return $http.get('/slingshot/doclib/node/workspace/SpacesStore/' + documentNodeRef, {}).then(function (response) {

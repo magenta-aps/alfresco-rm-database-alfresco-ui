@@ -1,13 +1,13 @@
 <div layout="row" layout-wrap ng-repeat="content in contents" ng-if="!tableView">
-        <md-card ng-repeat="c in content" flex-gt-sm="15" flex='45'>
-            <md-checkbox class="document-checkbox" aria-label="Checkbox {{c.shortRef}}" ng-click="selectedFile(c)"></md-checkbox>
-            <span ng-click="!isEditing ? openFile(c) : null">
+    <md-card ng-repeat="c in content" flex-gt-sm="15" flex='45'>
+        <md-checkbox class="document-checkbox" aria-label="Checkbox {{c.shortRef}}" ng-click="selectedFile(c)"></md-checkbox>
+        <span ng-click="!isEditing ? openFile(c) : null">
             <img ng-src="https://placehold.it/190" class="md-card-image">
             <md-card-content class="document-filename">
-                <span class="md-subhead">{{isEditing}} {{c.name}}</span>
-            </md-card-content>
-            </span>
-        </md-card>
+                <span class="md-subhead">{{c.name}}</span>
+        </md-card-content>
+        </span>
+    </md-card>
 </div>
 
 <md-card ng-show="tableView">
@@ -26,7 +26,6 @@
                         <td md-cell>{{c.name}}</td>
                         <td md-cell>{{c.lastChanged | customDate}}</td>
                         <td md-cell>{{c.lastChangedBy}}</td>
-
                     </tr>
                 </tbody>
             </table>

@@ -31,15 +31,10 @@ function DocumentToolbarController($scope, $mdDialog, declarationService, docume
     };
 
     $scope.deleteDocumentsDialog = function (event) {
-        var caseData = declarationService.getCurrentCase();
-        var caseNodeRef = caseData['store-protocol'] + '://' + caseData['store-identifier'] + '/' + caseData['node-uuid'];
         $mdDialog.show({
-            controller: 'SiteController',
+            controller: 'DocumentController',
             controllerAs: 'vm',
-            locals: {
-                folderNodeRef: caseNodeRef
-            },
-            templateUrl: 'app/src/sites/view/deleteFile.tmpl.html',
+            templateUrl: 'app/src/declaration/view/deleteFiles.tmpl.html',
             parent: angular.element(document.body),
             targetEvent: event,
             scope: $scope, // use parent scope in template

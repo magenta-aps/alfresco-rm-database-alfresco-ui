@@ -2,10 +2,10 @@ angular
     .module('openDeskApp.declaration')
     .controller('DocumentController', DocumentController);
 
-function DocumentController($scope, $state, declarationService, documentToolbarService, siteService, documentService) {
+function DocumentController($scope, $state, $mdDialog, declarationService, documentToolbarService, siteService, documentService) {
     var vm = this;
 
-    var selectedFiles = [];
+    $scope.selectedFiles = documentService.getSelectedFiles();
     $scope.isEditing = false;
 
     $scope.documentToolbarService = documentToolbarService;
@@ -18,34 +18,40 @@ function DocumentController($scope, $state, declarationService, documentToolbarS
 
     $scope.tableView = false;
 
+    //update service with currently selected files
+    $scope.$watch('selectedFiles', function (newVal, oldVal) {
+        documentService.setSelectedFiles(newVal);
+    }, true);
+
+    //load files using the current case
     $scope.$watch('declarationService.getCurrentCase()', function (newVal) {
         $scope.case = newVal;
         if (newVal['node-uuid'])
             loadFiles($scope.case['node-uuid']);
     });
 
+    //change view
     $scope.$watch('documentToolbarService.getDocumentView()', function (newVal) {
         $scope.tableView = newVal;
     });
 
-
     $scope.selectedFile = function (file) {
-        if(selectedFiles.indexOf(file) > -1) {
-            selectedFiles.splice(selectedFiles.indexOf(file), 1);
+        if ($scope.selectedFiles.indexOf(file) > -1) {
+            $scope.selectedFiles.splice($scope.selectedFiles.indexOf(file), 1);
         } else {
-            selectedFiles.push(file);
+            $scope.selectedFiles.push(file);
         }
 
-        if(selectedFiles.length > 0) {
+        if ($scope.selectedFiles.length > 0) {
             $scope.isEditing = true;
             $state.go('declaration.show.documents.edit');
-        } else  {
+        } else {
             $scope.isEditing = false;
             $state.go('declaration.show.documents');
         }
     }
 
-    $scope.openFile = function(file) {
+    $scope.openFile = function (file) {
         console.log('open the file');
     }
 
@@ -65,9 +71,21 @@ function DocumentController($scope, $state, declarationService, documentToolbarS
     };
 
     function getThumbnail(node) {
-        documentService.createThumbnail(node.parentNodeRef,node.nodeRef).then(function(response) {
+        documentService.createThumbnail(node.parentNodeRef, node.nodeRef).then(function (response) {
             console.log(response);
         });
+    }
+
+    vm.deleteFiles = function () {
+        var files = documentService.getSelectedFiles();
+        files.forEach(function (file) {
+            console.log(file);
+            siteService.deleteFile(file.nodeRef).then(function (response) {
+                console.log(response);
+                //loadFiles($scope.case['node-uuid']);
+            });
+        })
+        $mdDialog.hide();
     }
 
 }
