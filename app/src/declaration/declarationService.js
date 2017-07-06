@@ -46,6 +46,12 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
                 return response.data;
             });
         },
+        getAllCases : function() {
+            return $http.get("/alfresco/s/entry?type=forensicPsychiatryDeclaration", {}).then(function (response) {
+                console.log(response.data);
+                return response.data;
+            });
+        },
 
         updateCase : function(caseNumber, properties) {
             return $http.put("/alfresco/s/entry?type=forensicPsychiatryDeclaration&entryKey=caseNumber&entryValue=" + caseNumber,
