@@ -1,0 +1,30 @@
+<md-dialog aria-label="Tiløj behandler" ng-cloak>
+    <form name="addPractitionerForm" ng-submit="vm.deleteFiles()">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Tilføj behandler</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="vm.cancel()">
+                    <i class="material-icons" aria-label="Luk dialogboks">close</i>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content class="md-padding">
+            <md-input-container class="md-block">
+                <label>{{'MEMBER.NAME' | translate}}</label>
+                <input ng-model="" required>
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>{{'MEMBER.ROLE' | translate}}</label>
+                <input ng-model="" required>
+            </md-input-container>
+        </md-dialog-content>
+
+        <md-dialog-actions>
+            <md-button type="submit" class="md-primary" ng-disabled="addPractitionerForm.$invalid" aria-label="{{'COMMON.ADD' | translate}}">{{'COMMON.ADD' | translate}}</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

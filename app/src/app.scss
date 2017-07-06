@@ -311,8 +311,15 @@ md-list-item, md-list-item .md-list-item-inner {
   bottom: 0;
   position: fixed !important;
   top: $u * 8;
+
+  .md-button {
+    text-align: left;
+  }
 }
 
+.toolbar-contextual {
+  border-right: 1px solid $white;
+}
 
 .document-filename {
     white-space: nowrap;

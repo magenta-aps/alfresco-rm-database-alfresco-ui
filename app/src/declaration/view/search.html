@@ -1,19 +1,7 @@
 <div layout="row" layout-align="center center">
-    <div layout="column" flex-gt-sm="50" flex>
+    <div layout="column" style="height:128px" flex-gt-sm="50" flex>
+        <span flex></span>
         <div layout="row">
-            <!--<md-autocomplete
-                md-selected-item="ctrl.selectedItem"
-                md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
-                md-search-text="ctrl.searchText"
-                md-selected-item-change="ctrl.selectedItemChange(item)" 
-                md-items="item in ctrl.querySearch(ctrl.searchText)"
-                md-item-text="item.caseNumber" 
-                md-min-length="0" 
-                placeholder="Søg på et sagsnummer" flex>
-                <md-item-template>
-                    <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.caseNumber}}</span>
-                </md-item-template>
-            </md-autocomplete>-->
             <md-input-container class="md-block" flex>
                 <label>Søg på et sagsnummer</label>
                 <input ng-model="caseid">
@@ -22,10 +10,25 @@
             <md-button ng-click="search()">
                 Søg
             </md-button>
+        </div>
+        <!--<div layout="row">
+            <md-autocomplete
+                md-selected-item="ctrl.selectedItem"
+                md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                md-search-text="ctrl.searchText"
+                md-selected-item-change="ctrl.selectedItemChange(item)" 
+                md-items="item in ctrl.querySearch(ctrl.searchText)"
+                md-item-text="item.caseNumber" 
+                md-min-length="0" 
+                placeholder="Søg på et CPR- eller sagsnummer" flex>
+                <md-item-template>
+                    <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.caseNumber}}</span>
+                </md-item-template>
+            </md-autocomplete>
 
             <md-button class="md-icon-button">
             <md-icon>filter_list</md-icon>
             </md-button>
-        </div>
+        </div>-->
     </div>
 </div>

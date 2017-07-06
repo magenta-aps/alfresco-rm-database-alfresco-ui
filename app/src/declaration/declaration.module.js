@@ -12,7 +12,7 @@ function config($stateProvider, USER_ROLES) {
                     controller: 'DeclarationSearchController',
                     controllerAs: 'vm'
                 },
-                'toolbar-tools@site': {
+                'toolbar-tools-right@site': {
                     templateUrl: 'app/src/declaration/view/create-toolbar.html',
                     controller: 'DeclarationCreateToolbarController',
                 },
@@ -26,11 +26,11 @@ function config($stateProvider, USER_ROLES) {
                     controller: 'DeclarationCreateController',
                     controllerAs: 'vm'
                 },
-                'toolbar-tools@site': {
+                'toolbar-tools-right@site': {
                     templateUrl: 'app/src/declaration/view/create-toolbar.html',
                     controller: 'DeclarationCreateToolbarController',
                 },
-                'toolbar-label@site': {
+                'toolbar-tools-left@site': {
                     template: "<h2>Opret ny erklæring</h2>"
                 }
             }
@@ -54,12 +54,12 @@ function config($stateProvider, USER_ROLES) {
                     controller: 'DocumentController',
                     controllerAs: 'vm'
                 },
-                'toolbar-tools@site': {
+                'toolbar-tools-right@site': {
                     templateUrl: 'app/src/declaration/view/document-toolbar.html',
                     controller: 'DocumentToolbarController',
                     controllerAs: 'vm'
                 },
-                'toolbar-label@site': {
+                'toolbar-tools-left@site': {
                     templateUrl: 'app/src/declaration/view/patient-toolbar.html',
                     controller: 'PatientInfoToolbarController',
                 }
@@ -71,7 +71,7 @@ function config($stateProvider, USER_ROLES) {
                 'declarations@declaration.show': {
                     templateUrl: 'app/src/declaration/view/document-view.html'
                 },
-                'toolbar-tools@site': {
+                'toolbar-tools-right@site': {
                     template: '',
                 }
             }
@@ -87,12 +87,12 @@ function config($stateProvider, USER_ROLES) {
                     controller: 'PatientInfoController',
                     controllerAs: 'vm'
                 },
-                'toolbar-tools@site': {
+                'toolbar-tools-right@site': {
                     templateUrl: 'app/src/declaration/view/patient-info-toolbar.html',
                     controller: 'PatientInfoToolbarController',
                     controllerAs: 'vm'
                 },
-                'toolbar-label@site': {
+                'toolbar-tools-left@site': {
                     templateUrl: 'app/src/declaration/view/patient-toolbar.html',
                     controller: 'PatientInfoToolbarController',
                 }
