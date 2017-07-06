@@ -1,0 +1,44 @@
+<md-card>
+    <md-card-title>
+        <md-card-title-text>
+            <span class="md-headline">Historik</span>
+        </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+        <md-input-container flex-gt-xs>
+            <label>Kendelsesdato</label>
+            <md-datepicker ng-model="case.verdictDate" ng-disabled="!editPatientData"></md-datepicker>
+        </md-input-container>
+        <md-input-container>
+            <md-checkbox ng-model="case.consent" ng-disabled="!editPatientData">
+                Samtykke
+            </md-checkbox>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Begæringsdato</label>
+            <md-datepicker ng-model="case.petitionDate" ng-disabled="!editPatientData"></md-datepicker>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Sagen oprettet</label>
+            <md-datepicker ng-model="case.creationDate" ng-disabled="!editPatientData"></md-datepicker>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Observation påbegyndt</label>
+            <md-datepicker ng-model="case.observationDate" ng-disabled="!editPatientData"></md-datepicker>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Ereklæring afgivet</label>
+            <md-datepicker ng-model="case.declarationDate" ng-disabled="!editPatientData"></md-datepicker>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+            <md-checkbox ng-model="case.endedWithoutDeclaration" ng-disabled="!editPatientData">
+                Afsluttet uden erklæring
+            </md-checkbox>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Sendt til</label>
+            <input ng-model="case.sentTo" ng-disabled="!editPatientData">
+        </md-input-container>
+    </md-card-content>
+</md-card>

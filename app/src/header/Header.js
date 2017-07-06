@@ -1,6 +1,11 @@
 angular
     .module('openDeskApp')
-    .directive('appHeader', HeaderDirective);
+    .directive('appHeader', HeaderDirective)
+    .controller('HeaderController', HeaderController);
+
+function HeaderController($scope,$state) {
+    $scope.$state = $state;
+};
 
 function HeaderDirective() {
 

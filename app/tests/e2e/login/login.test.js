@@ -8,11 +8,11 @@ describe('OpenDesk AuthController', function () {
 
     it('should be able to login', function () {
         loginPage.loginAsAdmin();
-        expect(browser.getCurrentUrl()).toContain('/#!/projekter');
+        expect(browser.getCurrentUrl()).toContain('/#!/erklaeringer');
     });
 
-    it('should be able to logout', function () {
-        logoutPage.logout();
-        expect(browser.getCurrentUrl()).toContain('/#!/login');
-    });
+    // it('should be able to logout', function () {
+    //     logoutPage.logout();
+    //     expect(browser.getCurrentUrl()).toContain('/#!/login');
+    // });
 });

@@ -1,16 +1,20 @@
-<div layout class="admin_sub_menu">
-    <md-card flex="20">
-        <md-card-content layout>
-            <md-list>
-                <md-subheader class="md-no-sticky">{{ 'ADMIN.SYS_SETTINGS.SETTINGS' | translate}}</md-subheader>
-                <md-list-item ng-repeat="sysSetPage in vm.pages" ng-if="!sysSetPage.isAdminOnly || vm.isAdmin" ui-sref="{{sysSetPage.sref}}" ui-sref-active="active">
-                    <md-icon class="md-default-theme" class="material-icons">{{sysSetPage.icon}}</md-icon>
-                    <p>{{ sysSetPage.labelKey | translate}}</p>
-                </md-list-item>
-            </md-list>
-        </md-card-content>
-    </md-card>
+<div layout="row">
+    <md-sidenav class="md-sidenav-left sidenav-fixed" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+        <md-button class="md-text-icon-button" aria-label="Dashboard" ng-click="viewDashboard()">
+            <md-icon>dashboard</md-icon> Dashboard
+        </md-button>
+        <md-button class="md-text-icon-button" aria-label="Behandlere" ng-click="viewPractitioners()">
+            <md-icon>people</md-icon> Behandlere
+        </md-button>
+        <md-button class="md-text-icon-button" aria-label="Diagnoser" ng-click="viewDiagnosis()">
+            <md-icon>assignment</md-icon> Diagnoser
+        </md-button>
+        <md-button class="md-text-icon-button" aria-label="Etniciteter" ng-click="viewEthnicities()">
+            <md-icon>face</md-icon> Etniciteter
+        </md-button>
+    </md-sidenav>
 
-    <div flex="grow" ui-view="systemsetting-view"></div>
+    <div class="od-info-declarations" flex>
+        <div ui-view='systemsetting-view'></div>
+    </div>
 </div>
-

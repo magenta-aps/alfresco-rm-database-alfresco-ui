@@ -1,0 +1,10 @@
+
+<md-button ng-click="createNewDeclaration($event)" ng-if="'declaration' | isState">
+    <md-icon>add</md-icon>
+    <span>Ny erklæring</span>
+</md-button>
+
+<md-button ng-click="submit()" ng-if="'declaration.create' | isState">
+    <md-icon>add</md-icon>
+    <span>Opret erklæring</span>
+</md-button>

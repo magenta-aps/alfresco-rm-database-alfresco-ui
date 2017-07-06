@@ -2,28 +2,48 @@
 
 angular.module('openDeskApp.declaration').factory('declarationService', function ($http, $window, alfrescoNodeUtils) {
 
-    var restBaseUrl = '/alfresco/s/api/';
+    var edit = false;
+    var newCase = {};
+    var currentCase = {};
+    var caseTitle = '';
 
-    var _currentSiteType = "";
-
-    var declarationController = null;
+    function setCaseTitle(newCase) {
+        caseTitle = newCase.firstName + ' ' + newCase.lastName + ' (Sag #' + newCase.caseNumber + ')';
+    }
 
     return {
-
-
-        setType: function (t){
-            _currentSiteType = t;
+        toggleEdit: function() {
+            edit = !edit;
         },
-        getType: function() {
 
-            console.log("flot")
-
-            return _currentSiteType;
+        isEditing: function() {
+            return edit;
         },
+
+        setCurrentCase: function(newCase) {
+            currentCase = newCase;
+        },
+
+        getCurrentCase: function() {
+            return currentCase;
+        },
+
+        updateNewCase: function(caseUpdate) {
+            newCase = caseUpdate;
+        },
+
+        getNewCaseInfo: function() {
+            return newCase;
+        },
+
+        getCaseTitle: function() {
+            return caseTitle;
+        },
+
         getCase : function(caseNumber) {
             return $http.get("/alfresco/s/entry?type=forensicPsychiatryDeclaration&entryKey=caseNumber&entryValue=" + caseNumber, {}).then(function (response) {
+                setCaseTitle(response.data[0]);
                 return response.data;
-
             });
         },
 
@@ -47,13 +67,8 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
             });
         },
 
-        setDeclarationController: function (controller) {
-            declarationController = controller;
-        },
-
         getContents: function (node) {
             return $http.get("/alfresco/service/contents?node=" + node).then(function(response) {
-                //console.log(response.data);
                 return response.data;
             });
         },

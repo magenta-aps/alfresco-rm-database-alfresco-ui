@@ -11,11 +11,15 @@ function config($stateProvider, USER_ROLES) {
                 templateUrl: 'app/src/admin/view/admin.html',
                 controller: 'AdminController',
                 controllerAs: 'vm'
+            },
+            'toolbar-tools-left@site': {
+                template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }}</h2>"
             }
         },
         data: {
             authorizedRoles: [USER_ROLES.user]
-        }
+        },
+        redirectTo: 'administration.systemsettings'
     })
 
 };

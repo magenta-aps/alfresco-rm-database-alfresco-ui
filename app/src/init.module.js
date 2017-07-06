@@ -17,7 +17,7 @@ angular
         phone: /^[+]?[0-9\- ]+$/
     })
     .constant('APP_CONFIG', {
-        appName: 'OpenDesk',
+        appName: 'Retspsykiatriske erklæringer',
         logoSrc: './app/assets/images/logo-light.svg',
         ssoLoginEnabled: "false"
     });

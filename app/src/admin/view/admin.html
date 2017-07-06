@@ -1,22 +1,20 @@
 <md-content layout="column">
 
-    <div class="sub-toolbar" layout-padding>
-        <h1 class="md-headline">{{ 'ADMIN.ADMINISTRATION_PAGES' | translate }}</h1>
-    </div>
-
-    <!--<md-tabs md-dynamic-height md-selected="currentTab">
-
-        <md-tab ui-sref="administration.systemsettings">
-            <md-tab-label>
-                <span><i class="material-icons">settings</i> {{ 'SYSTEM_SETTINGS.SYSTEM_SETTINGS' | translate }}</span>
-            </md-tab-label>
-            <md-tab-body layout="column">
-                <div ui-view="systemsettings"></div>
-            </md-tab-body>
-        </md-tab>
-
-    </md-tabs>-->
-
     <div ui-view="systemsettings"></div>
 
 </md-content>
+
+<!--<div layout="row">
+    <md-sidenav class="md-sidenav-left sidenav-fixed" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+        <md-button class="md-text-icon-button" aria-label="edit" ng-click="viewPatientData()">
+            <md-icon>assignment</md-icon> Medarbejdere
+        </md-button>
+        <md-button class="md-text-icon-button" aria-label="edit" ng-click="viewDocuments()">
+            <md-icon>insert_drive_file</md-icon> Diagnoser
+        </md-button>
+    </md-sidenav>
+
+    <div class="od-info-declarations" flex>
+        <div ui-view='systemsettings'></div>
+    </div>
+</div>-->

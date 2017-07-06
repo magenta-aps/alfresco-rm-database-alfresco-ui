@@ -1,15 +1,15 @@
-<div>
-
-    <od-menu></od-menu>
-
-    <od-searchbar></od-searchbar>
+<md-toolbar class="md-tall">
 
     <od-settings></od-settings>
 
     <od-user></od-user>
 
-    <od-notifications></od-notifications>
-
-    <od-chat></od-chat>
-
-</div>
+    <span class="md-toolbar-tools" flex>
+        <h2 ui-sref="declaration">Retspsykologiske erklæringer</h2>
+    </span>
+    <span class="md-toolbar-tools" layout="row">
+        <ui-view name="toolbar-tools-left"></ui-view>
+        <span flex></span>
+        <ui-view name="toolbar-tools-right"></ui-view>
+    </span>
+</md-toolbar>

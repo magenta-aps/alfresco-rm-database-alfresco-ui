@@ -2,11 +2,15 @@
     <div ng-controller="AuthController as ac">
         <div class="od-user-header-menu">
             <h2 class="od-user-name" ng-class="ac.getUserInfo().user.capabilities.isAdmin ? 'od-user-admin' : ''">{{ ac.getUserInfo().user.firstName }} {{ ac.getUserInfo().user.lastName }}</h2>
-            <button ng-click="vm.toggleUser()" class="od-btn od-user--toggle">
+            <!--<button ng-click="vm.toggleUser()" class="od-btn od-user--toggle">
                 <i class="material-icons">person</i>
-             </button>
-        </div>
+             </button>-->
 
+             <md-button ng-click="ac.logout()">
+                    {{ 'MENU.LOGOUT' | translate }}
+                </md-button>
+        </div>
+<!--
         <div class="od-flyout right fixed" ng-class="{ open: vm.on, closed: !vm.on }" ng-click="vm.toggleUser()">
             <div class="od-flyout--body" ng-click="$event.stopPropagation()">
                 <h2 class="od-flyout--title">{{'USER.USER' | translate}}</h2>
@@ -74,6 +78,6 @@
                 </div>
 
             </div>
-        </div>
+        </div>-->
     </div>
 </section>

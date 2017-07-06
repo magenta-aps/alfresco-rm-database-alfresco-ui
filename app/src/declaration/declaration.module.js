@@ -4,16 +4,102 @@ angular.module('openDeskApp.declaration', ['ngMaterial'])
 function config($stateProvider, USER_ROLES) {
 
     $stateProvider.state('declaration', {
-        parent: 'site',
-        url: '/declaration',
-        views: {
-            'content@': {
-                templateUrl: 'app/src/declaration/view/info.html',
-                controller: 'DeclarationController',
-                controllerAs: 'vm'
+            parent: 'site',
+            url: '/erklaeringer',
+            views: {
+                'content@': {
+                    templateUrl: 'app/src/declaration/view/search.html',
+                    controller: 'DeclarationSearchController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools-right@site': {
+                    templateUrl: 'app/src/declaration/view/create-toolbar.html',
+                    controller: 'DeclarationCreateToolbarController',
+                },
             }
-        }
-
-    })
+        })
+        .state('declaration.create', {
+            url: '/opret',
+            views: {
+                'content@': {
+                    templateUrl: 'app/src/declaration/view/info-cards.html',
+                    controller: 'DeclarationCreateController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools-right@site': {
+                    templateUrl: 'app/src/declaration/view/create-toolbar.html',
+                    controller: 'DeclarationCreateToolbarController',
+                },
+                'toolbar-tools-left@site': {
+                    template: "<h2>Opret ny erklæring</h2>"
+                }
+            }
+        })
+        .state('declaration.show', {
+            url: '/:caseid',
+            views: {
+                'content@': {
+                    templateUrl: 'app/src/declaration/view/declaration.html',
+                    controller: 'DeclarationController',
+                    controllerAs: 'vm'
+                },
+            },
+            redirectTo: 'declaration.show.patientdata'
+        })
+        .state('declaration.show.documents', {
+            url: '/dokumenter',
+            views: {
+                'declarations': {
+                    templateUrl: 'app/src/declaration/view/documents.html',
+                    controller: 'DocumentController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools-right@site': {
+                    templateUrl: 'app/src/declaration/view/document-toolbar.html',
+                    controller: 'DocumentToolbarController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools-left@site': {
+                    templateUrl: 'app/src/declaration/view/patient-toolbar.html',
+                    controller: 'PatientInfoToolbarController',
+                }
+            }
+        })
+        .state('declaration.show.documents.view-file', {
+            url: '/:nodeid',
+            views: {
+                'declarations@declaration.show': {
+                    templateUrl: 'app/src/declaration/view/document-view.html'
+                },
+                'toolbar-tools-right@site': {
+                    template: '',
+                }
+            }
+        })
+        .state('declaration.show.documents.edit', {
+            url: '/rediger'
+        })
+        .state('declaration.show.patientdata', {
+            url: '/patientdata',
+            views: {
+                'declarations': {
+                    templateUrl: 'app/src/declaration/view/info-cards.html',
+                    controller: 'PatientInfoController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools-right@site': {
+                    templateUrl: 'app/src/declaration/view/patient-info-toolbar.html',
+                    controller: 'PatientInfoToolbarController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools-left@site': {
+                    templateUrl: 'app/src/declaration/view/patient-toolbar.html',
+                    controller: 'PatientInfoToolbarController',
+                }
+            }
+        })
+        .state('declaration.show.patientdata.edit', {
+            url: '/rediger'
+        })
 
 };

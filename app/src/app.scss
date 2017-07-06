@@ -71,7 +71,7 @@ a {
 }
 
 body {
-  background: $gray-85;
+  //background: $gray-85;
   color: $primary-text-color;
 }
 
@@ -109,26 +109,26 @@ dl {
 }
 
 .od-body {
-  margin: $u * 3 0 auto;
+  margin: $u * 8 0 auto;
 }
 
 // Title that is placed in the header
 .od-title {
   color: $headline-color;
-  font-size: $u * 1.5;
-  font-weight: normal;
-  left: $u * 3;
-  line-height: 1;
-  right: $u * 6;
-  position: fixed;
-  width: 30%;
-  top: 0;
+  // font-size: $u * 1.5;
+  // font-weight: normal;
+  left: 0;
+  // line-height: 1;
   margin: 0;
-  padding: $u * .75 $u;
-  z-index: 1;
   overflow: hidden;
+  // right: $u * 6;
+  // padding: $u * .75 $u;
+  position: fixed;
+  // width: 30%;
+  top: 0;
   white-space: nowrap;
   text-overflow: ellipsis;
+  z-index: 1;
 }
 
 // Simple button class can be added to <a> or <button> elements
@@ -140,7 +140,7 @@ dl {
     border: none;
     display: inline-block;
     box-sizing: border-box;
-    background-color: $primary-color-dark;
+    //background-color: $primary-color-dark;
     color: $secondary-text-color;
     padding: $u * .5;
     min-width: $u * 3;
@@ -297,4 +297,32 @@ dl {
 md-list-item, md-list-item .md-list-item-inner {
   min-height: 20px;
   height: 25px;
+}
+
+//hover checkboxes in patient documents
+.document-checkbox {
+  left: $u * .5;
+  position: absolute;
+  top: $u * .5;
+}
+
+.sidenav-fixed {
+  background-color: transparent;
+  bottom: 0;
+  position: fixed !important;
+  top: $u * 8;
+
+  .md-button {
+    text-align: left;
+  }
+}
+
+.toolbar-contextual {
+  border-right: 1px solid $white;
+}
+
+.document-filename {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
 }

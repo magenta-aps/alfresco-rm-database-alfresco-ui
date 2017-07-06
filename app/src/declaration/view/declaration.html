@@ -1,54 +1,14 @@
-<md-list-item>
-    <div class="md-no-style md-list-item-inner">
-        <div flex="10">
-            <a class="member" ng-click="vm.openMemberInfo(member)">Læge 1</a>
-        </div>
-        <div flex="15" class="od-secondary">
-            {{case.petitionDate}}
-        </div>
-    </div>
-</md-list-item>
+<div layout="row">
+    <md-sidenav class="md-sidenav-left sidenav-fixed" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+        <md-button class="md-text-icon-button" aria-label="edit" ng-click="viewPatientData()">
+            <md-icon>assignment</md-icon> Patient data
+        </md-button>
+        <md-button class="md-text-icon-button" aria-label="edit" ng-click="viewDocuments()">
+            <md-icon>insert_drive_file</md-icon> Dokumenter
+        </md-button>
+    </md-sidenav>
 
-<md-list-item>
-    <div class="md-no-style md-list-item-inner">
-        <div flex="10">
-            <a class="member" ng-click="vm.openMemberInfo(member)">Læge 2</a>
-        </div>
-        <div flex="15" class="od-secondary">
-            {{case.petitionDate}}
-        </div>
+    <div class="od-info-declarations" flex>
+        <div ui-view='declarations'></div>
     </div>
-</md-list-item>
-
-<md-list-item>
-    <div class="md-no-style md-list-item-inner">
-        <div flex="10">
-            <a class="member" ng-click="vm.openMemberInfo(member)">Psykolog</a>
-        </div>
-        <div flex="15" class="od-secondary">
-            {{case.petitionDate}}
-        </div>
-    </div>
-</md-list-item>
-
-<md-list-item>
-    <div class="md-no-style md-list-item-inner">
-        <div flex="10">
-            <a class="member" ng-click="vm.openMemberInfo(member)">Socialrådgiver</a>
-        </div>
-        <div flex="15" class="od-secondary">
-            {{case.petitionDate}}
-        </div>
-    </div>
-</md-list-item>
-
-<md-list-item>
-    <div class="md-no-style md-list-item-inner">
-        <div flex="10">
-            <a class="member" ng-click="vm.openMemberInfo(member)">Sekretær</a>
-        </div>
-        <div flex="15" class="od-secondary">
-            {{case.petitionDate}}
-        </div>
-    </div>
-</md-list-item>
+</div>

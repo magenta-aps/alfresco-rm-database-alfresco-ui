@@ -6,7 +6,7 @@ angular
 
 function SiteController($scope, $timeout, $mdDialog, $window, siteService, cmisService, $stateParams, documentPreviewService,
     alfrescoDownloadService, documentService, notificationsService, authService, $rootScope, $translate,
-    searchService, $state, userService, sessionService, filterService, fileUtilsService, groupService) {
+    searchService, $state, userService, sessionService, filterService, fileUtilsService, groupService, folderNodeRef) {
 
     $scope.contents = [];
     $scope.contentLength = 0;
@@ -36,6 +36,7 @@ function SiteController($scope, $timeout, $mdDialog, $window, siteService, cmisS
     vm.isAdmin = sessionService.isAdmin();
     vm.newTemplateName = '';
     vm.newFileName = '';
+    vm.currentFolderNodeRef = folderNodeRef;
 
     vm.sendToEsdh = false;
 

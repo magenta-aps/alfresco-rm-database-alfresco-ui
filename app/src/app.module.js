@@ -13,8 +13,8 @@ angular
         'isteven-multi-select',
         'openDeskApp.init',
         'openDeskApp.auth',
-        //'openDeskApp.sites',
-        //'openDeskApp.site',
+        'openDeskApp.sites',
+        'openDeskApp.site',
         'openDeskApp.translations.init',
         'openDeskApp.header',
         'openDeskApp.dashboard',
@@ -37,6 +37,7 @@ angular
         'openDeskApp.user',
         'openDeskApp.menu',
         'openDeskApp.declaration',
+        'md.data.table',
 
         /*DO NOT REMOVE MODULES PLACEHOLDER!!!*/ //openDesk-modules
         /*LAST*/ 'openDeskApp.translations']) //TRANSLATIONS IS ALWAYS LAST!

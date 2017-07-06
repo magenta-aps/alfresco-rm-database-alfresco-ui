@@ -1,0 +1,62 @@
+<md-tabs md-dynamic-height md-border-bottom>
+    <md-tab>
+        <md-tab-label>
+            <i class="material-icons icon-small">library_books</i> stamdata
+        </md-tab-label>
+
+        <md-tab-body>
+            <div layout="row" layout-wrap>
+                <div layout="column" flex-gt-sm="33" flex-sm="50" flex="100">
+                    <ng-include src="'app/src/declaration/view/sections/basic-info.html'"></ng-include>
+                </div>
+                <div layout="column" flex-gt-sm="33" flex-sm="50" flex="100">
+                    <ng-include src="'app/src/declaration/view/sections/ethnicity.html'"></ng-include>
+                </div>
+                <div layout="column" flex-gt-sm="33" flex-sm="50" flex="100">
+                    <ng-include src="'app/src/declaration/view/sections/referral.html'"></ng-include>
+                </div>
+            </div>
+        </md-tab-body>
+    </md-tab>
+
+    <md-tab ui-sref="">
+        <md-tab-label>
+            <i class="material-icons icon-small">history</i> Historik
+        </md-tab-label>
+        <md-tab-body>
+            <ng-include src="'app/src/declaration/view/sections/history.html'"></ng-include>
+        </md-tab-body>
+    </md-tab>
+
+    <md-tab ui-sref="">
+        <md-tab-label>
+            <i class="material-icons icon-small">gavel</i> Erklæringer
+        </md-tab-label>
+        <md-tab-body>
+            <div layout="row" layout-wrap>
+                <div layout="column" flex-gt-xs="50" flex="100">
+                    <ng-include src="'app/src/declaration/view/sections/declaration.html'"></ng-include>
+                </div>
+                <div layout="column" flex-gt-xs="50" flex="100">
+                    <ng-include src="'app/src/declaration/view/sections/doctor-board.html'"></ng-include>
+                </div>
+            </div>
+        </md-tab-body>
+    </md-tab>
+
+    <md-tab ui-sref="">
+        <md-tab-label>
+            <i class="material-icons icon-small">content_paste</i> ICD-10 diagnose
+        </md-tab-label>
+        <md-tab-body>
+            <div layout="row" layout-wrap>
+                <div layout="column" flex-gt-xs="50" flex="100">
+                    <ng-include src="'app/src/declaration/view/sections/judgement.html'"></ng-include>
+                </div>
+                <div layout="column" flex-gt-xs="50" flex="100">
+                    <ng-include src="'app/src/declaration/view/sections/icd-10.html'"></ng-include>
+                </div>
+            </div>
+        </md-tab-body>
+    </md-tab>
+</md-tabs>

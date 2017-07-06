@@ -1,6 +1,3 @@
-//var HtmlScreenshotReporter = require("protractor-jasmine2-screenshot-reporter");
-//var JasmineReporters = require('jasmine-reporters');
-
 exports.config = {
     capabilities: {'browserName': 'chrome'},
 
@@ -27,24 +24,7 @@ exports.config = {
     onPrepare: function () {
 
 
-        //console.log("It's located in " + __dirname);
-
-    // The require statement must be down here, since jasmine-reporters
-            // needs jasmine to be in the global and protractor does not guarantee
-            // this until inside the onPrepare function.
-        // The require statement must be down here, since jasmine-reporters
-        // needs jasmine to be in the global and protractor does not guarantee
-        // this until inside the onPrepare function.
-        //new jasmine.JUnitXmlReporter('xmloutput', true, true)
-
-        //jasmine.getEnv().addReporter(new JasmineReporters.JUnitXmlReporter(
-        //   'xmloutput, true, true'
-        //));
-        //jasmine.getEnv().addReporter(new HtmlScreenshotReporter({
-        //    dest: "build/reports/e2e/screenshots"
-        //}));
-
-        browser.get('http://localhost:8000');
+        browser.get('http://localhost:8000/#!/erklaeringer');
         browser.getCapabilities().then(function (capabilities) {
             browser.capabilities = capabilities;
         });
@@ -59,32 +39,9 @@ exports.config = {
             }
         })();
 
-        // Add a screenshot reporter and store screenshots to `/tmp/screnshots`:
-        //see https://github.com/mlison/protractor-jasmine2-screenshot-reporter/issues/4
-        /*jasmine.getEnv().addReporter(
-            new HtmlScreenshotReporter({
-                dest: 'target/screenshots',
-                filename: 'failed-reports.html',
-                ignoreSkippedSpecs: true,
-                reportOnlyFailedSpecs: false,
-                captureOnlyFailedSpecs: false,
-                pathBuilder: function (currentSpec) {
-                    return browser.capabilities.get('platform') + '/' + browser.capabilities.get('browserName') + '.' + browser.capabilities.get('version') + '/' + currentSpec.fullName;
-                }
-                /!*metadataBuilder: function (currentSpec, suites, browserCapabilities) {
-                    return {id: currentSpec.id, os: browserCapabilities.get('browserName')};
-                }*!/
-            })
-        );*/
-
     },
     suites: {
-        //login: './login/*.test.js',
-        //projects: './projects/*.test.js'
-        //grouprooms: './groupRooms/*.test.js'
-        //folders: './folders/*.test.js',
-        //documents: './documents/*.test.js',
-        //members: './members/*.test.js'
-        userHenrik: './userJourneys/henrik.test.js'
+        login: './login/*.test.js',
+        declarations: './declarations/*.test.js'
     }
 };

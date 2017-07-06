@@ -159,28 +159,25 @@ angular.module('openDeskApp.sites').factory('siteService', function ($http, $win
                 return result.data;
             });
         },
+
+        //TODO: deprecated, moved to documentservice.
         deleteFile: function (nodeRef) {
             var url = '/slingshot/doclib/action/file/node/' + alfrescoNodeUtils.processNodeRef(nodeRef).uri;
             return $http.delete(url).then(function (result) {
                 return result.data;
             });
         },
+
+        //TODO: deprecated, moved to documentservice.
         uploadFiles: function (file, destination, extras) {
-
-
-
-
-            return $http.post("/alfresco/service/sites", {
-                PARAM_METHOD : "returnFileName",
-                PARAM_FILENAME: file.name,
-                PARAM_DESTINATION: destination
-            }).then(function(response) {
-
                 var formData = new FormData();
                 formData.append("filedata", file);
-                formData.append("filename", response.data[0].fileName);
+                formData.append("filename", file.name);
                 formData.append("destination", destination ? destination : null);
 
+                for (var key of formData.entries()) {
+                    console.log(key[0] + ', ' + key[1]);
+                }
 
 
                 return $http.post("/api/upload", formData, {
@@ -189,12 +186,8 @@ angular.module('openDeskApp.sites').factory('siteService', function ($http, $win
                 }).then(function (response) {
                     return response;
                 });
-            });
-
-
-
-
         },
+
         uploadNewVersion: function (file, destination, existingNodeRef, extras) {
             console.log("inside uploadNewVersion");
 
