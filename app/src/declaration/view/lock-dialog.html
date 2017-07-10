@@ -12,14 +12,20 @@
         </md-toolbar>
 
         <md-dialog-content class="md-padding">
-            <span style="color:red">
-                <p>Når du låser sagen kan den ikke åbnes igen.</p>
-                <p>Indtast dit kodeord for at bekræfte.</p>
-                </span>
-            <md-input-container>
-                <label>{{'LOGIN.PASSWORD' |translate}}</label> 
-                <input type="password" name="password" required ng-model="password" md-autofocus>
+            <md-radio-group ng-model="case.closed">
+                <md-radio-button value="afsluttet"> Afsluttet</md-radio-button>
+                <md-radio-button value="ingen-erklaering">  Afsluttet uden erklæring</md-radio-button>
+            </md-radio-group>
+            <span ng-show="case.closed == 'ingen-erklaering'">
+                <md-input-container class="md-block">
+                <label>Årsag</label> 
+                <input type="text" name="reason">
             </md-input-container>
+            <md-input-container class="md-block">
+                <label>Sendt til</label> 
+                <input type="text" name="sent-to" ng-model="case.sentTo">
+            </md-input-container>
+            </span>
         </md-dialog-content>
 
         <md-dialog-actions>

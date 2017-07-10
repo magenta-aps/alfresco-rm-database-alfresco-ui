@@ -5,33 +5,56 @@
         </md-card-title-text>
     </md-card-title>
     <md-card-content>
-        <md-input-container flex-gt-xs>
-            <label>Kendelsesdato</label>
-            <md-datepicker ng-model="case.verdictDate" ng-disabled="!editPatientData"></md-datepicker>
+        <md-input-container class="md-block" style="padding-bottom:16px" flex="30">
+            <label>Status</label>
+            <input ng-model="case.status" ng-disabled="!editPatientData">
         </md-input-container>
-        <md-input-container>
-            <md-checkbox ng-model="case.consent" ng-disabled="!editPatientData">
-                Samtykke
-            </md-checkbox>
-        </md-input-container>
-        <md-input-container class="md-block">
-            <label>Begæringsdato</label>
-            <md-datepicker ng-model="case.petitionDate" ng-disabled="!editPatientData"></md-datepicker>
-        </md-input-container>
-        <md-input-container class="md-block">
-            <label>Sagen oprettet</label>
-            <md-datepicker ng-model="case.creationDate" ng-disabled="!editPatientData"></md-datepicker>
-        </md-input-container>
-        <md-input-container class="md-block">
-            <label>Observation påbegyndt</label>
-            <md-datepicker ng-model="case.observationDate" ng-disabled="!editPatientData"></md-datepicker>
-        </md-input-container>
-        <md-input-container class="md-block">
-            <label>Ereklæring afgivet</label>
-            <md-datepicker ng-model="case.declarationDate" ng-disabled="!editPatientData"></md-datepicker>
-        </md-input-container>
+        <div layout="row" style="padding-bottom:16px">
+            <md-input-container flex>
+                <label>Sagen oprettet</label>
+                <md-datepicker ng-model="case.creationDate" ng-disabled="!editPatientData"></md-datepicker>
+            </md-input-container>
+            <md-input-container flex>
+                <label>Observation påbegyndt</label>
+                <md-datepicker ng-model="case.observationDate" ng-disabled="!editPatientData"></md-datepicker>
+            </md-input-container>
+            <md-input-container flex>
+                <label>Erklæring afgivet</label>
+                <md-datepicker ng-model="case.declarationDate" ng-disabled="!editPatientData"></md-datepicker>
+            </md-input-container>
+        </div>
+        <div layout="row">
+            <div layout="column" flex>
+                <md-checkbox ng-model="case.endedWithoutDeclaration" ng-disabled="!editPatientData">
+                    Psykologisk undersøgelse foretaget
+                </md-checkbox>
 
-        <md-input-container class="md-block">
+                <span style="padding-top:16px">Afsluttet uden erklæring: Tilbagesendt</span>
+                <span style="padding:16px 0">Sendt til: Retspsyk i Aalborg</span>
+            </div>
+            <div layout="column" flex="10">
+                <span>12
+                    <md-icon class="icon-small">
+                        info_outline
+                        <md-tooltip md-direction="right">Passiv ventetid</md-tooltip>
+                    </md-icon>
+                </span>
+                <span>38
+                    <md-icon class="icon-small">
+                        info_outline
+                        <md-tooltip md-direction="right">Aktiv ventetid</md-tooltip>
+                    </md-icon>
+                </span>
+                <span><strong>50</strong>
+                    <md-icon class="icon-small">
+                        info_outline
+                        <md-tooltip md-direction="right">Samlet ventetid</md-tooltip>
+                    </md-icon>
+                </span>
+            </div>
+        </div>
+
+        <!--<md-input-container class="md-block">
             <md-checkbox ng-model="case.endedWithoutDeclaration" ng-disabled="!editPatientData">
                 Afsluttet uden erklæring
             </md-checkbox>
@@ -39,6 +62,6 @@
         <md-input-container class="md-block">
             <label>Sendt til</label>
             <input ng-model="case.sentTo" ng-disabled="!editPatientData">
-        </md-input-container>
+        </md-input-container>-->
     </md-card-content>
 </md-card>

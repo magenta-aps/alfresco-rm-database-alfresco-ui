@@ -14,7 +14,9 @@ $gray-60: #999;
 $gray-40: #666;
 $gray-20: #333;
 
-$primary-color: rgb(63, 81, 181);
+$rm-primary: rgb(153,0,51);
+//$primary-color: rgb(63, 81, 181);
+$primary-color: $rm-primary;
 $primary-color-light: lighten($primary-color, 15%);
 $primary-color-dark: darken($primary-color, 15%);
 
@@ -321,8 +323,29 @@ md-list-item, md-list-item .md-list-item-inner {
   border-right: 1px solid $white;
 }
 
+.textarea-highlight {
+  background-color: rgba(0 ,0 ,0 , .02) !important;
+}
+
+md-toolbar {
+  background-color: $primary-color !important;
+}
+
+.rm-logo {
+  width: 144px;
+  position: absolute;
+  bottom: 0;
+  left: 53px;
+}
+
 .document-filename {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis
+}
+
+@media (min-width: 600px) {
+  md-sidenav {
+    max-width: 250px !important;
+  }
 }
