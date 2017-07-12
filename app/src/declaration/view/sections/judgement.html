@@ -5,23 +5,19 @@
         </md-card-title-text>
     </md-card-title>
     <md-card-content>
-        <div layout="row">
-            <div layout="column" flex="45">
+        <div layout="column">
                 <md-input-container class="md-block">
                     <label>Endelig dom</label>
                     <input ng-model="case.finalVerdict" ng-disabled="!editPatientData">
                 </md-input-container>
                 <md-input-container class="md-block">
-                    <label>Bemærkninger</label>
-                    <textarea class="textarea-highlight" ng-model="case.remarks" rows="8" md-select-on-focus ng-disabled="!editPatientData"></textarea>
-                </md-input-container>
-            </div>
-            <div layout="column" flex="50" flex-offset="5">
-                <md-input-container class="md-block">
                     <label>Dom</label>
                     <textarea class="textarea-highlight" ng-model="case.verdict" rows="10" md-select-on-focus ng-disabled="!editPatientData"></textarea>
                 </md-input-container>
-            </div>
+                                <md-input-container class="md-block">
+                    <label>Bemærkninger</label>
+                    <textarea class="textarea-highlight" ng-model="case.remarks" rows="8" md-select-on-focus ng-disabled="!editPatientData"></textarea>
+                </md-input-container>
         </div>
     </md-card-content>
 </md-card>

@@ -112,6 +112,7 @@ dl {
 
 .od-body {
   margin: $u * 8 0 auto;
+  z-index: 1;
 }
 
 // Title that is placed in the header
@@ -333,7 +334,7 @@ md-toolbar {
 
 .rm-logo {
   width: 144px;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 53px;
 }

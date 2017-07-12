@@ -33,7 +33,7 @@ angular
         'dcbImgFallback',
         'openDeskApp.notifications',
         //'openDeskApp.discussion',
-        'openDeskApp.chat',
+        // 'openDeskApp.chat',
         'openDeskApp.user',
         'openDeskApp.menu',
         'openDeskApp.declaration',
@@ -89,6 +89,9 @@ function config($stateProvider, $urlRouterProvider) {
         views: {
             'header@': {
                 templateUrl: 'app/src/header/view/header.html'
+            },
+            'footer@': {
+                template: '<img src="app/assets/images/rm-weblogo.jpg" class="rm-logo">'
             }
         }
     });

@@ -1,10 +1,19 @@
 <md-card>
     <md-card-title>
         <md-card-title-text>
-            <span class="md-headline">Erklæring afgivet af</span>
+            <span class="md-headline">Anbefalet erklæring</span>
         </md-card-title-text>
     </md-card-title>
     <md-card-content>
+        <md-input-container class="md-block">
+            <label>Placering</label>
+            <input ng-model="case.placement" ng-disabled="!editPatientData">
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Sanktionsforslag</label>
+            <input ng-model="case.sanctionProposal" ng-disabled="!editPatientData">
+        </md-input-container>
+        <span class="md-subhead">Afgivet af</span>
         <md-input-container class="md-block">
             <label>Læge</label>
             <input ng-model="case.petitionDate" ng-disabled="!editPatientData">

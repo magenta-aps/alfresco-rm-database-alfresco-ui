@@ -6,7 +6,6 @@
                     <tr md-row>
                         <th md-column></th>
                         <th md-column>Diagnose</th>
-                        <th md-column md-numeric>Noter</th>
                     </tr>
                 </thead>
                 <tbody md-body ng-repeat="content in contents">
@@ -21,22 +20,18 @@
                     <tr md-row md-select="dessert" md-select-id="name" md-auto-select>
                         <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
                         <td md-cell>Skizofreni</td>
-                        <td md-cell>Det er ikke så godt</td>
                     </tr>
                     <tr md-row md-select="dessert" md-select-id="name" md-auto-select>
                         <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
                         <td md-cell>Borderline</td>
-                        <td md-cell>Det er også ret skidt</td>
                     </tr>
                     <tr md-row md-select="dessert" md-select-id="name" md-auto-select>
                         <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
                         <td md-cell>Bipolar</td>
-                        <td md-cell>Den er heller ikke god</td>
                     </tr>
                     <tr md-row md-select="dessert" md-select-id="name" md-auto-select>
                         <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
                         <td md-cell>Mani</td>
-                        <td md-cell>Det hele er skidt</td>
                     </tr>
                 </tbody>
             </table>

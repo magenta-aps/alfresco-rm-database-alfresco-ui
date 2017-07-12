@@ -1,16 +1,20 @@
-<div layout="row" layout-align="center center">
+<div layout="row" layout-align="center center" ng-show="!showFilters">
     <div layout="column" style="height:128px" flex-gt-sm="50" flex>
         <span flex></span>
         <div layout="row">
             <md-input-container class="md-block" flex>
-                <label>Søg på et sagsnummer</label>
+                <label>Søg på et navn, CPR eller sagsnummer</label>
                 <input ng-model="caseid">
             </md-input-container>
 
-            <md-button ng-click="search()">
-                Søg
+            <md-button class="md-icon-button" ng-click="search()">
+                <md-icon>search</md-icon>
+            </md-button>
+            <md-button class="md-icon-button" ng-click="toggleFilters()">
+                <md-icon>filter_list</md-icon>
             </md-button>
         </div>
+
         <!--<div layout="row">
             <md-autocomplete
                 md-selected-item="ctrl.selectedItem"
@@ -32,3 +36,123 @@
         </div>-->
     </div>
 </div>
+
+<div layout="row" layout-align="center center" ng-show="showFilters">
+    <div layout="column" flex="50">
+        <div layout="column" layout-align="end">
+
+            <md-button ng-click="toggleFilters()">
+                <md-icon>search</md-icon>
+                tilbage til søgning
+            </md-button>
+        </div>
+        <span class="md-title">Vis alle sager med:</span>
+        <br>
+        <div layout="row">
+
+            <md-input-container flex="20">
+                <label>Hovedsigtelse</label>
+                <input ng-model="case.mainCharge">
+            </md-input-container>
+
+            <md-input-container flex="20" flex-offset="5">
+                <label>Placering</label>
+                <input ng-model="case.placement">
+            </md-input-container>
+
+            <md-input-container flex="20" flex-offset="5">
+                <label>Sanktionsforslag</label>
+                <input ng-model="case.sanctionProposal">
+            </md-input-container>
+
+            <md-input-container flex="20" flex-offset="5">
+                <label>Læge</label>
+                <input ng-model="case.petitionDate">
+            </md-input-container>
+        </div>
+
+        <md-checkbox ng-model="case.PsychEval">
+            Psykologisk undersøgelse foretaget
+        </md-checkbox>
+        <div layout="row">
+            <md-input-container>
+                <label>Ventetid</label>
+                <md-select ng-model="case.waitingTime">
+                    <md-option value="Passiv ventetid">
+                        Passiv ventetid
+                    </md-option>
+                    <md-option value="Aktiv ventetid">
+                        Aktiv ventetid
+                    </md-option>
+                    <md-option value="Samlet ventetid">
+                        Samlet ventetid
+                    </md-option>
+                </md-select>
+            </md-input-container>
+
+            <md-input-container flex-offset="5">
+                 <!-- <label>Handling</label>  -->
+                <md-select ng-model="case.waitingTimeModifier">
+                    <md-option value="Over">
+                        Over
+                    </md-option>
+                    <md-option value="Under">
+                        Under
+                    </md-option>
+                    <md-option value="Lig med">
+                        Lig med
+                    </md-option>
+                </md-select>
+            </md-input-container>
+
+            <md-input-container flex-offset="5">
+                <!-- <label>dage</label> -->
+                <input ng-model="case.waitingDays" size="4">
+            </md-input-container>
+            dage
+        </div>
+        <div layout="row">
+            I perioden
+            <md-input-container>
+                <label>Fra</label>
+                <md-datepicker ng-model="case.fromDate"></md-datepicker>
+            </md-input-container>
+            <md-input-container>
+                <label>Til</label>
+                <md-datepicker ng-model="case.toDate"></md-datepicker>
+            </md-input-container>
+        </div>
+        <md-button>
+            Søg
+        </md-button>
+    </div>
+</div>
+
+<md-card>
+    <md-card-content>
+    <md-table-container>
+            <table md-table md-row-select multiple>
+                <thead md-head>
+                    <tr md-row>
+                        <th md-column md-numeric>Sagsnummer</th>
+                        <th md-column>Navn</th>
+                        <th md-column md-numeric>CPR</th>
+                        <th md-column md-numeric>Oprettet</th>
+                        <th md-column md-numeric>Afsluttet</th>
+                        <th md-column>Dom/note</th>
+                    </tr>
+                </thead>
+                <tbody md-body>
+                    <tr md-row>
+                        <td md-cell>1234</td>
+                        <td md-cell>Peter Larsen</td>
+                        <td md-cell>0613886645</td>
+                        <td md-cell>07/02/2017</td>
+                        <td md-cell>-</td>
+                        <td md-cell>Afsluttet uden erklæring: tilbagesendt</td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+    </md-card-content>
+</md-card>

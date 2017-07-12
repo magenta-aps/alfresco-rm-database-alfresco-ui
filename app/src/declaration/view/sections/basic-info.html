@@ -13,16 +13,14 @@
             <label>CPR</label>
             <input ng-model="case.cprNumber"  ng-disabled="!editPatientData">
         </md-input-container>
-        <div layout="row">
-        <md-input-container>
+        <md-input-container class="md-block">
             <label>Fornavne</label>
             <input ng-model="case.firstName" ng-disabled="!editPatientData">
         </md-input-container>
-        <md-input-container >
+        <md-input-container class="md-block">
             <label>Efternavn</label>
             <input ng-model="case.lastName" ng-disabled="!editPatientData">
         </md-input-container>
-        </div>
         <md-input-container class="md-block">
             <label>Adresse</label>
             <input ng-model="case.address" ng-disabled="!editPatientData">
