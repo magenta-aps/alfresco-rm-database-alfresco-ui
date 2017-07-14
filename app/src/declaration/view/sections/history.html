@@ -10,6 +10,7 @@
             <input ng-model="case.status" ng-disabled="!editPatientData">
         </md-input-container>
         <div layout="row">
+            {{case.creationDate}}
             <md-input-container flex>
                 <label>Sagen oprettet</label>
                 <md-datepicker ng-model="case.creationDate" ng-disabled="!editPatientData"></md-datepicker>

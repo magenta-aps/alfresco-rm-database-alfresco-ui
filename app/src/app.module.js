@@ -42,7 +42,7 @@ angular
         /*DO NOT REMOVE MODULES PLACEHOLDER!!!*/ //openDesk-modules
         /*LAST*/ 'openDeskApp.translations']) //TRANSLATIONS IS ALWAYS LAST!
     .config(config)
-    .run(function ($rootScope, $transitions, $state, $mdDialog, authService, sessionService, APP_CONFIG) {
+    .run(function ($rootScope, $transitions, $state, $mdDialog, authService, sessionService, declarationService, APP_CONFIG) {
         var ssoLoginEnabled = APP_CONFIG.ssoLoginEnabled == "true";
         angular.element(window.document)[0].title = APP_CONFIG.appName;
         $rootScope.appName = APP_CONFIG.appName;
@@ -60,9 +60,16 @@ angular
                 });
             }
         }
+
+        declarationService.getDropdownGroups().then( function(response) {
+            angular.forEach(response, function(group) {
+                declarationService.setDropdownOptions(group.name);
+            })
+        });
+    
     });
 
-function config($stateProvider, $urlRouterProvider) {
+function config($stateProvider, $urlRouterProvider, $mdDateLocaleProvider) {
 
     $urlRouterProvider
         .when('/admin/system-settings', '/admin/system-settings/general-configuration')
@@ -95,5 +102,7 @@ function config($stateProvider, $urlRouterProvider) {
             }
         }
     });
+
+    $mdDateLocaleProvider.firstDayOfWeek = 1;
 }
 

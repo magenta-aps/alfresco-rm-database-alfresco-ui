@@ -344,6 +344,16 @@ md-toolbar {
     overflow: hidden;
     text-overflow: ellipsis
 }
+.md-autocomplete-suggestions {
+  li {
+    color: rgb(117,117,117);
+  }
+}
+.highlight {
+  color: $black !important;
+  font-weight: 900;
+}
+
 
 @media (min-width: 600px) {
   md-sidenav {

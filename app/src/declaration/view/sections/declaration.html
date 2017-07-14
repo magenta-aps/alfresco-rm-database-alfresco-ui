@@ -13,14 +13,14 @@
             <label>Sanktionsforslag</label>
             <input ng-model="case.sanctionProposal" ng-disabled="!editPatientData">
         </md-input-container>
-        <span class="md-subhead">Afgivet af</span>
+        <p class="md-subhead">Afgivet af<br></p>
         <md-input-container class="md-block">
             <label>Læge</label>
-            <input ng-model="case.petitionDate" ng-disabled="!editPatientData">
+            <input ng-model="case.doctor" ng-disabled="!editPatientData">
         </md-input-container>
         <md-input-container class="md-block">
             <label>Psykolog</label>
-            <input ng-model="case.petitionDate" ng-disabled="!editPatientData">
+            <input ng-model="case.psychologist" ng-disabled="!editPatientData">
         </md-input-container>
     </md-card-content>
 </md-card>

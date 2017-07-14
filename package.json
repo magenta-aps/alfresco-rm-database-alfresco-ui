@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "gulp-install": "^0.6.0",
-    "gulp-nsp": "~2.4.0"
+    "gulp-nsp": "~2.4.0",
+    "moment": "^2.18.1"
   }
 }

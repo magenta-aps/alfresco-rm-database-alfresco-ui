@@ -2,38 +2,25 @@
     <div layout="column" style="height:128px" flex-gt-sm="50" flex>
         <span flex></span>
         <div layout="row">
-            <md-input-container class="md-block" flex>
-                <label>Søg på et navn, CPR eller sagsnummer</label>
-                <input ng-model="caseid">
-            </md-input-container>
-
-            <md-button class="md-icon-button" ng-click="search()">
-                <md-icon>search</md-icon>
-            </md-button>
-            <md-button class="md-icon-button" ng-click="toggleFilters()">
-                <md-icon>filter_list</md-icon>
-            </md-button>
-        </div>
-
-        <!--<div layout="row">
             <md-autocomplete
-                md-selected-item="ctrl.selectedItem"
-                md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
-                md-search-text="ctrl.searchText"
-                md-selected-item-change="ctrl.selectedItemChange(item)" 
-                md-items="item in ctrl.querySearch(ctrl.searchText)"
-                md-item-text="item.caseNumber" 
+                md-selected-item="selectedCase"
+                md-search-text="caseSearchQuery"
+                md-items="case in filterCases(caseSearchQuery)"
+                md-item-text="'Sag #'+ case.caseNumber + ' - ' + case.firstName + ' ' + case.lastName + ' (' + case.cprNumber + ')'" 
                 md-min-length="0" 
-                placeholder="Søg på et CPR- eller sagsnummer" flex>
+                ng-enter="gotoCase(selectedCase.caseNumber)"
+                placeholder="Søg på et navn, CPR eller sagsnummer" flex>
                 <md-item-template>
-                    <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.caseNumber}}</span>
+                    <span md-highlight-text="caseSearchQuery" md-highlight-flags="gi">
+                        Sag #{{case.caseNumber}} - {{case.firstName}} {{case.lastName}} ({{case.cprNumber}})
+                    </span>
                 </md-item-template>
             </md-autocomplete>
 
-            <md-button class="md-icon-button">
+            <md-button class="md-icon-button" ng-click="toggleFilters()">
             <md-icon>filter_list</md-icon>
             </md-button>
-        </div>-->
+        </div>
     </div>
 </div>
 
@@ -52,32 +39,32 @@
 
             <md-input-container flex="20">
                 <label>Hovedsigtelse</label>
-                <input ng-model="case.mainCharge">
+                <input ng-model="searchParams.mainCharge">
             </md-input-container>
 
             <md-input-container flex="20" flex-offset="5">
                 <label>Placering</label>
-                <input ng-model="case.placement">
+                <input ng-model="searchParams.placement">
             </md-input-container>
 
             <md-input-container flex="20" flex-offset="5">
                 <label>Sanktionsforslag</label>
-                <input ng-model="case.sanctionProposal">
+                <input ng-model="searchParams.sanctionProposal">
             </md-input-container>
 
             <md-input-container flex="20" flex-offset="5">
                 <label>Læge</label>
-                <input ng-model="case.petitionDate">
+                <input ng-model="searchParams.doctor">
             </md-input-container>
         </div>
 
-        <md-checkbox ng-model="case.PsychEval">
+        <md-checkbox ng-model="searchParams.PsychEval">
             Psykologisk undersøgelse foretaget
         </md-checkbox>
         <div layout="row">
             <md-input-container>
                 <label>Ventetid</label>
-                <md-select ng-model="case.waitingTime">
+                <md-select ng-model="searchParams.waitingTime">
                     <md-option value="Passiv ventetid">
                         Passiv ventetid
                     </md-option>
@@ -91,8 +78,7 @@
             </md-input-container>
 
             <md-input-container flex-offset="5">
-                 <!-- <label>Handling</label>  -->
-                <md-select ng-model="case.waitingTimeModifier">
+                <md-select ng-model="searchParams.waitingTimeModifier" aria-label="modifier">
                     <md-option value="Over">
                         Over
                     </md-option>
@@ -106,8 +92,7 @@
             </md-input-container>
 
             <md-input-container flex-offset="5">
-                <!-- <label>dage</label> -->
-                <input ng-model="case.waitingDays" size="4">
+                <input ng-model="searchParams.waitingDays" size="4" aria-label="antal dage">
             </md-input-container>
             dage
         </div>
@@ -115,44 +100,44 @@
             I perioden
             <md-input-container>
                 <label>Fra</label>
-                <md-datepicker ng-model="case.fromDate"></md-datepicker>
+                <md-datepicker ng-model="searchParams.fromDate"></md-datepicker>
             </md-input-container>
             <md-input-container>
                 <label>Til</label>
-                <md-datepicker ng-model="case.toDate"></md-datepicker>
+                <md-datepicker ng-model="searchParams.toDate"></md-datepicker>
             </md-input-container>
         </div>
-        <md-button>
+        <md-button ng-click="advancedSearch()">
             Søg
         </md-button>
     </div>
 </div>
 
-<md-card>
+ <md-card>
     <md-card-content>
     <md-table-container>
-            <table md-table md-row-select multiple>
+            <table md-table>
                 <thead md-head>
                     <tr md-row>
-                        <th md-column md-numeric>Sagsnummer</th>
-                        <th md-column>Navn</th>
-                        <th md-column md-numeric>CPR</th>
+                        <th md-column md-numeric md-order-by="caseNumber">Sagsnummer</th>
+                        <th md-column md-order-by="fullName">Navn</th>
+                        <th md-column md-numeric md-order-by="cprNumber">CPR</th>
                         <th md-column md-numeric>Oprettet</th>
                         <th md-column md-numeric>Afsluttet</th>
                         <th md-column>Dom/note</th>
                     </tr>
                 </thead>
-                <tbody md-body>
-                    <tr md-row>
-                        <td md-cell>1234</td>
-                        <td md-cell>Peter Larsen</td>
-                        <td md-cell>0613886645</td>
-                        <td md-cell>07/02/2017</td>
-                        <td md-cell>-</td>
+                <tbody md-body ng-repeat="case in allCases">
+                    <tr md-row ng-click="gotoCase(case.caseNumber)">
+                        <td md-cell>{{case.caseNumber}}</td>
+                        <td md-cell>{{case.fullName}}</td>
+                        <td md-cell>{{case.cprNumber}}</td>
+                        <td md-cell>{{case.created}}</td>
+                        <td md-cell></td>
                         <td md-cell>Afsluttet uden erklæring: tilbagesendt</td>
                     </tr>
                 </tbody>
             </table>
         </md-table-container>
     </md-card-content>
-</md-card>
+</md-card> 

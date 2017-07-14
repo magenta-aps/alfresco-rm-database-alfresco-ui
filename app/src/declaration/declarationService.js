@@ -6,6 +6,8 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
     var newCase = {};
     var currentCase = {};
     var caseTitle = '';
+    var dropdownGroupNames = {};
+    var dropdownGroupOptions = {};
 
     function setCaseTitle(newCase) {
         caseTitle = newCase.firstName + ' ' + newCase.lastName + ' (Sag #' + newCase.caseNumber + ')';
@@ -22,6 +24,8 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
 
         setCurrentCase: function(newCase) {
             currentCase = newCase;
+            // currentCase.creationDate = moment(newCase.creationDate);
+            // console.log(moment(newCase.creationDate).format('YYYY-MM-DD'));
         },
 
         getCurrentCase: function() {
@@ -54,10 +58,12 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
         },
 
         updateCase : function(caseNumber, properties) {
+            console.log(properties);
             return $http.put("/alfresco/s/entry?type=forensicPsychiatryDeclaration&entryKey=caseNumber&entryValue=" + caseNumber,
                             {"type":"forensicPsychiatryDeclaration",
                             "siteShortName" : "retspsyk",
                             "properties" : properties}).then(function (response) {
+                                console.log(response.data);
 
                 return response.data;
 
@@ -79,11 +85,25 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
             });
         },
 
-        getDropDownGroups: function() {
+        getDropdownGroups: function() {
             return $http.get("/alfresco/service/conf?method=getDropDownColumnGroupNames").then(function(response) {
-                console.log(response.data);
+                dropdownGroupNames = response.data;
                 return response.data;
             });
+        },
+
+        setDropdownOptions: function(groupName) {
+            $http.get("alfresco/s/api/groups/GROUP_"+ groupName +"/children?authorityType=GROUP").then(function(response) {
+                //dropdownGroupOptions = response.data;
+                // console.log(response.data.data);
+                dropdownGroupOptions[groupName] = response.data.data;
+                console.log('retrieved ' + groupName);
+            });
+        },
+
+        getDropdownOptions: function(groupName) {
+            console.log('dropdown options for ' + groupName);
+            return dropdownGroupOptions[groupName];
         }
 
     };

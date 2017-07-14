@@ -10,18 +10,21 @@ function DeclarationController($scope, $state, $stateParams, declarationService)
 
     $scope.case = "tom";
 
-    declarationService.getDropDownGroups();
-
+    $scope.ethnicityOptions;
 
     function loadCase(caseid) {
         if (caseid) {
             declarationService.getCase(caseid).then(function (response) {
                 declarationService.setCurrentCase(response[0]);
                 console.log('case loaded');
+                console.log(response[0]);
+                $scope.someOtherDate = new Date(response[0].creationDate);
             });
         }
     }
     loadCase($stateParams.caseid);
+
+    $scope.ethnicityOptions = declarationService.getDropdownOptions('ethnicity');
 
     $scope.viewDocuments = function () {
         $state.go('declaration.show.documents');
@@ -34,7 +37,5 @@ function DeclarationController($scope, $state, $stateParams, declarationService)
     $scope.viewPatientData = function () {
         $state.go('declaration.show.patientdata');
     }
-
-    declarationService.getAllCases();
 
 }

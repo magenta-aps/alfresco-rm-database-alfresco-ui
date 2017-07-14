@@ -49,10 +49,10 @@
 md-input-container {
   margin: 0;
   padding: 0 !important;
-  .md-input-focused label,
-  .md-input-has-value label {
-    font-size: 120%;
-  }
+  // .md-input-focused label,
+  // .md-input-has-value label {
+  //   font-size: 120%;
+  // }
 }
 
 md-list {
@@ -394,13 +394,13 @@ md-card-title h3 {
     }
   }
 
-  md-input-container {
-    margin: $u * .5 0;
-  }
+  // md-input-container {
+  //   margin: $u * .5 0;
+  // }
 
-  md-autocomplete {
-    margin: $u * .5 0 $u;
-  }
+  // md-autocomplete {
+  //   margin: $u * .5 0 $u;
+  // }
   
   .org-input,
   .template-input {
