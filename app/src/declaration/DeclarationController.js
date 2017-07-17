@@ -10,7 +10,7 @@ function DeclarationController($scope, $state, $stateParams, declarationService)
 
     $scope.case = "tom";
 
-    $scope.ethnicityOptions;
+    $scope.dropdownOptions;
 
     function loadCase(caseid) {
         if (caseid) {
@@ -18,13 +18,12 @@ function DeclarationController($scope, $state, $stateParams, declarationService)
                 declarationService.setCurrentCase(response[0]);
                 console.log('case loaded');
                 console.log(response[0]);
-                $scope.someOtherDate = new Date(response[0].creationDate);
             });
         }
     }
     loadCase($stateParams.caseid);
 
-    $scope.ethnicityOptions = declarationService.getDropdownOptions('ethnicity');
+    $scope.dropdownOptions = declarationService.getAllDropdownOptions();
 
     $scope.viewDocuments = function () {
         $state.go('declaration.show.documents');

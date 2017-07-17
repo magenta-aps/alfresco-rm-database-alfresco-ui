@@ -4,9 +4,10 @@
             <table md-table md-row-select="true" multiple="true" ng-model="selected">
                 <thead md-head>
                     <tr md-row>
-                        <th md-checkbox-column></th>
                         <th md-column>Navn</th>
-                        <th md-column md-numeric>Rolle</th>
+                        <th md-column md-numeric>Genåbne sager</th>
+                        <th md-column md-numeric>Redigerer lister</th>
+                        <th md-column md-numeric>Tildele roller</th>
                     </tr>
                 </thead>
                 <tbody md-body ng-repeat="content in contents">
@@ -19,24 +20,28 @@
                 </tbody>
                 <tbody md-body>
                     <tr md-row md-select="dessert" md-select-id="name" md-auto-select>
-                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
                         <td md-cell>Dr. John Hansen</td>
-                        <td md-cell>Læge</td>
+                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
                     </tr>
                     <tr md-row md-select="dessert" md-select-id="name" md-auto-select>
-                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
                         <td md-cell>Peter Larsen</td>
-                        <td md-cell>Psykolog</td>
+                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
                     </tr>
                     <tr md-row md-select="dessert" md-select-id="name" md-auto-select>
-                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
                         <td md-cell>Helle Vitus Østergaard</td>
-                        <td md-cell>Socialrådgiver</td>
+                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
                     </tr>
                     <tr md-row md-select="dessert" md-select-id="name" md-auto-select>
-                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
                         <td md-cell>Camilla Henriksen</td>
-                        <td md-cell>Sekretær</td>
+                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
                     </tr>
                 </tbody>
             </table>

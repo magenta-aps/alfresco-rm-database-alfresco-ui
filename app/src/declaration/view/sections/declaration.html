@@ -5,14 +5,37 @@
         </md-card-title-text>
     </md-card-title>
     <md-card-content>
-        <md-input-container class="md-block">
-            <label>Placering</label>
-            <input ng-model="case.placement" ng-disabled="!editPatientData">
-        </md-input-container>
-        <md-input-container class="md-block">
-            <label>Sanktionsforslag</label>
-            <input ng-model="case.sanctionProposal" ng-disabled="!editPatientData">
-        </md-input-container>
+        <div>
+        <md-autocomplete flex 
+            md-selected-item="case.placement" 
+            md-search-text="placementSearch"
+            md-items="placement in dropdownOptions['placement']" 
+            md-item-text="placement.displayName" 
+            md-min-length="0" 
+            md-floating-label="Placering"
+            ng-disabled="!editPatientData">
+            <md-item-template>
+                <span md-highlight-text="placementSearch" md-highlight-flags="gi">{{placement.displayName}}</span>
+            </md-item-template>
+        </md-autocomplete>
+        <md-tooltip md-direction="top" md-delay="500">{{case.placement.displayName}}</md-tooltip>
+        </div>
+        <div>
+        <md-autocomplete flex 
+            md-selected-item="case.sanctionProposal" 
+            md-search-text="sanctionProposalSearch"
+            md-items="sanctionProposal in dropdownOptions['sanctionProposal']" 
+            md-item-text="sanctionProposal.displayName" 
+            md-min-length="0" 
+            md-floating-label="Sanktionsforslag"
+            ng-disabled="!editPatientData">
+            <md-item-template>
+                <span md-highlight-text="sanctionProposalSearch" md-highlight-flags="gi">{{sanctionProposal.displayName}}</span>
+            </md-item-template>
+        </md-autocomplete>
+        <md-tooltip md-direction="top" md-delay="500">{{case.sanctionProposal.displayName}}</md-tooltip>
+        </div>
+
         <p class="md-subhead">Afgivet af<br></p>
         <md-input-container class="md-block">
             <label>Læge</label>

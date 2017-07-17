@@ -52,7 +52,7 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
         },
         getAllCases : function() {
             return $http.get("/alfresco/s/entry?type=forensicPsychiatryDeclaration", {}).then(function (response) {
-                console.log(response.data);
+                // console.log(response.data);
                 return response.data;
             });
         },
@@ -97,13 +97,18 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
                 //dropdownGroupOptions = response.data;
                 // console.log(response.data.data);
                 dropdownGroupOptions[groupName] = response.data.data;
-                console.log('retrieved ' + groupName);
+                // console.log('retrieved ' + groupName);
+                // console.log(dropdownGroupOptions);
             });
         },
 
         getDropdownOptions: function(groupName) {
-            console.log('dropdown options for ' + groupName);
+            // console.log('dropdown options for ' + groupName);
             return dropdownGroupOptions[groupName];
+        },
+
+        getAllDropdownOptions: function() {
+            return dropdownGroupOptions;
         }
 
     };

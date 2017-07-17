@@ -39,6 +39,8 @@ function DeclarationSearchController($scope, $state, $stateParams, declarationSe
 
     function getAllCases() {
         declarationService.getAllCases().then(function (response) {
+            console.log('get all cases');
+            console.log(response);
             $scope.allCases = response;
         });
     }

@@ -5,13 +5,23 @@
         </md-card-title-text>
     </md-card-title>
     <md-card-content>
-        <md-input-container class="md-block">
-            <label>Henvisende instans</label>
-            <input ng-model="case.referingAgency" ng-disabled="!editPatientData">
-        </md-input-container>
-        <md-input-container class="md-block">
-            <label>Hovedsigtelse</label>
-            <input ng-model="case.mainCharge" ng-disabled="!editPatientData">
-        </md-input-container>
+        <div>
+            <md-autocomplete flex md-selected-item="case.referingAgency" md-search-text="agencySearch" md-items="agency in dropdownOptions['referingAgency']"
+                md-item-text="agency.displayName" md-min-length="0" md-floating-label="Henvisende instans" ng-disabled="!editPatientData">
+                <md-item-template>
+                    <span md-highlight-text="agencySearch" md-highlight-flags="gi">{{agency.displayName}}</span>
+                </md-item-template>
+            </md-autocomplete>
+            <md-tooltip md-direction="top" md-delay="500">{{case.referingAgency.displayName}}</md-tooltip>
+        </div>
+        <div>
+            <md-autocomplete flex md-selected-item="case.mainCharge" md-search-text="mainChargeSearch" md-items="mainCarge in dropdownOptions['mainCharge']"
+                md-item-text="mainCarge.displayName" md-min-length="0" md-floating-label="Hovedsigtelse" ng-disabled="!editPatientData">
+                <md-item-template>
+                    <span md-highlight-text="mainChargeSearch" md-highlight-flags="gi">{{mainCarge.displayName}}</span>
+                </md-item-template>
+            </md-autocomplete>
+            <md-tooltip md-direction="top" md-delay="500">{{case.mainCharge.displayName}}</md-tooltip>
+        </div>
     </md-card-content>
 </md-card>

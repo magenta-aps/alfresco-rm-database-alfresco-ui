@@ -1,0 +1,20 @@
+<md-card>
+    <md-card-content>
+        <md-table-container>
+            <table md-table md-row-select multiple>
+                <thead md-head>
+                    <tr md-row>
+                        <th md-column></th>
+                        <th md-column>Etnicitet</th>
+                    </tr>
+                </thead>
+                <tbody md-body ng-repeat="content in contents">
+                    <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="c in content">
+                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
+                        <td md-cell>{{c.name}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+    </md-card-content>
+</md-card>

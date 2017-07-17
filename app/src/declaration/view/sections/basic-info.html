@@ -11,7 +11,7 @@
         </md-input-container>-->
         <md-input-container class="md-block">
             <label>CPR</label>
-            <input ng-model="case.cprNumber"  ng-disabled="!editPatientData" required>
+            <input ng-model="case.cprNumber" ng-disabled="!editPatientData" required>
         </md-input-container>
         <md-input-container class="md-block">
             <label>Fornavne</label>
@@ -35,53 +35,45 @@
                 <input ng-model="case.city" ng-disabled="!editPatientData">
             </md-input-container>
         </div>
-        <md-input-container class="md-block">
-            <label>Etnicitet</label>
-            <md-select ng-model="case.ethnicity" ng-disabled="!editPatientData">
-              <md-option ng-repeat="ethnicity in ethnicityOptions" value="{{ethnicity.shortName}}">
-                {{ethnicity.displayName}}
-              </md-option>
-            </md-select>
-        </md-input-container>
-        <md-input-container class="md-block">
-            <label>Mors etnicitet</label>
-            <md-select ng-model="case.motherEthnicity" ng-disabled="!editPatientData">
-              <md-option ng-repeat="ethnicity in ethnicityOptions" value="{{ethnicity.shortName}}">
-                {{ethnicity.displayName}}
-              </md-option>
-            </md-select>
-        </md-input-container>
-        <md-input-container class="md-block">
-            <label>Fars etnicitet</label>
-            <md-select ng-model="case.fatherEthnicity" ng-disabled="!editPatientData">
-              <md-option ng-repeat="ethnicity in ethnicityOptions" value="{{ethnicity.shortName}}">
-                {{ethnicity.displayName}}
-              </md-option>
-            </md-select>
-        </md-input-container>
 
-        <md-autocomplete flex
-            md-input-name="autocompleteField"
-            md-selected-item="selectedEthnicity"
-            md-items="ethnicity in ethnicityOptions"
-            md-item-text="ethnicity.displayName"
-            md-floating-label="Etnicitet">
-          <md-item-template>
-            <span>{{ethnicity.displayName}}</span>
-          </md-item-template>
+        <md-autocomplete flex 
+            md-selected-item="case.ethnicity" 
+            md-search-text="ethnicitySearch"
+            md-items="ethnicity in dropdownOptions['ethnicity']" 
+            md-item-text="ethnicity.displayName" 
+            md-min-length="0" 
+            md-floating-label="Etnicitet"
+            ng-disabled="!editPatientData">
+            <md-item-template>
+                <span md-highlight-text="ethnicitySearch" md-highlight-flags="gi">{{ethnicity.displayName}}</span>
+            </md-item-template>
         </md-autocomplete>
 
-        <md-autocomplete
-                md-selected-item="selectedEthnicity"
-                md-search-text="ethnicitySearch"
-                md-items="ethnicity in ethnicityOptions"
-                md-item-text="ethnicity" 
-                placeholder="Søg på et navn, CPR eller sagsnummer" flex>
-                <md-item-template>
-                    <span md-highlight-text="" md-highlight-flags="gi">
-                        {{ethnicity}}
-                    </span>
-                </md-item-template>
-            </md-autocomplete>
+        <md-autocomplete flex 
+            md-selected-item="case.motherEthnicity" 
+            md-search-text="motherEthnicitySearch"
+            md-items="ethnicity in dropdownOptions['ethnicity']" 
+            md-item-text="ethnicity.displayName" 
+            md-min-length="0" 
+            md-floating-label="Mors etnicitet"
+            ng-disabled="!editPatientData">
+            <md-item-template>
+                <span md-highlight-text="motherEthnicitySearch" md-highlight-flags="gi">{{ethnicity.displayName}}</span>
+            </md-item-template>
+        </md-autocomplete>
+
+        <md-autocomplete flex 
+            md-selected-item="case.fatherEthnicity" 
+            md-search-text="fatherEthnicitySearch"
+            md-items="ethnicity in dropdownOptions['ethnicity']" 
+            md-item-text="ethnicity.displayName" 
+            md-min-length="0" 
+            md-floating-label="Fars etnicitet"
+            ng-disabled="!editPatientData">
+            <md-item-template>
+                <span md-highlight-text="fatherEthnicitySearch" md-highlight-flags="gi">{{ethnicity.displayName}}</span>
+            </md-item-template>
+        </md-autocomplete>
+
     </md-card-content>
 </md-card>
