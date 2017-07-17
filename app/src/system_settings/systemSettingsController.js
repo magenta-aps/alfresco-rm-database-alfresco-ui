@@ -23,8 +23,8 @@ function SystemSettingsCtrl($scope, $state, $stateParams, systemSettingsPagesSer
         $state.go('administration.systemsettings.diagnosis');
     }
 
-    $scope.viewEthnicities = function() {
-        $state.go('administration.systemsettings.ethnicities');
+    $scope.viewState = function(newState) {
+        $state.go('administration.systemsettings.' + newState);
     }
 
     function loadTemplates() {

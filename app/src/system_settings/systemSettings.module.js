@@ -7,7 +7,6 @@ function config(systemSettingsPagesServiceProvider, $stateProvider, USER_ROLES) 
     systemSettingsPagesServiceProvider.addPage('Dokumentskabeloner', 'document_templates', true);
 
     $stateProvider.state('administration.systemsettings', {
-        // url: '/systemindstillinger',
         data: {
             authorizedRoles: [USER_ROLES.user],
         },
@@ -21,7 +20,6 @@ function config(systemSettingsPagesServiceProvider, $stateProvider, USER_ROLES) 
         redirectTo: 'administration.systemsettings.dashboard'
     })
     .state('administration.systemsettings.dashboard', {
-        // url: '/dashboard',
         data: {
             authorizedRoles: [USER_ROLES.user]
         },
@@ -52,101 +50,139 @@ function config(systemSettingsPagesServiceProvider, $stateProvider, USER_ROLES) 
             }
         }
     })
-    .state('administration.systemsettings.diagnosis', {
-        url: '/diagnoser',
-        data: {
-            authorizedRoles: [USER_ROLES.user]
-        },
-        views: {
-            'systemsetting-view': {
-                templateUrl: 'app/src/system_settings/diagnosis/view/diagnosis-list.html',
-                controller: 'DiagnosisController',
-                controllerAs: 'vm'
-            },
-            'toolbar-tools-left@site': {
-                template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Diagnoser</h2>"
-            },
-            'toolbar-tools-right@site': {
-                templateUrl: 'app/src/system_settings/diagnosis/view/diagnosis-toolbar.html',
-                controller: 'DiagnosisToolbarController',
-                controllerAs: 'vm'
-            }
-        }
-    })
     .state('administration.systemsettings.ethnicities', {
         url: '/etniciteter',
         data: {
-            authorizedRoles: [USER_ROLES.user]
+            authorizedRoles: [USER_ROLES.user],
+        },
+        params: {
+            listTitle: 'Etnicitet',
+            listData: 'ethnicity'
         },
         views: {
             'systemsetting-view': {
-                templateUrl: 'app/src/system_settings/ethnicities/view/ethnicity-list.html',
-                controller: 'EthnicityController',
+                templateUrl: 'app/src/system_settings/lists/view/list.html',
+                controller: 'ListController',
                 controllerAs: 'vm'
             },
             'toolbar-tools-left@site': {
                 template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Etniciteter</h2>"
             },
             'toolbar-tools-right@site': {
-                templateUrl: 'app/src/system_settings/ethnicities/view/ethnicity-toolbar.html',
-                controller: 'EthnicityToolbarController',
+                templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',
+                controller: 'ListToolbarController',
                 controllerAs: 'vm'
             }
         }
     })
-    // .state('administration.systemsettings.notifications', {
-    //     url: '/notifikationer',
-    //     data: {
-    //         authorizedRoles: [USER_ROLES.user]
-    //     },
-    //     views: {
-    //         'systemsetting-view': {
-    //             templateUrl: 'app/src/system_settings/notifications/view/notifications.html',
-    //             controller: 'NotificationsSettingsController',
-    //             controllerAs: 'vm'
-    //         }
-    //     }
-    // })
-    // .state('document_templates', {
-    //     parent: 'site',
-    //     url: 'projekter/DokumentSkabeloner',
-    //     views: {
-    //         'content@': {
-    //             templateUrl: 'app/src/sites/view/site.html',
-    //             controller: 'SiteController',
-    //             controllerAs: 'vm'
-    //         }
-    //     },
-    //     data: {
-    //         authorizedRoles: [USER_ROLES.user],
-    //         selectedTab: 0
-    //     }
-
-    // })
-    // .state('administration.systemsettings.templateList', {
-    //     url: '/skabeloner',
-    //     data: {
-    //         authorizedRoles: [USER_ROLES.admin]
-    //     },
-    //     views: {
-    //         'systemsetting-view': {
-    //             templateUrl: 'app/src/system_settings/templates/view/templateList.html',
-    //             controller: 'TemplatesController',
-    //             controllerAs: 'vm'
-    //         }
-    //     }
-    // })
-    // .state('administration.systemsettings.editTemplate', {
-    //     url: '/skabelon',
-    //     data: {
-    //         authorizedRoles: [USER_ROLES.admin]
-    //     },
-    //     views: {
-    //         'systemsetting-view': {
-    //             templateUrl: 'app/src/system_settings/templates/view/editTemplate.html',
-    //             controller: 'TemplatesController',
-    //             controllerAs: 'vm'
-    //         }
-    //     }
-    // });
+    .state('administration.systemsettings.sanctions', {
+        url: '/sanktioner',
+        params: {
+            listTitle: 'Sanktion',
+            listData: 'sanctionProposal'
+        },
+        views: {
+            'systemsetting-view': {
+                templateUrl: 'app/src/system_settings/lists/view/list.html',
+                controller: 'ListController',
+                controllerAs: 'vm'
+            },
+            'toolbar-tools-left@site': {
+                template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Sanktioner</h2>"
+            },
+            'toolbar-tools-right@site': {
+                templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',
+                controller: 'ListToolbarController',
+                controllerAs: 'vm'
+            }
+        }
+    })
+    .state('administration.systemsettings.referingAgencies', {
+        url: '/henvisende-instanser',
+        params: {
+            listTitle: 'Henvisende instans',
+            listData: 'referingAgency'
+        },
+        views: {
+            'systemsetting-view': {
+                templateUrl: 'app/src/system_settings/lists/view/list.html',
+                controller: 'ListController',
+                controllerAs: 'vm'
+            },
+            'toolbar-tools-left@site': {
+                template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Henvisende instanser</h2>"
+            },
+            'toolbar-tools-right@site': {
+                templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',
+                controller: 'ListToolbarController',
+                controllerAs: 'vm'
+            }
+        }
+    })
+    .state('administration.systemsettings.placement', {
+        url: '/placeringer',
+        params: {
+            listTitle: 'Placering',
+            listData: 'placement'
+        },
+        views: {
+            'systemsetting-view': {
+                templateUrl: 'app/src/system_settings/lists/view/list.html',
+                controller: 'ListController',
+                controllerAs: 'vm'
+            },
+            'toolbar-tools-left@site': {
+                template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Placeringer</h2>"
+            },
+            'toolbar-tools-right@site': {
+                templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',
+                controller: 'ListToolbarController',
+                controllerAs: 'vm'
+            }
+        }
+    })
+    .state('administration.systemsettings.diagnosis', {
+        url: '/diagnoser',
+        params: {
+            listTitle: 'Diagnose',
+            listData: 'mainDiagnosis'
+        },
+        views: {
+            'systemsetting-view': {
+                templateUrl: 'app/src/system_settings/lists/view/list.html',
+                controller: 'ListController',
+                controllerAs: 'vm'
+            },
+            'toolbar-tools-left@site': {
+                template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Diagnoser</h2>"
+            },
+            'toolbar-tools-right@site': {
+                templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',
+                controller: 'ListToolbarController',
+                controllerAs: 'vm'
+            }
+        }
+    })
+    .state('administration.systemsettings.mainCharge', {
+        url: '/sigtelser',
+        params: {
+            listTitle: 'Sigtelse',
+            listData: 'mainCharge'
+        },
+        views: {
+            'systemsetting-view': {
+                templateUrl: 'app/src/system_settings/lists/view/list.html',
+                controller: 'ListController',
+                controllerAs: 'vm'
+            },
+            'toolbar-tools-left@site': {
+                template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Sigtelser</h2>"
+            },
+            'toolbar-tools-right@site': {
+                templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',
+                controller: 'ListToolbarController',
+                controllerAs: 'vm'
+            }
+        }
+    })
 }
