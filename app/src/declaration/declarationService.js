@@ -90,17 +90,11 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
 
         setDropdownOptions: function(groupName) {
             $http.get("alfresco/s/api/groups/GROUP_"+ groupName +"/children?authorityType=GROUP").then(function(response) {
-                //dropdownGroupOptions = response.data;
-                // console.log(response.data.data);
                 dropdownGroupOptions[groupName] = response.data.data;
-                // console.log('retrieved ' + groupName);
-                // console.log(dropdownGroupOptions);
             });
         },
 
         getDropdownOptions: function(groupName) {
-            // console.log('dropdown options for ' + groupName);
-            //console.log(dropdownGroupOptions[groupName]);
             return dropdownGroupOptions[groupName];
         },
 

@@ -2,12 +2,15 @@ angular
     .module('openDeskApp.declaration')
     .controller('PatientInfoToolbarController', PatientInfoToolbarController);
 
-function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $mdToast, $transitions, declarationService) {
+function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $mdToast, $transitions, declarationService, authService) {
 
     $scope.declarationService = declarationService;
     $scope.editMode = false;
     $scope.caseTitle = '';
     $scope.currentCase;
+    $scope.editor = {};
+
+    var currentUser = authService.getUserInfo().user;
 
     $scope.$watch('declarationService.getCaseTitle()', function (newVal) {
         $scope.caseTitle = newVal;
@@ -15,6 +18,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
 
     $scope.$watch('declarationService.getCurrentCase()', function (newVal) {
         $scope.currentCase = newVal;
+        $scope.editor = angular.fromJson(newVal.locked4editBy);
     });
 
     $scope.toggleEdit = function () {
@@ -67,7 +71,8 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
     }, function () {
         var locked = {
             'node-uuid': $scope.currentCase['node-uuid'],
-            'locked4edit': true
+            'locked4edit': true,
+            'locked4editBy': currentUser
         }
         declarationService.updateCase(locked);
     });
@@ -82,7 +87,8 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
 
         var locked = {
             'node-uuid': $scope.currentCase['node-uuid'],
-            'locked4edit': false
+            'locked4edit': false,
+            'locked4editBy': null
         }
         declarationService.updateCase(locked);
     });
