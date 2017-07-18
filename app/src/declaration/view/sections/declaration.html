@@ -18,7 +18,7 @@
                 <span md-highlight-text="placementSearch" md-highlight-flags="gi">{{placement.displayName}}</span>
             </md-item-template>
         </md-autocomplete>
-        <md-tooltip md-direction="top" md-delay="500">{{case.placement.displayName}}</md-tooltip>
+        <md-tooltip md-direction="top" md-delay="500" ng-if="case.placement != 'null'">{{case.placement.displayName}}</md-tooltip>
         </div>
         <div>
         <md-autocomplete flex 
@@ -33,7 +33,7 @@
                 <span md-highlight-text="sanctionProposalSearch" md-highlight-flags="gi">{{sanctionProposal.displayName}}</span>
             </md-item-template>
         </md-autocomplete>
-        <md-tooltip md-direction="top" md-delay="500">{{case.sanctionProposal.displayName}}</md-tooltip>
+        <md-tooltip md-direction="top" md-delay="500" ng-if="case.sanctionProposal != 'null'">{{case.sanctionProposal.displayName}}</md-tooltip>
         </div>
 
         <p class="md-subhead">Afgivet af<br></p>

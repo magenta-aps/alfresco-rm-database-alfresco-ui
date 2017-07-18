@@ -1,5 +1,5 @@
-<md-dialog aria-label="Lås sagen" ng-cloak>
-    <form name="lockDeclarationForm" ng-submit="">
+<md-dialog aria-label="Lås sagen">
+    <form name="lockDeclarationForm" ng-submit="lockCase()">
 
         <md-toolbar>
             <div class="md-toolbar-tools">
@@ -12,18 +12,18 @@
         </md-toolbar>
 
         <md-dialog-content class="md-padding">
-            <md-radio-group ng-model="case.closed">
-                <md-radio-button value="afsluttet"> Afsluttet</md-radio-button>
-                <md-radio-button value="ingen-erklaering">  Afsluttet uden erklæring</md-radio-button>
+            <md-radio-group ng-model="currentCase.closed">
+                <md-radio-button value="closed"> Afsluttet</md-radio-button>
+                <md-radio-button value="no-declaration">  Afsluttet uden erklæring</md-radio-button>
             </md-radio-group>
-            <span ng-show="case.closed == 'ingen-erklaering'">
+            <span ng-show="currentCase.closed == 'no-declaration'">
                 <md-input-container class="md-block">
                 <label>Årsag</label> 
-                <input type="text" name="reason">
+                <input type="text" name="reason" ng-model="currentCase.reason">
             </md-input-container>
             <md-input-container class="md-block">
                 <label>Sendt til</label> 
-                <input type="text" name="sent-to" ng-model="case.sentTo">
+                <input type="text" name="sent-to" ng-model="currentCase.sentTo">
             </md-input-container>
             </span>
         </md-dialog-content>

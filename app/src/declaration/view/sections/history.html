@@ -10,7 +10,6 @@
             <input ng-model="case.status" ng-disabled="!editPatientData">
         </md-input-container>
         <div layout="row">
-            {{case.creationDate}}
             <md-input-container flex>
                 <label>Sagen oprettet</label>
                 <md-datepicker ng-model="case.creationDate" ng-disabled="!editPatientData"></md-datepicker>
@@ -21,8 +20,8 @@
                 <label>Observation påbegyndt</label>
                 <md-datepicker ng-model="case.observationDate" ng-disabled="!editPatientData"></md-datepicker>
             </md-input-container>
-            <span style="float:right">
-                12
+            <span style="float:right" ng-show="isNumber(passiveWait)">
+                {{passiveWait}}
                 <md-icon class="icon-small">
                     info_outline
                     <md-tooltip md-direction="top">Passiv ventetid</md-tooltip>
@@ -34,7 +33,8 @@
                 <label>Erklæring afgivet</label>
                 <md-datepicker ng-model="case.declarationDate" ng-disabled="!editPatientData"></md-datepicker>
             </md-input-container>
-            <span style="float:right">38
+            <span style="float:right" ng-show="isNumber(activeWait)">
+                {{activeWait}}
                     <md-icon class="icon-small">
                         info_outline
                         <md-tooltip md-direction="top">Aktiv ventetid</md-tooltip>
@@ -43,7 +43,8 @@
         </div>
         <div layout="row">
             <span flex></span>
-            <span><strong>50</strong>
+            <span ng-show="isNumber(totalWait)">
+                <strong>{{totalWait}}</strong>
                     <md-icon class="icon-small">
                         info_outline
                         <md-tooltip md-direction="top">Samlet ventetid</md-tooltip>
@@ -52,8 +53,11 @@
         </div>
 
         <div layout="column">
-            <span style="padding-top:16px">Afsluttet uden erklæring: Tilbagesendt</span>
-            <span style="padding:16px 0">Sendt til: Retspsyk i Aalborg</span>
+            <span ng-show="case.closed == 'closed'">Afsluttet</span>
+            <div ng-show="case.closed == 'no-declaration'">
+                <span style="padding-top:16px">Afsluttet uden erklæring: {{case.reason}}</span><br>
+                <span style="padding:16px 0">Sendt til: {{case.sentTo}}</span>
+            </div>
         </div>
     </md-card-content>
 </md-card>

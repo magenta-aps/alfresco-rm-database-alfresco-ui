@@ -99,7 +99,7 @@ function config($stateProvider, USER_ROLES) {
             }
         })
         .state('declaration.show.patientdata.edit', {
-            url: '/rediger'
+            
         })
 
 };

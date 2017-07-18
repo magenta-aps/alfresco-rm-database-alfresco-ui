@@ -1,5 +1,12 @@
-<span ng-show="!editMode">
-    <md-button class="md-text-icon-button" aria-label="lås sagen" ng-click="lockCase()">
+<span ng-show="currentCase.locked4edit == 'true'">
+<md-icon>warning</md-icon> 
+<md-tooltip>Sagen redigeres i øjeblikket af en anden</md-tooltip>
+</span>
+
+{{currentCase.closed}}
+
+<span ng-if="!editMode">
+    <md-button class="md-text-icon-button" aria-label="lås sagen" ng-click="lockCaseDialog()">
         <md-icon>lock</md-icon> afslut sagen
     </md-button>
     <md-button class="md-text-icon-button" aria-label="edit" ng-click="toggleEdit()">
@@ -7,8 +14,8 @@
     </md-button>
 </span>
 
-<span ng-show="editMode">
-    <md-button class="md-text-icon-button" aria-label="lås sagen" ng-click="lockCase()">
+<span ng-if="editMode">
+    <md-button class="md-text-icon-button" aria-label="lås sagen" ng-click="lockCaseDialog()">
         <md-icon>lock</md-icon> gem og afslut sagen
     </md-button>
 

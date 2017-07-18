@@ -12,7 +12,7 @@
                     <span md-highlight-text="agencySearch" md-highlight-flags="gi">{{agency.displayName}}</span>
                 </md-item-template>
             </md-autocomplete>
-            <md-tooltip md-direction="top" md-delay="500">{{case.referingAgency.displayName}}</md-tooltip>
+            <md-tooltip md-direction="top" md-delay="500" ng-if="case.referingAgency != 'null'">{{case.referingAgency.displayName}}</md-tooltip>
         </div>
         <div>
             <md-autocomplete flex md-selected-item="case.mainCharge" md-search-text="mainChargeSearch" md-items="mainCarge in dropdownOptions['mainCharge']"
@@ -21,7 +21,7 @@
                     <span md-highlight-text="mainChargeSearch" md-highlight-flags="gi">{{mainCarge.displayName}}</span>
                 </md-item-template>
             </md-autocomplete>
-            <md-tooltip md-direction="top" md-delay="500">{{case.mainCharge.displayName}}</md-tooltip>
+            <md-tooltip md-direction="top" md-delay="500" ng-if="case.mainCharge != 'null'">{{case.mainCharge.displayName}}</md-tooltip>
         </div>
     </md-card-content>
 </md-card>

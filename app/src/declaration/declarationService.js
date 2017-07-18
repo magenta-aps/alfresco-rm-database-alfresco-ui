@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('openDeskApp.declaration').factory('declarationService', function ($http, $window, alfrescoNodeUtils) {
+angular.module('openDeskApp.declaration').factory('declarationService', function ($http, $window, $transitions, alfrescoNodeUtils) {
 
     var edit = false;
     var newCase = {};
@@ -24,8 +24,6 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
 
         setCurrentCase: function(newCase) {
             currentCase = newCase;
-            // currentCase.creationDate = moment(newCase.creationDate);
-            // console.log(moment(newCase.creationDate).format('YYYY-MM-DD'));
         },
 
         getCurrentCase: function() {
@@ -57,12 +55,10 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
             });
         },
 
-        updateCase : function(caseNumber, properties) {
+        updateCase : function(properties) {
             console.log(properties);
-            return $http.put("/alfresco/s/entry?type=forensicPsychiatryDeclaration&entryKey=caseNumber&entryValue=" + caseNumber,
-                            {"type":"forensicPsychiatryDeclaration",
-                            "siteShortName" : "retspsyk",
-                            "properties" : properties}).then(function (response) {
+            return $http.put("/alfresco/s/entry?uuid=" + properties['node-uuid'],
+                            {"properties" : properties}).then(function (response) {
                                 console.log(response.data);
 
                 return response.data;
@@ -104,10 +100,12 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
 
         getDropdownOptions: function(groupName) {
             // console.log('dropdown options for ' + groupName);
+            //console.log(dropdownGroupOptions[groupName]);
             return dropdownGroupOptions[groupName];
         },
 
         getAllDropdownOptions: function() {
+            console.log(dropdownGroupOptions);
             return dropdownGroupOptions;
         }
 

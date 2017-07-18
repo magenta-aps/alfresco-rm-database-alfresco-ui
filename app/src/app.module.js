@@ -40,7 +40,9 @@ angular
         'md.data.table',
 
         /*DO NOT REMOVE MODULES PLACEHOLDER!!!*/ //openDesk-modules
-        /*LAST*/ 'openDeskApp.translations']) //TRANSLATIONS IS ALWAYS LAST!
+        /*LAST*/
+        'openDeskApp.translations'
+    ]) //TRANSLATIONS IS ALWAYS LAST!
     .config(config)
     .run(function ($rootScope, $transitions, $state, $mdDialog, authService, sessionService, declarationService, APP_CONFIG) {
         var ssoLoginEnabled = APP_CONFIG.ssoLoginEnabled == "true";
@@ -54,19 +56,18 @@ angular
                     if (!authService.isAuthenticated()) {
                         sessionService.retainCurrentLocation();
                         $state.go('login');
-                    }
-                    else
+                    } else
                         $state.reload();
                 });
             }
         }
 
-        declarationService.getDropdownGroups().then( function(response) {
-            angular.forEach(response, function(group) {
+        declarationService.getDropdownGroups().then(function (response) {
+            angular.forEach(response, function (group) {
                 declarationService.setDropdownOptions(group.name);
             })
         });
-    
+
     });
 
 function config($stateProvider, $urlRouterProvider, $mdDateLocaleProvider) {
@@ -78,8 +79,7 @@ function config($stateProvider, $urlRouterProvider, $mdDateLocaleProvider) {
     $stateProvider.state('site', {
         abstract: true,
         resolve: {
-            authorize:
-                ['authService', '$q', 'sessionService', '$state', function (authService, $q, sessionService, $state) {
+            authorize: ['authService', '$q', 'sessionService', '$state', function (authService, $q, sessionService, $state) {
                 var d = $q.defer();
                 if (authService.isAuthenticated()) {
                     // I also provide the user for child controllers
@@ -104,5 +104,15 @@ function config($stateProvider, $urlRouterProvider, $mdDateLocaleProvider) {
     });
 
     $mdDateLocaleProvider.firstDayOfWeek = 1;
-}
 
+    $mdDateLocaleProvider.formatDate = function (date) {
+        if (date == undefined)
+            return;
+        var day = ('0' + date.getDate()).slice(-2);
+        var month = ('0' + (date.getMonth() + 1)).slice(-2);
+        var year = date.getFullYear();
+
+        return day + '/' + month + '/' + year;
+
+    };
+}

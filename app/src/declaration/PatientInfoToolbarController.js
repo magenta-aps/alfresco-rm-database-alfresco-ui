@@ -2,35 +2,47 @@ angular
     .module('openDeskApp.declaration')
     .controller('PatientInfoToolbarController', PatientInfoToolbarController);
 
-function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, declarationService) {
+function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $mdToast, $transitions, declarationService) {
 
     $scope.declarationService = declarationService;
     $scope.editMode = false;
     $scope.caseTitle = '';
+    $scope.currentCase;
 
     $scope.$watch('declarationService.getCaseTitle()', function (newVal) {
         $scope.caseTitle = newVal;
     });
 
-    $scope.toggleEdit = function() {
+    $scope.$watch('declarationService.getCurrentCase()', function (newVal) {
+        $scope.currentCase = newVal;
+    });
+
+    $scope.toggleEdit = function () {
         $scope.editMode = !$scope.editMode;
         declarationService.toggleEdit();
 
-        if($scope.editMode) {
+        if ($scope.editMode) {
             $state.go('declaration.show.patientdata.edit');
         } else {
             $state.go('declaration.show.patientdata');
+
+            $mdToast.show(
+                $mdToast.simple()
+                .textContent('Ændringerne er gemt')
+                .position('top right')
+                .hideDelay(3000)
+            );
         }
     }
 
-    $scope.saveEdit = function() {
+    $scope.saveEdit = function () {
         var newCase = declarationService.getNewCaseInfo();
-        declarationService.updateCase($stateParams.caseid,newCase).then(function(response) {
+        declarationService.updateCase(newCase).then(function (response) {
             console.log(response);
         });
     }
 
-    $scope.lockCase = function() {
+    $scope.lockCaseDialog = function () {
         $mdDialog.show({
             templateUrl: 'app/src/declaration/view/lock-dialog.html',
             parent: angular.element(document.body),
@@ -41,7 +53,37 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, d
         });
     }
 
-    $scope.back = function() {
+    $scope.lockCase = function() {
+        declarationService.updateCase($scope.currentCase);
+        $mdDialog.cancel();
+    }
+
+    $scope.back = function () {
         $state.go('declaration');
     }
+
+    $transitions.onStart({
+        to: 'declaration.show.patientdata.edit'
+    }, function () {
+        var locked = {
+            'node-uuid': $scope.currentCase['node-uuid'],
+            'locked4edit': true
+        }
+        declarationService.updateCase(locked);
+    });
+
+    $transitions.onStart({
+        from: 'declaration.show.patientdata.edit'
+    }, function () {
+        if($scope.editMode) {
+            $scope.editMode = false;
+            declarationService.toggleEdit();
+        }
+
+        var locked = {
+            'node-uuid': $scope.currentCase['node-uuid'],
+            'locked4edit': false
+        }
+        declarationService.updateCase(locked);
+    });
 }
