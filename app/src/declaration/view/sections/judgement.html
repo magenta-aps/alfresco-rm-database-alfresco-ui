@@ -6,10 +6,23 @@
     </md-card-title>
     <md-card-content>
         <div layout="column">
-                <md-input-container class="md-block">
-                    <label>Endelig dom</label>
-                    <input ng-model="case.finalVerdict" ng-disabled="!editPatientData">
-                </md-input-container>
+
+
+                <div>
+        <md-autocomplete flex 
+            md-selected-item="case.finalVerdict" 
+            md-search-text="finalVerdictSearch"
+            md-items="finalVerdict in dropdownFilter(dropdownOptions['finalVerdict'],finalVerdictSearch,['displayName'])" 
+            md-item-text="finalVerdict.displayName" 
+            md-min-length="0" 
+            md-floating-label="Endelig dom"
+            ng-disabled="!editPatientData">
+            <md-item-template>
+                <span md-highlight-text="finalVerdictSearch" md-highlight-flags="gi">{{finalVerdict.displayName}}</span>
+            </md-item-template>
+        </md-autocomplete>
+        <md-tooltip md-direction="top" md-delay="500" ng-if="case.sanctionProposal != 'null'">{{case.sanctionProposal.displayName}}</md-tooltip>
+        </div>
                 <md-input-container class="md-block">
                     <label>Dom</label>
                     <textarea class="textarea-highlight" ng-model="case.verdict" rows="10" md-select-on-focus ng-disabled="!editPatientData"></textarea>

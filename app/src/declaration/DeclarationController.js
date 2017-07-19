@@ -8,7 +8,9 @@ function DeclarationController($scope, $state, $stateParams, declarationService)
     var sidebar = $(".md-sidenav-left");
     $(".od-info-declarations").css("margin-left", sidebar.width() + "px");
 
-    $scope.case = "tom";
+    $scope.case = {};
+
+    $scope.bidiagnoses = [{id: 'bidiagnosis1'}];
 
     $scope.dropdownOptions = declarationService.getAllDropdownOptions();
 
@@ -24,9 +26,9 @@ function DeclarationController($scope, $state, $stateParams, declarationService)
                 var observationDate = new Date(response[0].observationDate);
                 var declarationDate = new Date(response[0].declarationDate);
 
-                $scope.passiveWait = (observationDate - creationDate) / 1000 / 60 / 60 / 24;
-                $scope.activeWait = (declarationDate - observationDate) / 1000 / 60 / 60 / 24;
-                $scope.totalWait = (declarationDate - creationDate) / 1000 / 60 / 60 / 24;
+                $scope.passiveWait = Math.ceil((observationDate - creationDate) / 1000 / 60 / 60 / 24);
+                $scope.activeWait = Math.ceil((declarationDate - observationDate) / 1000 / 60 / 60 / 24);
+                $scope.totalWait = Math.ceil((declarationDate - creationDate) / 1000 / 60 / 60 / 24);
             });
         }
     }
@@ -43,6 +45,11 @@ function DeclarationController($scope, $state, $stateParams, declarationService)
     $scope.viewPatientData = function () {
         $state.go('declaration.show.patientdata');
     }
+
+    $scope.addNewBidiagnosis = function() {
+        var newItemNo = $scope.bidiagnoses.length+1;
+        $scope.bidiagnoses.push({'id':'bidiagnosis'+newItemNo});
+    };
 
     $scope.isNumber = function (number) {
         return isNaN(number) ? false : true;

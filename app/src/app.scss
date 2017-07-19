@@ -360,3 +360,11 @@ md-toolbar {
     max-width: 250px !important;
   }
 }
+
+.md-datepicker-input-container {
+    width: calc(100% - 64px) !important;
+}
+
+.text-strike-through {
+  text-decoration: line-through;
+}

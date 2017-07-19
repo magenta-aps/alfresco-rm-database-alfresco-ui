@@ -5,15 +5,16 @@
             <md-autocomplete
                 md-selected-item="selectedCase"
                 md-search-text="caseSearchQuery"
-                md-items="case in filterCases(caseSearchQuery)"
+                md-items="case in filterCases(caseSearchQuery, ['cprNumber', 'caseNumber', 'fullName'])"
                 md-item-text="'Sag #'+ case.caseNumber + ' - ' + case.firstName + ' ' + case.lastName + ' (' + case.cprNumber + ')'" 
                 md-min-length="0" 
                 ng-enter="gotoCase(selectedCase.caseNumber)"
                 placeholder="Søg på et navn, CPR eller sagsnummer" flex>
                 <md-item-template>
                     <span md-highlight-text="caseSearchQuery" md-highlight-flags="gi">
-                        Sag #{{case.caseNumber}} - {{case.firstName}} {{case.lastName}} ({{case.cprNumber}})
+                        #{{case.caseNumber}} - {{case.firstName}} {{case.lastName}} ({{case.cprNumber}})
                     </span>
+                    <md-icon ng-show="case.hasOwnProperty('closed')">done</md-icon>
                 </md-item-template>
             </md-autocomplete>
 
@@ -21,99 +22,15 @@
             <md-icon>filter_list</md-icon>
             </md-button>
         </div>
+        <div layout="row" layout-align="center">
+            <a>Se den aktuelle venteliste</a>
+        </div>
     </div>
 </div>
 
-<div layout="row" layout-align="center center" ng-show="showFilters">
-    <div layout="column" flex="50">
-        <div layout="column" layout-align="end">
+<ng-include src="'app/src/declaration/view/search-advanced.html'" ng-show="showFilters"></ng-include>
 
-            <md-button ng-click="toggleFilters()">
-                <md-icon>search</md-icon>
-                tilbage til søgning
-            </md-button>
-        </div>
-        <span class="md-title">Vis alle sager med:</span>
-        <br>
-        <div layout="row">
-
-            <md-input-container flex="20">
-                <label>Hovedsigtelse</label>
-                <input ng-model="searchParams.mainCharge">
-            </md-input-container>
-
-            <md-input-container flex="20" flex-offset="5">
-                <label>Placering</label>
-                <input ng-model="searchParams.placement">
-            </md-input-container>
-
-            <md-input-container flex="20" flex-offset="5">
-                <label>Sanktionsforslag</label>
-                <input ng-model="searchParams.sanctionProposal">
-            </md-input-container>
-
-            <md-input-container flex="20" flex-offset="5">
-                <label>Læge</label>
-                <input ng-model="searchParams.doctor">
-            </md-input-container>
-        </div>
-
-        <md-checkbox ng-model="searchParams.PsychEval">
-            Psykologisk undersøgelse foretaget
-        </md-checkbox>
-        <div layout="row">
-            <md-input-container>
-                <label>Ventetid</label>
-                <md-select ng-model="searchParams.waitingTime">
-                    <md-option value="Passiv ventetid">
-                        Passiv ventetid
-                    </md-option>
-                    <md-option value="Aktiv ventetid">
-                        Aktiv ventetid
-                    </md-option>
-                    <md-option value="Samlet ventetid">
-                        Samlet ventetid
-                    </md-option>
-                </md-select>
-            </md-input-container>
-
-            <md-input-container flex-offset="5">
-                <md-select ng-model="searchParams.waitingTimeModifier" aria-label="modifier">
-                    <md-option value="Over">
-                        Over
-                    </md-option>
-                    <md-option value="Under">
-                        Under
-                    </md-option>
-                    <md-option value="Lig med">
-                        Lig med
-                    </md-option>
-                </md-select>
-            </md-input-container>
-
-            <md-input-container flex-offset="5">
-                <input ng-model="searchParams.waitingDays" size="4" aria-label="antal dage">
-            </md-input-container>
-            dage
-        </div>
-        <div layout="row">
-            I perioden
-            <md-input-container>
-                <label>Fra</label>
-                <md-datepicker ng-model="searchParams.fromDate"></md-datepicker>
-            </md-input-container>
-            <md-input-container>
-                <label>Til</label>
-                <md-datepicker ng-model="searchParams.toDate"></md-datepicker>
-            </md-input-container>
-        </div>
-        <md-button ng-click="advancedSearch()">
-            Søg
-        </md-button>
-    </div>
-</div>
-
- <!-- <md-card>
+  <md-card>
     <md-card-content>
     <md-table-container>
             <table md-table>
@@ -123,21 +40,19 @@
                         <th md-column md-order-by="fullName">Navn</th>
                         <th md-column md-numeric md-order-by="cprNumber">CPR</th>
                         <th md-column md-numeric>Oprettet</th>
-                        <th md-column md-numeric>Afsluttet</th>
-                        <th md-column>Dom/note</th>
+                        <th md-column md-numeric>Liggetid (dage)</th>
                     </tr>
                 </thead>
-                <tbody md-body ng-repeat="case in allCases">
+                <tbody md-body ng-repeat="case in waitingListCases">
                     <tr md-row ng-click="gotoCase(case.caseNumber)">
                         <td md-cell>{{case.caseNumber}}</td>
                         <td md-cell>{{case.fullName}}</td>
                         <td md-cell>{{case.cprNumber}}</td>
                         <td md-cell>{{case.created}}</td>
-                        <td md-cell></td>
-                        <td md-cell>Afsluttet uden erklæring: tilbagesendt</td>
+                        <td md-cell>{{case.closed}}</td>
                     </tr>
                 </tbody>
             </table>
         </md-table-container>
     </md-card-content>
-</md-card>  -->
+</md-card>  

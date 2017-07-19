@@ -9,7 +9,7 @@
         <md-autocomplete flex 
             md-selected-item="case.placement" 
             md-search-text="placementSearch"
-            md-items="placement in dropdownOptions['placement']" 
+            md-items="placement in dropdownFilter(dropdownOptions['placement'],placementSearch,['displayName'])" 
             md-item-text="placement.displayName" 
             md-min-length="0" 
             md-floating-label="Placering"
@@ -18,13 +18,13 @@
                 <span md-highlight-text="placementSearch" md-highlight-flags="gi">{{placement.displayName}}</span>
             </md-item-template>
         </md-autocomplete>
-        <md-tooltip md-direction="top" md-delay="500" ng-if="case.placement != 'null'">{{case.placement.displayName}}</md-tooltip>
+        <md-tooltip md-direction="top" md-delay="500" ng-if="case.placement != null">{{case.placement.displayName}}</md-tooltip>
         </div>
         <div>
         <md-autocomplete flex 
             md-selected-item="case.sanctionProposal" 
             md-search-text="sanctionProposalSearch"
-            md-items="sanctionProposal in dropdownOptions['sanctionProposal']" 
+            md-items="sanctionProposal in dropdownFilter(dropdownOptions['sanctionProposal'],sanctionProposalSearch,['displayName'])" 
             md-item-text="sanctionProposal.displayName" 
             md-min-length="0" 
             md-floating-label="Sanktionsforslag"
@@ -33,7 +33,7 @@
                 <span md-highlight-text="sanctionProposalSearch" md-highlight-flags="gi">{{sanctionProposal.displayName}}</span>
             </md-item-template>
         </md-autocomplete>
-        <md-tooltip md-direction="top" md-delay="500" ng-if="case.sanctionProposal != 'null'">{{case.sanctionProposal.displayName}}</md-tooltip>
+        <md-tooltip md-direction="top" md-delay="500" ng-if="case.sanctionProposal != null">{{case.sanctionProposal.displayName}}</md-tooltip>
         </div>
 
         <p class="md-subhead">Afgivet af<br></p>

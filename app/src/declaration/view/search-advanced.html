@@ -1,0 +1,124 @@
+<div layout="row" layout-align="center center">
+    <div layout="column" flex="50">
+        <div layout="column">
+            <div>
+            <md-button class="md-icon-text-button" ng-click="toggleFilters()">
+                <md-icon>arrow_back</md-icon>
+                tilbage til søgning
+            </md-button>
+            </div>
+        </div>
+        <span class="md-title">Vis alle sager med:</span>
+        <br>
+        <div layout="row">
+            <div flex="45">
+                <md-autocomplete md-selected-item="searchParams.mainCharge" md-search-text="mainChargeSearch" md-items="mainCarge in dropdownFilter(dropdownOptions['mainCharge'],mainChargeSearch,['displayName'])"
+                    md-item-text="mainCarge.displayName" md-min-length="0" md-floating-label="Hovedsigtelse">
+                    <md-item-template>
+                        <span md-highlight-text="mainChargeSearch" md-highlight-flags="gi">{{mainCarge.displayName}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+                <md-tooltip md-direction="top" md-delay="500" ng-if="searchParams.mainCharge != null">{{searchParams.mainCharge.displayName}}</md-tooltip>
+            </div>
+
+            <div flex flex-offset="10">
+                <md-autocomplete md-selected-item="searchParams.placement" md-search-text="placementSearch" md-items="placement in dropdownFilter(dropdownOptions['placement'],placementSearch,['displayName'])"
+                    md-item-text="placement.displayName" md-min-length="0" md-floating-label="Placering">
+                    <md-item-template>
+                        <span md-highlight-text="placementSearch" md-highlight-flags="gi">{{placement.displayName}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+                <md-tooltip md-direction="top" md-delay="500" ng-if="searchParams.placement != null">{{searchParams.placement.displayName}}</md-tooltip>
+            </div>
+
+        </div>
+        <div layout="row">
+            <div flex="45">
+                <md-autocomplete md-selected-item="searchParams.sanctionProposal" md-search-text="sanctionProposalSearch" md-items="sanctionProposal in dropdownFilter(dropdownOptions['sanctionProposal'],sanctionProposalSearch,['displayName'])"
+                    md-item-text="sanctionProposal.displayName" md-min-length="0" md-floating-label="Sanktionsforslag">
+                    <md-item-template>
+                        <span md-highlight-text="sanctionProposalSearch" md-highlight-flags="gi">{{sanctionProposal.displayName}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+                <md-tooltip md-direction="top" md-delay="500" ng-if="searchParams.sanctionProposal != null">{{searchParams.sanctionProposal.displayName}}</md-tooltip>
+            </div>
+
+            <md-autocomplete flex="45" flex-offset="10" md-selected-item="searchParams.diagnosis" md-search-text="diagnosisSearch" md-items="diagnosis in dropdownFilter(dropdownOptions['diagnosis'],diagnosisSearch,['displayName'])"
+                md-item-text="diagnosis.displayName" md-min-length="0" md-floating-label="Diagnose">
+                <md-item-template>
+                    <span md-highlight-text="diagnosisSearch" md-highlight-flags="gi">{{diagnosis.displayName}}</span>
+                </md-item-template>
+            </md-autocomplete>
+        </div>
+        <div layout="row">
+            <md-input-container flex="45">
+                <label>Læge</label>
+                <input ng-model="searchParams.doctor">
+            </md-input-container>
+
+            <div flex-offset="10">
+                <md-checkbox ng-model="searchParams.PsychEval">
+                    Psykologisk undersøgelse foretaget
+                </md-checkbox>
+            </div>
+        </div>
+        <div layout="row">
+
+            <div layout="row" flex="45">
+                <md-input-container>
+                    <label>Ventetid</label>
+                    <md-select ng-model="searchParams.waitingTime">
+                        <md-option value="Passiv ventetid">
+                            Passiv ventetid
+                        </md-option>
+                        <md-option value="Aktiv ventetid">
+                            Aktiv ventetid
+                        </md-option>
+                        <md-option value="Samlet ventetid">
+                            Samlet ventetid
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-input-container flex-offset="5">
+                    <md-select ng-model="searchParams.waitingTimeModifier" aria-label="modifier">
+                        <md-option value="Over">
+                            Over
+                        </md-option>
+                        <md-option value="Under">
+                            Under
+                        </md-option>
+                        <md-option value="Lig med">
+                            Lig med
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-input-container flex-offset="5">
+                    <input ng-model="searchParams.waitingDays" size="4" aria-label="antal dage">
+                </md-input-container>
+                dage
+            </div>
+            <div flex="45" flex-offset="10">
+                <md-checkbox ng-model="searchParams.declaration">
+                    Erklæring afgivet
+                </md-checkbox>
+            </div>
+        </div>
+
+        <div layout="row">
+            I perioden
+            <md-input-container>
+                <label>Fra</label>
+                <md-datepicker ng-model="searchParams.fromDate"></md-datepicker>
+            </md-input-container>
+            <md-input-container>
+                <label>Til</label>
+                <md-datepicker ng-model="searchParams.toDate"></md-datepicker>
+            </md-input-container>
+        </div>
+        <md-button ng-click="advancedSearch()">
+            Søg
+        </md-button>
+    </div>
+</div>

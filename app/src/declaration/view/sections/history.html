@@ -5,10 +5,18 @@
         </md-card-title-text>
     </md-card-title>
     <md-card-content>
-        <md-input-container class="md-block" style="padding-bottom:16px" flex="30">
-            <label>Status</label>
-            <input ng-model="case.status" ng-disabled="!editPatientData">
-        </md-input-container>
+        <md-autocomplete flex 
+            md-selected-item="case.status" 
+            md-search-text="statusSearch"
+            md-items="status in dropdownFilter(dropdownOptions['status'],statusSearch,['displayName'])" 
+            md-item-text="status.displayName" 
+            md-min-length="0" 
+            md-floating-label="Status"
+            ng-disabled="!editPatientData">
+            <md-item-template>
+                <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status.displayName}}</span>
+            </md-item-template>
+        </md-autocomplete>
         <div layout="row">
             <md-input-container flex>
                 <label>Sagen oprettet</label>
@@ -55,8 +63,8 @@
         <div layout="column">
             <span ng-show="case.closed == 'closed'">Afsluttet</span>
             <div ng-show="case.closed == 'no-declaration'">
-                <span style="padding-top:16px">Afsluttet uden erklæring: {{case.reason}}</span><br>
-                <span style="padding:16px 0">Sendt til: {{case.sentTo}}</span>
+                <span style="padding-top:16px" ng-show="case.hasOwnProperty('reason')">Afsluttet uden erklæring: {{case.reason}}</span><br>
+                <span style="padding:16px 0" ng-show="case.hasOwnProperty('sentTo')">Sendt til: {{case.sentTo}}</span>
             </div>
         </div>
     </md-card-content>

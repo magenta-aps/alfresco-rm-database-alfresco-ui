@@ -3,15 +3,13 @@ angular
     .filter('casefilter', caseFilter);
 
 function caseFilter() {
-    return function (cases, query) {
+    return function (cases, query, facets) {
         var items = {
             query: query,
             out: []
         };
 
         var filteredCases = [];
-
-        var facets = ['cprNumber', 'caseNumber', 'fullName'];
 
         var alreadyAdded = false;
 

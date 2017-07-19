@@ -2,7 +2,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('PatientInfoController', PatientInfoController);
 
-function PatientInfoController($scope, $state, $stateParams, declarationService) {
+function PatientInfoController($scope, $state, $stateParams, declarationService, filterService) {
 
     $scope.declarationService = declarationService;
     $scope.editPatientData = false;
@@ -18,7 +18,10 @@ function PatientInfoController($scope, $state, $stateParams, declarationService)
 
     $scope.$watch('case', function (newVal) {
         declarationService.updateNewCase(newVal);
-        console.log(newVal);
     }, true);
+
+    $scope.dropdownFilter = function(array, query, filters) {
+        return filterService.caseSearch(array, query, filters);
+    }
 
 }

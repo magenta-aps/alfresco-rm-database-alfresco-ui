@@ -46,9 +46,6 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
             return $http.get("/alfresco/s/entry?type=forensicPsychiatryDeclaration&entryKey=caseNumber&entryValue=" + caseNumber, {}).then(function (response) {
                 setCaseTitle(response.data[0]);
 
-                console.log("what");
-                console.log(response.data[0]);
-
                 if (response.data[0].placement != null) {
                     response.data[0].placement = JSON.parse( response.data[0].placement );
                 }
@@ -77,13 +74,17 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
                     response.data[0].sanctionProposal = JSON.parse( response.data[0].sanctionProposal );
                 }
 
+                if (response.data[0].finalVerdict != null) {
+                    response.data[0].finalVerdict = JSON.parse( response.data[0].finalVerdict );
+                }
 
+                if (response.data[0].status != null) {
+                    response.data[0].status = JSON.parse( response.data[0].status );
+                }
 
-
-
-
-
-
+                if (response.data[0].diagnosis != null) {
+                    response.data[0].diagnosis = JSON.parse( response.data[0].diagnosis );
+                }
 
                 return response.data;
             });
@@ -97,22 +98,12 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
 
         updateCase : function(properties) {
             console.log(properties);
-            return $http.put("/alfresco/s/entry?uuid=" + properties['node-uuid'],
-                            {"properties" : properties}).then(function (response) {
-                                console.log(response.data);
-
+            return $http.put("/alfresco/s/entry?uuid=" + properties['node-uuid'],{"properties" : properties}).then(function (response) {
                 return response.data;
-
             });
         },
 
         createCase : function(properties) {
-
-            console.log("crap");
-            console.log(properties);
-
-
-
 
             if (properties["placement"] != null) {
                 properties["placement"] = JSON.stringify(properties["placement"]);
@@ -142,12 +133,17 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
                 properties["sanctionProposal"] = JSON.stringify(properties["sanctionProposal"]);
             }
 
+            if (properties["status"] != null) {
+                properties["status"] = JSON.stringify(properties["status"]);
+            }
 
+            if (properties["diagnosis"] != null) {
+                properties["diagnosis"] = JSON.stringify(properties["diagnosis"]);
+            }
 
-
-
-
-
+            if (properties["finalVerdict"] != null) {
+                properties["finalVerdict"] = JSON.stringify(properties["finalVerdict"]);
+            }
 
             return $http.post("/alfresco/s/entry", {"type":"forensicPsychiatryDeclaration",
                                                     "siteShortName" : "retspsyk",
@@ -181,7 +177,6 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
         },
 
         getAllDropdownOptions: function() {
-            console.log(dropdownGroupOptions);
             return dropdownGroupOptions;
         }
 

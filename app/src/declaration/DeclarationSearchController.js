@@ -7,8 +7,10 @@ function DeclarationSearchController($scope, $state, $stateParams, declarationSe
     $scope.caseid;
     $scope.showFilters = false;
     $scope.allCases;
+    $scope.waitingListCases = [];
     $scope.searchParams = {};
     $scope.selectedCase = null;
+    $scope.dropdownOptions = declarationService.getAllDropdownOptions();
 
     $scope.$watch('selectedCase', function (newVal, oldVal) {
         if(newVal) {
@@ -16,8 +18,12 @@ function DeclarationSearchController($scope, $state, $stateParams, declarationSe
         }
     }, true);
 
-    $scope.filterCases = function(query) {
-        return filterService.caseSearch($scope.allCases, query);
+    $scope.filterCases = function(query, filters) {
+        return filterService.caseSearch($scope.allCases, query, filters);
+    }
+
+    $scope.dropdownFilter = function(array, query, filters) {
+        return filterService.caseSearch(array, query, filters);
     }
 
     $scope.search = function() {
@@ -42,6 +48,15 @@ function DeclarationSearchController($scope, $state, $stateParams, declarationSe
             console.log('get all cases');
             console.log(response);
             $scope.allCases = response;
+
+            angular.forEach($scope.allCases, function(declaration) {
+                console.log(declaration);
+                if(!declaration.hasOwnProperty('closed')) {
+                    $scope.waitingListCases.push(declaration);
+                }
+            });
+
+            console.log($scope.waitingListCases);
         });
     }
 

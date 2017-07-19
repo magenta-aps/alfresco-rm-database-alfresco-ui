@@ -13,8 +13,13 @@ function filterService($filter) {
         return hitList;
     }
 
-    function caseSearch(array, query) {
-        var hitList = $filter('casefilter')(array, query);
+    function caseSearch(array, query, filters) {
+        var hitList = $filter('casefilter')(array, query, filters);
+        return hitList;
+    }
+
+    function dropdownFilter(array, query, filters) {
+        var hitList = $filter('casefilter')(array, query, filters);
         return hitList;
     }
 }

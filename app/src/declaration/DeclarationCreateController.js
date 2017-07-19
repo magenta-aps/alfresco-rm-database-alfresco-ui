@@ -4,7 +4,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('DeclarationCreateController', DeclarationCreateController);
 
-function DeclarationCreateController($scope, declarationService) {
+function DeclarationCreateController($scope, declarationService, filterService) {
 
     $scope.editPatientData = true;
     $scope.case = {};
@@ -13,6 +13,10 @@ function DeclarationCreateController($scope, declarationService) {
 
     $scope.$watch('case', function (newVal, oldVal) {
         declarationService.updateNewCase(newVal);
-        console.log(newVal);
     }, true);
+
+
+    $scope.dropdownFilter = function(array, query, filters) {
+        return filterService.caseSearch(array, query, filters);
+    }
 }

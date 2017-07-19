@@ -5,34 +5,41 @@
         </md-card-title-text>
     </md-card-title>
     <md-card-content>
-        <md-input-container class="md-block">
-            <label>Hoveddiagnose</label>
-            <input ng-model="case.diagnosis" ng-disabled="!editPatientData">
-        </md-input-container>
-        <md-input-container class="md-block">
+        <md-autocomplete flex 
+            md-selected-item="case.diagnosis" 
+            md-search-text="diagnosisSearch"
+            md-items="diagnosis in dropdownFilter(dropdownOptions['diagnosis'],diagnosisSearch,['displayName'])" 
+            md-item-text="diagnosis.displayName" 
+            md-min-length="0" 
+            md-floating-label="Hoveddiagnose"
+            ng-disabled="!editPatientData">
+            <md-item-template>
+                <span md-highlight-text="diagnosisSearch" md-highlight-flags="gi">{{diagnosis.displayName}}</span>
+            </md-item-template>
+        </md-autocomplete>
+
+        <md-autocomplete flex 
+            ng-repeat="bd in bidiagnoses"
+            md-selected-item="case.bidiagnoses" 
+            md-search-text="bidiagnosisSearch"
+            md-items="bidiagnosis in dropdownFilter(dropdownOptions['diagnosis'],bidiagnosisSearch,['displayName'])" 
+            md-item-text="bidiagnosis.displayName" 
+            md-min-length="0" 
+            md-floating-label="Bidiagnose"
+            ng-disabled="!editPatientData">
+            <md-item-template>
+                <span md-highlight-text="bidiagnosisSearch" md-highlight-flags="gi">{{bidiagnosis.displayName}}</span>
+            </md-item-template>
+        </md-autocomplete>
+
+        <!-- <md-input-container class="md-block" ng-repeat="bidiagnosis in bidiagnoses">
             <label>Bidiagnose</label>
-            <input ng-model="case.diagnosis2" ng-disabled="!editPatientData">
-        </md-input-container>
-         <!--<md-input-container class="md-block">
-            <label>Bidiagnose</label>
-            <input ng-model="case.ethnicity" ng-disabled="!editPatientData">
-        </md-input-container>
-         <md-input-container class="md-block">
-            <label>Bidiagnose</label>
-            <input ng-model="case.ethnicity" ng-disabled="!editPatientData">
-        </md-input-container>
-         <md-input-container class="md-block">
-            <label>Bidiagnose</label>
-            <input ng-model="case.ethnicity" ng-disabled="!editPatientData">
-        </md-input-container>
-         <md-input-container class="md-block">
-            <label>Bidiagnose</label>
-            <input ng-model="case.ethnicity" ng-disabled="!editPatientData">
-        </md-input-container>-->
+            <input ng-model="case.diagnosis2" id="{{bidiagnosis.id}}" ng-disabled="!editPatientData">
+        </md-input-container> -->
     </md-card-content>
     <md-card-actions layout="row">
         <span flex></span>
-        <md-button class="md-icon-button md-accent" ng-disabled="!editPatientData">
+        <md-button class="md-icon-button md-accent" ng-click="addNewBidiagnosis()" ng-disabled="!editPatientData || bidiagnoses.length==5">
             <md-icon>add</md-icon>
         </md-button>
     </md-card-actions>

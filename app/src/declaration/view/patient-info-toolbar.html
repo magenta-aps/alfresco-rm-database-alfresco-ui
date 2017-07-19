@@ -1,17 +1,19 @@
-<span ng-show="currentCase.locked4edit == 'true'">
+<span ng-hide="canCurrentlyEdit">
 <md-icon>warning</md-icon> 
 <md-tooltip>Sagen redigeres i øjeblikket af {{editor.displayName}}</md-tooltip>
 </span>
 
-{{currentCase.closed}}
+<span ng-if="currentCase.hasOwnProperty('closed')">
+    <md-icon>done</md-icon> Sagen er afsluttet
+</span>
 
-{{currentCase.locked4edit}}
+<span ng-if="!currentCase.hasOwnProperty('closed')">
 
 <span ng-if="!editMode">
-    <md-button class="md-text-icon-button" aria-label="lås sagen" ng-click="lockCaseDialog()">
+    <md-button class="md-text-icon-button" aria-label="lås sagen" ng-click="lockCaseDialog()" ng-disabled="!canCurrentlyEdit">
         <md-icon>lock</md-icon> afslut sagen
     </md-button>
-    <md-button class="md-text-icon-button" aria-label="edit" ng-click="toggleEdit()">
+    <md-button class="md-text-icon-button" aria-label="edit" ng-click="toggleEdit()" ng-disabled="!canCurrentlyEdit">
         <md-icon>edit</md-icon> rediger
     </md-button>
 </span>
@@ -24,4 +26,5 @@
     <md-button class="md-text-icon-button" aria-label="edit" ng-click="toggleEdit(); saveEdit()">
         <md-icon>save</md-icon> gem
     </md-button>
+</span>
 </span>
