@@ -5,7 +5,8 @@ angular
 function filterService($filter) {
     return {
         search: search,
-        caseSearch: caseSearch
+        caseSearch: caseSearch,
+        dropdownFilter: dropdownFilter
     };
 
     function search(array, query) {
@@ -18,8 +19,8 @@ function filterService($filter) {
         return hitList;
     }
 
-    function dropdownFilter(array, query, filters) {
-        var hitList = $filter('casefilter')(array, query, filters);
+    function dropdownFilter(array, query) {
+        var hitList = $filter('dropdownfilter')(array, query);
         return hitList;
     }
 }

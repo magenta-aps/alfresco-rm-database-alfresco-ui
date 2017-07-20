@@ -9,31 +9,31 @@
             <md-autocomplete flex 
             md-selected-item="case.referingAgency" 
             md-search-text="agencySearch" 
-            md-items="agency in dropdownFilter(dropdownOptions['referingAgency'],agencySearch,['displayName'])"
-                md-item-text="agency.displayName" 
+            md-items="agency in dropdownFilter(dropdownOptions['referingAgency'],agencySearch)"
+                md-item-text="agency" 
                 md-min-length="0" 
                 md-floating-label="Henvisende instans" 
                 ng-disabled="!editPatientData">
                 <md-item-template>
-                    <span md-highlight-text="agencySearch" md-highlight-flags="gi">{{agency.displayName}}</span>
+                    <span md-highlight-text="agencySearch" md-highlight-flags="gi">{{agency}}</span>
                 </md-item-template>
             </md-autocomplete>
-            <md-tooltip md-direction="top" md-delay="500" ng-if="case.referingAgency != null">{{case.referingAgency.displayName}}</md-tooltip>
+            <md-tooltip md-direction="top" md-delay="500" ng-if="case.referingAgency != null">{{case.referingAgency}}</md-tooltip>
         </div>
         <div>
             <md-autocomplete flex 
             md-selected-item="case.mainCharge" 
             md-search-text="mainChargeSearch" 
-            md-items="mainCarge in dropdownFilter(dropdownOptions['mainCharge'],mainChargeSearch,['displayName'])"
-                md-item-text="mainCarge.displayName" 
+            md-items="mainCarge in dropdownFilter(dropdownOptions['mainCharge'],mainChargeSearch)"
+                md-item-text="mainCarge" 
                 md-min-length="0" 
                 md-floating-label="Hovedsigtelse" 
                 ng-disabled="!editPatientData">
                 <md-item-template>
-                    <span md-highlight-text="mainChargeSearch" md-highlight-flags="gi">{{mainCarge.displayName}}</span>
+                    <span md-highlight-text="mainChargeSearch" md-highlight-flags="gi">{{mainCarge}}</span>
                 </md-item-template>
             </md-autocomplete>
-            <md-tooltip md-direction="top" md-delay="500" ng-if="case.mainCharge != null">{{case.mainCharge.displayName}}</md-tooltip>
+            <md-tooltip md-direction="top" md-delay="500" ng-if="case.mainCharge != null">{{case.mainCharge}}</md-tooltip>
         </div>
     </md-card-content>
 </md-card>

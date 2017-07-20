@@ -2,8 +2,8 @@ angular
     .module('openDeskApp.declaration')
     .controller('DocumentController', DocumentController);
 
-function DocumentController($scope, $state, $mdDialog, declarationService, documentToolbarService, 
-                            siteService, documentService) {
+function DocumentController($scope, $state, $stateParams, $mdDialog, declarationService, documentToolbarService,
+    siteService, documentService, documentPreviewService, alfrescoDownloadService) {
     var vm = this;
 
     $scope.selectedFiles = documentService.getSelectedFiles();
@@ -61,7 +61,9 @@ function DocumentController($scope, $state, $mdDialog, declarationService, docum
     }
 
     $scope.viewFile = function (file) {
-        $state.go('declaration.show.documents.view-file', {nodeid:  file.shortRef});
+        $state.go('declaration.show.documents.view-file', {
+            nodeid: file.shortRef,
+        });
     }
 
     function loadFiles(node) {
@@ -76,5 +78,28 @@ function DocumentController($scope, $state, $mdDialog, declarationService, docum
             console.log(response);
         });
     };
+
+
+    $scope.getPDF = function (nodeRef) {
+        console.log('get pdf ' + nodeRef);
+        documentPreviewService.previewDocumentPlugin(nodeRef).then(function (plugin) {
+            $scope.config = plugin;
+            $scope.viewerTemplateUrl = documentPreviewService.templatesUrl + plugin.templateUrl;
+
+            if (plugin.initScope) {
+                plugin.initScope($scope);
+            }
+
+        });
+    }
+
+    function init() {
+        if($stateParams.nodeid) {
+            console.log('hello world ' + $stateParams.nodeid);
+            $scope.getPDF('workspace://SpacesStore/' + $stateParams.nodeid);                
+        }
+    }
+
+    init();
 
 }

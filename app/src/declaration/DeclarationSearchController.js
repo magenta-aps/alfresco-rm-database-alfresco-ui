@@ -33,6 +33,10 @@ function DeclarationSearchController($scope, $state, $stateParams, declarationSe
     $scope.gotoCase = function(caseNumber) {
         $state.go('declaration.show', {caseid: caseNumber});
     }
+
+    $scope.gotoWaitinglist = function() {
+        $state.go('declaration.waitinglist');
+    }
     
 
     $scope.toggleFilters = function() {
@@ -46,17 +50,21 @@ function DeclarationSearchController($scope, $state, $stateParams, declarationSe
     function getAllCases() {
         declarationService.getAllCases().then(function (response) {
             console.log('get all cases');
-            console.log(response);
             $scope.allCases = response;
 
             angular.forEach($scope.allCases, function(declaration) {
-                console.log(declaration);
                 if(!declaration.hasOwnProperty('closed')) {
+                    var date = new Date(declaration.creationDate);
+
+                    var day = ('0' + date.getDate()).slice(-2);
+                    var month = ('0' + (date.getMonth() + 1)).slice(-2);
+                    var year = date.getFullYear();
+
+                    declaration.creationDateFormatted = day + '/' + month + '/' + year;
+                    declaration.waitingTime = Math.ceil((new Date() - date) / 1000 / 60 / 60 / 24);
                     $scope.waitingListCases.push(declaration);
                 }
             });
-
-            console.log($scope.waitingListCases);
         });
     }
 

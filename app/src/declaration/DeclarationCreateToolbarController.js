@@ -9,6 +9,7 @@ function DeclarationCreateToolbarController($scope, $state, $mdToast, declaratio
         newCase.fullName = newCase.firstName + ' ' + newCase.lastName;
         
         declarationService.createCase(newCase).then(function (response) {
+            declarationService.setCurrentCaseAfterCreation(response);
             $state.go('declaration.show.patientdata', {caseid: response.caseNumber});
 
             $mdToast.show(

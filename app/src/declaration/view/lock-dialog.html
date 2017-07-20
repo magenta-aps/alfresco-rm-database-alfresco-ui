@@ -29,11 +29,20 @@
             </md-item-template>
         </md-autocomplete> -->
 
+        <!--noDeclarationReason  -->
+
             <span ng-show="currentCase.closed == 'no-declaration'">
-                <md-input-container class="md-block">
-                <label>Årsag</label> 
-                <input type="text" name="reason" ng-model="currentCase.reason">
-            </md-input-container>
+                <md-autocomplete flex 
+            md-selected-item="currentCase.reason" 
+            md-search-text="reasonSearch"
+            md-items="reason in dropdownFilter(dropdownOptions['noDeclarationReason'],reasonSearch)" 
+            md-item-text="reason" 
+            md-min-length="0" 
+            md-floating-label="Årsag">
+            <md-item-template>
+                <span md-highlight-text="reasonSearch" md-highlight-flags="gi">{{reason}}</span>
+            </md-item-template>
+        </md-autocomplete>
             <md-input-container class="md-block">
                 <label>Sendt til</label> 
                 <input type="text" name="sentTo" ng-model="currentCase.sentTo">

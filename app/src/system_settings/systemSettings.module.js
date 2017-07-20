@@ -145,7 +145,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider, USER_ROLES) 
         url: '/diagnoser',
         params: {
             listTitle: 'Diagnose',
-            listData: 'mainDiagnosis'
+            listData: 'diagnosis'
         },
         views: {
             'systemsetting-view': {
@@ -177,6 +177,50 @@ function config(systemSettingsPagesServiceProvider, $stateProvider, USER_ROLES) 
             },
             'toolbar-tools-left@site': {
                 template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Sigtelser</h2>"
+            },
+            'toolbar-tools-right@site': {
+                templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',
+                controller: 'ListToolbarController',
+                controllerAs: 'vm'
+            }
+        }
+    })
+    .state('administration.systemsettings.status', {
+        url: '/statusser',
+        params: {
+            listTitle: 'Status',
+            listData: 'status'
+        },
+        views: {
+            'systemsetting-view': {
+                templateUrl: 'app/src/system_settings/lists/view/list.html',
+                controller: 'ListController',
+                controllerAs: 'vm'
+            },
+            'toolbar-tools-left@site': {
+                template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Statusser</h2>"
+            },
+            'toolbar-tools-right@site': {
+                templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',
+                controller: 'ListToolbarController',
+                controllerAs: 'vm'
+            }
+        }
+    })
+    .state('administration.systemsettings.noDeclaration', {
+        url: '/afsluttet-uden-erklaering',
+        params: {
+            listTitle: 'Årsag',
+            listData: 'noDeclarationReason'
+        },
+        views: {
+            'systemsetting-view': {
+                templateUrl: 'app/src/system_settings/lists/view/list.html',
+                controller: 'ListController',
+                controllerAs: 'vm'
+            },
+            'toolbar-tools-left@site': {
+                template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Afsluttet uden erklæring</h2>"
             },
             'toolbar-tools-right@site': {
                 templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',

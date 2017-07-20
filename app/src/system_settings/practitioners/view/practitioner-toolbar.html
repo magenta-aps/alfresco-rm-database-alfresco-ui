@@ -1,19 +1,10 @@
-<span class="toolbar-contextual">
-<md-button class="md-icon-button" ng-click="" ng-if="'administration.systemsettings.practitioners' | isState">
+
+<md-button ng-click="" ng-if="'administration.systemsettings.practitioners' | isState">
     <md-icon>edit</md-icon>
+    <span>Rediger</span>
 </md-button>
 
-<md-button class="md-icon-button" ng-click="" ng-if="'administration.systemsettings.practitioners' | isState">
-    <md-icon>delete</md-icon>
+<md-button ng-click="" ng-if="'administration.systemsettings.practitioners' | isState">
+    <md-icon>save</md-icon>
+    <span>Gem</span>
 </md-button>
-</span>
-
-<md-button ng-click="addPractitionerDialog()" ng-if="'administration.systemsettings.practitioners' | isState">
-    <md-icon>add</md-icon>
-    <span>Tilføj behandler</span>
-</md-button>
-
-<!--<md-button ng-click="submit()" ng-if="'declaration.create' | isState">
-    <md-icon>add</md-icon>
-    <span>Opret erklæring</span>
-</md-button>-->

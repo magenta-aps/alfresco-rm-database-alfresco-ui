@@ -8,34 +8,30 @@
         <md-autocomplete flex 
             md-selected-item="case.diagnosis" 
             md-search-text="diagnosisSearch"
-            md-items="diagnosis in dropdownFilter(dropdownOptions['diagnosis'],diagnosisSearch,['displayName'])" 
-            md-item-text="diagnosis.displayName" 
+            md-items="diagnosis in dropdownFilter(dropdownOptions['diagnosis'],diagnosisSearch)" 
+            md-item-text="diagnosis" 
             md-min-length="0" 
             md-floating-label="Hoveddiagnose"
             ng-disabled="!editPatientData">
             <md-item-template>
-                <span md-highlight-text="diagnosisSearch" md-highlight-flags="gi">{{diagnosis.displayName}}</span>
+                <span md-highlight-text="diagnosisSearch" md-highlight-flags="gi">{{diagnosis}}</span>
             </md-item-template>
         </md-autocomplete>
 
         <md-autocomplete flex 
             ng-repeat="bd in bidiagnoses"
-            md-selected-item="case.bidiagnoses" 
-            md-search-text="bidiagnosisSearch"
-            md-items="bidiagnosis in dropdownFilter(dropdownOptions['diagnosis'],bidiagnosisSearch,['displayName'])" 
-            md-item-text="bidiagnosis.displayName" 
+            md-selected-item="case.bidiagnoses[bd.id]" 
+            md-search-text="bidiagnosisSearch[bd.id]"
+            md-items="bidiagnosis in dropdownFilter(dropdownOptions['diagnosis'],bidiagnosisSearch[bd.id])" 
+            md-item-text="bidiagnosis" 
             md-min-length="0" 
             md-floating-label="Bidiagnose"
             ng-disabled="!editPatientData">
             <md-item-template>
-                <span md-highlight-text="bidiagnosisSearch" md-highlight-flags="gi">{{bidiagnosis.displayName}}</span>
+                <span md-highlight-text="bidiagnosisSearch[bd.id]" md-highlight-flags="gi">{{bidiagnosis}}</span>
             </md-item-template>
         </md-autocomplete>
 
-        <!-- <md-input-container class="md-block" ng-repeat="bidiagnosis in bidiagnoses">
-            <label>Bidiagnose</label>
-            <input ng-model="case.diagnosis2" id="{{bidiagnosis.id}}" ng-disabled="!editPatientData">
-        </md-input-container> -->
     </md-card-content>
     <md-card-actions layout="row">
         <span flex></span>

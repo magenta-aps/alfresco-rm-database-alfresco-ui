@@ -39,39 +39,39 @@
         <md-autocomplete flex 
             md-selected-item="case.ethnicity" 
             md-search-text="ethnicitySearch"
-            md-items="ethnicity in dropdownFilter(dropdownOptions['ethnicity'],ethnicitySearch,['displayName'])" 
-            md-item-text="ethnicity.displayName" 
+            md-items="ethnicity in dropdownFilter(dropdownOptions['ethnicity'],ethnicitySearch)" 
+            md-item-text="ethnicity" 
             md-min-length="0" 
             md-floating-label="Etnicitet"
             ng-disabled="!editPatientData">
             <md-item-template>
-                <span md-highlight-text="ethnicitySearch" md-highlight-flags="gi">{{ethnicity.displayName}}</span>
+                <span md-highlight-text="ethnicitySearch" md-highlight-flags="gi">{{ethnicity}}</span>
             </md-item-template>
         </md-autocomplete>
 
         <md-autocomplete flex 
             md-selected-item="case.motherEthnicity" 
             md-search-text="motherEthnicitySearch"
-            md-items="ethnicity in dropdownFilter(dropdownOptions['ethnicity'],motherEthnicitySearch,['displayName'])" 
-            md-item-text="ethnicity.displayName" 
+            md-items="ethnicity in dropdownFilter(dropdownOptions['ethnicity'],motherEthnicitySearch)" 
+            md-item-text="ethnicity" 
             md-min-length="0" 
             md-floating-label="Mors etnicitet"
             ng-disabled="!editPatientData">
             <md-item-template>
-                <span md-highlight-text="motherEthnicitySearch" md-highlight-flags="gi">{{ethnicity.displayName}}</span>
+                <span md-highlight-text="motherEthnicitySearch" md-highlight-flags="gi">{{ethnicity}}</span>
             </md-item-template>
         </md-autocomplete>
 
         <md-autocomplete flex 
             md-selected-item="case.fatherEthnicity" 
             md-search-text="fatherEthnicitySearch"
-            md-items="ethnicity in dropdownFilter(dropdownOptions['ethnicity'],fatherEthnicitySearch,['displayName'])" 
-            md-item-text="ethnicity.displayName" 
+            md-items="ethnicity in dropdownFilter(dropdownOptions['ethnicity'],fatherEthnicitySearch)" 
+            md-item-text="ethnicity" 
             md-min-length="0" 
             md-floating-label="Fars etnicitet"
             ng-disabled="!editPatientData">
             <md-item-template>
-                <span md-highlight-text="fatherEthnicitySearch" md-highlight-flags="gi">{{ethnicity.displayName}}</span>
+                <span md-highlight-text="fatherEthnicitySearch" md-highlight-flags="gi">{{ethnicity}}</span>
             </md-item-template>
         </md-autocomplete>
 

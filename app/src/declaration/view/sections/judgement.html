@@ -12,16 +12,16 @@
         <md-autocomplete flex 
             md-selected-item="case.finalVerdict" 
             md-search-text="finalVerdictSearch"
-            md-items="finalVerdict in dropdownFilter(dropdownOptions['finalVerdict'],finalVerdictSearch,['displayName'])" 
-            md-item-text="finalVerdict.displayName" 
+            md-items="finalVerdict in dropdownFilter(dropdownOptions['finalVerdict'],finalVerdictSearch)" 
+            md-item-text="finalVerdict" 
             md-min-length="0" 
             md-floating-label="Endelig dom"
             ng-disabled="!editPatientData">
             <md-item-template>
-                <span md-highlight-text="finalVerdictSearch" md-highlight-flags="gi">{{finalVerdict.displayName}}</span>
+                <span md-highlight-text="finalVerdictSearch" md-highlight-flags="gi">{{finalVerdict}}</span>
             </md-item-template>
         </md-autocomplete>
-        <md-tooltip md-direction="top" md-delay="500" ng-if="case.sanctionProposal != 'null'">{{case.sanctionProposal.displayName}}</md-tooltip>
+        <md-tooltip md-direction="top" md-delay="500" ng-if="case.sanctionProposal != 'null'">{{case.sanctionProposal}}</md-tooltip>
         </div>
                 <md-input-container class="md-block">
                     <label>Dom</label>

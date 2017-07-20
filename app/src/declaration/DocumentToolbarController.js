@@ -2,10 +2,17 @@ angular
     .module('openDeskApp.declaration')
     .controller('DocumentToolbarController', DocumentToolbarController);
 
-function DocumentToolbarController($scope, $mdDialog, documentToolbarService) {
+function DocumentToolbarController($scope, $mdDialog, declarationService, documentToolbarService, documentService, documentPreviewService, alfrescoDownloadService) {
     $scope.toggleIcon = 'list';
 
     $scope.case;
+
+    $scope.declarationService = declarationService;
+
+    $scope.$watch('declarationService.getCurrentCase()', function (newVal) {
+        console.log(newVal);
+        $scope.case = newVal;
+    });
 
     $scope.toggleDocumentView = function () {
         documentToolbarService.toggleDocumentView();
@@ -37,4 +44,22 @@ function DocumentToolbarController($scope, $mdDialog, documentToolbarService) {
             clickOutsideToClose: true
         });
     }
+
+
+    $scope.downloadDocuments = function (event) {
+        console.log('download documents');
+
+        var files = documentService.getSelectedFiles();
+
+        console.log(files);
+
+        files.forEach(function (file) {
+            console.log('download ' + file.nodeRef);
+            documentPreviewService.previewDocumentPlugin(file.nodeRef).then(function (plugin) {
+                console.log('initiated ' + plugin.fileName);
+                alfrescoDownloadService.downloadFile(plugin.nodeRef, plugin.fileName);
+            });
+        });
+
+    };
 }

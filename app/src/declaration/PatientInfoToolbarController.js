@@ -2,7 +2,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('PatientInfoToolbarController', PatientInfoToolbarController);
 
-function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $mdToast, $transitions, declarationService, authService) {
+function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $mdToast, $transitions, declarationService, filterService, authService) {
 
     $scope.declarationService = declarationService;
     $scope.editMode = false;
@@ -10,11 +10,16 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
     $scope.currentCase;
     $scope.editor = {};
     $scope.canCurrentlyEdit = true;
+    $scope.dropdownOptions;
 
     var currentUser = authService.getUserInfo().user;
 
     $scope.$watch('declarationService.getCaseTitle()', function (newVal) {
         $scope.caseTitle = newVal;
+    });
+
+    $scope.$watch('declarationService.getAllDropdownOptions()', function (newVal) {
+        $scope.dropdownOptions = newVal;
     });
 
     $scope.$watch('declarationService.getCurrentCase()', function (newVal) {
@@ -113,6 +118,10 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
         }
         declarationService.updateCase(locked);
     });
+
+    $scope.dropdownFilter = function(array, query, filters) {
+        return filterService.caseSearch(array, query, filters);
+    }
 
     $scope.cancel = function() {
         $mdDialog.cancel();

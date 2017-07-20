@@ -8,13 +8,13 @@
         <md-autocomplete flex 
             md-selected-item="case.status" 
             md-search-text="statusSearch"
-            md-items="status in dropdownFilter(dropdownOptions['status'],statusSearch,['displayName'])" 
-            md-item-text="status.displayName" 
+            md-items="status in dropdownFilter(dropdownOptions['status'],statusSearch)" 
+            md-item-text="status" 
             md-min-length="0" 
             md-floating-label="Status"
             ng-disabled="!editPatientData">
             <md-item-template>
-                <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status.displayName}}</span>
+                <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
             </md-item-template>
         </md-autocomplete>
         <div layout="row">

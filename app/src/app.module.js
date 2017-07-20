@@ -62,11 +62,7 @@ angular
             }
         }
 
-        declarationService.getDropdownGroups().then(function (response) {
-            angular.forEach(response, function (group) {
-                declarationService.setDropdownOptions(group.name);
-            })
-        });
+        declarationService.getPropertyValues();
 
     });
 

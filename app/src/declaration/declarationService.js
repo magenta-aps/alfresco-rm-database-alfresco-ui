@@ -22,8 +22,9 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
             return edit;
         },
 
-        setCurrentCase: function(newCase) {
+        setCurrentCaseAfterCreation: function(newCase) {
             currentCase = newCase;
+            setCaseTitle(currentCase);
         },
 
         getCurrentCase: function() {
@@ -86,7 +87,16 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
                     response.data[0].diagnosis = JSON.parse( response.data[0].diagnosis );
                 }
 
-                return response.data;
+                if (response.data[0].bidiagnoses != null) {
+                    response.data[0].bidiagnoses = JSON.parse( response.data[0].bidiagnoses );
+                }
+
+                if (response.data[0].reason != null) {
+                    response.data[0].reason = JSON.parse( response.data[0].reason );
+                }
+
+                currentCase = response.data[0];
+                return response.data[0];
             });
         },
         
@@ -97,7 +107,6 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
         },
 
         updateCase : function(properties) {
-            console.log(properties);
             return $http.put("/alfresco/s/entry?uuid=" + properties['node-uuid'],{"properties" : properties}).then(function (response) {
                 return response.data;
             });
@@ -105,45 +114,11 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
 
         createCase : function(properties) {
 
-            if (properties["placement"] != null) {
-                properties["placement"] = JSON.stringify(properties["placement"]);
-            }
-
-            if (properties["ethnicity"] != null) {
-                properties["ethnicity"] = JSON.stringify(properties["ethnicity"]);;
-            }
-
-            if (properties["fatherEthnicity"] != null) {
-                properties["fatherEthnicity"] = JSON.stringify(properties["fatherEthnicity"]);
-            }
-
-            if (properties["motherEthnicity"] != null) {
-                properties["motherEthnicity"] = JSON.stringify(properties["motherEthnicity"]);
-            }
-
-            if (properties["mainCharge"] != null) {
-                properties["mainCharge"] = JSON.stringify(properties["mainCharge"]);
-            }
-
-            if (properties["referingAgency"] != null) {
-                properties["referingAgency"] = JSON.stringify(properties["referingAgency"]);
-            }
-
-            if (properties["sanctionProposal"] != null) {
-                properties["sanctionProposal"] = JSON.stringify(properties["sanctionProposal"]);
-            }
-
-            if (properties["status"] != null) {
-                properties["status"] = JSON.stringify(properties["status"]);
-            }
-
-            if (properties["diagnosis"] != null) {
-                properties["diagnosis"] = JSON.stringify(properties["diagnosis"]);
-            }
-
-            if (properties["finalVerdict"] != null) {
-                properties["finalVerdict"] = JSON.stringify(properties["finalVerdict"]);
-            }
+            angular.forEach(properties, function(value, key) {
+                if(value != null && typeof value == "object" && typeof value.getMonth != 'function') {
+                    properties[key] = JSON.stringify(properties[key])
+                }
+            });
 
             return $http.post("/alfresco/s/entry", {"type":"forensicPsychiatryDeclaration",
                                                     "siteShortName" : "retspsyk",
@@ -159,16 +134,10 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
             });
         },
 
-        getDropdownGroups: function() {
-            return $http.get("/alfresco/service/conf?method=getDropDownColumnGroupNames").then(function(response) {
-                dropdownGroupNames = response.data;
+        getPropertyValues: function() {
+            return $http.get("/alfresco/s/propertyValues").then(function(response) {
+                dropdownGroupOptions = response.data;
                 return response.data;
-            });
-        },
-
-        setDropdownOptions: function(groupName) {
-            $http.get("alfresco/s/api/groups/GROUP_"+ groupName +"/children?authorityType=GROUP").then(function(response) {
-                dropdownGroupOptions[groupName] = response.data.data;
             });
         },
 

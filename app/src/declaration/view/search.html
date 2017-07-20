@@ -1,5 +1,5 @@
 <div layout="row" layout-align="center center" ng-show="!showFilters">
-    <div layout="column" style="height:128px" flex-gt-sm="50" flex>
+    <div layout="column" style="height:144px" flex-gt-sm="50" flex>
         <span flex></span>
         <div layout="row">
             <md-autocomplete
@@ -22,7 +22,7 @@
             <md-icon>filter_list</md-icon>
             </md-button>
         </div>
-        <div layout="row" layout-align="center">
+        <div layout="row" layout-align="center" style="margin-top:16px" ng-click="gotoWaitinglist()">
             <a>Se den aktuelle venteliste</a>
         </div>
     </div>
@@ -30,29 +30,4 @@
 
 <ng-include src="'app/src/declaration/view/search-advanced.html'" ng-show="showFilters"></ng-include>
 
-  <md-card>
-    <md-card-content>
-    <md-table-container>
-            <table md-table>
-                <thead md-head>
-                    <tr md-row>
-                        <th md-column md-numeric md-order-by="caseNumber">Sagsnummer</th>
-                        <th md-column md-order-by="fullName">Navn</th>
-                        <th md-column md-numeric md-order-by="cprNumber">CPR</th>
-                        <th md-column md-numeric>Oprettet</th>
-                        <th md-column md-numeric>Liggetid (dage)</th>
-                    </tr>
-                </thead>
-                <tbody md-body ng-repeat="case in waitingListCases">
-                    <tr md-row ng-click="gotoCase(case.caseNumber)">
-                        <td md-cell>{{case.caseNumber}}</td>
-                        <td md-cell>{{case.fullName}}</td>
-                        <td md-cell>{{case.cprNumber}}</td>
-                        <td md-cell>{{case.created}}</td>
-                        <td md-cell>{{case.closed}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </md-table-container>
-    </md-card-content>
-</md-card>  
+<!-- <ng-include src="'app/src/declaration/view/waitinglist.html'"></ng-include> -->

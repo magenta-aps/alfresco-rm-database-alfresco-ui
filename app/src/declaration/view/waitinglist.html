@@ -1,0 +1,26 @@
+  <md-card>
+    <md-card-content>
+    <md-table-container>
+            <table md-table  md-row-select multiple>
+                <thead md-head md-order="caseNumber">
+                    <tr md-row>
+                        <th md-column md-numeric md-order-by="caseNumber">Sagsnummer</th>
+                        <th md-column md-order-by="fullName">Navn</th>
+                        <th md-column md-numeric md-order-by="cprNumber">CPR</th>
+                        <th md-column md-numeric>Oprettet</th>
+                        <th md-column md-numeric>Liggetid (dage)</th>
+                    </tr>
+                </thead>
+                <tbody md-body ng-repeat="case in waitingListCases">
+                    <tr md-row ng-click="gotoCase(case.caseNumber)">
+                        <td md-cell>{{case.caseNumber}}</td>
+                        <td md-cell>{{case.fullName}}</td>
+                        <td md-cell>{{case.cprNumber}}</td>
+                        <td md-cell>{{case.creationDateFormatted}}</td>
+                        <td md-cell>{{case.waitingTime}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+    </md-card-content>
+</md-card>  

@@ -18,6 +18,19 @@ function config($stateProvider, USER_ROLES) {
                 },
             }
         })
+        .state('declaration.waitinglist', {
+            url: '/venteliste',
+            views: {
+                'content@': {
+                    templateUrl: 'app/src/declaration/view/waitinglist.html',
+                    controller: 'DeclarationSearchController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools-left@site': {
+                    template: "<h2>Venteliste</h2>"
+                }
+            }
+        })
         .state('declaration.create', {
             url: '/opret',
             views: {
@@ -36,7 +49,7 @@ function config($stateProvider, USER_ROLES) {
             }
         })
         .state('declaration.show', {
-            url: '/:caseid',
+            url: '/sag/:caseid',
             views: {
                 'content@': {
                     templateUrl: 'app/src/declaration/view/declaration.html',
@@ -69,7 +82,8 @@ function config($stateProvider, USER_ROLES) {
             url: '/:nodeid',
             views: {
                 'declarations@declaration.show': {
-                    templateUrl: 'app/src/declaration/view/document-view.html'
+                    templateUrl: 'app/src/declaration/view/document-view.html',
+                    controller: 'DocumentController',
                 },
                 'toolbar-tools-right@site': {
                     template: '',
@@ -77,7 +91,6 @@ function config($stateProvider, USER_ROLES) {
             }
         })
         .state('declaration.show.documents.edit', {
-            url: '/rediger'
         })
         .state('declaration.show.patientdata', {
             url: '/patientdata',

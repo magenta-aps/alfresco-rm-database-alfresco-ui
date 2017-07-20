@@ -9,26 +9,41 @@ function DeclarationController($scope, $state, $stateParams, declarationService)
     $(".od-info-declarations").css("margin-left", sidebar.width() + "px");
 
     $scope.case = {};
-
-    $scope.bidiagnoses = [{id: 'bidiagnosis1'}];
-
+    $scope.bidiagnoses = [{
+        id: 'bidiagnosis1'
+    }];
     $scope.dropdownOptions = declarationService.getAllDropdownOptions();
 
     function loadCase(caseid) {
         if (caseid) {
             declarationService.getCase(caseid).then(function (response) {
-                declarationService.setCurrentCase(response[0]);
-                $scope.case = response[0];
-                console.log('case loaded');
-                console.log(response[0]);
 
-                var creationDate = new Date(response[0].creationDate);
-                var observationDate = new Date(response[0].observationDate);
-                var declarationDate = new Date(response[0].declarationDate);
+                    $scope.case = response;
+                    console.log('case loaded');
+                    console.log($scope.case);
 
-                $scope.passiveWait = Math.ceil((observationDate - creationDate) / 1000 / 60 / 60 / 24);
-                $scope.activeWait = Math.ceil((declarationDate - observationDate) / 1000 / 60 / 60 / 24);
-                $scope.totalWait = Math.ceil((declarationDate - creationDate) / 1000 / 60 / 60 / 24);
+                    if (response.hasOwnProperty('bidiagnoses')) {
+                        $scope.bidiagnoses = [];
+
+                        Object.keys(response.bidiagnoses).forEach(function (elem) {
+                            console.log(elem);
+                            $scope.bidiagnoses.push({
+                                id: elem
+                            });
+                        });
+                    }
+
+                    var creationDate = new Date(response.creationDate);
+                    var observationDate = new Date(response.observationDate);
+                    var declarationDate = new Date(response.declarationDate);
+
+                    $scope.passiveWait = Math.ceil((observationDate - creationDate) / 1000 / 60 / 60 / 24);
+                    $scope.activeWait = Math.ceil((declarationDate - observationDate) / 1000 / 60 / 60 / 24);
+                    $scope.totalWait = Math.ceil((declarationDate - creationDate) / 1000 / 60 / 60 / 24);
+                
+            },function(error) {
+                console.log('ikke sat endnu');
+                $scope.case = declarationService.getCurrentCase();
             });
         }
     }
@@ -46,9 +61,11 @@ function DeclarationController($scope, $state, $stateParams, declarationService)
         $state.go('declaration.show.patientdata');
     }
 
-    $scope.addNewBidiagnosis = function() {
-        var newItemNo = $scope.bidiagnoses.length+1;
-        $scope.bidiagnoses.push({'id':'bidiagnosis'+newItemNo});
+    $scope.addNewBidiagnosis = function () {
+        var newItemNo = $scope.bidiagnoses.length + 1;
+        $scope.bidiagnoses.push({
+            'id': 'bidiagnosis' + newItemNo
+        });
     };
 
     $scope.isNumber = function (number) {

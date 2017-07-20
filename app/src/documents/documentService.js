@@ -21,6 +21,7 @@ function documentService($http, alfrescoNodeUtils) {
         cleanupThumbnail: cleanupThumbnail,
         revertToVersion: revertToVersion,
         getPDFLink: getPDFLink,
+        getDoclibLink: getDoclibLink,
         deleteFile: deleteFile,
         uploadFiles: uploadFiles
     };
@@ -137,6 +138,10 @@ function documentService($http, alfrescoNodeUtils) {
 
     function getPDFLink(nodeRef) {
         return "/alfresco/service/api/node/" + nodeRef + "/content/thumbnails/pdf"
+    }
+
+    function getDoclibLink(nodeRef) {
+        return "/alfresco/service/api/node/" + nodeRef + "/content/thumbnails/doclib"
     }
 
 

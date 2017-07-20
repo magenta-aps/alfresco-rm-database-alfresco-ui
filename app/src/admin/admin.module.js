@@ -5,7 +5,7 @@ function config($stateProvider, USER_ROLES) {
 
     $stateProvider.state('administration', {
         parent: 'site',
-        url: '/indstillinger',
+        url: '/administration',
         views: {
             'content@': {
                 templateUrl: 'app/src/admin/view/admin.html',
