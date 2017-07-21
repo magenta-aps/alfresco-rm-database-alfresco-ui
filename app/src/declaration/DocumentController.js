@@ -20,6 +20,10 @@ function DocumentController($scope, $state, $stateParams, $mdDialog, declaration
 
     $scope.tableView = false;
 
+    $scope.query = {
+        order: 'name'
+    }
+
     //update service with currently selected files
     $scope.$watch('selectedFiles', function (newVal, oldVal) {
         documentService.setSelectedFiles(newVal);
@@ -38,6 +42,15 @@ function DocumentController($scope, $state, $stateParams, $mdDialog, declaration
         $scope.contents = newVal;
         documentService.resetSelectedFiles();
     });
+
+    $scope.$watch('contents', function (newVal) {
+        console.log('content updated');
+        newVal.forEach(function (contentTypeList) {
+                $scope.contentLength += contentTypeList.length;
+            });
+        // $scope.contents = newVal;
+        // documentService.resetSelectedFiles();
+    },true);
 
     //change view
     $scope.$watch('documentToolbarService.getDocumentView()', function (newVal) {
