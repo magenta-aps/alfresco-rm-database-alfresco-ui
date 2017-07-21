@@ -33,21 +33,23 @@ function advancedCaseFilter() {
 
         var alreadyAdded = false;
 
-        if (filters.hasOwnProperty('closed')) {
-            filters['closed'] = 'closed';
-        }
-
         angular.forEach(cases, function (declaration) {
             var filtersMet = [];
             var psychSet = false;
             var fromDateSet = false;
             var toDateSet = false;
             var waitTimeSet = false;
+            var declarationSet = false;
             angular.forEach(declaration, function (value, key) {
 
                 angular.forEach(filters, function (fval, fkey) {
                     if (key == fkey && value == fval) {
                         filtersMet.push(true);
+                    }
+
+                    if (fkey == 'closed' && declaration.hasOwnProperty('declarationDate') && !declarationSet) {
+                        filtersMet.push(true);
+                        declarationSet = true;
                     }
 
                     if (fkey == 'psychEval' && declaration.hasOwnProperty('psychologist') && !psychSet) {
@@ -61,7 +63,6 @@ function advancedCaseFilter() {
                     }
 
                     if (fkey == 'toDate' && new Date(declaration.creationDate) <= fval && !toDateSet) {
-                        console.log('to date is higher!');
                         filtersMet.push(true);
                         toDateSet = true;
                     }
@@ -115,7 +116,6 @@ function advancedCaseFilter() {
 
 
             if (Object.keys(filters).length == filtersMet.length) {
-                console.log(declaration);
                 filteredCases.push(declaration);
             }
 

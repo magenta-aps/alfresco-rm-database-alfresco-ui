@@ -16,7 +16,6 @@ function DeclarationController($scope, $state, $stateParams, declarationService)
 
     function loadCase(caseid) {
         if (caseid) {
-            console.log(caseid)
             declarationService.getCase(caseid).then(function (response) {
 
                     $scope.case = response;
@@ -27,7 +26,6 @@ function DeclarationController($scope, $state, $stateParams, declarationService)
                         $scope.bidiagnoses = [];
 
                         Object.keys(response.bidiagnoses).forEach(function (elem) {
-                            console.log(elem);
                             $scope.bidiagnoses.push({
                                 id: elem
                             });

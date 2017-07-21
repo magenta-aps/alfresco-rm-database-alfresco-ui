@@ -28,13 +28,16 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
             $scope.editor = angular.fromJson(newVal.locked4editBy);
 
             if($scope.editor.hasOwnProperty('userName')) {
-            $scope.canCurrentlyEdit = $scope.editor.userName == currentUser.userName ? true : false;
-        }
+                $scope.canCurrentlyEdit = $scope.editor.userName == currentUser.userName ? true : false;
+            }
+            else {
+                $scope.canCurrentlyEdit = true;
+            }
 
-        if ($scope.canCurrentlyEdit) {
-            // $scope.editMode = true;
-            // declarationService.toggleEdit();
-            // $state.go('declaration.show.patientdata.edit');
+        if ($scope.editor.userName == currentUser.userName) {
+            $scope.editMode = true;
+            declarationService.forceEdit(true);
+            $state.go('declaration.show.patientdata.edit');
         }
         }
     });
@@ -45,8 +48,10 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
 
         if ($scope.editMode) {
             $state.go('declaration.show.patientdata.edit');
+            lockCase(true);
         } else {
             $state.go('declaration.show.patientdata');
+            lockCase(false);
 
             $mdToast.show(
                 $mdToast.simple()
@@ -76,7 +81,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
         });
     }
 
-    $scope.lockCase = function () {
+    $scope.closeCase = function () {
         $scope.currentCase.locked4edit = false;
         $scope.currentCase.locked4editBy = {}
         declarationService.updateCase($scope.currentCase);
@@ -87,37 +92,40 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
         $state.go('declaration');
     }
 
-    $transitions.onStart({
-        to: 'declaration.show.patientdata.edit'
-    }, function () {
+    function lockCase(lock) {
         var locked = {
             'node-uuid': $scope.currentCase['node-uuid'],
-            'locked4edit': true,
-            'locked4editBy': currentUser
+            'locked4edit': lock,
+            'locked4editBy': lock ? currentUser : {}
         }
-        declarationService.updateCase(locked);
-    });
+        declarationService.updateCase(locked).then(function (response) {
+            console.log(response);
+        });
+        console.log('locked: ' + lock);
+    }
+
+    // $transitions.onStart({
+    //     to: 'declaration.show.patientdata.edit'
+    // }, function () {
+    //     var locked = {
+    //         'node-uuid': $scope.currentCase['node-uuid'],
+    //         'locked4edit': true,
+    //         'locked4editBy': currentUser
+    //     }
+    //     declarationService.updateCase(locked);
+    //     console.log('locked, start editing');
+    // });
 
     $transitions.onStart({
         from: 'declaration.show.patientdata.edit'
     }, function (trans) {
 
-        // var answer = confirm("Er du sikker på du vil forlade sagen uden at gemme?")
-        // if (!answer) {
-        //     return false;
-        // }
-
         if ($scope.editMode) {
             $scope.editMode = false;
-            declarationService.toggleEdit();
+            declarationService.forceEdit(false);
         }
 
-        var locked = {
-            'node-uuid': $scope.currentCase['node-uuid'],
-            'locked4edit': false,
-            'locked4editBy': {}
-        }
-        //declarationService.updateCase(locked);
+        lockCase(false);
     });
 
     $scope.dropdownFilter = function(array, query, filters) {

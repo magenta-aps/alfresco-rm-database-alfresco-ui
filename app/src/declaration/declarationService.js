@@ -18,6 +18,10 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
             edit = !edit;
         },
 
+        forceEdit: function (state) {
+            edit = state;
+        },
+
         isEditing: function () {
             return edit;
         },
@@ -50,7 +54,6 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
 
                 angular.forEach(res, function(value,key) {
                     if (value == 'null') {
-                        console.log(key)
                         res[key] = null;
                     }
                 });
