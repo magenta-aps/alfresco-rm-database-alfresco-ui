@@ -18,6 +18,19 @@ function config($stateProvider, USER_ROLES) {
                 },
             }
         })
+        .state('declaration.advancedSearch', {
+            url: '/advanceret-soegning',
+            views: {
+                'content@': {
+                    templateUrl: 'app/src/declaration/view/search-advanced.html',
+                    controller: 'DeclarationSearchController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools-left@site': {
+                    template: "<md-button class='md-icon-button' aria-label='Back' ui-sref='declaration'><md-icon>arrow_back</md-icon></md-button><span>Advanceret søgning</span>"
+                }
+            }
+        })
         .state('declaration.waitinglist', {
             url: '/venteliste',
             views: {

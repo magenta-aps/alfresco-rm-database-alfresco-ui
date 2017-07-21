@@ -6,6 +6,7 @@ function DeclarationSearchController($scope, $state, $stateParams, declarationSe
 
     $scope.caseid;
     $scope.showFilters = false;
+    $scope.showResults = false;
     $scope.allCases;
     $scope.waitingListCases = [];
     $scope.searchParams = {};
@@ -22,8 +23,8 @@ function DeclarationSearchController($scope, $state, $stateParams, declarationSe
         return filterService.caseSearch($scope.allCases, query, filters);
     }
 
-    $scope.dropdownFilter = function(array, query, filters) {
-        return filterService.caseSearch(array, query, filters);
+    $scope.dropdownFilter = function(array, query) {
+        return filterService.dropdownFilter(array, query);
     }
 
     $scope.search = function() {
@@ -41,10 +42,35 @@ function DeclarationSearchController($scope, $state, $stateParams, declarationSe
 
     $scope.toggleFilters = function() {
         $scope.showFilters = !$scope.showFilters;
+        if($scope.showFilters) {
+            $state.go('declaration.advancedSearch');
+        }
+        else {
+            $state.go('declaration');
+        }
     }
 
-    $scope.advancedSearch = function() {
-        console.log($scope.searchParams);
+    $scope.toggleResults = function() {
+        $scope.results = !$scope.results;
+    }
+
+    $scope.advancedSearch = function(params) {
+        for (var filter in params) { 
+            if (params[filter] == null || params[filter] == "") {
+                delete params[filter];
+            }
+
+            if(filter == 'waitingTime') {
+                angular.forEach(params[filter], function(value,key) {
+                    if(value == "") {
+                        delete params[filter];
+                    }
+                });
+            }
+        }
+        var filters = angular.copy(params);
+        console.log(filters);
+        $scope.advancedSearchResults = filterService.advancedCaseSearch($scope.allCases,filters);
     }
 
     function getAllCases() {
@@ -61,7 +87,11 @@ function DeclarationSearchController($scope, $state, $stateParams, declarationSe
                     var year = date.getFullYear();
 
                     declaration.creationDateFormatted = day + '/' + month + '/' + year;
-                    declaration.waitingTime = Math.ceil((new Date() - date) / 1000 / 60 / 60 / 24);
+                    var days = (new Date() - date) / 1000 / 60 / 60 / 24;
+
+                    
+
+                    declaration.waitingTime = days < 0.5 ? 0 : Math.ceil(days);
                     $scope.waitingListCases.push(declaration);
                 }
             });

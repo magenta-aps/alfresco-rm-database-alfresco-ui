@@ -59,6 +59,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
 
     $scope.saveEdit = function () {
         var newCase = declarationService.getNewCaseInfo();
+        newCase.fullName = newCase.firstName + ' ' + newCase.lastName;
         declarationService.updateCase(newCase).then(function (response) {
             console.log(response);
         });
@@ -116,7 +117,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
             'locked4edit': false,
             'locked4editBy': {}
         }
-        declarationService.updateCase(locked);
+        //declarationService.updateCase(locked);
     });
 
     $scope.dropdownFilter = function(array, query, filters) {

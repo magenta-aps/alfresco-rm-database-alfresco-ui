@@ -6,6 +6,7 @@ function filterService($filter) {
     return {
         search: search,
         caseSearch: caseSearch,
+        advancedCaseSearch: advancedCaseSearch,
         dropdownFilter: dropdownFilter
     };
 
@@ -16,6 +17,11 @@ function filterService($filter) {
 
     function caseSearch(array, query, filters) {
         var hitList = $filter('casefilter')(array, query, filters);
+        return hitList;
+    }
+
+    function advancedCaseSearch(array, filters) {
+        var hitList = $filter('advancedcasefilter')(array, filters);
         return hitList;
     }
 

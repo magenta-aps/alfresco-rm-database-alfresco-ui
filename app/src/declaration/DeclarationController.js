@@ -16,6 +16,7 @@ function DeclarationController($scope, $state, $stateParams, declarationService)
 
     function loadCase(caseid) {
         if (caseid) {
+            console.log(caseid)
             declarationService.getCase(caseid).then(function (response) {
 
                     $scope.case = response;
@@ -43,6 +44,7 @@ function DeclarationController($scope, $state, $stateParams, declarationService)
                 
             },function(error) {
                 console.log('ikke sat endnu');
+                console.log(error);
                 $scope.case = declarationService.getCurrentCase();
             });
         }

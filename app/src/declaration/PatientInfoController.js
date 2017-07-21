@@ -20,8 +20,8 @@ function PatientInfoController($scope, $state, $stateParams, declarationService,
         declarationService.updateNewCase(newVal);
     }, true);
 
-    $scope.dropdownFilter = function(array, query, filters) {
-        return filterService.caseSearch(array, query, filters);
+    $scope.dropdownFilter = function(array, query) {
+        return filterService.dropdownFilter(array, query);
     }
 
 }
