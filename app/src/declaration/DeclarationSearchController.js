@@ -13,6 +13,10 @@ function DeclarationSearchController($scope, $state, $stateParams, declarationSe
     $scope.selectedCase = null;
     $scope.dropdownOptions = declarationService.getAllDropdownOptions();
 
+    $scope.query = {
+        order: 'caseNumber'
+    }
+
     $scope.$watch('selectedCase', function (newVal, oldVal) {
         if(newVal) {
             $scope.gotoCase($scope.selectedCase.caseNumber);

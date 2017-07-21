@@ -149,22 +149,22 @@
   </md-card-title>
     <md-card-content>
     <md-table-container>
-            <table md-table  md-row-select multiple>
-                <thead md-head md-order="caseNumber">
+            <table md-table>
+                <thead md-head md-order="query.order">
                     <tr md-row>
                         <th md-column md-numeric md-order-by="caseNumber">Sagsnummer</th>
                         <th md-column md-order-by="fullName">Navn</th>
                         <th md-column md-numeric md-order-by="cprNumber">CPR</th>
-                        <th md-column md-order-by="">Læge</th>
-                        <th md-column md-order-by="">Erklæring afgivet</th>
-                        <th md-column md-order-by="">Psykologisk evaluering</th>
-                        <th md-column md-order-by="" ng-if="searchParams.mainCharge">Hovedsigtelse</th>
-                        <th md-column md-order-by="" ng-if="searchParams.placement">Placering</th>
-                        <th md-column md-order-by="" ng-if="searchParams.sanctionProposal">Sanktionsforslag</th>
-                        <th md-column md-order-by="" ng-if="searchParams.diagnosis">Sanktionsforslag</th>
+                        <th md-column md-order-by="doctor">Læge</th>
+                        <th md-column md-order-by="closed">Erklæring afgivet</th>
+                        <th md-column md-order-by="psychologist">Psykologisk evaluering</th>
+                        <th md-column md-order-by="mainCharge" ng-if="searchParams.mainCharge">Hovedsigtelse</th>
+                        <th md-column md-order-by="placement" ng-if="searchParams.placement">Placering</th>
+                        <th md-column md-order-by="sanctionProposal" ng-if="searchParams.sanctionProposal">Sanktionsforslag</th>
+                        <th md-column md-order-by="diagnosis" ng-if="searchParams.diagnosis">Diagnose</th>
                     </tr>
                 </thead>
-                <tbody md-body ng-repeat="case in advancedSearchResults">
+                <tbody md-body ng-repeat="case in advancedSearchResults | orderBy : query.order ">
                     <tr md-row ng-click="gotoCase(case.caseNumber)">
                         <td md-cell>{{case.caseNumber}}</td>
                         <td md-cell>{{case.fullName}}</td>
