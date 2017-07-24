@@ -8,7 +8,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider, USER_ROLES) 
 
     $stateProvider.state('administration.systemsettings', {
         data: {
-            authorizedRoles: [USER_ROLES.user],
+            authorizedRoles: [USER_ROLES.admin],
         },
         views: {
             'systemsettings': {
@@ -20,9 +20,6 @@ function config(systemSettingsPagesServiceProvider, $stateProvider, USER_ROLES) 
         redirectTo: 'administration.systemsettings.dashboard'
     })
     .state('administration.systemsettings.dashboard', {
-        data: {
-            authorizedRoles: [USER_ROLES.user]
-        },
         views: {
             'systemsetting-view': {
                 templateUrl: 'app/src/system_settings/dashboard/view/dashboard.html',
@@ -31,9 +28,6 @@ function config(systemSettingsPagesServiceProvider, $stateProvider, USER_ROLES) 
     })
     .state('administration.systemsettings.practitioners', {
         url: '/behandlere',
-        data: {
-            authorizedRoles: [USER_ROLES.user]
-        },
         views: {
             'systemsetting-view': {
                 templateUrl: 'app/src/system_settings/practitioners/view/practitioner-list.html',
@@ -52,9 +46,6 @@ function config(systemSettingsPagesServiceProvider, $stateProvider, USER_ROLES) 
     })
     .state('administration.systemsettings.ethnicities', {
         url: '/etniciteter',
-        data: {
-            authorizedRoles: [USER_ROLES.user],
-        },
         params: {
             listTitle: 'Etnicitet',
             listData: 'ethnicity'

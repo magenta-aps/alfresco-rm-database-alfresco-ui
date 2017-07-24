@@ -6,42 +6,16 @@
                     <tr md-row>
                         <th md-column>Navn</th>
                         <th md-column md-numeric>Genåbne sager</th>
-                        <th md-column md-numeric>Redigerer lister</th>
+                        <th md-column md-numeric>Redigere lister</th>
                         <th md-column md-numeric>Tildele roller</th>
                     </tr>
                 </thead>
-                <tbody md-body ng-repeat="content in contents">
-                    <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="c in content">
-                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
-                        <td md-cell>{{c.name}}</td>
-                        <td md-cell>{{c.lastChanged | customDate}}</td>
-                        <td md-cell>{{c.lastChangedBy}}</td>
-                    </tr>
-                </tbody>
-                <tbody md-body>
+                <tbody md-body ng-repeat="user in allUsers">
                     <tr md-row md-select="dessert" md-select-id="name" md-auto-select>
-                        <td md-cell>Dr. John Hansen</td>
-                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
-                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
-                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
-                    </tr>
-                    <tr md-row md-select="dessert" md-select-id="name" md-auto-select>
-                        <td md-cell>Peter Larsen</td>
-                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
-                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
-                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
-                    </tr>
-                    <tr md-row md-select="dessert" md-select-id="name" md-auto-select>
-                        <td md-cell>Helle Vitus Østergaard</td>
-                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
-                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
-                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
-                    </tr>
-                    <tr md-row md-select="dessert" md-select-id="name" md-auto-select>
-                        <td md-cell>Camilla Henriksen</td>
-                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
-                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
-                        <td md-cell><md-checkbox aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
+                        <td md-cell>{{user.firstName}} {{user.lastName}}</td>
+                        <td md-cell><md-checkbox aria-label="genåbne sager"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="redigere lister" ng-model="c.editLists"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="tildele roller" ng-model="c.assignRoles"></md-checkbox></td>
                     </tr>
                 </tbody>
             </table>

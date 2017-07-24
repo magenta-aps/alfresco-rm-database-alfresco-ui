@@ -16,7 +16,10 @@ function GroupService(ALFRESCO_URI, $http, $q) {
         deleteGroup: deleteGroup,
         uploadGroupsCSVFile: uploadGroupsCSVFile,
         getGroupsAndMembers: getGroupsAndMembers,
-        getSubGroups: getSubGroups
+        getSubGroups: getSubGroups,
+        getUserGroups: getUserGroups,
+        addUserToGroups: addUserToGroups,
+        removeUserToGroups: removeUserFromGroups
     };
 
     /**
@@ -173,4 +176,33 @@ function GroupService(ALFRESCO_URI, $http, $q) {
             return response.data;
         });
     }
+
+    function getUserGroups(groupShortName) {
+        return $http.get('/alfresco/s/api/groups/'+ groupShortName + '/children').then(function(response) {
+            return response.data;
+        });
+    }
+
+    function addUserToGroups(userName,groupShortNames) {
+        var json = { 
+            addGroups: groupShortNames
+        };
+
+        return $http.put('/alfresco/s/api/people/'+ userName, json).then(function(response) {
+            console.log('hello');
+            console.log(response);
+            return response.data;
+        });
+    }
+
+    function removeUserFromGroups(userName,groupShortNames) {
+        var json = {
+            removeGroups: groupShortNames
+        };
+
+        return $http.put('/alfresco/s/api/people/'+ userName, json).then(function(response) {
+            return response.data;
+        });
+    }
+
 }

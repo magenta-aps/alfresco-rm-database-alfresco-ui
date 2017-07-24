@@ -4,6 +4,7 @@ angular
 
 function userService($http, sessionService) {
     return {
+        getAllUsers: getAllUsers,
         getPerson: getPerson,
         getUsers: getUsers,
         getAuthorities: getAuthorities,
@@ -13,6 +14,11 @@ function userService($http, sessionService) {
         getAvatarFromUser : getAvatarFromUser
     };
 
+    function getAllUsers() {
+        return $http.get('/api/people').then(function (response) {
+            return response.data;
+        });
+    }
 
     function getPerson(username) {
         return $http.get('/api/people/' + username).then(function (response) {
