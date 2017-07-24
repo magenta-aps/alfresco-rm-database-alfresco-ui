@@ -19,5 +19,6 @@ angular
     .constant('APP_CONFIG', {
         appName: 'Retspsykiatriske erklæringer',
         logoSrc: './app/assets/images/logo-light.svg',
-        ssoLoginEnabled: "false"
+        ssoLoginEnabled: "false",
+        landingPage: "projects"
     });

@@ -16,7 +16,7 @@ function config($stateProvider, USER_ROLES) {
                 template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }}</h2>"
             }
         },
-        data: {
+        params: {
             authorizedRoles: [USER_ROLES.user]
         },
         redirectTo: 'administration.systemsettings'

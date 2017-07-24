@@ -45,22 +45,12 @@ angular
     ]) //TRANSLATIONS IS ALWAYS LAST!
     .config(config)
     .run(function ($rootScope, $transitions, $state, $mdDialog, authService, sessionService, declarationService, APP_CONFIG) {
-        var ssoLoginEnabled = APP_CONFIG.ssoLoginEnabled == "true";
+        $rootScope.ssoLoginEnabled = APP_CONFIG.ssoLoginEnabled == "true";
         angular.element(window.document)[0].title = APP_CONFIG.appName;
         $rootScope.appName = APP_CONFIG.appName;
         $rootScope.logoSrc = APP_CONFIG.logoSrc;
-
-        if (!authService.isAuthenticated()) {
-            if (ssoLoginEnabled) {
-                authService.ssoLogin().then(function (response) {
-                    if (!authService.isAuthenticated()) {
-                        sessionService.retainCurrentLocation();
-                        $state.go('login');
-                    } else
-                        $state.reload();
-                });
-            }
-        }
+        if($state.current.url == "^")
+            $state.go(APP_CONFIG.landingPage);
 
         declarationService.getPropertyValues();
 
@@ -75,19 +65,34 @@ function config($stateProvider, $urlRouterProvider, $mdDateLocaleProvider) {
     $stateProvider.state('site', {
         abstract: true,
         resolve: {
-            authorize: ['authService', '$q', 'sessionService', '$state', function (authService, $q, sessionService, $state) {
-                var d = $q.defer();
-                if (authService.isAuthenticated()) {
-                    // I also provide the user for child controllers
-                    d.resolve(authService.user);
-                } else {
-                    // here the rejection
-                    d.reject('Not logged in!');
-                    sessionService.retainCurrentLocation();
-                    $state.go('login');
-                }
-                return d.promise;
-            }]
+            authorize:
+                ['authService', '$q', 'sessionService', '$state', '$rootScope', '$stateParams',
+                    function (authService, $q, sessionService, $state, $rootScope, $stateParams) {
+                        var d = $q.defer();
+                        if (authService.isAuthenticated() && authService.isAuthorized($stateParams.authorizedRoles)) {
+                            // I also provide the user for child controllers
+                            d.resolve(authService.user);
+                        } else {
+                            // here the rejection
+                            if ($rootScope.ssoLoginEnabled) {
+                                authService.ssoLogin().then(function (response) {
+                                    if (authService.isAuthenticated() && authService.isAuthorized($stateParams.authorizedRoles))
+                                        d.resolve(authService.user);
+                                    else {
+                                        d.reject('Not logged in or lacking authorization!');
+                                        sessionService.retainCurrentLocation();
+                                        $state.go('login');
+                                    }
+                                });
+                            }
+                            else {
+                                d.reject('Not logged in or lacking authorization!');
+                                sessionService.retainCurrentLocation();
+                                $state.go('login');
+                            }
+                        }
+                        return d.promise;
+                    }]
         },
         views: {
             'header@': {

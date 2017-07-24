@@ -7,7 +7,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider, USER_ROLES) 
     systemSettingsPagesServiceProvider.addPage('Dokumentskabeloner', 'document_templates', true);
 
     $stateProvider.state('administration.systemsettings', {
-        data: {
+        params: {
             authorizedRoles: [USER_ROLES.user],
         },
         views: {
@@ -20,7 +20,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider, USER_ROLES) 
         redirectTo: 'administration.systemsettings.dashboard'
     })
     .state('administration.systemsettings.dashboard', {
-        data: {
+        params: {
             authorizedRoles: [USER_ROLES.user]
         },
         views: {
@@ -31,7 +31,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider, USER_ROLES) 
     })
     .state('administration.systemsettings.practitioners', {
         url: '/behandlere',
-        data: {
+        params: {
             authorizedRoles: [USER_ROLES.user]
         },
         views: {
@@ -52,12 +52,10 @@ function config(systemSettingsPagesServiceProvider, $stateProvider, USER_ROLES) 
     })
     .state('administration.systemsettings.ethnicities', {
         url: '/etniciteter',
-        data: {
-            authorizedRoles: [USER_ROLES.user],
-        },
         params: {
             listTitle: 'Etnicitet',
-            listData: 'ethnicity'
+            listData: 'ethnicity',
+            authorizedRoles: [USER_ROLES.user]
         },
         views: {
             'systemsetting-view': {
