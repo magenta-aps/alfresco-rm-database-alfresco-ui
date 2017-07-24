@@ -1,18 +1,17 @@
 <md-card>
     <md-card-content>
         <md-table-container>
-            <table md-table md-row-select multiple>
-                <thead md-head>
+            <table md-table>
+                <thead md-head md-order="query.order">
                     <tr md-row>
                         <th md-column></th>
-                        <th md-column>{{listTitle}}</th>
+                        <th md-column md-order-by="title">{{listTitle}}</th>
                     </tr>
                 </thead>
                 <tbody md-body>
-                    
-                    <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="content in listContent">
-                        <td md-cell><md-checkbox aria-label="Checkbox {{content.shortRef}}" ng-model="content.shortRef" ng-click="selectedFile(c)"></md-checkbox></td>
-                        <td md-cell>{{content}}</td>
+                    <tr md-row ng-repeat="content in listContent | orderBy: query.order">
+                        <td md-cell><md-checkbox aria-label="{{content.title}}" ng-model="content.selected"></md-checkbox></td>
+                        <td md-cell>{{content.title}}</td>
                     </tr>
                 </tbody>
             </table>
