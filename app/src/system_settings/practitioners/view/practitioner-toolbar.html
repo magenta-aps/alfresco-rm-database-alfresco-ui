@@ -1,10 +1,10 @@
 
-<md-button ng-click="" ng-if="'administration.systemsettings.practitioners' | isState">
+<md-button ng-if="!isEditing" ng-click="toggleEdit()">
     <md-icon>edit</md-icon>
     <span>Rediger</span>
 </md-button>
 
-<md-button ng-click="" ng-if="'administration.systemsettings.practitioners' | isState">
+<md-button ng-if="isEditing" ng-click="toggleEdit(); saveChanges()">
     <md-icon>save</md-icon>
     <span>Gem</span>
 </md-button>

@@ -1,21 +1,21 @@
 <md-card>
     <md-card-content>
         <md-table-container>
-            <table md-table md-row-select="true" multiple="true" ng-model="selected">
-                <thead md-head>
+            <table md-table>
+                <thead md-head md-order="query.order">
                     <tr md-row>
-                        <th md-column>Navn</th>
-                        <th md-column md-numeric>Genåbne sager</th>
-                        <th md-column md-numeric>Redigere lister</th>
-                        <th md-column md-numeric>Tildele roller</th>
+                        <th md-column md-order-by="firstName">Navn</th>
+                        <th md-column md-numeric md-order-by="GROUP_reopen_cases">Genåbne sager</th>
+                        <th md-column md-numeric md-order-by="GROUP_edit_lists">Redigere lister</th>
+                        <th md-column md-numeric md-order-by="GROUP_assign_roles">Tildele roller</th>
                     </tr>
                 </thead>
-                <tbody md-body ng-repeat="user in allUsers">
-                    <tr md-row md-select="dessert" md-select-id="name" md-auto-select>
+                <tbody md-body ng-repeat="user in allUsers | orderBy: query.order">
+                    <tr md-row>
                         <td md-cell>{{user.firstName}} {{user.lastName}}</td>
-                        <td md-cell><md-checkbox aria-label="genåbne sager"></md-checkbox></td>
-                        <td md-cell><md-checkbox aria-label="redigere lister" ng-model="c.editLists"></md-checkbox></td>
-                        <td md-cell><md-checkbox aria-label="tildele roller" ng-model="c.assignRoles"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="genåbne sager" ng-model="user.GROUP_reopen_cases" ng-disabled="!isEditing"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="redigere lister" ng-model="user.GROUP_edit_lists" ng-disabled="!isEditing"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="tildele roller" ng-model="user.GROUP_assign_roles" ng-disabled="!isEditing"></md-checkbox></td>
                     </tr>
                 </tbody>
             </table>

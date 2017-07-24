@@ -12,7 +12,8 @@ function config($stateProvider, USER_ROLES) {
         params: {
 			nodeRef: null,
 			showArchived: null,
-			backToDocPreview: null
+			backToDocPreview: null,
+            authorizedRoles: [USER_ROLES.user]
 		},
         views: {
             'content@': {
@@ -20,9 +21,6 @@ function config($stateProvider, USER_ROLES) {
                 controller: 'LoolController',
                 controllerAs: 'vm'
             }
-        },
-        data: {
-            authorizedRoles: [USER_ROLES.user]
         }
     });
 }

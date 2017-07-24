@@ -6,5 +6,4 @@ function ListController($scope, $state, $stateParams, declarationService) {
 
     $scope.listTitle = $stateParams.listTitle;
     $scope.listContent = declarationService.getDropdownOptions($stateParams.listData);
-    console.log($scope.listContent);
 }

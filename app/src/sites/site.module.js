@@ -21,7 +21,7 @@ function config($stateProvider, USER_ROLES) {
                 controllerAs: 'vm'
             },
         },
-        data: {
+        params: {
             authorizedRoles: [USER_ROLES.user]
         }
 
@@ -35,8 +35,10 @@ function config($stateProvider, USER_ROLES) {
                 controllerAs: 'vm'
             }
         },
+        params: {
+            authorizedRoles: [USER_ROLES.user]
+        },
         data: {
-            authorizedRoles: [USER_ROLES.user],
             selectedTab: 0
         }
     }).state('project.discussions', {

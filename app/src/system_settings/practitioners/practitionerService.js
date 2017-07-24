@@ -1,22 +1,32 @@
 angular.module('openDeskApp.declaration').factory('practitionerService', function () {
-    var tableView = false;
-    var toggleIcon = 'list';
-    var currentCase = {};
+    var isEditing = false;
+    var users = {};
+    var usersBeforeEdit = {};
 
     return {
-        toggleDocumentView: function() {
-            tableView = !tableView;
-
-            toggleIcon = tableView ? 'view_module' : 'list';
+        setEdit: function(state) {
+            isEditing = state;
         },
 
-        getToggleIcon: function() {
-            return toggleIcon;
+        isEditing: function() {
+            return isEditing;
         },
 
-        getDocumentView: function() {
-            return tableView;
+        updateUsers: function(update) {
+            users = update;
         },
+
+        setUsersBeforeEdit: function(save) {
+            usersBeforeEdit = angular.copy(save);
+        },
+
+        getOriginalUsers: function() {
+            return usersBeforeEdit;
+        },
+
+        getUpdatedUsers: function() {
+            return users;
+        }
     }
 
 });

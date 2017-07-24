@@ -19,7 +19,7 @@ function GroupService(ALFRESCO_URI, $http, $q) {
         getSubGroups: getSubGroups,
         getUserGroups: getUserGroups,
         addUserToGroups: addUserToGroups,
-        removeUserToGroups: removeUserFromGroups
+        removeUserFromGroups: removeUserFromGroups
     };
 
     /**
@@ -189,9 +189,9 @@ function GroupService(ALFRESCO_URI, $http, $q) {
         };
 
         return $http.put('/alfresco/s/api/people/'+ userName, json).then(function(response) {
-            console.log('hello');
-            console.log(response);
             return response.data;
+        }, function(err) {
+            console.log('already added to list');
         });
     }
 
@@ -202,6 +202,8 @@ function GroupService(ALFRESCO_URI, $http, $q) {
 
         return $http.put('/alfresco/s/api/people/'+ userName, json).then(function(response) {
             return response.data;
+        }, function(err) {
+            console.log('already removed from list');
         });
     }
 
