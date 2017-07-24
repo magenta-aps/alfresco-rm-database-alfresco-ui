@@ -2,14 +2,11 @@ angular
     .module('openDeskApp.systemsettings', ['ngMaterial', 'pascalprecht.translate'])
     .config(config);
 
-function config(systemSettingsPagesServiceProvider, $stateProvider, USER_ROLES) {
+function config(systemSettingsPagesServiceProvider, $stateProvider) {
     systemSettingsPagesServiceProvider.addPage('Projektskabeloner', 'administration.systemsettings.templateList', true);
     systemSettingsPagesServiceProvider.addPage('Dokumentskabeloner', 'document_templates', true);
 
     $stateProvider.state('administration.systemsettings', {
-        params: {
-            authorizedRoles: [USER_ROLES.user],
-        },
         views: {
             'systemsettings': {
                 templateUrl: 'app/src/system_settings/system_settings.html',
@@ -20,9 +17,6 @@ function config(systemSettingsPagesServiceProvider, $stateProvider, USER_ROLES) 
         redirectTo: 'administration.systemsettings.dashboard'
     })
     .state('administration.systemsettings.dashboard', {
-        params: {
-            authorizedRoles: [USER_ROLES.user]
-        },
         views: {
             'systemsetting-view': {
                 templateUrl: 'app/src/system_settings/dashboard/view/dashboard.html',
@@ -31,9 +25,6 @@ function config(systemSettingsPagesServiceProvider, $stateProvider, USER_ROLES) 
     })
     .state('administration.systemsettings.practitioners', {
         url: '/behandlere',
-        params: {
-            authorizedRoles: [USER_ROLES.user]
-        },
         views: {
             'systemsetting-view': {
                 templateUrl: 'app/src/system_settings/practitioners/view/practitioner-list.html',
@@ -55,7 +46,6 @@ function config(systemSettingsPagesServiceProvider, $stateProvider, USER_ROLES) 
         params: {
             listTitle: 'Etnicitet',
             listData: 'ethnicity',
-            authorizedRoles: [USER_ROLES.user]
         },
         views: {
             'systemsetting-view': {

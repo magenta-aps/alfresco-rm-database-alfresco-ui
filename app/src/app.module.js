@@ -56,44 +56,44 @@ angular
 
     });
 
-function config($stateProvider, $urlRouterProvider, $mdDateLocaleProvider) {
+function config($stateProvider, $mdDateLocaleProvider) {
 
-    $urlRouterProvider
-        .when('/admin/system-settings', '/admin/system-settings/general-configuration')
-        .otherwise('/');
+    $stateProvider.decorator('data', function(state, parent) {
+        var stateData = parent(state);
 
-    $stateProvider.state('site', {
-        abstract: true,
-        resolve: {
-            authorize:
-                ['authService', '$q', 'sessionService', '$state', '$rootScope', '$stateParams',
-                    function (authService, $q, sessionService, $state, $rootScope, $stateParams) {
-                        var d = $q.defer();
-                        if (authService.isAuthenticated() && authService.isAuthorized($stateParams.authorizedRoles)) {
-                            // I also provide the user for child controllers
-                            d.resolve(authService.user);
-                        } else {
-                            // here the rejection
-                            if ($rootScope.ssoLoginEnabled) {
-                                authService.ssoLogin().then(function (response) {
-                                    if (authService.isAuthenticated() && authService.isAuthorized($stateParams.authorizedRoles))
-                                        d.resolve(authService.user);
-                                    else {
-                                        d.reject('Not logged in or lacking authorization!');
-                                        sessionService.retainCurrentLocation();
-                                        $state.go('login');
-                                    }
-                                });
-                            }
+        state.resolve = state.resolve || {};
+        state.resolve.authorize = ['authService', '$q', 'sessionService', '$state', '$rootScope', '$stateParams',
+            function (authService, $q, sessionService, $state, $rootScope, $stateParams) {
+                var d = $q.defer();
+                if (authService.isAuthenticated() && authService.isAuthorized($stateParams.authorizedRoles)) {
+                    // I also provide the user for child controllers
+                    d.resolve(authService.user);
+                } else {
+                    // here the rejection
+                    if ($rootScope.ssoLoginEnabled) {
+                        authService.ssoLogin().then(function (response) {
+                            if (authService.isAuthenticated() && authService.isAuthorized($stateParams.authorizedRoles))
+                                d.resolve(authService.user);
                             else {
                                 d.reject('Not logged in or lacking authorization!');
                                 sessionService.retainCurrentLocation();
                                 $state.go('login');
                             }
-                        }
-                        return d.promise;
-                    }]
-        },
+                        });
+                    }
+                    else {
+                        d.reject('Not logged in or lacking authorization!');
+                        sessionService.retainCurrentLocation();
+                        $state.go('login');
+                    }
+                }
+                return d.promise;
+            }];
+        return stateData;
+    });
+
+    $stateProvider.state('site', {
+        abstract: true,
         views: {
             'header@': {
                 templateUrl: 'app/src/header/view/header.html'
