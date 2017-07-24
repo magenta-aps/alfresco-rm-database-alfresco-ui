@@ -2,78 +2,67 @@ angular
     .module('openDeskApp.systemsettings', ['ngMaterial', 'pascalprecht.translate'])
     .config(config);
 
-function config(systemSettingsPagesServiceProvider, $stateProvider, USER_ROLES) {
+function config(systemSettingsPagesServiceProvider, $stateProvider) {
     systemSettingsPagesServiceProvider.addPage('Projektskabeloner', 'administration.systemsettings.templateList', true);
     systemSettingsPagesServiceProvider.addPage('Dokumentskabeloner', 'document_templates', true);
 
     $stateProvider.state('administration.systemsettings', {
-
-            params: {
-                authorizedRoles: [USER_ROLES.admin],
-            },
-            views: {
-                'systemsettings': {
-                    templateUrl: 'app/src/system_settings/system_settings.html',
-                    controller: 'SystemSettingsController',
-                    controllerAs: 'vm'
-                }
-            },
-            redirectTo: 'administration.systemsettings.dashboard'
-        })
-        .state('administration.systemsettings.dashboard', {
-            params: {
-                authorizedRoles: [USER_ROLES.admin],
-            },
-            views: {
-                'systemsetting-view': {
-                    templateUrl: 'app/src/system_settings/dashboard/view/dashboard.html',
-                }
+        views: {
+            'systemsettings': {
+                templateUrl: 'app/src/system_settings/system_settings.html',
+                controller: 'SystemSettingsController',
+                controllerAs: 'vm'
             }
-        })
-        .state('administration.systemsettings.practitioners', {
-            params: {
-                authorizedRoles: [USER_ROLES.admin],
-            },
-            url: '/behandlere',
-            views: {
-                'systemsetting-view': {
-                    templateUrl: 'app/src/system_settings/practitioners/view/practitioner-list.html',
-                    controller: 'PractitionerController',
-                    controllerAs: 'vm'
-                },
-                'toolbar-tools-left@site': {
-                    template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Behandlere</h2>"
-                },
-                'toolbar-tools-right@site': {
-                    templateUrl: 'app/src/system_settings/practitioners/view/practitioner-toolbar.html',
-                    controller: 'PractitionerToolbarController',
-                    controllerAs: 'vm'
-                }
+        },
+        redirectTo: 'administration.systemsettings.dashboard'
+    })
+    .state('administration.systemsettings.dashboard', {
+        views: {
+            'systemsetting-view': {
+                templateUrl: 'app/src/system_settings/dashboard/view/dashboard.html',
             }
-        })
-        .state('administration.systemsettings.ethnicities', {
-            url: '/etniciteter',
-            params: {
-                listTitle: 'Etnicitet',
-                listData: 'ethnicity',
-                authorizedRoles: [USER_ROLES.user]
+        }
+    })
+    .state('administration.systemsettings.practitioners', {
+        url: '/behandlere',
+        views: {
+            'systemsetting-view': {
+                templateUrl: 'app/src/system_settings/practitioners/view/practitioner-list.html',
+                controller: 'PractitionerController',
+                controllerAs: 'vm'
             },
-            views: {
-                'systemsetting-view': {
-                    templateUrl: 'app/src/system_settings/lists/view/list.html',
-                    controller: 'ListController',
-                    controllerAs: 'vm'
-                },
-                'toolbar-tools-left@site': {
-                    template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Etniciteter</h2>"
-                },
-                'toolbar-tools-right@site': {
-                    templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',
-                    controller: 'ListToolbarController',
-                    controllerAs: 'vm'
-                }
+            'toolbar-tools-left@site': {
+                template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Behandlere</h2>"
+            },
+            'toolbar-tools-right@site': {
+                templateUrl: 'app/src/system_settings/practitioners/view/practitioner-toolbar.html',
+                controller: 'PractitionerToolbarController',
+                controllerAs: 'vm'
             }
-        })
+        }
+    })
+    .state('administration.systemsettings.ethnicities', {
+        url: '/etniciteter',
+        params: {
+            listTitle: 'Etnicitet',
+            listData: 'ethnicity',
+        },
+        views: {
+            'systemsetting-view': {
+                templateUrl: 'app/src/system_settings/lists/view/list.html',
+                controller: 'ListController',
+                controllerAs: 'vm'
+            },
+            'toolbar-tools-left@site': {
+                template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Etniciteter</h2>"
+            },
+            'toolbar-tools-right@site': {
+                templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',
+                controller: 'ListToolbarController',
+                controllerAs: 'vm'
+            }
+        }
+    })
         .state('administration.systemsettings.sanctions', {
             url: '/sanktioner',
             params: {
