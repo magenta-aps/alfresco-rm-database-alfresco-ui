@@ -23,9 +23,6 @@ function PractitionerToolbarController($scope, practitionerService, groupService
 
             groupNames.forEach(function (group) {
                 if (user.hasOwnProperty(group)) {
-                    console.log(original);
-                    console.log('old value ' + original[key][group]);
-                    console.log('new value ' + user[group]);
                     if (user[group] && (!original[key][group] || !original[key].hasOwnProperty(group))) {
                         addedTo.push(group);
                     }
@@ -37,14 +34,10 @@ function PractitionerToolbarController($scope, practitionerService, groupService
             });
 
             if (addedTo.length > 0) {
-                console.log(user.userName + ' added to');
-                console.log(addedTo);
                 groupService.addUserToGroups(user.userName, addedTo);
             }
 
             if (removedFrom.length > 0) {
-                console.log(user.userName + ' removed from');
-                console.log(removedFrom);
                 groupService.removeUserFromGroups(user.userName, removedFrom);
             }
 

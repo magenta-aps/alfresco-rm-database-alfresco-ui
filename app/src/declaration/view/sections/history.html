@@ -28,8 +28,8 @@
                 <label>Observation påbegyndt</label>
                 <md-datepicker ng-model="case.observationDate" ng-disabled="!editPatientData"></md-datepicker>
             </md-input-container>
-            <span style="float:right" ng-show="isNumber(passiveWait)">
-                {{passiveWait}}
+            <span style="float:right" ng-show="isNumber(case.passiveWait)">
+                {{case.passiveWait}}
                 <md-icon class="icon-small">
                     info_outline
                     <md-tooltip md-direction="top">Passiv ventetid</md-tooltip>
@@ -41,8 +41,8 @@
                 <label>Erklæring afgivet</label>
                 <md-datepicker ng-model="case.declarationDate" ng-disabled="!editPatientData"></md-datepicker>
             </md-input-container>
-            <span style="float:right" ng-show="isNumber(activeWait)">
-                {{activeWait}}
+            <span style="float:right" ng-show="isNumber(case.activeWait)">
+                {{case.activeWait}}
                     <md-icon class="icon-small">
                         info_outline
                         <md-tooltip md-direction="top">Aktiv ventetid</md-tooltip>
@@ -51,8 +51,8 @@
         </div>
         <div layout="row">
             <span flex></span>
-            <span ng-show="isNumber(totalWait)">
-                <strong>{{totalWait}}</strong>
+            <span ng-show="isNumber(case.totalWait)">
+                <strong>{{case.totalWait}}</strong>
                     <md-icon class="icon-small">
                         info_outline
                         <md-tooltip md-direction="top">Samlet ventetid</md-tooltip>

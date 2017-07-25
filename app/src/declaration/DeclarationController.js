@@ -31,18 +31,7 @@ function DeclarationController($scope, $state, $stateParams, declarationService)
                             });
                         });
                     }
-
-                    var creationDate = new Date(response.creationDate);
-                    var observationDate = new Date(response.observationDate);
-                    var declarationDate = new Date(response.declarationDate);
-
-                    $scope.passiveWait = Math.ceil((observationDate - creationDate) / 1000 / 60 / 60 / 24);
-                    $scope.activeWait = Math.ceil((declarationDate - observationDate) / 1000 / 60 / 60 / 24);
-                    $scope.totalWait = Math.ceil((declarationDate - creationDate) / 1000 / 60 / 60 / 24);
-                
             },function(error) {
-                console.log('ikke sat endnu');
-                console.log(error);
                 $scope.case = declarationService.getCurrentCase();
             });
         }

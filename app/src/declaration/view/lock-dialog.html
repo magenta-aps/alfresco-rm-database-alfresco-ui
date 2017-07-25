@@ -12,28 +12,14 @@
         </md-toolbar>
 
         <md-dialog-content class="md-padding">
-            <md-radio-group ng-model="currentCase.closed">
+            <md-radio-group ng-model="closeCaseParams.closed">
                 <md-radio-button value="closed"> Afsluttet</md-radio-button>
                 <md-radio-button value="no-declaration">  Afsluttet uden erklæring</md-radio-button>
             </md-radio-group>
 
-            <!-- <md-autocomplete flex 
-            md-selected-item="case.reason" 
-            md-search-text="reasonSearch"
-            md-items="reason in dropdownFilter(dropdownOptions['noDeclarationReason'],reasonSearch,['displayName'])" 
-            md-item-text="reason.displayName" 
-            md-min-length="0" 
-            md-floating-label="Årsag">
-            <md-item-template>
-                <span md-highlight-text="reasonSearch" md-highlight-flags="gi">{{reason.displayName}}</span>
-            </md-item-template>
-        </md-autocomplete> -->
-
-        <!--noDeclarationReason  -->
-
-            <span ng-show="currentCase.closed == 'no-declaration'">
+            <span ng-show="closeCaseParams.closed == 'no-declaration'">
                 <md-autocomplete flex 
-            md-selected-item="currentCase.reason" 
+            md-selected-item="closeCaseParams.reason" 
             md-search-text="reasonSearch"
             md-items="reason in dropdownFilter(dropdownOptions['noDeclarationReason'],reasonSearch)" 
             md-item-text="reason" 
@@ -45,7 +31,7 @@
         </md-autocomplete>
             <md-input-container class="md-block">
                 <label>Sendt til</label> 
-                <input type="text" name="sentTo" ng-model="currentCase.sentTo">
+                <input type="text" name="sentTo" ng-model="closeCaseParams.sentTo">
             </md-input-container>
             </span>
         </md-dialog-content>

@@ -8,9 +8,16 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
     $scope.editMode = false;
     $scope.caseTitle = '';
     $scope.currentCase;
+    $scope.closeCaseParams = {
+        closed: null,
+        reason: null,
+        sentTo: null,
+    };
     $scope.editor = {};
     $scope.canCurrentlyEdit = true;
     $scope.dropdownOptions;
+
+    var clickedSave = false;
 
     var currentUser = authService.getUserInfo().user;
 
@@ -24,6 +31,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
 
     $scope.$watch('declarationService.getCurrentCase()', function (newVal) {
         $scope.currentCase = newVal;
+
         if(newVal.hasOwnProperty('locked4editBy') && newVal.locked4editBy != "null") {
             $scope.editor = angular.fromJson(newVal.locked4editBy);
 
@@ -51,7 +59,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
             lockCase(true);
         } else {
             $state.go('declaration.show.patientdata');
-            lockCase(false);
+            //lockCase(false);
 
             $mdToast.show(
                 $mdToast.simple()
@@ -63,8 +71,11 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
     }
 
     $scope.saveEdit = function () {
+        clickedSave = true;
         var newCase = declarationService.getNewCaseInfo();
         newCase.fullName = newCase.firstName + ' ' + newCase.lastName;
+        newCase.locked4edit = false;
+        newCase.locked4editBy = {};
         declarationService.updateCase(newCase).then(function (response) {
             console.log(response);
         });
@@ -83,7 +94,11 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
 
     $scope.closeCase = function () {
         $scope.currentCase.locked4edit = false;
-        $scope.currentCase.locked4editBy = {}
+        $scope.currentCase.locked4editBy = {};
+        $scope.currentCase.closed = $scope.closeCaseParams.closed;
+        $scope.currentCase.reason = $scope.closeCaseParams.reason;
+        $scope.currentCase.sentTo = $scope.closeCaseParams.sentTo;
+        
         declarationService.updateCase($scope.currentCase);
         $mdDialog.cancel();
     }
@@ -104,32 +119,19 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
         console.log('locked: ' + lock);
     }
 
-    // $transitions.onStart({
-    //     to: 'declaration.show.patientdata.edit'
-    // }, function () {
-    //     var locked = {
-    //         'node-uuid': $scope.currentCase['node-uuid'],
-    //         'locked4edit': true,
-    //         'locked4editBy': currentUser
-    //     }
-    //     declarationService.updateCase(locked);
-    //     console.log('locked, start editing');
-    // });
-
     $transitions.onStart({
         from: 'declaration.show.patientdata.edit'
     }, function (trans) {
 
-        if ($scope.editMode) {
+        if ($scope.editMode && !clickedSave) {
             $scope.editMode = false;
             declarationService.forceEdit(false);
+            lockCase(false);
         }
-
-        lockCase(false);
     });
 
     $scope.dropdownFilter = function(array, query, filters) {
-        return filterService.caseSearch(array, query, filters);
+        return filterService.dropdownFilter(array, query, filters);
     }
 
     $scope.cancel = function() {

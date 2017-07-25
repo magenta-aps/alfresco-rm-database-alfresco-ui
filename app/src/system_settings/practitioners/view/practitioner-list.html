@@ -13,9 +13,9 @@
                 <tbody md-body ng-repeat="user in allUsers | orderBy: query.order">
                     <tr md-row>
                         <td md-cell>{{user.firstName}} {{user.lastName}}</td>
-                        <td md-cell><md-checkbox aria-label="genåbne sager" ng-model="user.GROUP_reopen_cases" ng-disabled="!isEditing"></md-checkbox></td>
-                        <td md-cell><md-checkbox aria-label="redigere lister" ng-model="user.GROUP_edit_lists" ng-disabled="!isEditing"></md-checkbox></td>
-                        <td md-cell><md-checkbox aria-label="tildele roller" ng-model="user.GROUP_assign_roles" ng-disabled="!isEditing"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="genåbne sager" ng-model="user.GROUP_reopen_cases" ng-disabled="!isEditing || (user.userName == 'admin')"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="redigere lister" ng-model="user.GROUP_edit_lists" ng-disabled="!isEditing || (user.userName == 'admin')"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="tildele roller" ng-model="user.GROUP_assign_roles" ng-disabled="!isEditing || (user.userName == 'admin')"></md-checkbox></td>
                     </tr>
                 </tbody>
             </table>

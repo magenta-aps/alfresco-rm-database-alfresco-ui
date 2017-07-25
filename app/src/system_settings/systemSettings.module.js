@@ -32,7 +32,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider) {
                 controllerAs: 'vm'
             },
             'toolbar-tools-left@site': {
-                template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Behandlere</h2>"
+                template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Brugerrettigheder</h2>"
             },
             'toolbar-tools-right@site': {
                 templateUrl: 'app/src/system_settings/practitioners/view/practitioner-toolbar.html',

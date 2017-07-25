@@ -9,7 +9,7 @@ function PractitionerController($scope, $state, $stateParams, practitionerServic
     var groupNames = ['GROUP_reopen_cases', 'GROUP_edit_lists', 'GROUP_assign_roles'];
 
     $scope.isEditing = false;
-    $scope.allUsers = {};
+    $scope.allUsers = [];
 
     $scope.query = {
         order: 'firstName'
@@ -35,7 +35,6 @@ function PractitionerController($scope, $state, $stateParams, practitionerServic
 
             groupNames.forEach(function (group) {
                 groupService.getUserGroups(group).then(function (userGroup) {
-                    console.log(userGroup);
                     angular.forEach(users, function (user) {
                         angular.forEach(userGroup.data, function(userInGroup) {
                             if(user.userName == userInGroup.shortName) {
