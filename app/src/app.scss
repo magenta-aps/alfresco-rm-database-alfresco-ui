@@ -368,3 +368,17 @@ md-toolbar {
 .text-strike-through {
   text-decoration: line-through;
 }
+
+.list-edit {
+    background-image: url(/app/assets/images/edit.svg);
+    background-repeat: no-repeat;
+    background-size: $u $u;
+    padding-left: $u * 1.5;
+    border: none;
+    width: 100%;
+    outline: none;
+}
+
+.clickable {
+  cursor: pointer;
+}

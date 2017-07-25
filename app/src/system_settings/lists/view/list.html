@@ -4,14 +4,21 @@
             <table md-table>
                 <thead md-head md-order="query.order">
                     <tr md-row>
-                        <th md-column></th>
+                        <th md-column style="width:50px"></th>
                         <th md-column md-order-by="title">{{listTitle}}</th>
                     </tr>
                 </thead>
                 <tbody md-body>
                     <tr md-row ng-repeat="content in listContent | orderBy: query.order">
-                        <td md-cell><md-checkbox aria-label="{{content.title}}" ng-model="content.selected"></md-checkbox></td>
-                        <td md-cell>{{content.title}}</td>
+                        <td md-cell>
+                            <md-checkbox aria-label="{{content.title}}" ng-model="content.selected" ng-disabled="!isEditing"></md-checkbox>
+                        </td>
+                        <td md-cell>
+                            <span>
+                                <i class="list-edit clickable" ng-if="isEditing" ng-click="renameDialog(content)"></i>
+                                {{content.title}}
+                            </span>
+                        </td>
                     </tr>
                 </tbody>
             </table>

@@ -1,9 +1,9 @@
 <md-dialog aria-label="Tiløj">
-    <form name="addNewForm" ng-submit="addNew()">
+    <form name="deleteForm" ng-submit="delete()">
 
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>{{'COMMON.ADD' | translate}}</h2>
+                <h2>{{'COMMON.DELETE' | translate}}</h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="cancel()">
                     <i class="material-icons" aria-label="Luk dialogboks">close</i>
@@ -12,14 +12,12 @@
         </md-toolbar>
 
         <md-dialog-content class="md-padding">
-            <md-input-container class="md-block">
-                <label>{{'MEMBER.NAME' | translate}}</label>
-                <input ng-model="addNew.title" md-autofocus required>
-            </md-input-container>
+            Er du sikker på du vil slette følgende:<br>
+            <p ng-repeat="c in selectedContent"><em>{{c.title}}</em></p>
         </md-dialog-content>
 
         <md-dialog-actions>
-            <md-button type="submit" class="md-primary" ng-disabled="addNewForm.$invalid" aria-label="{{'COMMON.ADD' | translate}}">{{'COMMON.ADD' | translate}}</md-button>
+            <md-button type="submit" class="md-primary" aria-label="{{'COMMON.DELETE' | translate}}">{{'COMMON.DELETE' | translate}}</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

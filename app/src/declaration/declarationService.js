@@ -112,6 +112,15 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
             });
         },
 
+        setPropertyValues: function (property,values) {
+            return $http.put("/alfresco/s/propertyValues", {
+                "property": property,
+                "values": values,
+            }).then(function (response) {
+                return response.data;
+            });
+        },
+
         getDropdownOptions: function (groupName) {
             return dropdownGroupOptions[groupName];
         },
