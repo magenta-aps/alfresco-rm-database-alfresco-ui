@@ -150,6 +150,7 @@ function documentService($http, alfrescoNodeUtils) {
         return $http.delete(url).then(function (result) {
             return result.data;
         });
+        selectedFiles = [];
     }
 
     function uploadFiles(file, destination, extras) {

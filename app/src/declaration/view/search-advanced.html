@@ -61,7 +61,7 @@
             md-items="diagnosis in dropdownFilter(dropdownOptions['diagnosis'],diagnosisSearch)"
                 md-item-text="diagnosis" 
                 md-min-length="0" 
-                md-floating-label="Diagnose">
+                md-floating-label="Hoveddiagnose">
                 <md-item-template>
                     <span md-highlight-text="diagnosisSearch" md-highlight-flags="gi">{{diagnosis}}</span>
                 </md-item-template>
@@ -161,7 +161,7 @@
                         <th md-column md-order-by="mainCharge" ng-if="searchParams.mainCharge">Hovedsigtelse</th>
                         <th md-column md-order-by="placement" ng-if="searchParams.placement">Placering</th>
                         <th md-column md-order-by="sanctionProposal" ng-if="searchParams.sanctionProposal">Sanktionsforslag</th>
-                        <th md-column md-order-by="diagnosis" ng-if="searchParams.diagnosis">Diagnose</th>
+                        <th md-column md-order-by="diagnosis" ng-if="searchParams.diagnosis">Hoveddiagnose</th>
                     </tr>
                 </thead>
                 <tbody md-body ng-repeat="case in advancedSearchResults | orderBy : query.order ">

@@ -2,10 +2,18 @@ angular
     .module('openDeskApp.declaration')
     .controller('DocumentToolbarController', DocumentToolbarController);
 
-function DocumentToolbarController($scope, $mdDialog, declarationService, documentToolbarService, documentService, documentPreviewService, alfrescoDownloadService) {
+function DocumentToolbarController($scope, $mdDialog, declarationService, documentToolbarService, documentService, 
+    preferenceService, authService, documentPreviewService, alfrescoDownloadService) {
+
     $scope.toggleIcon = 'list';
 
     $scope.case;
+
+    var currentUser = authService.getUserInfo().user;
+
+    preferenceService.getPreferences(currentUser.userName,'dk.magenta.sites.retspsyk.tableView').then(function(response) {
+        $scope.toggleIcon = response['dk.magenta.sites.retspsyk.tableView'] == 'true' ? 'view_module' : 'list';
+    });
 
     $scope.declarationService = declarationService;
 

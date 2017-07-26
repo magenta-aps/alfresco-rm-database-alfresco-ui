@@ -49,16 +49,27 @@ angular
         angular.element(window.document)[0].title = APP_CONFIG.appName;
         $rootScope.appName = APP_CONFIG.appName;
         $rootScope.logoSrc = APP_CONFIG.logoSrc;
-        if($state.current.url == "^")
+        if ($state.current.url == "^")
             $state.go(APP_CONFIG.landingPage);
 
         declarationService.getPropertyValues();
 
     });
 
-function config($stateProvider, $mdDateLocaleProvider) {
+function config($stateProvider, $mdDateLocaleProvider, $mdThemingProvider) {
 
-    $stateProvider.decorator('data', function(state, parent) {
+    var regionMidtMap = $mdThemingProvider.extendPalette('red', {
+        '500': '#990033',
+    });
+
+    // Register the new color palette map with the name <code>neonRed</code>
+    $mdThemingProvider.definePalette('regionMidt', regionMidtMap);
+
+    // Use that theme for the primary intentions
+    $mdThemingProvider.theme('default')
+        .primaryPalette('regionMidt');
+
+    $stateProvider.decorator('data', function (state, parent) {
         var stateData = parent(state);
 
         state.resolve = state.resolve || {};
@@ -80,15 +91,15 @@ function config($stateProvider, $mdDateLocaleProvider) {
                                 $state.go('login');
                             }
                         });
-                    }
-                    else {
+                    } else {
                         d.reject('Not logged in or lacking authorization!');
                         sessionService.retainCurrentLocation();
                         $state.go('login');
                     }
                 }
                 return d.promise;
-            }];
+            }
+        ];
         return stateData;
     });
 

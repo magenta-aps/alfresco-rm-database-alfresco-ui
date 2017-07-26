@@ -3,10 +3,10 @@ angular
     .controller('DocumentController', DocumentController);
 
 function DocumentController($scope, $state, $stateParams, $mdDialog, declarationService, documentToolbarService,
-    siteService, documentService, documentPreviewService, alfrescoDownloadService) {
+    siteService, documentService, documentPreviewService, preferenceService, authService, sessionService, alfrescoDownloadService) {
     var vm = this;
 
-    $scope.selectedFiles = documentService.getSelectedFiles();
+    $scope.selectedFiles = [];
     $scope.isEditing = false;
 
     $scope.documentService = documentService;
@@ -18,15 +18,26 @@ function DocumentController($scope, $state, $stateParams, $mdDialog, declaration
 
     $scope.case = {};
 
+    var currentUser = authService.getUserInfo().user;
     $scope.tableView = false;
+
+    preferenceService.getPreferences(currentUser.userName,'dk.magenta.sites.retspsyk.tableView').then(function(response) {
+        $scope.tableView = response['dk.magenta.sites.retspsyk.tableView'] == 'true' ? true : false;
+    });
 
     $scope.query = {
         order: 'name'
     }
 
     //update service with currently selected files
-    $scope.$watch('selectedFiles', function (newVal, oldVal) {
+    $scope.$watch('selectedFiles', function (newVal) {
         documentService.setSelectedFiles(newVal);
+    }, true);
+
+    $scope.$watch('documentService.getSelectedFiles()', function (newVal) {
+        console.log('get selected files');
+        $scope.selectedFiles = newVal;
+        console.log(newVal);
     }, true);
 
     //load files using the current case
@@ -44,12 +55,9 @@ function DocumentController($scope, $state, $stateParams, $mdDialog, declaration
     });
 
     $scope.$watch('contents', function (newVal) {
-        console.log('content updated');
         newVal.forEach(function (contentTypeList) {
                 $scope.contentLength += contentTypeList.length;
             });
-        // $scope.contents = newVal;
-        // documentService.resetSelectedFiles();
     },true);
 
     //change view
@@ -82,6 +90,7 @@ function DocumentController($scope, $state, $stateParams, $mdDialog, declaration
     function loadFiles(node) {
         console.log('load files');
         declarationService.getContents(node).then(function (response) {
+            // response.thumbnail = sessionService.makeURL(response.thumbnail);
             documentService.setCaseFiles(response);
             $scope.contents = response;
             $scope.contents.forEach(function (contentTypeList) {
@@ -106,9 +115,12 @@ function DocumentController($scope, $state, $stateParams, $mdDialog, declaration
         });
     }
 
+    $scope.thumbnailUrl = function(url) {
+        return sessionService.makeURL(url);
+    }
+
     function init() {
         if($stateParams.nodeid) {
-            console.log('hello world ' + $stateParams.nodeid);
             $scope.getPDF('workspace://SpacesStore/' + $stateParams.nodeid);                
         }
     }
