@@ -8,12 +8,9 @@ function DeclarationCreateController($scope, declarationService, filterService) 
 
     $scope.editPatientData = true;
     $scope.case = {};
+    $scope.case.biDiagnoses = [];
     $scope.case.creationDate = new Date();
     $scope.dropdownOptions = declarationService.getAllDropdownOptions();
-
-    $scope.bidiagnoses = [{id: 'bidiagnosis1'}];
-
-    console.log($scope.dropdownOptions);
 
     $scope.$watch('case', function (newVal, oldVal) {
         declarationService.updateNewCase(newVal);
@@ -25,9 +22,9 @@ function DeclarationCreateController($scope, declarationService, filterService) 
     }
 
     $scope.addNewBidiagnosis = function () {
-        var newItemNo = $scope.bidiagnoses.length + 1;
-        $scope.bidiagnoses.push({
-            'id': 'bidiagnosis' + newItemNo
-        });
+        var newItemNo = $scope.case.biDiagnoses.length + 1;
+        if ($scope.case.biDiagnoses.indexOf(null) < 0) {
+            $scope.case.biDiagnoses.push(null);
+        }
     };
 }

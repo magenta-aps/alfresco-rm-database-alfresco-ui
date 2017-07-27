@@ -19,23 +19,23 @@
         </md-autocomplete>
 
         <md-autocomplete flex 
-            ng-repeat="bd in bidiagnoses"
-            md-selected-item="case.bidiagnoses[bd.id]" 
-            md-search-text="bidiagnosisSearch[bd.id]"
-            md-items="bidiagnosis in dropdownFilter(dropdownOptions['diagnosis'],bidiagnosisSearch[bd.id])" 
+            ng-repeat="(index,bd) in case.biDiagnoses"
+            md-selected-item="case.biDiagnoses[index]" 
+            md-search-text="bidiagnosisSearch[index]"
+            md-items="bidiagnosis in dropdownFilter(dropdownOptions['diagnosis'],bidiagnosisSearch[index])" 
             md-item-text="bidiagnosis" 
             md-min-length="0" 
             md-floating-label="Bidiagnose"
             ng-disabled="!editPatientData">
             <md-item-template>
-                <span md-highlight-text="bidiagnosisSearch[bd.id]" md-highlight-flags="gi">{{bidiagnosis}}</span>
+                <span md-highlight-text="bidiagnosisSearch[index]" md-highlight-flags="gi">{{bidiagnosis}}</span>
             </md-item-template>
         </md-autocomplete>
 
     </md-card-content>
     <md-card-actions layout="row">
         <span flex></span>
-        <md-button class="md-icon-button md-accent" ng-click="addNewBidiagnosis()" ng-disabled="!editPatientData || bidiagnoses.length==5">
+        <md-button class="md-icon-button md-accent" ng-click="addNewBidiagnosis()" ng-disabled="!editPatientData || case.biDiagnoses.length==5">
             <md-icon>add</md-icon>
         </md-button>
     </md-card-actions>

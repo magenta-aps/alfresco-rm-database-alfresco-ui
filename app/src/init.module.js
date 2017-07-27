@@ -20,5 +20,5 @@ angular
         appName: 'Retspsykiatriske erklæringer',
         logoSrc: './app/assets/images/logo-light.svg',
         ssoLoginEnabled: "false",
-        landingPage: "projects"
+        landingPage: "declaration"
     });

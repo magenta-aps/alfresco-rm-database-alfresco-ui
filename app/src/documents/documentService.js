@@ -23,7 +23,8 @@ function documentService($http, alfrescoNodeUtils) {
         getPDFLink: getPDFLink,
         getDoclibLink: getDoclibLink,
         deleteFile: deleteFile,
-        uploadFiles: uploadFiles
+        uploadFiles: uploadFiles,
+        downloadFiles: downloadFiles
     };
 
     return service;
@@ -166,6 +167,21 @@ function documentService($http, alfrescoNodeUtils) {
             }
         }).then(function (response) {
             return response;
+        });
+    }
+
+    function downloadFiles(files) {
+        console.log('download files service');
+        var fileNodeRefs = [];
+
+        files.forEach(function(file) {
+            fileNodeRefs.push(file.nodeRef);
+        })
+
+        return $http.post('/alfresco/s/contents/download',{
+            nodeRefs: fileNodeRefs
+        }).then(function (result) {
+            return result;
         });
     }
 

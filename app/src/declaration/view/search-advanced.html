@@ -171,10 +171,10 @@
                         <td md-cell>{{case.cprNumber}}</td>
                         <td md-cell>{{case.doctor}}</td>
                         <td md-cell>
-                            <span ng-if="case.closed == 'closed'">Afsluttet</span>
-                            <span ng-if="case.closed == 'no-declaration'">
-                                Afsluttet uden erklæring: {{case.reason}}<br>
-                                Sendt til: {{case.sentTo}}
+                            <span ng-if="case.closed">Afsluttet</span>
+                            <span ng-if="case.closedWithoutDeclaration">
+                                Afsluttet uden erklæring: {{case.closedWithoutDeclarationReason}}<br>
+                                Sendt til: {{case.closedWithoutDeclarationSentTo}}
                             </span>
                         </td>
                         <td md-cell>{{case.psychologist}}</td>

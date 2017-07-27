@@ -3,11 +3,11 @@
 <md-tooltip>Sagen redigeres i øjeblikket af {{editor.displayName}}</md-tooltip>
 </span>
 
-<span ng-if="currentCase.hasOwnProperty('closed')">
+<span ng-if="currentCase.hasOwnProperty('closed') || currentCase.hasOwnProperty('closedWithoutDeclaration')">
     <md-icon>done</md-icon> Sagen er afsluttet
 </span>
 
-<span ng-if="!currentCase.hasOwnProperty('closed')">
+<span ng-if="!currentCase.hasOwnProperty('closed') && !currentCase.hasOwnProperty('closedWithoutDeclaration')">
 
 <span ng-if="!editMode">
     <md-button class="md-text-icon-button" aria-label="lås sagen" ng-click="lockCaseDialog()" ng-disabled="!canCurrentlyEdit">

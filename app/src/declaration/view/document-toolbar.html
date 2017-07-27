@@ -1,4 +1,4 @@
-<span ng-if="!case.hasOwnProperty('closed')">
+<span ng-if="!case.hasOwnProperty('closed') && !case.hasOwnProperty('closedWithoutDeclaration')">
 <span class="toolbar-contextual" ng-if="'declaration.show.documents.edit' | isState">
 
      <md-button class="md-icon-button" aria-label="download" ng-click="downloadDocuments($event)">
@@ -12,12 +12,12 @@
 <md-button class="md-text-icon-button" aria-label="edit" ng-click="uploadDocumentsDialog($event)">
     <md-icon>file_upload</md-icon> Nyt dokument
 </md-button>
+</span>
+
+<span ng-if="case.hasOwnProperty('closed') || case.hasOwnProperty('closedWithoutDeclaration')">
+    <md-icon>done</md-icon> Sagen er afsluttet
+</span>
 
 <md-button class="md-icon-button" aria-label="view" ng-click="toggleDocumentView()">
     <md-icon>{{toggleIcon}}</md-icon>
 </md-button>
-</span>
-
-<span ng-if="case.hasOwnProperty('closed')">
-    <md-icon>done</md-icon> Sagen er afsluttet
-</span>

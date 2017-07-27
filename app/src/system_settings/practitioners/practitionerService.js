@@ -1,7 +1,8 @@
-angular.module('openDeskApp.declaration').factory('practitionerService', function () {
+angular.module('openDeskApp.declaration').factory('practitionerService', function (groupService) {
     var isEditing = false;
     var users = {};
     var usersBeforeEdit = {};
+    var permissionGroups = [];
 
     return {
         setEdit: function(state) {
@@ -26,6 +27,12 @@ angular.module('openDeskApp.declaration').factory('practitionerService', functio
 
         getUpdatedUsers: function() {
             return users;
+        },
+
+        getPermissionGroups: function() {
+            return groupService.getGroupNamesForSite('retspsyk').then(function (response) {
+                return response.permissionGroups;
+            })
         }
     }
 

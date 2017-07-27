@@ -52,7 +52,7 @@ angular
         if ($state.current.url == "^")
             $state.go(APP_CONFIG.landingPage);
 
-        declarationService.getPropertyValues();
+        // declarationService.getPropertyValues();
 
     });
 
@@ -73,12 +73,13 @@ function config($stateProvider, $mdDateLocaleProvider, $mdThemingProvider) {
         var stateData = parent(state);
 
         state.resolve = state.resolve || {};
-        state.resolve.authorize = ['authService', '$q', 'sessionService', '$state', '$rootScope', '$stateParams',
-            function (authService, $q, sessionService, $state, $rootScope, $stateParams) {
+        state.resolve.authorize = ['authService', '$q', 'sessionService', '$state', '$rootScope', '$stateParams','declarationService',
+            function (authService, $q, sessionService, $state, $rootScope, $stateParams, declarationService) {
                 var d = $q.defer();
                 if (authService.isAuthenticated() && authService.isAuthorized($stateParams.authorizedRoles)) {
                     // I also provide the user for child controllers
                     d.resolve(authService.user);
+                    declarationService.getPropertyValues();
                 } else {
                     // here the rejection
                     if ($rootScope.ssoLoginEnabled) {

@@ -14,7 +14,7 @@
                     <span md-highlight-text="caseSearchQuery" md-highlight-flags="gi">
                         #{{case.caseNumber}} - {{case.firstName}} {{case.lastName}} ({{case.cprNumber}})
                     </span>
-                    <md-icon ng-show="case.hasOwnProperty('closed')">done</md-icon>
+                    <md-icon ng-show="case.hasOwnProperty('closed') || case.hasOwnProperty('closedWithoutDeclaration')">done</md-icon>
                 </md-item-template>
             </md-autocomplete>
 

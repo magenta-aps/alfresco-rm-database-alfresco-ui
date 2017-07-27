@@ -6,7 +6,7 @@ function PractitionerController($scope, $state, $stateParams, practitionerServic
 
     $scope.practitionerService = practitionerService;
 
-    var groupNames = ['GROUP_reopen_cases', 'GROUP_edit_lists', 'GROUP_assign_roles'];
+    // var groupNames = ['GROUP_reopen_cases', 'GROUP_edit_lists', 'GROUP_assign_roles'];
 
     $scope.isEditing = false;
     $scope.allUsers = [];
@@ -18,7 +18,7 @@ function PractitionerController($scope, $state, $stateParams, practitionerServic
     $scope.$watch('practitionerService.isEditing()', function (newVal) {
         $scope.isEditing = newVal;
 
-        if(newVal) {
+        if (newVal) {
             var users = angular.copy($scope.allUsers);
             practitionerService.setUsersBeforeEdit(users);
         }
@@ -33,14 +33,18 @@ function PractitionerController($scope, $state, $stateParams, practitionerServic
 
             var users = response.people;
 
-            groupNames.forEach(function (group) {
-                groupService.getUserGroups(group).then(function (userGroup) {
-                    angular.forEach(users, function (user) {
-                        angular.forEach(userGroup.data, function(userInGroup) {
-                            if(user.userName == userInGroup.shortName) {
-                               user[group] = true;
-                            }
-                        })
+            practitionerService.getPermissionGroups().then(function(permissionGroups) {
+                permissionGroups.forEach(function (group) {
+                    groupService.getUserGroups(group).then(function (userGroup) {
+                        angular.forEach(users, function (user) {
+                            angular.forEach(userGroup.data, function (userInGroup) {
+                                if (user.userName == userInGroup.shortName) {
+                                    user[group] = true;
+                                }
+                            })
+                        });
+                    },function(err) { 
+                        console.log(err);
                     });
                 });
             });

@@ -35,9 +35,7 @@ function DocumentController($scope, $state, $stateParams, $mdDialog, declaration
     }, true);
 
     $scope.$watch('documentService.getSelectedFiles()', function (newVal) {
-        console.log('get selected files');
         $scope.selectedFiles = newVal;
-        console.log(newVal);
     }, true);
 
     //load files using the current case

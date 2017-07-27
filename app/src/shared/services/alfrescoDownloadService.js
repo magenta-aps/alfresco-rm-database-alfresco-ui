@@ -5,7 +5,8 @@ angular
 function AlfrescoDownloadService(alfrescoNodeUtils, ALFRESCO_URI, sessionService) {
 
     var service = {
-        downloadFile: downloadFile
+        downloadFile: downloadFile,
+        downloadZipFile: downloadZipFile
     };
     return service;
 
@@ -13,6 +14,24 @@ function AlfrescoDownloadService(alfrescoNodeUtils, ALFRESCO_URI, sessionService
 
         var url = ALFRESCO_URI.webClientServiceProxy + "/api/node/content/" + alfrescoNodeUtils.processNodeRef(nodeRef).uri + "/" + fileName + "?a=true";
         url = sessionService.makeURL(url);
+
+        var iframe = document.querySelector("#downloadFrame");
+        if (iframe === null) {
+            iframe = angular.element("<iframe id='downloadFrame' style='position:fixed;display:none;top:-1px;left:-1px;'/>");
+            angular.element(document.body).append(iframe);
+        } else {
+            iframe = angular.element(iframe);
+        }
+
+        iframe.attr("src", url);
+    }
+
+    function downloadZipFile(nodeRef) {
+
+        var url = ALFRESCO_URI.webClientServiceProxy + "/api/node/content/" + alfrescoNodeUtils.processNodeRef(nodeRef).uri;
+
+        console.log(url);
+        //url = sessionService.makeURL(url);
 
         var iframe = document.querySelector("#downloadFrame");
         if (iframe === null) {

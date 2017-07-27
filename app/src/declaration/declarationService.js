@@ -13,35 +13,13 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
         caseTitle = newCase.firstName + ' ' + newCase.lastName + ' (Sag #' + newCase.caseNumber + ')';
     }
 
-    function fixNullAndJson(res) {
+    function formatCase(res) {
         angular.forEach(res, function (value, key) {
             if (value == 'null') {
-                res[key] = null;
+                delete res[key];
             }
         });
 
-        if (res.bidiagnoses != null) {
-            res.bidiagnoses = JSON.parse(res.bidiagnoses);
-        }
-
-        return res;
-    }
-
-    function addWaitingTimes(res) {
-        var creationDate = new Date(res.creationDate);
-        var observationDate = new Date(res.observationDate);
-        var declarationDate = new Date(res.declarationDate);
-
-        res.passiveWait = Math.ceil((observationDate - creationDate) / 1000 / 60 / 60 / 24);
-        res.activeWait = Math.ceil((declarationDate - observationDate) / 1000 / 60 / 60 / 24);
-        res.totalWait = Math.ceil((declarationDate - creationDate) / 1000 / 60 / 60 / 24);
-
-        return res;
-    }
-
-    function formatCase(res) {
-        res = fixNullAndJson(res);
-        res = addWaitingTimes(res);
         return res;
     }
 
@@ -68,7 +46,7 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
         },
 
         updateNewCase: function (caseUpdate) {
-            newCase = addWaitingTimes(caseUpdate);
+            newCase = caseUpdate;
         },
 
         getNewCaseInfo: function () {
@@ -105,17 +83,12 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
         },
 
         createCase: function (properties) {
-            angular.forEach(properties, function (value, key) {
-                if (value != null && typeof value == "object" && typeof value.getMonth != 'function') {
-                    properties[key] = JSON.stringify(properties[key])
-                }
-            });
-
             return $http.post("/alfresco/s/entry", {
                 "type": "forensicPsychiatryDeclaration",
                 "siteShortName": "retspsyk",
                 "properties": properties
             }).then(function (response) {
+                console.log(response.data);
                 return response.data;
 
             });

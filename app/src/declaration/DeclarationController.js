@@ -9,29 +9,16 @@ function DeclarationController($scope, $state, $stateParams, declarationService)
     $(".od-info-declarations").css("margin-left", sidebar.width() + "px");
 
     $scope.case = {};
-    $scope.bidiagnoses = [{
-        id: 'bidiagnosis1'
-    }];
+
     $scope.dropdownOptions = declarationService.getAllDropdownOptions();
 
     function loadCase(caseid) {
         if (caseid) {
             declarationService.getCase(caseid).then(function (response) {
-
-                    $scope.case = response;
-                    console.log('case loaded');
-                    console.log($scope.case);
-
-                    if (response.hasOwnProperty('bidiagnoses')) {
-                        $scope.bidiagnoses = [];
-
-                        Object.keys(response.bidiagnoses).forEach(function (elem) {
-                            $scope.bidiagnoses.push({
-                                id: elem
-                            });
-                        });
-                    }
-            },function(error) {
+                $scope.case = response;
+                console.log('case loaded');
+                console.log($scope.case);
+            }, function (error) {
                 $scope.case = declarationService.getCurrentCase();
             });
         }
@@ -51,10 +38,10 @@ function DeclarationController($scope, $state, $stateParams, declarationService)
     }
 
     $scope.addNewBidiagnosis = function () {
-        var newItemNo = $scope.bidiagnoses.length + 1;
-        $scope.bidiagnoses.push({
-            'id': 'bidiagnosis' + newItemNo
-        });
+        var newItemNo = $scope.case.biDiagnoses.length + 1;
+        if ($scope.case.biDiagnoses.indexOf(null) < 0) {
+            $scope.case.biDiagnoses.push(null);
+        }
     };
 
     $scope.isNumber = function (number) {

@@ -2,7 +2,7 @@ angular
     .module('openDeskApp')
     .controller('AuthController', AuthController);
 
-function AuthController($state, $stateParams, authService, userService, $mdDialog, sessionService, $window) {
+function AuthController(APP_CONFIG, $state, $stateParams, authService, userService, $mdDialog, sessionService, $window) {
     var vm = this;
     var loginErrorMessage = angular.fromJson($stateParams.error);
 
@@ -39,7 +39,7 @@ function AuthController($state, $stateParams, authService, userService, $mdDialo
     function restoreLocation() {
         var retainedLocation = sessionService.getRetainedLocation();
         if (!retainedLocation || retainedLocation === undefined) {
-            $state.go('projects');
+            $state.go(APP_CONFIG.landingPage);
         } else {
             $window.location = retainedLocation;
         }

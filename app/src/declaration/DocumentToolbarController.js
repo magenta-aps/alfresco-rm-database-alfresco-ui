@@ -2,7 +2,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('DocumentToolbarController', DocumentToolbarController);
 
-function DocumentToolbarController($scope, $mdDialog, declarationService, documentToolbarService, documentService, 
+function DocumentToolbarController($scope, $mdDialog, declarationService, documentToolbarService, documentService,
     preferenceService, authService, documentPreviewService, alfrescoDownloadService) {
 
     $scope.toggleIcon = 'list';
@@ -11,7 +11,7 @@ function DocumentToolbarController($scope, $mdDialog, declarationService, docume
 
     var currentUser = authService.getUserInfo().user;
 
-    preferenceService.getPreferences(currentUser.userName,'dk.magenta.sites.retspsyk.tableView').then(function(response) {
+    preferenceService.getPreferences(currentUser.userName, 'dk.magenta.sites.retspsyk.tableView').then(function (response) {
         $scope.toggleIcon = response['dk.magenta.sites.retspsyk.tableView'] == 'true' ? 'view_module' : 'list';
     });
 
@@ -61,12 +61,21 @@ function DocumentToolbarController($scope, $mdDialog, declarationService, docume
 
         console.log(files);
 
-        files.forEach(function (file) {
-            console.log('download ' + file.nodeRef);
-            documentPreviewService.previewDocumentPlugin(file.nodeRef).then(function (plugin) {
-                console.log('initiated ' + plugin.fileName);
-                alfrescoDownloadService.downloadFile(plugin.nodeRef, plugin.fileName);
+        if (files.length == 1) {
+            files.forEach(function (file) {
+                console.log('download ' + file.nodeRef);
+                documentPreviewService.previewDocumentPlugin(file.nodeRef).then(function (plugin) {
+                    console.log('initiated ' + plugin.nodeRef);
+                    alfrescoDownloadService.downloadFile(plugin.nodeRef, plugin.fileName);
+                });
             });
+            return;
+        }
+
+        documentService.downloadFiles(files).then(function (response) {
+            console.log('response from download');
+            console.log(response.data);
+            alfrescoDownloadService.downloadZipFile(response.data.downloadNodeRef);
         });
 
     };

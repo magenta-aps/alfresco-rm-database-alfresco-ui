@@ -19,7 +19,8 @@ function GroupService(ALFRESCO_URI, $http, $q) {
         getSubGroups: getSubGroups,
         getUserGroups: getUserGroups,
         addUserToGroups: addUserToGroups,
-        removeUserFromGroups: removeUserFromGroups
+        removeUserFromGroups: removeUserFromGroups,
+        getGroupNamesForSite: getGroupNamesForSite
     };
 
     /**
@@ -173,6 +174,12 @@ function GroupService(ALFRESCO_URI, $http, $q) {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         }).then(function (response) {
+            return response.data;
+        });
+    }
+
+    function getGroupNamesForSite(siteShortName) {
+        return $http.get('/alfresco/s/api/sites/'+ siteShortName +'/roles').then(function(response) {
             return response.data;
         });
     }
