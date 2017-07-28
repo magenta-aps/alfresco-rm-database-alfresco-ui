@@ -20,7 +20,7 @@ function filterService($filter) {
         return hitList;
     }
 
-    function advancedEaseSearch(array, filters) {
+    function advancedEntrySearch(array, filters) {
         var hitList = $filter('advancedentryfilter')(array, filters);
         return hitList;
     }
