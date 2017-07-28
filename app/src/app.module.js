@@ -53,7 +53,7 @@ angular
             $state.go(APP_CONFIG.landingPage);
     });
 
-function config($stateProvider, $mdDateLocaleProvider, $mdThemingProvider) {
+function config(USER_ROLES, $stateProvider, $mdDateLocaleProvider, $mdThemingProvider) {
 
     var regionMidtMap = $mdThemingProvider.extendPalette('red', {
         '500': '#990033',
@@ -110,6 +110,9 @@ function config($stateProvider, $mdDateLocaleProvider, $mdThemingProvider) {
             'footer@': {
                 template: '<img src="app/assets/images/rm-weblogo.jpg" class="rm-logo">'
             }
+        },
+        params: {
+            authorizedRoles: [USER_ROLES.user]
         }
     });
 
