@@ -2,7 +2,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('DeclarationSearchController', DeclarationSearchController);
 
-function DeclarationSearchController($scope, $state, $stateParams, declarationService, filterService) {
+function DeclarationSearchController($scope, $state, $stateParams, entryService, propertyService, filterService) {
 
     $scope.caseid;
     $scope.showFilters = false;
@@ -11,7 +11,7 @@ function DeclarationSearchController($scope, $state, $stateParams, declarationSe
     $scope.waitingListCases = [];
     $scope.searchParams = {};
     $scope.selectedCase = null;
-    $scope.dropdownOptions = declarationService.getAllDropdownOptions();
+    $scope.propertyValues = propertyService.getAllPropertyValues();
 
     $scope.query = {
         order: 'caseNumber'
@@ -27,8 +27,8 @@ function DeclarationSearchController($scope, $state, $stateParams, declarationSe
         return filterService.caseSearch($scope.allCases, query, filters);
     }
 
-    $scope.dropdownFilter = function(array, query) {
-        return filterService.dropdownFilter(array, query);
+    $scope.propertyFilter = function(array, query) {
+        return filterService.propertyFilter(array, query);
     }
 
     $scope.search = function() {
@@ -78,7 +78,7 @@ function DeclarationSearchController($scope, $state, $stateParams, declarationSe
     }
 
     function getAllCases() {
-        declarationService.getAllCases().then(function (response) {
+        entryService.getAllCases().then(function (response) {
             console.log('get all cases');
             $scope.allCases = response;
 

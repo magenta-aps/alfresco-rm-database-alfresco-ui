@@ -2,7 +2,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('DocumentController', DocumentController);
 
-function DocumentController($scope, $state, $stateParams, $mdDialog, declarationService, documentToolbarService,
+function DocumentController($scope, $state, $stateParams, $mdDialog, entryService, documentToolbarService,
     siteService, documentService, documentPreviewService, preferenceService, authService, sessionService, alfrescoDownloadService) {
     var vm = this;
 
@@ -11,7 +11,7 @@ function DocumentController($scope, $state, $stateParams, $mdDialog, declaration
 
     $scope.documentService = documentService;
     $scope.documentToolbarService = documentToolbarService;
-    $scope.declarationService = declarationService;
+    $scope.entryService = entryService;
 
     $scope.contents = [];
     $scope.contentLength = 0;
@@ -39,7 +39,7 @@ function DocumentController($scope, $state, $stateParams, $mdDialog, declaration
     }, true);
 
     //load files using the current case
-    $scope.$watch('declarationService.getCurrentCase()', function (newVal) {
+    $scope.$watch('entryService.getCurrentCase()', function (newVal) {
         $scope.case = newVal;
         if (newVal['node-uuid']) {
             loadFiles($scope.case['node-uuid']);
@@ -87,7 +87,7 @@ function DocumentController($scope, $state, $stateParams, $mdDialog, declaration
 
     function loadFiles(node) {
         console.log('load files');
-        declarationService.getContents(node).then(function (response) {
+        entryService.getContents(node).then(function (response) {
             // response.thumbnail = sessionService.makeURL(response.thumbnail);
             documentService.setCaseFiles(response);
             $scope.contents = response;

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('openDeskApp.declaration')
-    .factory('listService', function ($http, declarationService) {
+    .factory('propertyService', function ($http, entryService) {
 
         var isEditing = false;
         var count = 0;
@@ -9,6 +9,20 @@ angular.module('openDeskApp.declaration')
         var content = [];
         var propertyContent = [];
         var propertyName = '';
+        var propertyValues = {};
+
+        function getValuesForProperty(propertyName) {
+                return propertyValues[propertyName];
+            }
+
+        function setPropertyValues(property, values) {
+                return $http.put("/alfresco/s/propertyValues", {
+                    "property": property,
+                    "values": values,
+                }).then(function (response) {
+                    return response.data;
+                });
+            }
 
         return {
             toggleEdit: function () {
@@ -39,30 +53,40 @@ angular.module('openDeskApp.declaration')
                 return selectedContent;
             },
 
-            updateContent: function(updated) {
+            updateContent: function (updated) {
                 content = updated;
-
             },
 
-            getContent: function() {
+            getContent: function () {
                 return content;
             },
 
-            setPropertyName: function(name) {
+            setPropertyName: function (name) {
                 propertyName = name;
             },
 
-            saveChanges: function() {
+            saveChanges: function () {
                 var values = [];
-                propertyContent.forEach(function(property) {
+                propertyContent.forEach(function (property) {
                     values.push(property.title);
                 })
-                declarationService.setPropertyValues(propertyName,values);
+                setPropertyValues(propertyName, values);
+            },
+
+            initPropertyValues: function () {
+                return $http.get("/alfresco/s/propertyValues").then(function (response) {
+                    propertyValues = response.data;
+                    return response.data;
+                });
+            },
+
+            getAllPropertyValues: function () {
+                return propertyValues;
             },
 
             getPropertyContent: function (property) {
                 propertyContent = [];
-                var content = declarationService.getDropdownOptions(property);
+                var content = getValuesForProperty(property);
 
                 content.forEach(function (elem, key) {
                     propertyContent.push({

@@ -2,9 +2,9 @@ angular
     .module('openDeskApp.declaration')
     .controller('PatientInfoController', PatientInfoController);
 
-function PatientInfoController($scope, $state, $stateParams, declarationService, filterService) {
+function PatientInfoController($scope, $state, $stateParams, entryService, filterService) {
 
-    $scope.declarationService = declarationService;
+    $scope.entryService = entryService;
     $scope.editPatientData = false;
     $scope.case = {};
 
@@ -14,21 +14,21 @@ function PatientInfoController($scope, $state, $stateParams, declarationService,
         total: null
     };
 
-    $scope.$watch('declarationService.getCurrentCase()', function (newVal) {
+    $scope.$watch('entryService.getCurrentCase()', function (newVal) {
         $scope.case = newVal;
     });
 
-    $scope.$watch('declarationService.isEditing()', function (newVal) {
+    $scope.$watch('entryService.isEditing()', function (newVal) {
         $scope.editPatientData = newVal;
     });
 
     $scope.$watch('case', function (newVal) {
-        declarationService.updateNewCase(newVal);
+        entryService.updateNewCase(newVal);
         $scope.waitTime = getWaitingTimes(newVal);
     }, true);
 
-    $scope.dropdownFilter = function(array, query) {
-        return filterService.dropdownFilter(array, query);
+    $scope.propertyFilter = function(array, query) {
+        return filterService.propertyFilter(array, query);
     }
 
     function getWaitingTimes(res) {

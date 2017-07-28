@@ -2,7 +2,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('DocumentToolbarController', DocumentToolbarController);
 
-function DocumentToolbarController($scope, $mdDialog, declarationService, documentToolbarService, documentService,
+function DocumentToolbarController($scope, $mdDialog, $interval, $mdToast, entryService, documentToolbarService, documentService,
     preferenceService, authService, documentPreviewService, alfrescoDownloadService) {
 
     $scope.toggleIcon = 'list';
@@ -15,9 +15,9 @@ function DocumentToolbarController($scope, $mdDialog, declarationService, docume
         $scope.toggleIcon = response['dk.magenta.sites.retspsyk.tableView'] == 'true' ? 'view_module' : 'list';
     });
 
-    $scope.declarationService = declarationService;
+    $scope.entryService = entryService;
 
-    $scope.$watch('declarationService.getCurrentCase()', function (newVal) {
+    $scope.$watch('entryService.getCurrentCase()', function (newVal) {
         console.log(newVal);
         $scope.case = newVal;
     });
@@ -58,25 +58,36 @@ function DocumentToolbarController($scope, $mdDialog, declarationService, docume
         console.log('download documents');
 
         var files = documentService.getSelectedFiles();
-
-        console.log(files);
+        var delay = 3000;
+        var toastLabel = 'Henter filer...'
 
         if (files.length == 1) {
             files.forEach(function (file) {
-                console.log('download ' + file.nodeRef);
+                toastLabel = 'Henter ' + file.name;
                 documentPreviewService.previewDocumentPlugin(file.nodeRef).then(function (plugin) {
-                    console.log('initiated ' + plugin.nodeRef);
-                    alfrescoDownloadService.downloadFile(plugin.nodeRef, plugin.fileName);
+                    alfrescoDownloadService.downloadFile(plugin.nodeRef, plugin.fileName, true);
                 });
             });
-            return;
+        } else {
+            documentService.downloadFiles(files).then(function (response) {
+                var download = $interval(function () {
+                    documentService.getDownloadStatus(response.data.downloadNodeRef).then(function (res) {
+                        delay += 1000;
+                        if (res == 'DONE') {
+                            alfrescoDownloadService.downloadFile(response.data.downloadNodeRef, $scope.case.caseNumber, false);
+                            $interval.cancel(download);
+                        }
+                    });
+                }, 1000, 20);
+            });
         }
 
-        documentService.downloadFiles(files).then(function (response) {
-            console.log('response from download');
-            console.log(response.data);
-            alfrescoDownloadService.downloadZipFile(response.data.downloadNodeRef);
-        });
+        $mdToast.show(
+            $mdToast.simple()
+            .textContent(toastLabel)
+            .position('top right')
+            .hideDelay(delay)
+        );
 
     };
 }

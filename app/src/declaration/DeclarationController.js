@@ -2,7 +2,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('DeclarationController', DeclarationController);
 
-function DeclarationController($scope, $state, $stateParams, declarationService) {
+function DeclarationController($scope, $state, $stateParams, entryService, propertyService) {
 
     //sets the margin to the width of sidenav
     var sidebar = $(".md-sidenav-left");
@@ -10,16 +10,16 @@ function DeclarationController($scope, $state, $stateParams, declarationService)
 
     $scope.case = {};
 
-    $scope.dropdownOptions = declarationService.getAllDropdownOptions();
+    $scope.propertyValues = propertyService.getAllPropertyValues();
 
     function loadCase(caseid) {
         if (caseid) {
-            declarationService.getCase(caseid).then(function (response) {
+            entryService.getCase(caseid).then(function (response) {
                 $scope.case = response;
                 console.log('case loaded');
                 console.log($scope.case);
             }, function (error) {
-                $scope.case = declarationService.getCurrentCase();
+                $scope.case = entryService.getCurrentCase();
             });
         }
     }

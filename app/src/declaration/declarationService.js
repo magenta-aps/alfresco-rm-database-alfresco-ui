@@ -1,13 +1,11 @@
 'use strict';
 
-angular.module('openDeskApp.declaration').factory('declarationService', function ($http, $window, $transitions, alfrescoNodeUtils) {
+angular.module('openDeskApp.declaration').factory('entryService', function ($http, $window, $transitions, alfrescoNodeUtils) {
 
     var edit = false;
     var newCase = {};
     var currentCase = {};
     var caseTitle = '';
-    var dropdownGroupNames = {};
-    var dropdownGroupOptions = {};
 
     function setCaseTitle(newCase) {
         caseTitle = newCase.firstName + ' ' + newCase.lastName + ' (Sag #' + newCase.caseNumber + ')';
@@ -99,30 +97,5 @@ angular.module('openDeskApp.declaration').factory('declarationService', function
                 return response.data;
             });
         },
-
-        getPropertyValues: function () {
-            return $http.get("/alfresco/s/propertyValues").then(function (response) {
-                dropdownGroupOptions = response.data;
-                return response.data;
-            });
-        },
-
-        setPropertyValues: function (property, values) {
-            return $http.put("/alfresco/s/propertyValues", {
-                "property": property,
-                "values": values,
-            }).then(function (response) {
-                return response.data;
-            });
-        },
-
-        getDropdownOptions: function (groupName) {
-            return dropdownGroupOptions[groupName];
-        },
-
-        getAllDropdownOptions: function () {
-            return dropdownGroupOptions;
-        }
-
     };
 });

@@ -7,7 +7,7 @@ function filterService($filter) {
         search: search,
         caseSearch: caseSearch,
         advancedCaseSearch: advancedCaseSearch,
-        dropdownFilter: dropdownFilter
+        propertyFilter: propertyFilter
     };
 
     function search(array, query) {
@@ -25,8 +25,8 @@ function filterService($filter) {
         return hitList;
     }
 
-    function dropdownFilter(array, query) {
-        var hitList = $filter('dropdownfilter')(array, query);
+    function propertyFilter(array, query) {
+        var hitList = $filter('propertyfilter')(array, query);
         return hitList;
     }
 }

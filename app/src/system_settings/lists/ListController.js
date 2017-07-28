@@ -2,21 +2,21 @@ angular
     .module('openDeskApp.declaration')
     .controller('ListController', ListController);
 
-function ListController($scope, $state, $stateParams, $mdDialog, listService, declarationService) {
+function ListController($scope, $state, $stateParams, $mdDialog, propertyService) {
 
-    $scope.listService = listService;
+    $scope.propertyService = propertyService;
 
     $scope.isEditing = false;
     $scope.listTitle = $stateParams.listTitle;
-    $scope.listContent = listService.getPropertyContent($stateParams.listData);
+    $scope.listContent = propertyService.getPropertyContent($stateParams.listData);
 
-    listService.setPropertyName($stateParams.listData);
+    propertyService.setPropertyName($stateParams.listData);
 
     $scope.query = {
         order: 'title'
     }
 
-    $scope.$watch('listService.isEditing()', function (newVal) {
+    $scope.$watch('propertyService.isEditing()', function (newVal) {
         $scope.isEditing = newVal;
     });
 
@@ -29,9 +29,9 @@ function ListController($scope, $state, $stateParams, $mdDialog, listService, de
                 selectedContent.push(element);
             }
         }, this);
-        listService.updateCount(count);
-        listService.updateSelectedContent(selectedContent);
-        listService.updateContent(newVal);
+        propertyService.updateCount(count);
+        propertyService.updateSelectedContent(selectedContent);
+        propertyService.updateContent(newVal);
     }, true);
 
 

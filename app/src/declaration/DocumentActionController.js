@@ -2,14 +2,14 @@ angular
     .module('openDeskApp.declaration')
     .controller('DocumentActionController', DocumentActionController);
 
-function DocumentActionController($scope, $state, $mdDialog, $mdToast, declarationService, documentService) {
+function DocumentActionController($scope, $state, $mdDialog, $mdToast, entryService, documentService) {
     var vm = this;
 
-    $scope.declarationService = declarationService;
+    $scope.entryService = entryService;
     $scope.selectedFiles = documentService.getSelectedFiles();
     $scope.case = {};
 
-    $scope.$watch('declarationService.getCurrentCase()', function (newVal) {
+    $scope.$watch('entryService.getCurrentCase()', function (newVal) {
         $scope.case = newVal;
     });
 
@@ -17,7 +17,7 @@ function DocumentActionController($scope, $state, $mdDialog, $mdToast, declarati
         var caseNodeRef = $scope.case['store-protocol'] + '://' + $scope.case['store-identifier'] + '/' + $scope.case['node-uuid'];
         for (var i = 0; i < files.length; i++) {
             documentService.uploadFiles(files[i], caseNodeRef).then(function (response) {
-                declarationService.getContents($scope.case['node-uuid']).then(function (response) {
+                entryService.getContents($scope.case['node-uuid']).then(function (response) {
                     documentService.setCaseFiles(response);
                     $mdToast.show(
                         $mdToast.simple()
@@ -36,7 +36,7 @@ function DocumentActionController($scope, $state, $mdDialog, $mdToast, declarati
     vm.deleteFiles = function () {
         $scope.selectedFiles.forEach(function (file) {
             documentService.deleteFile(file.nodeRef).then(function (response) {
-                declarationService.getContents($scope.case['node-uuid']).then(function (response) {
+                entryService.getContents($scope.case['node-uuid']).then(function (response) {
                     documentService.setCaseFiles(response);
                     $mdToast.show(
                         $mdToast.simple()

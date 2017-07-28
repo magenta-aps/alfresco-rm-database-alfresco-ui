@@ -39,7 +39,7 @@
         <md-autocomplete flex 
             md-selected-item="case.ethnicity" 
             md-search-text="ethnicitySearch"
-            md-items="ethnicity in dropdownFilter(dropdownOptions['ethnicity'],ethnicitySearch)" 
+            md-items="ethnicity in propertyFilter(propertyValues['ethnicity'],ethnicitySearch)" 
             md-item-text="ethnicity" 
             md-min-length="0" 
             md-floating-label="Etnicitet"
@@ -52,7 +52,7 @@
         <md-autocomplete flex 
             md-selected-item="case.motherEthnicity" 
             md-search-text="motherEthnicitySearch"
-            md-items="ethnicity in dropdownFilter(dropdownOptions['ethnicity'],motherEthnicitySearch)" 
+            md-items="ethnicity in propertyFilter(propertyValues['ethnicity'],motherEthnicitySearch)" 
             md-item-text="ethnicity" 
             md-min-length="0" 
             md-floating-label="Mors etnicitet"
@@ -65,7 +65,7 @@
         <md-autocomplete flex 
             md-selected-item="case.fatherEthnicity" 
             md-search-text="fatherEthnicitySearch"
-            md-items="ethnicity in dropdownFilter(dropdownOptions['ethnicity'],fatherEthnicitySearch)" 
+            md-items="ethnicity in propertyFilter(propertyValues['ethnicity'],fatherEthnicitySearch)" 
             md-item-text="ethnicity" 
             md-min-length="0" 
             md-floating-label="Fars etnicitet"

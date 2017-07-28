@@ -127,18 +127,18 @@ function advancedCaseFilter() {
 
 angular
     .module('openDeskApp')
-    .filter('dropdownfilter', dropdownfilter);
+    .filter('propertyfilter', propertyfilter);
 
-function dropdownfilter() {
+function propertyfilter() {
     return function (options, query) {
 
-        var filteredOptions = [];
+        var filteredProperties = [];
 
         angular.forEach(options, function (option) {
             if (option.toString().toLowerCase().indexOf(query.toLowerCase()) > -1) {
                 this.push(option);
             }
-        }, filteredOptions);
-        return filteredOptions;
+        }, filteredProperties);
+        return filteredProperties;
     };
 }

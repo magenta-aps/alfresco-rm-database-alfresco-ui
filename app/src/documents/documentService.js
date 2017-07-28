@@ -24,7 +24,8 @@ function documentService($http, alfrescoNodeUtils) {
         getDoclibLink: getDoclibLink,
         deleteFile: deleteFile,
         uploadFiles: uploadFiles,
-        downloadFiles: downloadFiles
+        downloadFiles: downloadFiles,
+        getDownloadStatus: getDownloadStatus
     };
 
     return service;
@@ -182,6 +183,15 @@ function documentService($http, alfrescoNodeUtils) {
             nodeRefs: fileNodeRefs
         }).then(function (result) {
             return result;
+        });
+    }
+
+    function getDownloadStatus(nodeRef) {
+        console.log('get download status');
+
+        return $http.get('/alfresco/s/contents/download/status?nodeRef=' + nodeRef).then(function (result) {
+            console.log(result);
+            return result.data.downloadStatus;
         });
     }
 

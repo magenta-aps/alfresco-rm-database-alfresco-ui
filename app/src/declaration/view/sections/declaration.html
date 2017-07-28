@@ -9,7 +9,7 @@
         <md-autocomplete flex 
             md-selected-item="case.placement" 
             md-search-text="placementSearch"
-            md-items="placement in dropdownFilter(dropdownOptions['placement'],placementSearch)" 
+            md-items="placement in propertyFilter(propertyValues['placement'],placementSearch)" 
             md-item-text="placement" 
             md-min-length="0" 
             md-floating-label="Placering"
@@ -24,7 +24,7 @@
         <md-autocomplete flex 
             md-selected-item="case.sanctionProposal" 
             md-search-text="sanctionProposalSearch"
-            md-items="sanctionProposal in dropdownFilter(dropdownOptions['sanctionProposal'],sanctionProposalSearch)" 
+            md-items="sanctionProposal in propertyFilter(propertyValues['sanctionProposal'],sanctionProposalSearch)" 
             md-item-text="sanctionProposal" 
             md-min-length="0" 
             md-floating-label="Sanktionsforslag"

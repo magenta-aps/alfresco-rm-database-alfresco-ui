@@ -12,7 +12,6 @@ angular.module('openDeskApp.declaration').factory('documentToolbarService', func
 
     return {
         toggleDocumentView: function() {
-            console.log('toggle');
             console.log(tableView);
             tableView = !tableView;
 

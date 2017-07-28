@@ -2,9 +2,10 @@ angular
     .module('openDeskApp.declaration')
     .controller('PatientInfoToolbarController', PatientInfoToolbarController);
 
-function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $mdToast, $transitions, declarationService, filterService, authService) {
+function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $mdToast, $transitions, entryService, propertyService, filterService, authService) {
 
-    $scope.declarationService = declarationService;
+    $scope.entryService = entryService;
+    $scope.propertyService = propertyService;
     $scope.editMode = false;
     $scope.caseTitle = '';
     $scope.currentCase;
@@ -15,21 +16,21 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
     };
     $scope.editor = {};
     $scope.canCurrentlyEdit = true;
-    $scope.dropdownOptions;
+    $scope.propertyValues;
 
     var clickedSave = false;
 
     var currentUser = authService.getUserInfo().user;
 
-    $scope.$watch('declarationService.getCaseTitle()', function (newVal) {
+    $scope.$watch('entryService.getCaseTitle()', function (newVal) {
         $scope.caseTitle = newVal;
     });
 
-    $scope.$watch('declarationService.getAllDropdownOptions()', function (newVal) {
-        $scope.dropdownOptions = newVal;
+    $scope.$watch('propertyService.getAllPropertyValues()', function (newVal) {
+        $scope.propertyValues = newVal;
     });
 
-    $scope.$watch('declarationService.getCurrentCase()', function (newVal) {
+    $scope.$watch('entryService.getCurrentCase()', function (newVal) {
         $scope.currentCase = newVal;
 
         if(newVal.hasOwnProperty('locked4editBy') && newVal.locked4editBy != "null") {
@@ -44,7 +45,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
 
         if ($scope.editor.userName == currentUser.userName) {
             $scope.editMode = true;
-            declarationService.forceEdit(true);
+            entryService.forceEdit(true);
             $state.go('declaration.show.patientdata.edit');
         }
         }
@@ -52,14 +53,13 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
 
     $scope.toggleEdit = function () {
         $scope.editMode = !$scope.editMode;
-        declarationService.toggleEdit();
+        entryService.toggleEdit();
 
         if ($scope.editMode) {
             $state.go('declaration.show.patientdata.edit');
             lockCase(true);
         } else {
             $state.go('declaration.show.patientdata');
-            //lockCase(false);
 
             $mdToast.show(
                 $mdToast.simple()
@@ -72,11 +72,11 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
 
     $scope.saveEdit = function () {
         clickedSave = true;
-        var newCase = declarationService.getNewCaseInfo();
+        var newCase = entryService.getNewCaseInfo();
         newCase.fullName = newCase.firstName + ' ' + newCase.lastName;
         newCase.locked4edit = false;
         newCase.locked4editBy = {};
-        declarationService.updateCase(newCase).then(function (response) {
+        entryService.updateCase(newCase).then(function (response) {
             console.log(response);
         });
     }
@@ -106,7 +106,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
         $scope.currentCase.closedWithoutDeclarationReason = $scope.closeCaseParams.reason;
         $scope.currentCase.closedWithoutDeclarationSentTo = $scope.closeCaseParams.sentTo;
         
-        declarationService.updateCase($scope.currentCase);
+        entryService.updateCase($scope.currentCase);
         $mdDialog.cancel();
     }
 
@@ -120,7 +120,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
             'locked4edit': lock,
             'locked4editBy': lock ? currentUser : {}
         }
-        declarationService.updateCase(locked).then(function (response) {
+        entryService.updateCase(locked).then(function (response) {
             console.log(response);
         });
         console.log('locked: ' + lock);
@@ -132,13 +132,13 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
 
         if ($scope.editMode && !clickedSave) {
             $scope.editMode = false;
-            declarationService.forceEdit(false);
+            entryService.forceEdit(false);
             lockCase(false);
         }
     });
 
-    $scope.dropdownFilter = function(array, query, filters) {
-        return filterService.dropdownFilter(array, query, filters);
+    $scope.propertyFilter = function(array, query, filters) {
+        return filterService.propertyFilter(array, query, filters);
     }
 
     $scope.cancel = function() {

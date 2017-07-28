@@ -8,7 +8,7 @@
         <md-autocomplete flex 
             md-selected-item="case.status" 
             md-search-text="statusSearch"
-            md-items="status in dropdownFilter(dropdownOptions['status'],statusSearch)" 
+            md-items="status in propertyFilter(propertyValues['status'],statusSearch)" 
             md-item-text="status" 
             md-min-length="0" 
             md-floating-label="Status"

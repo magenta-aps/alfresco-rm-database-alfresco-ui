@@ -9,7 +9,7 @@
             <md-autocomplete flex 
             md-selected-item="case.referingAgency" 
             md-search-text="agencySearch" 
-            md-items="agency in dropdownFilter(dropdownOptions['referingAgency'],agencySearch)"
+            md-items="agency in propertyFilter(propertyValues['referingAgency'],agencySearch)"
                 md-item-text="agency" 
                 md-min-length="0" 
                 md-floating-label="Henvisende instans" 
@@ -24,7 +24,7 @@
             <md-autocomplete flex 
             md-selected-item="case.mainCharge" 
             md-search-text="mainChargeSearch" 
-            md-items="mainCarge in dropdownFilter(dropdownOptions['mainCharge'],mainChargeSearch)"
+            md-items="mainCarge in propertyFilter(propertyValues['mainCharge'],mainChargeSearch)"
                 md-item-text="mainCarge" 
                 md-min-length="0" 
                 md-floating-label="Hovedsigtelse" 

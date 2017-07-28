@@ -11,7 +11,7 @@
                 <md-autocomplete 
                 md-selected-item="searchParams.mainCharge" 
                 md-search-text="mainChargeSearch" 
-                md-items="mainCarge in dropdownFilter(dropdownOptions['mainCharge'],mainChargeSearch)"
+                md-items="mainCarge in propertyFilter(propertyValues['mainCharge'],mainChargeSearch)"
                     md-item-text="mainCarge" 
                     md-min-length="0" 
                     md-floating-label="Hovedsigtelse">
@@ -26,7 +26,7 @@
                 <md-autocomplete 
                 md-selected-item="searchParams.placement" 
                 md-search-text="placementSearch" 
-                md-items="placement in dropdownFilter(dropdownOptions['placement'],placementSearch)"
+                md-items="placement in propertyFilter(propertyValues['placement'],placementSearch)"
                     md-item-text="placement" 
                     md-min-length="0" 
                     md-floating-label="Placering">
@@ -43,7 +43,7 @@
                 <md-autocomplete 
                 md-selected-item="searchParams.sanctionProposal" 
                 md-search-text="sanctionProposalSearch" 
-                md-items="sanctionProposal in dropdownFilter(dropdownOptions['sanctionProposal'],sanctionProposalSearch)"
+                md-items="sanctionProposal in propertyFilter(propertyValues['sanctionProposal'],sanctionProposalSearch)"
                     md-item-text="sanctionProposal" 
                     md-min-length="0" 
                     md-floating-label="Sanktionsforslag">
@@ -58,7 +58,7 @@
             flex-offset="10" 
             md-selected-item="searchParams.diagnosis" 
             md-search-text="diagnosisSearch" 
-            md-items="diagnosis in dropdownFilter(dropdownOptions['diagnosis'],diagnosisSearch)"
+            md-items="diagnosis in propertyFilter(propertyValues['diagnosis'],diagnosisSearch)"
                 md-item-text="diagnosis" 
                 md-min-length="0" 
                 md-floating-label="Hoveddiagnose">
