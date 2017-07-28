@@ -2,14 +2,14 @@ angular
     .module('openDeskApp.declaration')
     .controller('DeclarationCreateToolbarController', DeclarationCreateToolbarController);
 
-function DeclarationCreateToolbarController($scope, $state, $mdToast, declarationService) {
+function DeclarationCreateToolbarController($scope, $state, $mdToast, entryService) {
 
     $scope.submit = function() {
-        var newCase = declarationService.getNewCaseInfo();
+        var newCase = entryService.getNewCaseInfo();
         newCase.fullName = newCase.firstName + ' ' + newCase.lastName;
         
-        declarationService.createCase(newCase).then(function (response) {
-            declarationService.setCurrentCaseAfterCreation(response);
+        entryService.createEntry(newCase).then(function (response) {
+            entryService.setCurrentCaseAfterCreation(response);
             $state.go('declaration.show.patientdata', {caseid: response.caseNumber});
 
             $mdToast.show(

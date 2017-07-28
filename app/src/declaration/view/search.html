@@ -4,14 +4,14 @@
         <div layout="row">
             <md-autocomplete
                 md-selected-item="selectedCase"
-                md-search-text="caseSearchQuery"
-                md-items="case in filterCases(caseSearchQuery, ['cprNumber', 'caseNumber', 'fullName'])"
+                md-search-text="entrySearchQuery"
+                md-items="case in filterCases(entrySearchQuery, ['cprNumber', 'caseNumber', 'fullName'])"
                 md-item-text="'Sag #'+ case.caseNumber + ' - ' + case.firstName + ' ' + case.lastName + ' (' + case.cprNumber + ')'" 
                 md-min-length="0" 
                 ng-enter="gotoCase(selectedCase.caseNumber)"
                 placeholder="Søg på et navn, CPR eller sagsnummer" flex>
                 <md-item-template>
-                    <span md-highlight-text="caseSearchQuery" md-highlight-flags="gi">
+                    <span md-highlight-text="entrySearchQuery" md-highlight-flags="gi">
                         #{{case.caseNumber}} - {{case.firstName}} {{case.lastName}} ({{case.cprNumber}})
                     </span>
                     <md-icon ng-show="case.hasOwnProperty('closed') || case.hasOwnProperty('closedWithoutDeclaration')">done</md-icon>

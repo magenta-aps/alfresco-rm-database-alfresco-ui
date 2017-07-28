@@ -5,8 +5,8 @@ angular
 function filterService($filter) {
     return {
         search: search,
-        caseSearch: caseSearch,
-        advancedCaseSearch: advancedCaseSearch,
+        entrySearch: entrySearch,
+        advancedEntrySearch: advancedEntrySearch,
         propertyFilter: propertyFilter
     };
 
@@ -15,13 +15,13 @@ function filterService($filter) {
         return hitList;
     }
 
-    function caseSearch(array, query, filters) {
-        var hitList = $filter('casefilter')(array, query, filters);
+    function entrySearch(array, query, filters) {
+        var hitList = $filter('entryfilter')(array, query, filters);
         return hitList;
     }
 
-    function advancedCaseSearch(array, filters) {
-        var hitList = $filter('advancedcasefilter')(array, filters);
+    function advancedEaseSearch(array, filters) {
+        var hitList = $filter('advancedentryfilter')(array, filters);
         return hitList;
     }
 

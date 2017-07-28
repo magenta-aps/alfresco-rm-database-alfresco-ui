@@ -45,7 +45,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
 
         if ($scope.editor.userName == currentUser.userName) {
             $scope.editMode = true;
-            entryService.forceEdit(true);
+            entryService.toggleEdit(true);
             $state.go('declaration.show.patientdata.edit');
         }
         }
@@ -53,7 +53,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
 
     $scope.toggleEdit = function () {
         $scope.editMode = !$scope.editMode;
-        entryService.toggleEdit();
+        entryService.toggleEdit($scope.editMode);
 
         if ($scope.editMode) {
             $state.go('declaration.show.patientdata.edit');
@@ -76,7 +76,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
         newCase.fullName = newCase.firstName + ' ' + newCase.lastName;
         newCase.locked4edit = false;
         newCase.locked4editBy = {};
-        entryService.updateCase(newCase).then(function (response) {
+        entryService.updateEntry(newCase).then(function (response) {
             console.log(response);
         });
     }
@@ -106,7 +106,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
         $scope.currentCase.closedWithoutDeclarationReason = $scope.closeCaseParams.reason;
         $scope.currentCase.closedWithoutDeclarationSentTo = $scope.closeCaseParams.sentTo;
         
-        entryService.updateCase($scope.currentCase);
+        entryService.updateEntry($scope.currentCase);
         $mdDialog.cancel();
     }
 
@@ -120,7 +120,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
             'locked4edit': lock,
             'locked4editBy': lock ? currentUser : {}
         }
-        entryService.updateCase(locked).then(function (response) {
+        entryService.updateEntry(locked).then(function (response) {
             console.log(response);
         });
         console.log('locked: ' + lock);
@@ -132,7 +132,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
 
         if ($scope.editMode && !clickedSave) {
             $scope.editMode = false;
-            entryService.forceEdit(false);
+            entryService.toggleEdit(false);
             lockCase(false);
         }
     });

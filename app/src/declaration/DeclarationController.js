@@ -14,7 +14,7 @@ function DeclarationController($scope, $state, $stateParams, entryService, prope
 
     function loadCase(caseid) {
         if (caseid) {
-            entryService.getCase(caseid).then(function (response) {
+            entryService.getEntry(caseid).then(function (response) {
                 $scope.case = response;
                 console.log('case loaded');
                 console.log($scope.case);

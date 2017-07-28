@@ -22,11 +22,7 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
     }
 
     return {
-        toggleEdit: function () {
-            edit = !edit;
-        },
-
-        forceEdit: function (state) {
+        toggleEdit: function (state) {
             edit = state;
         },
 
@@ -55,7 +51,7 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
             return caseTitle;
         },
 
-        getCase: function (caseNumber) {
+        getEntry: function (caseNumber) {
             return $http.get("/alfresco/s/entry?type=forensicPsychiatryDeclaration&entryKey=caseNumber&entryValue=" + caseNumber, {}).then(function (response) {
                 var res = response.data[0];
                 setCaseTitle(res);
@@ -64,13 +60,13 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
             });
         },
 
-        getAllCases: function () {
+        getAllEntries: function () {
             return $http.get("/alfresco/s/entry?type=forensicPsychiatryDeclaration", {}).then(function (response) {
                 return response.data;
             });
         },
 
-        updateCase: function (properties) {
+        updateEntry: function (properties) {
             return $http.put("/alfresco/s/entry?uuid=" + properties['node-uuid'], {
                 "properties": properties
             }).then(function (response) {
@@ -80,7 +76,7 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
             });
         },
 
-        createCase: function (properties) {
+        createEntry: function (properties) {
             return $http.post("/alfresco/s/entry", {
                 "type": "forensicPsychiatryDeclaration",
                 "siteShortName": "retspsyk",

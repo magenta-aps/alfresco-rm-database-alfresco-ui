@@ -24,7 +24,7 @@ function DeclarationSearchController($scope, $state, $stateParams, entryService,
     }, true);
 
     $scope.filterCases = function(query, filters) {
-        return filterService.caseSearch($scope.allCases, query, filters);
+        return filterService.entrySearch($scope.allCases, query, filters);
     }
 
     $scope.propertyFilter = function(array, query) {
@@ -74,12 +74,12 @@ function DeclarationSearchController($scope, $state, $stateParams, entryService,
         }
         var filters = angular.copy(params);
         console.log(filters);
-        $scope.advancedSearchResults = filterService.advancedCaseSearch($scope.allCases,filters);
+        $scope.advancedSearchResults = filterService.advancedEntrySearch($scope.allCases,filters);
     }
 
-    function getAllCases() {
-        entryService.getAllCases().then(function (response) {
-            console.log('get all cases');
+    function getAllEntries() {
+        entryService.getAllEntries().then(function (response) {
+            console.log('get all entries');
             $scope.allCases = response;
 
             angular.forEach($scope.allCases, function(declaration) {
@@ -102,5 +102,5 @@ function DeclarationSearchController($scope, $state, $stateParams, entryService,
         });
     }
 
-    getAllCases();
+    getAllEntries();
 }
