@@ -6,10 +6,10 @@
                 md-selected-item="selectedCase"
                 md-search-text="entrySearchQuery"
                 md-items="case in filterCases(entrySearchQuery, ['cprNumber', 'caseNumber', 'fullName'])"
-                md-item-text="'Sag #'+ case.caseNumber + ' - ' + case.firstName + ' ' + case.lastName + ' (' + case.cprNumber + ')'" 
+                md-item-text="'Erklæring #'+ case.caseNumber + ' - ' + case.firstName + ' ' + case.lastName + ' (' + case.cprNumber + ')'" 
                 md-min-length="0" 
                 ng-enter="gotoCase(selectedCase.caseNumber)"
-                placeholder="Søg på et navn, CPR eller sagsnummer" flex>
+                placeholder="{{'DECLARATION.SEARCH_NAME_CPR_DECLARATION' | translate}}" flex>
                 <md-item-template>
                     <span md-highlight-text="entrySearchQuery" md-highlight-flags="gi">
                         #{{case.caseNumber}} - {{case.firstName}} {{case.lastName}} ({{case.cprNumber}})
@@ -20,11 +20,11 @@
 
             <md-button class="md-icon-button" ng-click="toggleFilters()">
             <md-icon>filter_list</md-icon>
-            <md-tooltip md-direction="top" md-delay="500">Avanceret søgning</md-tooltip>
+            <md-tooltip md-direction="top" md-delay="500">{{'DECLARATION.ADVANCED_SEARCH' | translate}}</md-tooltip>
             </md-button>
         </div>
         <div layout="row" layout-align="center" style="margin-top:16px" ng-click="gotoWaitinglist()">
-            <a>Se den aktuelle venteliste</a>
+            <a>{{'DECLARATION.SEE_CURRENT_WAITINGLIST' | translate}}</a>
         </div>
     </div>
 </div>

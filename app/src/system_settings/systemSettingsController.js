@@ -34,13 +34,13 @@ function SystemSettingsCtrl($scope, $state, $stateParams, systemSettingsPagesSer
             $scope.templateSites = response;
         });
     }
-    loadTemplates();
+    //loadTemplates();
 
     vm.isAdmin = sessionService.isAdmin();
 
-    systemSettingsService.getDocumentTemplateSite().then(function (response) {
-        vm.shortName = response.shortName;
-    });
+    // systemSettingsService.getDocumentTemplateSite().then(function (response) {
+    //     vm.shortName = response.shortName;
+    // });
 
     vm.pages = systemSettingsPagesService.getPages()
         .filter(function (page) {

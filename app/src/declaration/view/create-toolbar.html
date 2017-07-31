@@ -1,10 +1,10 @@
 
 <md-button ng-click="createNewDeclaration($event)" ng-if="'declaration' | isState">
     <md-icon>add</md-icon>
-    <span>Ny erklæring</span>
+    <span>{{'DECLARATION.NEW_DECLARATION' | translate}}</span>
 </md-button>
 
 <md-button ng-click="submit()" ng-if="'declaration.create' | isState">
     <md-icon>save</md-icon>
-    <span>Gem</span>
+    <span>{{'COMMON.SAVE' | translate}}</span>
 </md-button>

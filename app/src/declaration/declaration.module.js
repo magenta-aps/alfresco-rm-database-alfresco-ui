@@ -27,7 +27,7 @@ function config($stateProvider, USER_ROLES) {
                     controllerAs: 'vm'
                 },
                 'toolbar-tools-left@site': {
-                    template: "<md-button class='md-icon-button' aria-label='Back' ui-sref='declaration'><md-icon>arrow_back</md-icon></md-button><span>Advanceret søgning</span>"
+                    template: "<md-button class='md-icon-button' aria-label='Back' ui-sref='declaration'><md-icon>arrow_back</md-icon></md-button><span>{{'DECLARATION.ADVANCED_SEARCH' | translate}}</span>"
                 }
             }
         })
@@ -40,7 +40,7 @@ function config($stateProvider, USER_ROLES) {
                     controllerAs: 'vm'
                 },
                 'toolbar-tools-left@site': {
-                    template: "<h2>Venteliste</h2>"
+                    template: "<h2>{{'DECLARATION.WAITINGLIST' | translate}}</h2>"
                 }
             }
         })

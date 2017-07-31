@@ -105,6 +105,23 @@
     "LOCAL_DOCUMENT": "Lokalt dokument",
     "REPLY": "Besvar"
   },
+  "DECLARATION": {
+    "NEW_DECLARATION": "Ny erklæring",
+    "CREATE_NEW_DECLARATION": "Opret ny erklæring",
+    "PATIENT_DATA": "Patient Data",
+    "SAVE_AND_LOCK": "Gem og afslut",
+    "LOCK": "Afslut",
+    "UNLOCK": "Genåben",
+    "REOPEN": "Genåben",
+    "DECLARATION_CLOSED": "Erklæringen er aflsuttet",
+    "CLOSED_WITHOUT_DECLARATION": "Afsluttet uden erklæring",
+    "WAITINGLIST": "Venteliste",
+    "SEE_CURRENT_WAITINGLIST": "Se den akutelle venteliste",
+    "SEARCH_NAME_CPR_DECLARATION": "Søg efter navn, CPR eller erklæringsnummer", 
+    "ADVANCED_SEARCH": "Advanceret søgning",
+    "DECLARATION_NUMBER": "Erklæringsnummer",
+    "DECLARATION": "Erklæring"
+  },
   "SIMPLE_CASE": {
     "TYPE": "Standardsag"
   },
