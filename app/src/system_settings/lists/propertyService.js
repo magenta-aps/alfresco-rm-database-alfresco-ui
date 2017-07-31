@@ -17,6 +17,7 @@ angular.module('openDeskApp.declaration')
 
         function setPropertyValues(property, values) {
                 return $http.put("/alfresco/s/propertyValues", {
+                    "siteShortName": "retspsyk",
                     "property": property,
                     "values": values,
                 }).then(function (response) {
@@ -74,7 +75,7 @@ angular.module('openDeskApp.declaration')
             },
 
             initPropertyValues: function () {
-                return $http.get("/alfresco/s/propertyValues").then(function (response) {
+                return $http.get("/alfresco/s/propertyValues?siteShortName=retspsyk").then(function (response) {
                     propertyValues = response.data;
                     return response.data;
                 });
