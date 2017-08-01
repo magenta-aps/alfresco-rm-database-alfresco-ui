@@ -26,12 +26,12 @@ function config($translateProvider, languageFilesProvider) {
     $translateProvider.useSanitizeValueStrategy('sanitizeParameters');
 
     $translateProvider
-        .registerAvailableLanguageKeys(availableLanguages.keys, availableLanguages.localesKeys)
-        .determinePreferredLanguage();
+        .registerAvailableLanguageKeys(availableLanguages.keys, availableLanguages.localesKeys);
+        // .determinePreferredLanguage();
 
     //set default language if browsers langugage not found
     if (availableLanguages.keys.indexOf($translateProvider.preferredLanguage()) === -1) {
-        $translateProvider.preferredLanguage(availableLanguages.keys[0]);
+        $translateProvider.preferredLanguage(availableLanguages.keys[1]);
     }
 }
 

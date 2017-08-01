@@ -2,7 +2,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('PatientInfoController', PatientInfoController);
 
-function PatientInfoController($scope, $state, $stateParams, entryService, filterService, loadingService) {
+function PatientInfoController($scope, $rootScope, $state, $stateParams, entryService, filterService, loadingService) {
 
     $scope.entryService = entryService;
     $scope.loadingService = loadingService;
