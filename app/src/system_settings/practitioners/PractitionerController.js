@@ -2,7 +2,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('PractitionerController', PractitionerController);
 
-function PractitionerController($scope, $state, $stateParams, practitionerService, userService, groupService) {
+function PractitionerController($scope, $state, $stateParams, $timeout, practitionerService, userService, groupService, loadingService) {
 
     $scope.practitionerService = practitionerService;
 
@@ -14,6 +14,12 @@ function PractitionerController($scope, $state, $stateParams, practitionerServic
     $scope.query = {
         order: 'firstName'
     }
+
+    loadingService.setLoading(true);
+
+    $timeout(function () {
+        loadingService.setLoading(false);
+    });
 
     $scope.$watch('practitionerService.isEditing()', function (newVal) {
         $scope.isEditing = newVal;

@@ -2,9 +2,10 @@ angular
     .module('openDeskApp.declaration')
     .controller('PatientInfoController', PatientInfoController);
 
-function PatientInfoController($scope, $state, $stateParams, entryService, filterService) {
+function PatientInfoController($scope, $state, $stateParams, entryService, filterService, loadingService) {
 
     $scope.entryService = entryService;
+    $scope.loadingService = loadingService;
     $scope.editPatientData = false;
     $scope.case = {};
 
@@ -14,9 +15,17 @@ function PatientInfoController($scope, $state, $stateParams, entryService, filte
         total: null
     };
 
+    loadingService.setLoading(true);
+
+    angular.element(document).ready(function() {
+        loadingService.setLoading(false);
+    });
+
     $scope.$watch('entryService.getCurrentCase()', function (newVal) {
         $scope.case = newVal;
     });
+
+
 
     $scope.$watch('entryService.isEditing()', function (newVal) {
         $scope.editPatientData = newVal;

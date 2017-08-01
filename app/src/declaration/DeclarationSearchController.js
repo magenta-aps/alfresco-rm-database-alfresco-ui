@@ -2,7 +2,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('DeclarationSearchController', DeclarationSearchController);
 
-function DeclarationSearchController($scope, $state, $stateParams, entryService, propertyService, filterService) {
+function DeclarationSearchController($scope, $state, $stateParams, $timeout, entryService, propertyService, filterService,loadingService) {
 
     $scope.caseid;
     $scope.showFilters = false;
@@ -16,6 +16,12 @@ function DeclarationSearchController($scope, $state, $stateParams, entryService,
     $scope.query = {
         order: 'caseNumber'
     }
+
+    loadingService.setLoading(true);
+
+    $timeout(function () {
+        loadingService.setLoading(false);
+    });
 
     $scope.$watch('selectedCase', function (newVal, oldVal) {
         if(newVal) {

@@ -4,6 +4,7 @@ angular
 
 function DeclarationController($scope, $state, $stateParams, entryService, propertyService) {
 
+    $scope.entryService = entryService;
     //sets the margin to the width of sidenav
     var sidebar = $(".md-sidenav-left");
     $(".od-info-declarations").css("margin-left", sidebar.width() + "px");

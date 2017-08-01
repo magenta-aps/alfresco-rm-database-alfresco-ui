@@ -2,7 +2,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('DocumentController', DocumentController);
 
-function DocumentController($scope, $state, $stateParams, $mdDialog, entryService, documentToolbarService,
+function DocumentController($scope, $state, $stateParams, $mdDialog, $timeout, entryService, documentToolbarService, loadingService,
     siteService, documentService, documentPreviewService, preferenceService, authService, sessionService, alfrescoDownloadService) {
     var vm = this;
 
@@ -28,6 +28,12 @@ function DocumentController($scope, $state, $stateParams, $mdDialog, entryServic
     $scope.query = {
         order: 'name'
     }
+
+    loadingService.setLoading(true);
+
+     $timeout(function () {
+        loadingService.setLoading(false);
+    });
 
     //update service with currently selected files
     $scope.$watch('selectedFiles', function (newVal) {

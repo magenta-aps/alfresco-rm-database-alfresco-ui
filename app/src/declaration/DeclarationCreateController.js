@@ -4,13 +4,19 @@ angular
     .module('openDeskApp.declaration')
     .controller('DeclarationCreateController', DeclarationCreateController);
 
-function DeclarationCreateController($scope, entryService, propertyService, filterService) {
+function DeclarationCreateController($scope, $timeout, entryService, propertyService, filterService) {
 
     $scope.editPatientData = true;
     $scope.case = {};
     $scope.case.biDiagnoses = [];
     $scope.case.creationDate = new Date();
     $scope.propertyValues = propertyService.getAllPropertyValues();
+
+    entryService.setLoading(true);
+
+    $timeout(function () {
+        loadingService.setLoading(false);
+    });
 
     $scope.$watch('case', function (newVal, oldVal) {
         entryService.updateNewCase(newVal);

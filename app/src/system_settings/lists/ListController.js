@@ -2,7 +2,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('ListController', ListController);
 
-function ListController($scope, $state, $stateParams, $mdDialog, propertyService) {
+function ListController($scope, $state, $stateParams, $mdDialog, $timeout, propertyService, loadingService) {
 
     $scope.propertyService = propertyService;
 
@@ -15,6 +15,12 @@ function ListController($scope, $state, $stateParams, $mdDialog, propertyService
     $scope.query = {
         order: 'title'
     }
+
+    loadingService.setLoading(true);
+
+    $timeout(function () {
+        loadingService.setLoading(false);
+    });
 
     $scope.$watch('propertyService.isEditing()', function (newVal) {
         $scope.isEditing = newVal;

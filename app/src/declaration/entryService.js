@@ -6,6 +6,7 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
     var newCase = {};
     var currentCase = {};
     var caseTitle = '';
+    var loading = true;
 
     function setCaseTitle(newCase) {
         caseTitle = newCase.firstName + ' ' + newCase.lastName + ' (erklæring #' + newCase.caseNumber + ')';
@@ -28,6 +29,14 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
 
         isEditing: function () {
             return edit;
+        },
+        
+        setLoading: function(state) {
+            loading = state;
+        },
+
+        isLoading: function() {
+            return loading;
         },
 
         setCurrentCaseAfterCreation: function (newCase) {
