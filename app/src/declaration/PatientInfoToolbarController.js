@@ -85,7 +85,6 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
         $mdDialog.show({
             templateUrl: 'app/src/declaration/view/lock-dialog.html',
             parent: angular.element(document.body),
-            targetEvent: event,
             scope: $scope, // use parent scope in template
             preserveScope: true, // do not forget this if use parent scope
             clickOutsideToClose: true
@@ -149,7 +148,9 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
         return authService.isAuthorized('SiteEntryLockManager');
     }
 
-    $scope.unlockEntry = function (currentCase) {
-        entryService.unlockEntry(currentCase);
+    $scope.unlockEntry = function () {
+        console.log('unlock');
+        console.log($scope.currentCase);
+        entryService.unlockEntry($scope.currentCase);
     }
 }

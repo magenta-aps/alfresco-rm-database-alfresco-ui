@@ -61,7 +61,7 @@
         </div>
 
         <div layout="column">
-            <span ng-show="case.closed == 'closed'">Afsluttet</span>
+            <span ng-show="case.closed">Afsluttet</span>
             <div ng-show="case.closedWithoutDeclaration">
                 <span style="padding-top:16px" ng-show="case.hasOwnProperty('closedWithoutDeclarationReason')">Afsluttet uden erklæring: {{case.closedWithoutDeclarationReason}}</span><br>
                 <span style="padding:16px 0" ng-show="case.hasOwnProperty('closedWithoutDeclarationSentTo')">Sendt til: {{case.closedWithoutDeclarationSentTo}}</span>

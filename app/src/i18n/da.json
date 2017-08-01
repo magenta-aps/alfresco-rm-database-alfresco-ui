@@ -114,7 +114,6 @@
     "LOCK_DECLARATION": "Afslut deklaration",
     "UNLOCK": "Genåben",
     "REOPEN": "Genåben",
-    "CLOSED": "Closed",
     "DECLARATION_CLOSED": "Erklæringen er aflsuttet",
     "CLOSED_WITHOUT_DECLARATION": "Afsluttet uden erklæring",
     "WAITINGLIST": "Venteliste",

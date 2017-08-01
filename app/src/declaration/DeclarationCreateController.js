@@ -4,7 +4,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('DeclarationCreateController', DeclarationCreateController);
 
-function DeclarationCreateController($scope, $rootScope, $timeout, entryService, propertyService, filterService) {
+function DeclarationCreateController($scope, $rootScope, $timeout, entryService, propertyService, filterService, loadingService) {
 
     $scope.editPatientData = true;
     $scope.case = {};

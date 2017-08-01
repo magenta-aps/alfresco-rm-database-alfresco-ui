@@ -114,7 +114,6 @@
     "LOCK": "Lock",
     "UNLOCK": "Unlock",
     "REOPEN": "Reopen",
-    "CLOSED": "Closed",
     "DECLARATION_CLOSED": "Declaration closed",
     "CLOSED_WITHOUT_DECLARATION": "Closed without declaration",
     "WAITINGLIST": "Waitinglist",
