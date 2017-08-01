@@ -13,6 +13,7 @@ function AuthController(APP_CONFIG, $state, $stateParams, authService, userServi
     vm.errorMsg = loginErrorMessage ? loginErrorMessage : "";
     vm.showForgotDialog = showForgotDialog;
     vm.updateValidator = updateValidator;
+    vm.getUserRoles = getUserRoles;
 
     function login(credentials) {
         authService.login(credentials.username, credentials.password).then(function (response) {
@@ -105,4 +106,9 @@ function AuthController(APP_CONFIG, $state, $stateParams, authService, userServi
         var userInfo = authService.getUserInfo();
         return userInfo;
     }
+
+    function getUserRoles() {
+        return authService.getUserRoles();
+    }
+
 }

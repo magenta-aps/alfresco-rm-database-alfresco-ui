@@ -47,5 +47,4 @@ function DeclarationController($scope, $state, $stateParams, entryService, prope
     $scope.isNumber = function (number) {
         return isNaN(number) ? false : true;
     }
-
 }

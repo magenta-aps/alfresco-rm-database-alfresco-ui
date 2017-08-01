@@ -2,7 +2,7 @@ angular
     .module('openDeskApp.systemsettings', ['ngMaterial', 'pascalprecht.translate'])
     .config(config);
 
-function config(systemSettingsPagesServiceProvider, $stateProvider) {
+function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
     systemSettingsPagesServiceProvider.addPage('Projektskabeloner', 'administration.systemsettings.templateList', true);
     systemSettingsPagesServiceProvider.addPage('Dokumentskabeloner', 'document_templates', true);
 
@@ -24,7 +24,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider) {
         }
     })
     .state('administration.systemsettings.practitioners', {
-        url: '/behandlere',
+        url: '/brugerrettigheder',
         views: {
             'systemsetting-view': {
                 templateUrl: 'app/src/system_settings/practitioners/view/practitioner-list.html',
@@ -39,6 +39,9 @@ function config(systemSettingsPagesServiceProvider, $stateProvider) {
                 controller: 'PractitionerToolbarController',
                 controllerAs: 'vm'
             }
+        },
+        params: {
+            authorizedRoles: [USER_ROLES.roleManager]
         }
     })
     .state('administration.systemsettings.ethnicities', {
@@ -46,6 +49,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider) {
         params: {
             listTitle: 'Etnicitet',
             listData: 'ethnicity',
+            authorizedRoles: [USER_ROLES.propertyValueManager]
         },
         views: {
             'systemsetting-view': {
@@ -61,13 +65,14 @@ function config(systemSettingsPagesServiceProvider, $stateProvider) {
                 controller: 'ListToolbarController',
                 controllerAs: 'vm'
             }
-        }
+        },
     })
         .state('administration.systemsettings.sanctions', {
             url: '/sanktioner',
             params: {
                 listTitle: 'Sanktion',
-                listData: 'sanctionProposal'
+                listData: 'sanctionProposal',
+                authorizedRoles: [USER_ROLES.propertyValueManager]
             },
             views: {
                 'systemsetting-view': {
@@ -83,13 +88,14 @@ function config(systemSettingsPagesServiceProvider, $stateProvider) {
                     controller: 'ListToolbarController',
                     controllerAs: 'vm'
                 }
-            }
+            },
         })
         .state('administration.systemsettings.referingAgencies', {
             url: '/henvisende-instanser',
             params: {
                 listTitle: 'Henvisende instans',
-                listData: 'referingAgency'
+                listData: 'referingAgency',
+                authorizedRoles: [USER_ROLES.propertyValueManager]
             },
             views: {
                 'systemsetting-view': {
@@ -105,13 +111,14 @@ function config(systemSettingsPagesServiceProvider, $stateProvider) {
                     controller: 'ListToolbarController',
                     controllerAs: 'vm'
                 }
-            }
+            },
         })
         .state('administration.systemsettings.placement', {
             url: '/placeringer',
             params: {
                 listTitle: 'Placering',
-                listData: 'placement'
+                listData: 'placement',
+                authorizedRoles: [USER_ROLES.propertyValueManager]
             },
             views: {
                 'systemsetting-view': {
@@ -133,7 +140,8 @@ function config(systemSettingsPagesServiceProvider, $stateProvider) {
             url: '/diagnoser',
             params: {
                 listTitle: 'Diagnose',
-                listData: 'diagnosis'
+                listData: 'diagnosis',
+                authorizedRoles: [USER_ROLES.propertyValueManager]
             },
             views: {
                 'systemsetting-view': {
@@ -155,7 +163,8 @@ function config(systemSettingsPagesServiceProvider, $stateProvider) {
             url: '/sigtelser',
             params: {
                 listTitle: 'Sigtelse',
-                listData: 'mainCharge'
+                listData: 'mainCharge',
+                authorizedRoles: [USER_ROLES.propertyValueManager]
             },
             views: {
                 'systemsetting-view': {
@@ -177,7 +186,8 @@ function config(systemSettingsPagesServiceProvider, $stateProvider) {
             url: '/statusser',
             params: {
                 listTitle: 'Status',
-                listData: 'status'
+                listData: 'status',
+                authorizedRoles: [USER_ROLES.propertyValueManager]
             },
             views: {
                 'systemsetting-view': {
@@ -199,7 +209,8 @@ function config(systemSettingsPagesServiceProvider, $stateProvider) {
             url: '/afsluttet-uden-erklaering',
             params: {
                 listTitle: 'Årsag',
-                listData: 'noDeclarationReason'
+                listData: 'noDeclarationReason',
+                authorizedRoles: [USER_ROLES.propertyValueManager]
             },
             views: {
                 'systemsetting-view': {

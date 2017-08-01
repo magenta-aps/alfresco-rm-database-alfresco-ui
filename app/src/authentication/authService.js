@@ -31,12 +31,11 @@ function httpTicketInterceptor($injector, $translate, $window, $q, sessionServic
     }
 
     function prefixAlfrescoServiceUrl(url) {
-        if (url.indexOf("/api/") == 0 || url.indexOf("/opendesk/") == 0 || url.indexOf("/slingshot/") == 0
-            || url.indexOf("/lool") == 0 || url.indexOf("/wopi") == 0 || url == "/touch") {
+        if (url.indexOf("/api/") == 0 || url.indexOf("/opendesk/") == 0 || url.indexOf("/slingshot/") == 0 ||
+            url.indexOf("/lool") == 0 || url.indexOf("/wopi") == 0 || url == "/touch") {
             return ALFRESCO_URI.webClientServiceProxy + url;
-        }
-        else if (url.indexOf("/share/") == 0 || url.indexOf("/opendesk/") == 0 || url.indexOf("/slingshot/") == 0
-            || url == "/touch") {
+        } else if (url.indexOf("/share/") == 0 || url.indexOf("/opendesk/") == 0 || url.indexOf("/slingshot/") == 0 ||
+            url == "/touch") {
             return ALFRESCO_URI.webClientServiceProxy + url;
         }
         return url;
@@ -83,10 +82,14 @@ function authService($http, $window, $state, sessionService, userService, notifi
         isAuthorized: isAuthorized,
         getUserInfo: getUserInfo,
         revalidateUser: revalidateUser,
-        ssoLogin: ssoLogin
+        ssoLogin: ssoLogin,
+        setUserRolesForSite: setUserRolesForSite,
+        getUserRoles: getUserRoles
     };
 
     return service;
+
+    var roles = [];
 
     function getUserInfo() {
         return sessionService.getUserInfo();
@@ -131,9 +134,11 @@ function authService($http, $window, $state, sessionService, userService, notifi
 
 
         if (userInfo) {
-            var ticket =  userInfo.ticket;
+            var ticket = userInfo.ticket;
             sessionService.clearRetainedLocation();
-            $http.delete('/api/login/ticket/' + ticket, {alf_ticket: ticket}).then(function (response) {
+            $http.delete('/api/login/ticket/' + ticket, {
+                alf_ticket: ticket
+            }).then(function (response) {
                 notificationsService.stopUpdate();
                 $state.go('login');
             });
@@ -152,7 +157,9 @@ function authService($http, $window, $state, sessionService, userService, notifi
      * @returns {*}
      */
     function changePassword(email) {
-        return $http.post("/api/opendesk/reset-user-password", {email: email}).then(function (response) {
+        return $http.post("/api/opendesk/reset-user-password", {
+            email: email
+        }).then(function (response) {
             return response;
         });
     }
@@ -166,23 +173,31 @@ function authService($http, $window, $state, sessionService, userService, notifi
         if (typeof userInfo === 'undefined') {
             return false;
         }
+        //if admin we don't care return true immediately
+        if (userInfo.user.capabilities.isAdmin)
+            return true;
+
         if (!angular.isArray(authorizedRoles)) {
             authorizedRoles = [authorizedRoles];
         }
-        //TODO refactor when we have more role types
+        
         //We should loop through each authorized role and return true as soon as we detect a true value
         //As we have only two roles we need only to return whether the user is an admin or return the inverse of
         //user.isAdmin when the user role is set to user (i.e. return true if the user is not admin when the role is
         //user
-//        for (var n = 0; n < authorizedRoles.length; n++) {
-//            //if admin we don't care return true immediately
-//            if (userInfo.user.capabilities.isAdmin)
-//                return true;
-//            if (authorizedRoles[n] === 'user')
-//                return !userInfo.user.capabilities.isAdmin;
-//        }
-        return userInfo.user.capabilities.isAdmin ||
-            (authorizedRoles.length > 0 && authorizedRoles.indexOf('user') > -1);
+        return $http.get('/alfresco/s/database/retspsyk/role').then(function (response) {
+            for (var n = 0; n < authorizedRoles.length; n++) {
+            if (authorizedRoles[n] === 'user' || response.data.indexOf(authorizedRoles[n]) > -1) {
+                return true;
+            }
+        }
+        });
+
+        // for (var n = 0; n < authorizedRoles.length; n++) {
+        //     if (authorizedRoles[n] === 'user' || roles.indexOf(authorizedRoles[n]) > -1) {
+        //         return true;
+        //     }
+        // }
     }
 
     function revalidateUser() {
@@ -199,5 +214,15 @@ function authService($http, $window, $state, sessionService, userService, notifi
             sessionService.setUserInfo(userInfo);
             return user;
         });
+    }
+
+    function setUserRolesForSite(siteShortName) {
+        $http.get('/alfresco/s/database/' + siteShortName + '/role').then(function (response) {
+            roles = response.data;
+        });
+    }
+
+    function getUserRoles() {
+        return roles;
     }
 }

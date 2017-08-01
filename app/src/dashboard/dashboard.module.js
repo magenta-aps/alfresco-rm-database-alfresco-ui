@@ -15,7 +15,8 @@ function config($stateProvider, USER_ROLES) {
         },
         params: {
             authorizedRoles: [USER_ROLES.user]
-        }
+        },
+        redirectTo: 'declaration'
     });
 
 };

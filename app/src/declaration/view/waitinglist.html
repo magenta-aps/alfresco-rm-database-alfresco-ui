@@ -12,7 +12,7 @@
                     </tr>
                 </thead>
                 <tbody md-body ng-repeat="case in waitingListCases | orderBy: query.order">
-                    <tr md-row ng-click="gotoCase(case.caseNumber)">
+                    <tr md-row class="clickable" ng-click="gotoCase(case.caseNumber)">
                         <td md-cell>{{case.caseNumber}}</td>
                         <td md-cell>{{case.fullName}}</td>
                         <td md-cell>{{case.cprNumber}}</td>

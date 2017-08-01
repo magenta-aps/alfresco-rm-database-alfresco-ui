@@ -6,7 +6,7 @@
 <span ng-if="currentCase.hasOwnProperty('closed') || currentCase.hasOwnProperty('closedWithoutDeclaration')">
     <md-icon>done</md-icon> {{'DECLARATION.DECLARATION_CLOSED' | translate}}
 
-    <md-button class="md-text-icon-button" aria-label="genåben erklæringen" ng-click="lockCaseDialog()" ng-disabled="!canCurrentlyEdit">
+    <md-button ng-if="canReopenEntries()" class="md-text-icon-button" aria-label="genåben erklæringen" ng-click="unlockEntry()">
         <md-icon>lock_open</md-icon> {{'DECLARATION.REOPEN' | translate}}
     </md-button>
 </span>

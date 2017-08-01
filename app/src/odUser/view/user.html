@@ -1,14 +1,33 @@
 <section class="od-user" ng-controller="UserController as vm">
     <div ng-controller="AuthController as ac">
         <div class="od-user-header-menu">
-            <h2 class="od-user-name" ng-class="ac.getUserInfo().user.capabilities.isAdmin ? 'od-user-admin' : ''">{{ ac.getUserInfo().user.firstName }} {{ ac.getUserInfo().user.lastName }}</h2>
+            <h2 class="od-user-name">
+                <!--ng-class="ac.getUserInfo().user.capabilities.isAdmin ? 'od-user-admin' : ''"  -->
+                {{ ac.getUserInfo().user.firstName }} {{ ac.getUserInfo().user.lastName }}
+            </h2>
             <!--<button ng-click="vm.toggleUser()" class="od-btn od-user--toggle">
                 <i class="material-icons">person</i>
              </button>-->
 
-             <md-button ng-click="ac.logout()">
-                    {{ 'MENU.LOGOUT' | translate }}
-                </md-button>
+            <!-- <md-button 
+                ng-if="ac.getUserRoles().indexOf('SiteManager') > -1 || ac.getUserRoles().indexOf('SiteRoleManager') > -1 || ac.getUserRoles().indexOf('SitePropertyValueManager') > -1" 
+                class="od-btn md-icon-button od-settings--toggle" 
+                title="Indstillinger" 
+                ui-sref="administration.systemsettings">
+                <md-icon>settings</md-icon>
+            </md-button> -->
+
+            <md-button 
+                ng-if="ac.getUserRoles().indexOf('SiteManager') > -1 || ac.getUserRoles().indexOf('SiteRoleManager') > -1 || ac.getUserRoles().indexOf('SitePropertyValueManager') > -1" 
+                class="md-icon-button od-btn "
+                title="Indstillinger" 
+                ui-sref="administration.systemsettings">
+                <md-icon>settings</md-icon>
+            </md-button>
+
+            <md-button ng-click="ac.logout()">
+                {{ 'MENU.LOGOUT' | translate }}
+            </md-button>
         </div>
 <!--
         <div class="od-flyout right fixed" ng-class="{ open: vm.on, closed: !vm.on }" ng-click="vm.toggleUser()">

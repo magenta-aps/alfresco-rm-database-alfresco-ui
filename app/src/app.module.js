@@ -24,8 +24,8 @@ angular
         'openDeskApp.users',
         'openDeskApp.systemsettings',
         'openDeskApp.search',
-        'openDeskApp.calendar',
-        'openDeskApp.nogletal',
+        //'openDeskApp.calendar',
+        //'openDeskApp.nogletal',
 
         'openDeskApp.common.directives',
         'openDeskApp.common.directives.filter',
@@ -77,6 +77,7 @@ function config(USER_ROLES, $stateProvider, $mdDateLocaleProvider, $mdThemingPro
                     // I also provide the user for child controllers
                     d.resolve(authService.user);
                     propertyService.initPropertyValues();
+                    authService.setUserRolesForSite('retspsyk');
                 } else {
                     // here the rejection
                     if ($rootScope.ssoLoginEnabled) {

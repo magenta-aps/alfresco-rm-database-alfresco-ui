@@ -88,6 +88,16 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
             });
         },
 
+        unlockEntry: function(properties) {
+            return $http.put("/alfresco/s/entry?uuid=" + properties['node-uuid'], {
+                "properties": properties
+            }).then(function (response) {
+                setCaseTitle(response.data);
+                var res = formatCase(response.data);
+                return res;
+            });
+        },
+
         getContents: function (node) {
             return $http.get("/alfresco/service/contents?node=" + node).then(function (response) {
                 return response.data;

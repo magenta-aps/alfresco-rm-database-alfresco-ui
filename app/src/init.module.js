@@ -2,7 +2,10 @@ angular
     .module('openDeskApp.init', ['ngMaterial'])
     .constant('USER_ROLES', {
         admin: 'admin',
-        user: 'user'
+        user: 'user',
+        roleManager: 'SiteRoleManager',
+        entryLockManager: 'SiteEntryLockManager',
+        propertyValueManager: 'SitePropertyValueManager'
         //guest: 'guest' we don't want this type of user as of yet
     })
     .constant('ALFRESCO_URI', {

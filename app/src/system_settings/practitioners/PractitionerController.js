@@ -48,6 +48,7 @@ function PractitionerController($scope, $state, $stateParams, practitionerServic
                     });
                 });
             });
+
             $scope.allUsers = users;
         });
     }

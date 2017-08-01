@@ -144,4 +144,12 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
     $scope.cancel = function() {
         $mdDialog.cancel();
     }
+
+    $scope.canReopenEntries = function() {
+        return authService.isAuthorized('SiteEntryLockManager');
+    }
+
+    $scope.unlockEntry = function (currentCase) {
+        entryService.unlockEntry(currentCase);
+    }
 }

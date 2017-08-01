@@ -3,7 +3,9 @@ angular
     .constant('USER_ROLES', {
         admin: 'admin',
         user: 'user',
-        guest: 'guest'
+        guest: 'guest',
+        roleManager: 'SiteRoleManager',
+        entryLockManager: 'SiteEntryLockManager'
     })
     .constant('ALFRESCO_URI', {
         apiProxy: '/alfresco/api/',

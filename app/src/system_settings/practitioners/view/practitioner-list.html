@@ -10,11 +10,11 @@
                         <th md-column md-numeric md-order-by="GROUP_site_retspsyk_SiteRoleManager">Tildele roller</th>
                     </tr>
                 </thead>
-                <tbody md-body ng-repeat="user in allUsers | orderBy: query.order">
+                <tbody md-body ng-repeat="user in allUsers | orderBy: query.order" ng-if="user.userName!='admin'">
                     <tr md-row>
                         <td md-cell>{{user.firstName}} {{user.lastName}}</td>
-                        <td md-cell><md-checkbox aria-label="genåbne sager" ng-model="user.GROUP_site_retspsyk_SiteEntryManager" ng-disabled="!isEditing || (user.userName == 'admin')"></md-checkbox></td>
-                        <td md-cell><md-checkbox aria-label="redigere lister" ng-model="user.GROUP_site_retspsyk_SiteListManager" ng-disabled="!isEditing || (user.userName == 'admin')"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="genåbne sager" ng-model="user.GROUP_site_retspsyk_SiteEntryLockManager" ng-disabled="!isEditing || (user.userName == 'admin')"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="redigere lister" ng-model="user.GROUP_site_retspsyk_SitePropertyValueManager" ng-disabled="!isEditing || (user.userName == 'admin')"></md-checkbox></td>
                         <td md-cell><md-checkbox aria-label="tildele roller" ng-model="user.GROUP_site_retspsyk_SiteRoleManager" ng-disabled="!isEditing || (user.userName == 'admin')"></md-checkbox></td>
                     </tr>
                 </tbody>

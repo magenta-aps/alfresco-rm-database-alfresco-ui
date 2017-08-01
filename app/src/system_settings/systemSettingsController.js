@@ -2,10 +2,12 @@ angular
     .module('openDeskApp.systemsettings')
     .controller('SystemSettingsController', SystemSettingsCtrl);
 
-function SystemSettingsCtrl($scope, $state, $stateParams, systemSettingsPagesService, sessionService, systemSettingsService) {
+function SystemSettingsCtrl($scope, $state, $stateParams, systemSettingsPagesService, sessionService, authService, systemSettingsService) {
     var vm = this;
 
     $scope.templateSites = [];
+
+    $scope.auth = {};
 
     //sets the margin to the width of sidenav
     var sidebar = $(".md-sidenav-left");
@@ -27,6 +29,10 @@ function SystemSettingsCtrl($scope, $state, $stateParams, systemSettingsPagesSer
         $state.go('administration.systemsettings.' + newState);
     }
 
+    $scope.getUserRoles = function() {
+        return authService.getUserRoles();
+    }
+
     function loadTemplates() {
 
         systemSettingsService.getTemplates().then (function(response) {
@@ -37,6 +43,20 @@ function SystemSettingsCtrl($scope, $state, $stateParams, systemSettingsPagesSer
     //loadTemplates();
 
     vm.isAdmin = sessionService.isAdmin();
+
+    function isAuthorized() {
+
+        console.log('is authorized');
+        var authRoles = $stateParams.authorizedRoles;
+        console.log(authRoles);
+
+        for(var i=0; i < authRoles.length; i++) {
+            $scope.auth[authRoles[i]] = authService.isAuthorized(authRoles[i]);
+            console.log(authRoles[i]);
+        }
+        console.log($scope.auth);
+    }
+    isAuthorized();
 
     // systemSettingsService.getDocumentTemplateSite().then(function (response) {
     //     vm.shortName = response.shortName;

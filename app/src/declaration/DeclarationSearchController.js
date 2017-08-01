@@ -99,6 +99,8 @@ function DeclarationSearchController($scope, $state, $stateParams, entryService,
                     $scope.waitingListCases.push(declaration);
                 }
             });
+        }, function(err) {
+            console.log(err);
         });
     }
 

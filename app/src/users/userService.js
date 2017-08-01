@@ -11,8 +11,10 @@ function userService($http, sessionService) {
         getPersons: getPersons,
         uploadAvatar : uploadAvatar,
         getAvatar : getAvatar,
-        getAvatarFromUser : getAvatarFromUser
+        getAvatarFromUser : getAvatarFromUser,
     };
+
+    var roles = [];
 
     function getAllUsers() {
         return $http.get('/api/people').then(function (response) {

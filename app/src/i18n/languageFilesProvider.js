@@ -17,7 +17,6 @@ function LanguageFilesProvider() {
     }
 
     function getLanguageFiles() {
-        console.log(availableFiles);
         return availableFiles;
     }
 
