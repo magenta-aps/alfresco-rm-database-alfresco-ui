@@ -95,9 +95,8 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
         $scope.currentCase.locked4edit = false;
         $scope.currentCase.locked4editBy = {};
         
-        if($scope.closeCaseParams.closed == 'closed') {
-            $scope.currentCase.closed = true;
-        }
+        $scope.currentCase.closed = true;
+        
         if($scope.closeCaseParams.closed == 'no-declaration') {
             $scope.currentCase.closedWithoutDeclaration = true;
         }

@@ -121,7 +121,7 @@ function config(USER_ROLES, $stateProvider, $mdDateLocaleProvider, $mdThemingPro
 
     $mdDateLocaleProvider.formatDate = function (date) {
         if (date == undefined)
-            return;
+            return '';
         var day = ('0' + date.getDate()).slice(-2);
         var month = ('0' + (date.getMonth() + 1)).slice(-2);
         var year = date.getFullYear();
