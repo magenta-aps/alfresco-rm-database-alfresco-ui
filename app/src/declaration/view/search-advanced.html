@@ -162,8 +162,14 @@
                         <th md-column md-order-by="placement" ng-if="searchParams.placement">Placering</th>
                         <th md-column md-order-by="sanctionProposal" ng-if="searchParams.sanctionProposal">Sanktionsforslag</th>
                         <th md-column md-order-by="diagnosis" ng-if="searchParams.diagnosis">Hoveddiagnose</th>
+                        <th md-column md-order-by="passiveWaitTime" ng-if="searchParams.waitingTime.time == 'passive'">Passiv ventetid</th>
+                        <th md-column md-order-by="activeWaitTime" ng-if="searchParams.waitingTime.time == 'active'">Aktiv ventetid</th>
+                        <th md-column md-order-by="totalWaitTime" ng-if="searchParams.waitingTime.time == 'total'">Samlet ventetid</th>
                     </tr>
                 </thead>
+                <tbody md-body ng-if="advancedSearchResults.length == 0">
+                    <td md-cell colspan="13" style="text-align:center">Ingen erklæringer passer på din søgning</td>
+                </tbody>
                 <tbody md-body ng-repeat="case in advancedSearchResults | orderBy : query.order ">
                     <tr md-row ng-click="gotoCase(case.caseNumber)">
                         <td md-cell>{{case.caseNumber}}</td>
@@ -181,6 +187,9 @@
                         <td md-cell ng-if="searchParams.mainCharge">{{case.mainCharge}}</td>
                         <td md-cell ng-if="searchParams.placement">{{case.placement}}</td>
                         <td md-cell ng-if="searchParams.diagnosis">{{case.diagnosis}}</td>
+                        <td md-cell ng-if="searchParams.waitingTime.time == 'passive'">{{case.passiveWaitTime}}</td>
+                        <td md-cell ng-if="searchParams.waitingTime.time == 'active'">{{case.activeWaitTime}}</td>
+                        <td md-cell ng-if="searchParams.waitingTime.time == 'total'">{{case.totalWaitTime}}</td>
                     </tr>
                 </tbody>
             </table>

@@ -79,7 +79,7 @@ function DeclarationSearchController($scope, $state, $stateParams, $timeout, ent
             }
         }
         var filters = angular.copy(params);
-        console.log(filters);
+
         $scope.advancedSearchResults = filterService.advancedEntrySearch($scope.allCases,filters);
     }
 

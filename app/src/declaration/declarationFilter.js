@@ -76,12 +76,15 @@ function advancedEntryFilter() {
                         switch (fval.time) {
                             case 'passive':
                                 waitTime = Math.ceil((observationDate - creationDate) / 1000 / 60 / 60 / 24);
+                                entry.passiveWaitTime = waitTime;
                                 break;
                             case 'active':
                                 waitTime = Math.ceil((declarationDate - observationDate) / 1000 / 60 / 60 / 24);
+                                entry.activeWaitTime = waitTime;
                                 break;
                             case 'total':
                                 waitTime = Math.ceil((declarationDate - creationDate) / 1000 / 60 / 60 / 24);
+                                entry.totalWaitTime = waitTime;
                                 break;
                         }
 
