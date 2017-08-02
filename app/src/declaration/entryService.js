@@ -98,7 +98,7 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
 
         unlockEntry: function(properties) {
             return $http.put("/alfresco/s/entry/" + properties['node-uuid'] + '/unlock').then(function (response) {
-                console.log(response);
+                return response.data;
             });
         },
 

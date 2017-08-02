@@ -72,7 +72,7 @@ function httpTicketInterceptor($injector, $translate, $window, $q, sessionServic
     }
 }
 
-function authService($http, $window, $state, sessionService, userService, notificationsService) {
+function authService($q, $http, $window, $state, sessionService, userService, notificationsService) {
     var service = {
         login: login,
         logout: logout,
@@ -171,11 +171,11 @@ function authService($http, $window, $state, sessionService, userService, notifi
     function isAuthorized(authorizedRoles) {
         var userInfo = sessionService.getUserInfo();
         if (typeof userInfo === 'undefined') {
-            return false;
+            return $q.resolve(false);
         }
         //if admin we don't care return true immediately
         if (userInfo.user.capabilities.isAdmin)
-            return true;
+            return $q.resolve(true);
 
         if (!angular.isArray(authorizedRoles)) {
             authorizedRoles = [authorizedRoles];

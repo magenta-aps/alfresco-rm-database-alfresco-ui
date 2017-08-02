@@ -18,6 +18,8 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
     $scope.canCurrentlyEdit = true;
     $scope.propertyValues;
 
+    $scope.canReopenEntries = false;
+
     var clickedSave = false;
 
     var currentUser = authService.getUserInfo().user;
@@ -143,13 +145,18 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
         $mdDialog.cancel();
     }
 
-    $scope.canReopenEntries = function() {
-        return authService.isAuthorized('SiteEntryLockManager');
+    function canReopenEntries() {
+        return authService.isAuthorized('SiteEntryLockManager').then(function(response) {
+            $scope.canReopenEntries = response;
+        });
     }
+    canReopenEntries();
 
     $scope.unlockEntry = function () {
         console.log('unlock');
         console.log($scope.currentCase);
-        entryService.unlockEntry($scope.currentCase);
+        entryService.unlockEntry($scope.currentCase).then(function(response) {
+            $scope.currentCase = response;
+        });
     }
 }
