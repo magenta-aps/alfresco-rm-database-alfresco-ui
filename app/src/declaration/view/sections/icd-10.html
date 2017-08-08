@@ -5,6 +5,7 @@
         </md-card-title-text>
     </md-card-title>
     <md-card-content>
+        <div>
         <md-autocomplete flex 
             md-selected-item="case.mainDiagnosis" 
             md-search-text="diagnosisSearch"
@@ -17,6 +18,8 @@
                 <span md-highlight-text="diagnosisSearch" md-highlight-flags="gi">{{diagnosis}}</span>
             </md-item-template>
         </md-autocomplete>
+        <md-tooltip md-direction="top" md-delay="500" ng-if="case.mainDiagnosis != null">{{case.mainDiagnosis}}</md-tooltip>
+        </div>
 
         <md-autocomplete flex 
             ng-repeat="(index,bd) in case.biDiagnoses"

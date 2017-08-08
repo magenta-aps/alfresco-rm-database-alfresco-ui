@@ -7,7 +7,7 @@
                 md-search-text="entrySearchQuery"
                 md-items="case in filterCases(entrySearchQuery, ['cprNumber', 'caseNumber', 'fullName'])"
                 md-item-text="'Erklæring #'+ case.caseNumber + ' - ' + case.firstName + ' ' + case.lastName + ' (' + case.cprNumber + ')'" 
-                md-min-length="0" 
+                md-min-length="1" 
                 ng-enter="gotoCase(selectedCase.caseNumber)"
                 placeholder="{{'DECLARATION.SEARCH_NAME_CPR_DECLARATION' | translate}}" flex>
                 <md-item-template>
