@@ -370,12 +370,13 @@ md-toolbar {
 }
 
 .list-edit {
-    background-image: url(/app/assets/images/edit.svg);
-    background-repeat: no-repeat;
-    background-size: $u $u;
-    padding-left: $u * 1.5;
+    // background-image: url('app/assets/images/edit.svg');
+    // background-repeat: no-repeat;
+    // background-size: $u $u;
+    width: $u;
+    // padding-left: $u * 1.5;
     border: none;
-    width: 100%;
+    // width: 100%;
     outline: none;
 }
 

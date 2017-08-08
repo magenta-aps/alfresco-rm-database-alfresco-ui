@@ -15,6 +15,7 @@
                         </td>
                         <td md-cell>
                             <span>
+                                <img class="list-edit clickable" ng-if="isEditing" ng-click="renameDialog(content)" ng-src="app/assets/images/edit.svg">
                                 <i class="list-edit clickable" ng-if="isEditing" ng-click="renameDialog(content)"></i>
                                 {{content.title}}
                             </span>
