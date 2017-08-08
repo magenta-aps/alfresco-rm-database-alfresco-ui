@@ -65,7 +65,7 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
                 var res = response.data;
                 setCaseTitle(res);
                 currentCase = formatCase(res);
-                return res;
+                return currentCase;
             });
         },
 
