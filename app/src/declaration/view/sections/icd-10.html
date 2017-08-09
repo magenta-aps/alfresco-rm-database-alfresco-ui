@@ -21,8 +21,8 @@
         <md-tooltip md-direction="top" md-delay="500" ng-if="case.mainDiagnosis != null">{{case.mainDiagnosis}}</md-tooltip>
         </div>
 
+        <div ng-repeat="(index,bd) in case.biDiagnoses">
         <md-autocomplete flex 
-            ng-repeat="(index,bd) in case.biDiagnoses"
             md-selected-item="case.biDiagnoses[index]" 
             md-search-text="bidiagnosisSearch[index]"
             md-items="bidiagnosis in propertyFilter(propertyValues['diagnosis'],bidiagnosisSearch[index])" 
@@ -34,6 +34,8 @@
                 <span md-highlight-text="bidiagnosisSearch[index]" md-highlight-flags="gi">{{bidiagnosis}}</span>
             </md-item-template>
         </md-autocomplete>
+        <md-tooltip md-direction="top" md-delay="500" ng-if="case.biDiagnoses[index] != null">{{case.biDiagnoses[index]}}</md-tooltip>
+        </div>
 
     </md-card-content>
     <md-card-actions layout="row">
