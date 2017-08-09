@@ -17,7 +17,7 @@ function config($stateProvider, USER_ROLES) {
             }
         },
         params: {
-            authorizedRoles: [USER_ROLES.admin, USER_ROLES.entryLockManager, USER_ROLES.roleManager, USER_ROLES.propertyValueManager]
+            authorizedRoles: [USER_ROLES.admin, USER_ROLES.roleManager, USER_ROLES.propertyValueManager]
         },
         redirectTo: 'administration.systemsettings'
     })

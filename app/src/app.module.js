@@ -73,30 +73,38 @@ function config(USER_ROLES, $stateProvider, $mdDateLocaleProvider, $mdThemingPro
         state.resolve.authorize = ['authService', '$q', 'sessionService', '$state', '$rootScope', '$stateParams','propertyService',
             function (authService, $q, sessionService, $state, $rootScope, $stateParams, propertyService) {
                 var d = $q.defer();
-                if (authService.isAuthenticated() && authService.isAuthorized($stateParams.authorizedRoles)) {
-                    // I also provide the user for child controllers
-                    d.resolve(authService.user);
-                    propertyService.initPropertyValues();
-                    authService.setUserRolesForSite('retspsyk');
-                } else {
-                    // here the rejection
-                    if ($rootScope.ssoLoginEnabled) {
-                        authService.ssoLogin().then(function (response) {
-                            if (authService.isAuthenticated() && authService.isAuthorized($stateParams.authorizedRoles))
+                    if (authService.isAuthenticated()) {
+                        authService.setUserRolesForSite('retspsyk').then(function(roles) {
+                            if(authService.isAuthorized($stateParams.authorizedRoles)) {
+                                // I also provide the user for child controllers
                                 d.resolve(authService.user);
-                            else {
-                                d.reject('Not logged in or lacking authorization!');
-                                sessionService.retainCurrentLocation();
-                                $state.go('login');
+                                propertyService.initPropertyValues();
                             }
                         });
                     } else {
-                        d.reject('Not logged in or lacking authorization!');
-                        sessionService.retainCurrentLocation();
-                        $state.go('login');
+                        // here the rejection
+                        if ($rootScope.ssoLoginEnabled) {
+                            authService.ssoLogin().then(function (response) {
+                                if (authService.isAuthenticated()) {
+                                    authService.setUserRolesForSite('retspsyk').then(function(roles) {
+                                        if (authService.isAuthorized($stateParams.authorizedRoles)) {
+                                            d.resolve(authService.user);
+                                        }
+                                    });
+                                }
+                                else {
+                                    d.reject('Not logged in or lacking authorization!');
+                                    sessionService.retainCurrentLocation();
+                                    $state.go('login');
+                                }
+                            });
+                        } else {
+                            d.reject('Not logged in or lacking authorization!');
+                            sessionService.retainCurrentLocation();
+                            $state.go('login');
+                        }
                     }
-                }
-                return d.promise;
+                    return d.promise;
             }
         ];
         return stateData;

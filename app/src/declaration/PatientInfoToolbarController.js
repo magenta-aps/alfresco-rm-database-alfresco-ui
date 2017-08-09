@@ -170,9 +170,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
     }
 
     function canReopenEntries() {
-        return authService.isAuthorized('SiteEntryLockManager').then(function(response) {
-            $scope.canReopenEntries = response;
-        });
+        $scope.canReopenEntries = authService.isAuthorized('SiteEntryLockManager');
     }
     canReopenEntries();
 

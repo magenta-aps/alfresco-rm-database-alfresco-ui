@@ -180,24 +180,13 @@ function authService($q, $http, $window, $state, sessionService, userService, no
         if (!angular.isArray(authorizedRoles)) {
             authorizedRoles = [authorizedRoles];
         }
-        
+
         //We should loop through each authorized role and return true as soon as we detect a true value
-        //As we have only two roles we need only to return whether the user is an admin or return the inverse of
-        //user.isAdmin when the user role is set to user (i.e. return true if the user is not admin when the role is
-        //user
-        return $http.get('/alfresco/s/database/retspsyk/role').then(function (response) {
-            for (var n = 0; n < authorizedRoles.length; n++) {
-            if (authorizedRoles[n] === 'user' || response.data.indexOf(authorizedRoles[n]) > -1) {
+        for (var n = 0; n < authorizedRoles.length; n++) {
+            if (authorizedRoles[n] === 'user' || roles.indexOf(authorizedRoles[n]) > -1) {
                 return true;
             }
         }
-        });
-
-        // for (var n = 0; n < authorizedRoles.length; n++) {
-        //     if (authorizedRoles[n] === 'user' || roles.indexOf(authorizedRoles[n]) > -1) {
-        //         return true;
-        //     }
-        // }
     }
 
     function revalidateUser() {
@@ -217,8 +206,9 @@ function authService($q, $http, $window, $state, sessionService, userService, no
     }
 
     function setUserRolesForSite(siteShortName) {
-        $http.get('/alfresco/s/database/' + siteShortName + '/role').then(function (response) {
+        return $http.get('/alfresco/s/database/' + siteShortName + '/role').then(function (response) {
             roles = response.data;
+            return roles;
         });
     }
 
