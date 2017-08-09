@@ -387,3 +387,8 @@ md-toolbar {
 .md-button-active {
   background-color: #e2e2e2;
 }
+
+//hide arrow on date picker
+.md-datepicker-triangle-button {
+  display: none;
+}
