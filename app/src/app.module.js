@@ -73,42 +73,41 @@ function config(USER_ROLES, $stateProvider, $mdDateLocaleProvider, $mdThemingPro
         state.resolve.authorize = ['authService', '$q', 'sessionService', '$state', '$rootScope', '$stateParams','propertyService',
             function (authService, $q, sessionService, $state, $rootScope, $stateParams, propertyService) {
                 var d = $q.defer();
-                    if (authService.isAuthenticated()) {
-                        authService.setUserRolesForSite('retspsyk').then(function(roles) {
-                            if(authService.isAuthorized($stateParams.authorizedRoles)) {
-                                // I also provide the user for child controllers
-                                d.resolve(authService.user);
-                                propertyService.initPropertyValues();
-                            }
-                        });
-                    } else {
-                        // here the rejection
-                        if ($rootScope.ssoLoginEnabled) {
-                            authService.ssoLogin().then(function (response) {
-                                if (authService.isAuthenticated()) {
-                                    authService.setUserRolesForSite('retspsyk').then(function(roles) {
-                                        if (authService.isAuthorized($stateParams.authorizedRoles)) {
-                                            d.resolve(authService.user);
-                                        }
-                                    });
-                                }
-                                else {
-                                    d.reject('Not logged in or lacking authorization!');
-                                    sessionService.retainCurrentLocation();
-                                    $state.go('login');
-                                }
-                            });
-                        } else {
-                            d.reject('Not logged in or lacking authorization!');
-                            sessionService.retainCurrentLocation();
-                            $state.go('login');
-                        }
-                    }
-                    return d.promise;
+
+                if (authService.isAuthenticated())
+                    resolveUserAfterAuthorization(authService, $stateParams, propertyService, d);
+
+                else if ($rootScope.ssoLoginEnabled) {
+                    authService.ssoLogin().then(function (response) {
+                        if (authService.isAuthenticated())
+                            resolveUserAfterAuthorization(authService, $stateParams, propertyService, d);
+                        else rejectUnauthenticatedUser($state, sessionService, d);
+                    });
+                }
+
+                else rejectUnauthenticatedUser($state, sessionService, d);
+
+                return d.promise;
             }
         ];
         return stateData;
     });
+
+    function resolveUserAfterAuthorization(authService, $stateParams, propertyService, defer) {
+        authService.setUserRolesForSite('retspsyk').then(function (roles) {
+            if (authService.isAuthorized($stateParams.authorizedRoles)) {
+                // I also provide the user for child controllers
+                defer.resolve(authService.user);
+                propertyService.initPropertyValues();
+            }
+        });
+    }
+
+    function rejectUnauthenticatedUser($state, sessionService, defer) {
+        defer.reject('Please login');
+        sessionService.retainCurrentLocation();
+        $state.go('login');
+    }
 
     $stateProvider.state('site', {
         abstract: true,
