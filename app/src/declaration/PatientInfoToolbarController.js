@@ -33,41 +33,65 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
     });
 
     $scope.$watch('entryService.getCurrentCase()', function (newVal) {
+        setCurrentCase(newVal);
+    });
+
+    function setCurrentCase(newVal) {
         $scope.currentCase = newVal;
 
         if(newVal.hasOwnProperty('locked4editBy') && newVal.locked4editBy != "null") {
             $scope.editor = angular.fromJson(newVal.locked4editBy);
 
             if($scope.editor.hasOwnProperty('userName')) {
-                $scope.canCurrentlyEdit = $scope.editor.userName == currentUser.userName ? true : false;
+                $scope.canCurrentlyEdit = $scope.editor.userName == currentUser.userName;
             }
             else {
                 $scope.canCurrentlyEdit = true;
             }
 
-        if ($scope.editor.userName == currentUser.userName) {
-            $scope.editMode = true;
-            entryService.toggleEdit(true);
-            $state.go('declaration.show.patientdata.edit');
+            if ($scope.editor.userName == currentUser.userName) {
+                $scope.editMode = true;
+                entryService.toggleEdit(true);
+                $state.go('declaration.show.patientdata.edit');
+            }
         }
-        }
-    });
+    }
 
     $scope.toggleEdit = function () {
-        $scope.editMode = !$scope.editMode;
-        entryService.toggleEdit($scope.editMode);
+        if (!$scope.editMode)
+            entryService.getEntry($scope.currentCase.caseNumber).then(function (response) {
+                setCurrentCase(response);
+                toggleEdit();
+            });
+        else
+            toggleEdit();
+    };
 
-        if ($scope.editMode) {
-            $state.go('declaration.show.patientdata.edit');
-            lockCase(true);
-        } else {
-            $state.go('declaration.show.patientdata');
+    function toggleEdit() {
+        if($scope.canCurrentlyEdit) {
+            $scope.editMode = !$scope.editMode;
+            entryService.toggleEdit($scope.editMode);
 
+            if ($scope.editMode) {
+                $state.go('declaration.show.patientdata.edit');
+                lockCase(true);
+            } else {
+                $state.go('declaration.show.patientdata');
+
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent('Ændringerne er gemt')
+                        .position('top right')
+                        .hideDelay(3000)
+                );
+            }
+        }
+        else {
             $mdToast.show(
                 $mdToast.simple()
-                .textContent('Ændringerne er gemt')
-                .position('top right')
-                .hideDelay(3000)
+                    .textContent('Erklæringen redigeres allerede af ' + $scope.editor.displayName)
+                    .position('top right')
+                    .hideDelay(3000)
             );
         }
     }
