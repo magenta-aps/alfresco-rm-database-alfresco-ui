@@ -183,7 +183,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
             }
         })
         .state('administration.systemsettings.status', {
-            url: '/statusser',
+            url: '/status',
             params: {
                 listTitle: 'Status',
                 listData: 'status',
@@ -196,7 +196,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
                     controllerAs: 'vm'
                 },
                 'toolbar-tools-left@site': {
-                    template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Statusser</h2>"
+                    template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Status</h2>"
                 },
                 'toolbar-tools-right@site': {
                     templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',
@@ -220,6 +220,74 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
                 },
                 'toolbar-tools-left@site': {
                     template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Afsluttet uden erklæring</h2>"
+                },
+                'toolbar-tools-right@site': {
+                    templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',
+                    controller: 'ListToolbarController',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+        .state('administration.systemsettings.doctors', {
+            url: '/laeger',
+            params: {
+                listTitle: 'Læge',
+                listData: 'doctors',
+                authorizedRoles: [USER_ROLES.propertyValueManager]
+            },
+            views: {
+                'systemsetting-view': {
+                    templateUrl: 'app/src/system_settings/lists/view/list.html',
+                    controller: 'ListController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools-left@site': {
+                    template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Læger</h2>"
+                },
+                'toolbar-tools-right@site': {
+                    templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',
+                    controller: 'ListToolbarController',
+                    controllerAs: 'vm'
+                }
+            }
+        }).state('administration.systemsettings.socialworkers', {
+            url: '/socialraadgivere',
+            params: {
+                listTitle: 'Socialrådgiver',
+                listData: 'socialworkers',
+                authorizedRoles: [USER_ROLES.propertyValueManager]
+            },
+            views: {
+                'systemsetting-view': {
+                    templateUrl: 'app/src/system_settings/lists/view/list.html',
+                    controller: 'ListController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools-left@site': {
+                    template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Socialrådgivere</h2>"
+                },
+                'toolbar-tools-right@site': {
+                    templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',
+                    controller: 'ListToolbarController',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+        .state('administration.systemsettings.psychologists', {
+            url: '/psykologer',
+            params: {
+                listTitle: 'Psykolog',
+                listData: 'psychologists',
+                authorizedRoles: [USER_ROLES.propertyValueManager]
+            },
+            views: {
+                'systemsetting-view': {
+                    templateUrl: 'app/src/system_settings/lists/view/list.html',
+                    controller: 'ListController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools-left@site': {
+                    template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Psykologer</h2>"
                 },
                 'toolbar-tools-right@site': {
                     templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',

@@ -126,7 +126,7 @@
         </div>
 
         <div layout="row">
-            I perioden
+            <div flex="45" layout="row">
             <md-input-container>
                 <label>Fra</label>
                 <md-datepicker ng-model="searchParams.fromDate"></md-datepicker>
@@ -135,6 +135,12 @@
                 <label>Til</label>
                 <md-datepicker ng-model="searchParams.toDate"></md-datepicker>
             </md-input-container>
+            </div>
+            <div flex-offset="10">
+                <md-checkbox ng-model="searchParams.socialEval">
+                    Levnedsbeskrivelse foretaget
+                </md-checkbox>
+            </div>
         </div>
         <md-button ng-click="advancedSearch(searchParams); toggleResults()">
             Søg
@@ -146,6 +152,10 @@
   <md-card ng-show="results">
   <md-card-title>
       <md-button ng-click="toggleResults()">Ret søgning</md-button>
+      <span flex></span>
+      <div layout="row" layout-align="center center">
+        <div>Antal: <span class="md-body-2">{{advancedSearchResults.length}}</span></div>
+      </div>
   </md-card-title>
     <md-card-content>
     <md-table-container>
@@ -157,7 +167,7 @@
                         <th md-column md-numeric md-order-by="cprNumber">CPR</th>
                         <th md-column md-order-by="doctor">Læge</th>
                         <th md-column md-order-by="closed">Erklæring afgivet</th>
-                        <th md-column md-order-by="psychologist">Psykologisk evaluering</th>
+                        <th md-column md-order-by="psychologist">Psykologisk undersøgelse</th>
                         <th md-column md-order-by="mainCharge" ng-if="searchParams.mainCharge">Hovedsigtelse</th>
                         <th md-column md-order-by="placement" ng-if="searchParams.placement">Placering</th>
                         <th md-column md-order-by="sanctionProposal" ng-if="searchParams.sanctionProposal">Sanktionsforslag</th>
