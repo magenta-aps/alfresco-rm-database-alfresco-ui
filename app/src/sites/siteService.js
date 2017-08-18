@@ -175,7 +175,7 @@ angular.module('openDeskApp.sites').factory('siteService', function ($http, $win
                 formData.append("filename", file.name);
                 formData.append("destination", destination ? destination : null);
 
-                for (var key of formData.entries()) {
+                for (var key in formData.entries()) {
                     console.log(key[0] + ', ' + key[1]);
                 }
 
