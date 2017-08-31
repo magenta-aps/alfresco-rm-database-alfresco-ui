@@ -18,8 +18,7 @@ function GroupService(ALFRESCO_URI, $http, $q) {
         getGroupsAndMembers: getGroupsAndMembers,
         getSubGroups: getSubGroups,
         getUserGroups: getUserGroups,
-        addUserToGroups: addUserToGroups,
-        removeUserFromGroups: removeUserFromGroups,
+        updateUserRoles: updateUserRoles,
         getGroupNamesForSite: getGroupNamesForSite
     };
 
@@ -190,28 +189,16 @@ function GroupService(ALFRESCO_URI, $http, $q) {
         });
     }
 
-    function addUserToGroups(userName,groupShortNames) {
+    function updateUserRoles(userName, siteShortName, addGroups, removeGroups) {
         var json = { 
-            addGroups: groupShortNames
+            addGroups: addGroups,
+            removeGroups: removeGroups
         };
 
-        return $http.put('/alfresco/s/api/people/'+ userName, json).then(function(response) {
+        return $http.put('/alfresco/s/database/'+ siteShortName + '/user/' + userName, json).then(function(response) {
             return response.data;
         }, function(err) {
-            console.log('already added to list');
+            console.log('error updating userroles for user:' + userName + ' and site:' + siteShortName);
         });
     }
-
-    function removeUserFromGroups(userName,groupShortNames) {
-        var json = {
-            removeGroups: groupShortNames
-        };
-
-        return $http.put('/alfresco/s/api/people/'+ userName, json).then(function(response) {
-            return response.data;
-        }, function(err) {
-            console.log('already removed from list');
-        });
-    }
-
 }
