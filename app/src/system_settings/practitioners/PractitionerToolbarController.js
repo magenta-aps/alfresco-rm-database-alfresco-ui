@@ -32,12 +32,8 @@ function PractitionerToolbarController($scope, practitionerService, groupService
                     }
                 });
 
-                if (addedTo.length > 0) {
-                    groupService.addUserToGroups(user.userName, addedTo);
-                }
-
-                if (removedFrom.length > 0) {
-                    groupService.removeUserFromGroups(user.userName, removedFrom);
+                if (addedTo.length > 0 || removedFrom.length > 0) {
+                    groupService.updateUserRoles(user.userName, 'retspsyk', addedTo, removedFrom);
                 }
 
                 console.log('finished editing');
