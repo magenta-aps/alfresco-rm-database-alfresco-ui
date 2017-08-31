@@ -36,6 +36,7 @@ function advancedEntryFilter() {
         angular.forEach(entries, function (entry) {
             var filtersMet = [];
             var psychSet = false;
+            var socialSet = false;
             var fromDateSet = false;
             var toDateSet = false;
             var waitTimeSet = false;
@@ -55,6 +56,11 @@ function advancedEntryFilter() {
                     if (fkey == 'psychEval' && entry.hasOwnProperty('psychologist') && !psychSet) {
                         filtersMet.push(true);
                         psychSet = true;
+                    }
+
+                    if (fkey == 'socialEval' && entry.hasOwnProperty('socialworker') && !socialSet) {
+                        filtersMet.push(true);
+                        socialSet = true;
                     }
 
                     if (fkey == 'fromDate' && new Date(entry.creationDate) >= fval && !fromDateSet) {

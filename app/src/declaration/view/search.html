@@ -12,7 +12,7 @@
                 placeholder="{{'DECLARATION.SEARCH_NAME_CPR_DECLARATION' | translate}}" flex>
                 <md-item-template>
                     <span md-highlight-text="entrySearchQuery" md-highlight-flags="gi">
-                        #{{case.caseNumber}} - {{case.firstName}} {{case.lastName}} ({{case.cprNumber}})
+                        {{case.cprNumber}} - {{case.firstName}} {{case.lastName}} ({{case.caseNumber}})
                     </span>
                     <md-icon ng-show="(case.hasOwnProperty('closed') && case.closed) || (case.hasOwnProperty('closedWithoutDeclaration') && case.closedWithoutDeclaration)">done</md-icon>
                 </md-item-template>

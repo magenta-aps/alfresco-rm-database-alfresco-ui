@@ -39,10 +39,12 @@ function DeclarationController($scope, $state, $stateParams, entryService, prope
     }
 
     $scope.addNewBidiagnosis = function () {
-        var newItemNo = $scope.case.biDiagnoses.length + 1;
+        console.log('add new bidiagnosis');
+        // var newItemNo = $scope.case.biDiagnoses.length + 1;
         if ($scope.case.biDiagnoses.indexOf(null) < 0) {
-            $scope.case.biDiagnoses.push(null);
+            
         }
+        $scope.case.biDiagnoses.push(null);
     };
 
     $scope.isNumber = function (number) {
