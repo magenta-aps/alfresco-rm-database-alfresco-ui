@@ -232,7 +232,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
             url: '/laeger',
             params: {
                 listTitle: 'Læge',
-                listData: 'doctors',
+                listData: 'doctor',
                 authorizedRoles: [USER_ROLES.propertyValueManager]
             },
             views: {
@@ -254,7 +254,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
             url: '/socialraadgivere',
             params: {
                 listTitle: 'Socialrådgiver',
-                listData: 'socialworkers',
+                listData: 'socialworker',
                 authorizedRoles: [USER_ROLES.propertyValueManager]
             },
             views: {
@@ -277,7 +277,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
             url: '/psykologer',
             params: {
                 listTitle: 'Psykolog',
-                listData: 'psychologists',
+                listData: 'psychologist',
                 authorizedRoles: [USER_ROLES.propertyValueManager]
             },
             views: {
@@ -288,6 +288,29 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
                 },
                 'toolbar-tools-left@site': {
                     template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Psykologer</h2>"
+                },
+                'toolbar-tools-right@site': {
+                    templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',
+                    controller: 'ListToolbarController',
+                    controllerAs: 'vm'
+                }
+            }
+        })
+        .state('administration.systemsettings.secretaries', {
+            url: '/sekretaerer',
+            params: {
+                listTitle: 'Sekretær',
+                listData: 'secretary',
+                authorizedRoles: [USER_ROLES.propertyValueManager]
+            },
+            views: {
+                'systemsetting-view': {
+                    templateUrl: 'app/src/system_settings/lists/view/list.html',
+                    controller: 'ListController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools-left@site': {
+                    template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Sekretærer</h2>"
                 },
                 'toolbar-tools-right@site': {
                     templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',

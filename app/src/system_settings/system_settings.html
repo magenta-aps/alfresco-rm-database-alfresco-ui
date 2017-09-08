@@ -20,6 +20,10 @@
             <md-icon>healing</md-icon> Socialrådgivere
         </md-button>
         <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
+            aria-label="Sekretærer" ng-click="viewState('secretaries')">
+            <md-icon>healing</md-icon> Sekretærer
+        </md-button>
+        <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
             aria-label="Sigtelser" ng-click="viewState('referingAgencies')">
             <md-icon>store</md-icon> Henvisende instanser
         </md-button>

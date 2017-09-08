@@ -35,5 +35,34 @@
             </md-autocomplete>
             <md-tooltip md-direction="top" md-delay="500" ng-if="case.mainCharge != null">{{case.mainCharge}}</md-tooltip>
         </div>
+
+        <md-autocomplete flex 
+        md-selected-item="case.status" 
+        md-search-text="statusSearch"
+        md-items="status in propertyFilter(propertyValues['status'],statusSearch)" 
+        md-item-text="status" 
+        md-min-length="0" 
+        md-floating-label="Status"
+        ng-disabled="!editPatientData">
+        <md-item-template>
+            <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
+        </md-item-template>
+        </md-autocomplete>
+
+        <!-- <div>
+            <md-autocomplete flex 
+            md-selected-item="case.status" 
+            md-search-text="statusSearch" 
+            md-items="status in propertyFilter(propertyValues['status'],mainChargeSearch)"
+                md-item-text="status" 
+                md-min-length="0" 
+                md-floating-label="Status" 
+                ng-disabled="!editPatientData">
+                <md-item-template>
+                    <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
+                </md-item-template>
+            </md-autocomplete>
+            <md-tooltip md-direction="top" md-delay="500" ng-if="case.status != null">{{case.status}}</md-tooltip>
+        </div> -->
     </md-card-content>
 </md-card>

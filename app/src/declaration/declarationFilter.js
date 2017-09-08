@@ -41,16 +41,24 @@ function advancedEntryFilter() {
             var toDateSet = false;
             var waitTimeSet = false;
             var declarationDateSet = false;
+            var noDeclarationSet = false;
+            
             angular.forEach(entry, function (value, key) {
 
                 angular.forEach(filters, function (fval, fkey) {
                     if (key == fkey && value == fval) {
+                        console.log(key + ' ' + value);
                         filtersMet.push(true);
                     }
 
-                    if (fkey == 'closed' && entry.hasOwnProperty('declarationDate') && !declarationDateSet) {
+                    if (fkey == 'givenDeclaration' && entry.hasOwnProperty('declarationDate') && !entry.hasOwnProperty('closedWithoutDeclaration') && !declarationDateSet) {
                         filtersMet.push(true);
                         declarationDateSet = true;
+                    }
+
+                    if(fkey == 'noDeclaration' && entry.hasOwnProperty('closedWithoutDeclaration') && entry.closedWithoutDeclaration && !noDeclarationSet) {
+                        filtersMet.push(true);
+                        noDeclarationSet = true;
                     }
 
                     if (fkey == 'psychEval' && entry.hasOwnProperty('psychologist') && !psychSet) {
@@ -127,6 +135,7 @@ function advancedEntryFilter() {
 
             alreadyAdded = false;
         });
+        console.log(filteredEntries);
         return filteredEntries;
     };
 }
