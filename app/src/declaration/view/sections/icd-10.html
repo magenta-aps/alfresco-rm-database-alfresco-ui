@@ -35,13 +35,16 @@
             </md-item-template>
         </md-autocomplete>
         <md-tooltip md-direction="top" md-delay="500" ng-if="case.biDiagnoses[index] != null">{{case.biDiagnoses[index]}}</md-tooltip>
-        </div>
-        
+        </div>        
     </md-card-content>
     <md-card-actions layout="row">
         <span flex></span>
-        <md-button class="md-icon-button md-accent" ng-click="addNewBidiagnosis()" ng-disabled="!editPatientData || case.biDiagnoses.length==5">
-            <md-icon>add</md-icon>
-        </md-button>
+        <div>
+            <md-button class="md-icon-button md-accent" ng-click="addNewBidiagnosis()" ng-disabled="!editPatientData || case.biDiagnoses.length==5">
+                <md-icon>add</md-icon>
+            </md-button>
+
+            <md-tooltip md-direction="top" md-delay="500" ng-if="case.biDiagnoses.length==5">Du kan maks tilføje 5 bidagnoser</md-tooltip>
+        </div>
     </md-card-actions>
 </md-card>

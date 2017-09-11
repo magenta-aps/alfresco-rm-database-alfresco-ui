@@ -25,8 +25,6 @@ function PatientInfoController($scope, $rootScope, $state, $stateParams, entrySe
         $scope.case = newVal;
     });
 
-
-
     $scope.$watch('entryService.isEditing()', function (newVal) {
         $scope.editPatientData = newVal;
     });
@@ -39,6 +37,18 @@ function PatientInfoController($scope, $rootScope, $state, $stateParams, entrySe
     $scope.propertyFilter = function(array, query) {
         return filterService.propertyFilter(array, query);
     }
+
+    $scope.addNewBidiagnosis = function () {
+        console.log('add new bidiagnosis');
+        // var newItemNo = $scope.case.biDiagnoses.length + 1;
+        console.log($scope.case.biDiagnoses.indexOf(''));
+
+        if ($scope.case.biDiagnoses.indexOf('') < 0) {
+            $scope.case.biDiagnoses.push('');
+        }
+
+        console.log($scope.case.biDiagnoses);
+    };
 
     function getWaitingTimes(res) {
         var creationDate = new Date(res.creationDate);
