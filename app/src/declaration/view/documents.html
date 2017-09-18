@@ -2,10 +2,12 @@
     <md-card ng-repeat="c in content" flex-gt-sm="15" flex='45'>
         <md-checkbox class="document-checkbox" aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox>
         <span ng-click="!isEditing ? viewFile(c) : null">
-            <img ng-src="{{thumbnailUrl(c.thumbnail)}}" class="md-card-image">
+            <div class="document-thumbnail">
+                <img ng-src="{{thumbnailUrl(c.thumbnail)}}" class="md-card-image">
+            </div>
             <md-card-content class="document-filename">
                 <span class="md-subhead">{{c.name}}</span>
-        </md-card-content>
+            </md-card-content>
         </span>
     </md-card>
 </div>

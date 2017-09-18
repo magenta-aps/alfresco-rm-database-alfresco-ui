@@ -302,11 +302,31 @@ md-list-item, md-list-item .md-list-item-inner {
   height: 25px;
 }
 
+//fix position of x for autocompletes
+md-autocomplete[md-floating-label] .md-show-clear-button button {
+  top: 0;
+}
+
 //hover checkboxes in patient documents
 .document-checkbox {
   left: $u * .5;
   position: absolute;
   top: $u * .5;
+  z-index: 1;
+}
+
+.document-thumbnail {
+  overflow: hidden;
+  padding-bottom: 100%;
+  position: relative;
+  width: 100%;
+
+  img {
+    min-width: 100%;
+    min-height: 100%;
+    position: absolute;
+    width: auto;
+  }
 }
 
 .sidenav-fixed {

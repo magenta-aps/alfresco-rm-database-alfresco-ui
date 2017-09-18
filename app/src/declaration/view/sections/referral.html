@@ -13,7 +13,9 @@
                 md-item-text="agency" 
                 md-min-length="0" 
                 md-floating-label="Henvisende instans" 
-                ng-disabled="!editPatientData">
+                ng-disabled="!editPatientData"
+                md-clear-button="true"
+                md-require-match="true">
                 <md-item-template>
                     <span md-highlight-text="agencySearch" md-highlight-flags="gi">{{agency}}</span>
                 </md-item-template>
@@ -28,7 +30,9 @@
                 md-item-text="mainCarge" 
                 md-min-length="0" 
                 md-floating-label="Hovedsigtelse" 
-                ng-disabled="!editPatientData">
+                ng-disabled="!editPatientData"
+                md-clear-button="true"
+                md-require-match="true">
                 <md-item-template>
                     <span md-highlight-text="mainChargeSearch" md-highlight-flags="gi">{{mainCarge}}</span>
                 </md-item-template>
@@ -43,7 +47,9 @@
         md-item-text="status" 
         md-min-length="0" 
         md-floating-label="Status"
-        ng-disabled="!editPatientData">
+        ng-disabled="!editPatientData"
+        md-clear-button="true"
+        md-require-match="true">
         <md-item-template>
             <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
         </md-item-template>
