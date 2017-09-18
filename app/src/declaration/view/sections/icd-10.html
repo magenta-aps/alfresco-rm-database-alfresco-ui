@@ -13,7 +13,9 @@
             md-item-text="diagnosis" 
             md-min-length="0" 
             md-floating-label="Hoveddiagnose"
-            ng-disabled="!editPatientData">
+            ng-disabled="!editPatientData"
+            md-clear-button="true"
+            md-require-match="true">
             <md-item-template>
                 <span md-highlight-text="diagnosisSearch" md-highlight-flags="gi">{{diagnosis}}</span>
             </md-item-template>
@@ -29,7 +31,9 @@
             md-item-text="bidiagnosis" 
             md-min-length="0" 
             md-floating-label="Bidiagnose"
-            ng-disabled="!editPatientData">
+            ng-disabled="!editPatientData"
+            md-clear-button="true"
+            md-require-match="true">
             <md-item-template>
                 <span md-highlight-text="bidiagnosisSearch[index]" md-highlight-flags="gi">{{bidiagnosis}}</span>
             </md-item-template>
