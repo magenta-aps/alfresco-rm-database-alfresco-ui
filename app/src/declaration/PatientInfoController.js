@@ -2,7 +2,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('PatientInfoController', PatientInfoController);
 
-function PatientInfoController($scope, $rootScope, $state, $stateParams, entryService, filterService, loadingService) {
+function PatientInfoController($scope, $rootScope, $state, $stateParams, entryService, filterService, loadingService, cprService) {
 
     $scope.entryService = entryService;
     $scope.loadingService = loadingService;
@@ -49,6 +49,27 @@ function PatientInfoController($scope, $rootScope, $state, $stateParams, entrySe
 
         console.log($scope.case.biDiagnoses);
     };
+
+    $scope.lookupCPR = function () {
+        cprService.getCPRData($scope.case.cprNumber).then(function(response) {
+            var res = response.data[0];
+            console.log(response.data[0]);
+            var name = res.NAVN.split(',');
+
+            $scope.case.firstName = name[1];
+            $scope.case.lastName = name[0];
+            $scope.case.address = res.GADE;
+            $scope.case.postbox = res.POSTNR;
+            $scope.case.city = res.BY;
+        }).error(function(err) {
+            $mdToast.show(
+                $mdToast.simple()
+                  .textContent('Ingen person med CPR nummeret ' + $scope.case.cprNumber)
+                  .position('top right')
+                  .hideDelay(3000)
+              );
+        });
+    }
 
     function getWaitingTimes(res) {
         var creationDate = new Date(res.creationDate);
