@@ -1,3 +1,5 @@
+'use strict';
+
 angular
     .module('openDeskApp.declaration')
     .controller('ListController', ListController);

@@ -17,6 +17,7 @@ function config($stateProvider, USER_ROLES) {
                 'toolbar-tools-right@site': {
                     templateUrl: 'app/src/declaration/view/create-toolbar.html',
                     controller: 'DeclarationCreateToolbarController',
+                    controllerAs: 'vm'
                 },
             }
         })
@@ -57,6 +58,7 @@ function config($stateProvider, USER_ROLES) {
                 'toolbar-tools-right@site': {
                     templateUrl: 'app/src/declaration/view/create-toolbar.html',
                     controller: 'DeclarationCreateToolbarController',
+                    controllerAs: 'vm'
                 },
                 'toolbar-tools-left@site': {
                     template: "<h2>Opret ny erklæring</h2>"

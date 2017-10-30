@@ -4,28 +4,31 @@ angular
     .module('openDeskApp.systemsettings', ['ngMaterial', 'pascalprecht.translate'])
     .config(config);
 
-function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
-    systemSettingsPagesServiceProvider.addPage('Projektskabeloner', 'administration.systemsettings.templateList', true);
-    systemSettingsPagesServiceProvider.addPage('Dokumentskabeloner', 'document_templates', true);
+function config($stateProvider,USER_ROLES) {
 
-    $stateProvider.state('administration.systemsettings', {
+    $stateProvider.state('administration', {
+        parent: 'site',
+        url: '/administration',
         views: {
-            'systemsettings': {
+            'content@': {
                 templateUrl: 'app/src/system_settings/system_settings.html',
                 controller: 'SystemSettingsController',
                 controllerAs: 'vm'
             }
         },
-        redirectTo: 'administration.systemsettings.dashboard'
+        params: {
+            authorizedRoles: [USER_ROLES.admin, USER_ROLES.roleManager, USER_ROLES.propertyValueManager]
+        },
+        redirectTo: 'administration.dashboard'
     })
-    .state('administration.systemsettings.dashboard', {
+    .state('administration.dashboard', {
         views: {
             'systemsetting-view': {
                 templateUrl: 'app/src/system_settings/dashboard/view/dashboard.html',
             }
         }
     })
-    .state('administration.systemsettings.practitioners', {
+    .state('administration.practitioners', {
         url: '/brugerrettigheder',
         views: {
             'systemsetting-view': {
@@ -46,7 +49,22 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
             authorizedRoles: [USER_ROLES.roleManager]
         }
     })
-    .state('administration.systemsettings.ethnicities', {
+    .state('administration.document_templates', {
+        url: '/dokumentskabeloner',
+        params: {
+            authorizedRoles: [USER_ROLES.admin],
+            path: "/Data Dictionary/Node Templates",
+            isSite: false
+        },
+        views: {
+            'systemsetting-view': {
+                templateUrl: 'app/src/filebrowser/view/filebrowserCard.html',
+                controller: 'FilebrowserController',
+                controllerAs: 'vm'
+            }
+        }
+    })
+    .state('administration.ethnicities', {
         url: '/etniciteter',
         params: {
             listTitle: 'Etnicitet',
@@ -69,7 +87,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
             }
         },
     })
-        .state('administration.systemsettings.sanctions', {
+        .state('administration.sanctions', {
             url: '/sanktioner',
             params: {
                 listTitle: 'Sanktion',
@@ -92,7 +110,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
                 }
             },
         })
-        .state('administration.systemsettings.referingAgencies', {
+        .state('administration.referingAgencies', {
             url: '/henvisende-instanser',
             params: {
                 listTitle: 'Henvisende instans',
@@ -115,7 +133,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
                 }
             },
         })
-        .state('administration.systemsettings.placement', {
+        .state('administration.placement', {
             url: '/placeringer',
             params: {
                 listTitle: 'Placering',
@@ -138,7 +156,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
                 }
             }
         })
-        .state('administration.systemsettings.diagnosis', {
+        .state('administration.diagnosis', {
             url: '/diagnoser',
             params: {
                 listTitle: 'Diagnose',
@@ -161,7 +179,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
                 }
             }
         })
-        .state('administration.systemsettings.mainCharge', {
+        .state('administration.mainCharge', {
             url: '/sigtelser',
             params: {
                 listTitle: 'Sigtelse',
@@ -184,7 +202,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
                 }
             }
         })
-        .state('administration.systemsettings.status', {
+        .state('administration.status', {
             url: '/status',
             params: {
                 listTitle: 'Status',
@@ -207,7 +225,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
                 }
             }
         })
-        .state('administration.systemsettings.noDeclaration', {
+        .state('administration.noDeclaration', {
             url: '/afsluttet-uden-erklaering',
             params: {
                 listTitle: 'Årsag',
@@ -230,7 +248,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
                 }
             }
         })
-        .state('administration.systemsettings.doctors', {
+        .state('administration.doctors', {
             url: '/laeger',
             params: {
                 listTitle: 'Læge',
@@ -252,7 +270,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
                     controllerAs: 'vm'
                 }
             }
-        }).state('administration.systemsettings.socialworkers', {
+        }).state('administration.socialworkers', {
             url: '/socialraadgivere',
             params: {
                 listTitle: 'Socialrådgiver',
@@ -275,7 +293,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
                 }
             }
         })
-        .state('administration.systemsettings.psychologists', {
+        .state('administration.psychologists', {
             url: '/psykologer',
             params: {
                 listTitle: 'Psykolog',
@@ -298,7 +316,7 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
                 }
             }
         })
-        .state('administration.systemsettings.secretaries', {
+        .state('administration.secretaries', {
             url: '/sekretaerer',
             params: {
                 listTitle: 'Sekretær',

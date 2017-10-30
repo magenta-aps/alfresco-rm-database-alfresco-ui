@@ -1,0 +1,33 @@
+<md-toolbar class="md-tall">
+
+    <!-- <od-user></od-user> -->
+
+    <div ng-controller="AuthController as ac">
+        <div class="od-user-header-menu">
+            <h2 class="od-user-name">
+                {{ ac.getUserInfo().user.firstName }} {{ ac.getUserInfo().user.lastName }}
+            </h2>
+
+            <md-button 
+                ng-if="ac.userRoles.indexOf('SiteManager') > -1 || ac.userRoles.indexOf('SiteRoleManager') > -1 || ac.userRoles.indexOf('SitePropertyValueManager') > -1"
+                class="md-icon-button od-btn "
+                title="Indstillinger" 
+                ui-sref="administration">
+                <md-icon>settings</md-icon>
+            </md-button>
+
+            <md-button ng-click="ac.logout()">
+                {{ 'MENU.LOGOUT' | translate }}
+            </md-button>
+        </div>
+    </div>
+
+    <span class="md-toolbar-tools" flex>
+        <h2 ui-sref="declaration" style="cursor:pointer">Retspsykiatriske erklæringer</h2>
+    </span>
+    <span class="md-toolbar-tools" layout="row">
+        <ui-view name="toolbar-tools-left"></ui-view>
+        <span flex></span>
+        <ui-view name="toolbar-tools-right"></ui-view>
+    </span>
+</md-toolbar>

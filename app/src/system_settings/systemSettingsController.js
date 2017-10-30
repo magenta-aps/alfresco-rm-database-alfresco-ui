@@ -9,26 +9,14 @@ function SystemSettingsCtrl($scope, $state, $stateParams, systemSettingsPagesSer
 
     $scope.templateSites = [];
 
-    vm.viewDashboard = viewDashboard;
-    vm.viewPractitioners = viewPractitioners;
     vm.viewState = viewState;
 
     //sets the margin to the width of sidenav
     var sidebar = $(".md-sidenav-left");
     $(".od-info-declarations").css("margin-left", sidebar.width()+"px");
-
-    
-    function viewDashboard() {
-        $state.go('administration.systemsettings.dashboard');
-    }
-
-    
-    function viewPractitioners() {
-        $state.go('administration.systemsettings.practitioners');
-    }
     
     function viewState(newState) {
-        $state.go('administration.systemsettings.' + newState);
+        $state.go('administration.' + newState);
     }
 
     function getUserRoles () {

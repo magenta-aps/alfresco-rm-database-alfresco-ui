@@ -30,7 +30,7 @@ function TemplatesController($window, siteService, $mdDialog, $scope, systemSett
 
     function init() {
         var vm = this;
-        vm.templateUisref = "administration.systemsettings." + vm.caseType.replace(':', '_') + '_template';
+        vm.templateUisref = "administration." + vm.caseType.replace(':', '_') + '_template';
 
         vm.loadTemplates();
         startCaseWorkflowService.getWorkflowDefinitions().then(function (result) {

@@ -4,7 +4,7 @@ angular
     .module('openDeskApp')
     .controller('LoadingController', LoadingController);
 
-function LoadingController($scope,loadingService) {
+function LoadingController($scope, loadingService) {
 
     $scope.loadingService = loadingService;
 

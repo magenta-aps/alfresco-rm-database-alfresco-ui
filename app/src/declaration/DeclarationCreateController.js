@@ -39,7 +39,6 @@ function DeclarationCreateController($scope, $rootScope, $timeout, $mdToast, ent
     function lookupCPR() {
         cprService.getCPRData($scope.case.cprNumber).then(function(response) {
             var res = response.data[0];
-            console.log(response.data[0]);
             var name = res.NAVN.split(',');
 
             $scope.case.firstName = name[1];
