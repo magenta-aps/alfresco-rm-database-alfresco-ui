@@ -97,7 +97,7 @@ function AuthController(APP_CONFIG, $scope, $state, $stateParams, authService, u
                 }
             );
         };
-    };
+    }
 
     function showForgotDialog(ev) {
         $mdDialog.show({

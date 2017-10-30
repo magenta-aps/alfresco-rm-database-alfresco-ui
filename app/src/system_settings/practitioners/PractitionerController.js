@@ -1,3 +1,5 @@
+'use strict';
+
 angular
     .module('openDeskApp.declaration')
     .controller('PractitionerController', PractitionerController);
@@ -13,7 +15,7 @@ function PractitionerController($scope, $state, $stateParams, $timeout, practiti
 
     $scope.query = {
         order: 'firstName'
-    }
+    };
 
     loadingService.setLoading(true);
 
@@ -47,7 +49,7 @@ function PractitionerController($scope, $state, $stateParams, $timeout, practiti
                                 if (user.userName == userInGroup.shortName) {
                                     user[group] = true;
                                 }
-                            })
+                            });
                         });
                     },function(err) { 
                         console.log(err);

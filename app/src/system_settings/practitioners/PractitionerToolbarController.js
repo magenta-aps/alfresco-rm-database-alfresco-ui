@@ -1,3 +1,5 @@
+'use strict';
+
 angular
     .module('openDeskApp.declaration')
     .controller('PractitionerToolbarController', PractitionerToolbarController);
@@ -6,16 +8,20 @@ function PractitionerToolbarController($scope, practitionerService, groupService
 
     $scope.isEditing = false;
 
-    $scope.toggleEdit = function () {
+    $scope.toggleEdit = toggleEdit;
+    $scope.saveChanges = saveChanges;
+    
+    function toggleEdit() {
         $scope.isEditing = !$scope.isEditing;
         practitionerService.setEdit($scope.isEditing);
     }
 
-    $scope.saveChanges = function () {
+    
+    function saveChanges() {
         var users = practitionerService.getUpdatedUsers();
         var original = practitionerService.getOriginalUsers();
 
-        users.forEach(function (user, key) {
+        angular.forEach(users, function(user,key) {
             var addedTo = [];
             var removedFrom = [];
 
@@ -39,7 +45,7 @@ function PractitionerToolbarController($scope, practitionerService, groupService
                 console.log('finished editing');
                 practitionerService.setUsersBeforeEdit(users);
             });
-        }, this);
+        });
     }
 
 

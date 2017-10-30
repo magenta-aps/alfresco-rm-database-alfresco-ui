@@ -1,3 +1,5 @@
+'use strict';
+
 angular
     .module('openDeskApp.systemsettings', ['ngMaterial', 'pascalprecht.translate'])
     .config(config);
@@ -318,5 +320,5 @@ function config(systemSettingsPagesServiceProvider, $stateProvider,USER_ROLES) {
                     controllerAs: 'vm'
                 }
             }
-        })
+        });
 }
