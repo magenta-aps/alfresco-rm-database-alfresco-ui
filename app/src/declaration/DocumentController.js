@@ -1,9 +1,11 @@
+'use strict';
+
 angular
     .module('openDeskApp.declaration')
     .controller('DocumentController', DocumentController);
 
-function DocumentController($scope, $state, $stateParams, $mdDialog, $timeout, entryService, documentToolbarService, loadingService,
-    siteService, documentService, documentPreviewService, preferenceService, authService, sessionService, alfrescoDownloadService) {
+function DocumentController($scope, $state, $stateParams, $timeout, entryService, documentToolbarService, loadingService,
+    documentService, documentPreviewService, preferenceService, authService, sessionService) {
     var vm = this;
 
     $scope.selectedFiles = [];
@@ -15,6 +17,10 @@ function DocumentController($scope, $state, $stateParams, $mdDialog, $timeout, e
 
     $scope.contents = [];
     $scope.contentLength = 0;
+    $scope.selectedFile = selectedFile;
+    vm.viewFile = viewFile;
+    // vm.getPDF = getPDF;
+    vm.thumbnailUrl = thumbnailUrl;
 
     $scope.case = {};
 
@@ -27,7 +33,7 @@ function DocumentController($scope, $state, $stateParams, $mdDialog, $timeout, e
 
     $scope.query = {
         order: 'name'
-    }
+    };
 
     loadingService.setLoading(true);
 
@@ -69,7 +75,15 @@ function DocumentController($scope, $state, $stateParams, $mdDialog, $timeout, e
         $scope.tableView = newVal;
     });
 
-    $scope.selectedFile = function (file) {
+    activate();
+    
+    function activate() {
+        if($stateParams.nodeid) {
+            getPDF('workspace://SpacesStore/' + $stateParams.nodeid);                
+        }
+    }
+    
+    function selectedFile(file) {
         if ($scope.selectedFiles.indexOf(file) > -1) {
             $scope.selectedFiles.splice($scope.selectedFiles.indexOf(file), 1);
         } else {
@@ -84,8 +98,9 @@ function DocumentController($scope, $state, $stateParams, $mdDialog, $timeout, e
             $state.go('declaration.show.documents');
         }
     }
-
-    $scope.viewFile = function (file) {
+    
+    
+    function viewFile(file) {
         $state.go('declaration.show.documents.view-file', {
             nodeid: file.shortRef,
         });
@@ -103,11 +118,9 @@ function DocumentController($scope, $state, $stateParams, $mdDialog, $timeout, e
             $scope.selectedFiles = []; //reset selected files
             console.log(response);
         });
-    };
-
-
-    $scope.getPDF = function (nodeRef) {
-        console.log('get pdf ' + nodeRef);
+    }
+    
+    function getPDF(nodeRef) {
         documentPreviewService.previewDocumentPlugin(nodeRef).then(function (plugin) {
             $scope.config = plugin;
             $scope.viewerTemplateUrl = documentPreviewService.templatesUrl + plugin.templateUrl;
@@ -118,17 +131,9 @@ function DocumentController($scope, $state, $stateParams, $mdDialog, $timeout, e
 
         });
     }
-
-    $scope.thumbnailUrl = function(url) {
+    
+    function thumbnailUrl(url) {
         return sessionService.makeURL(url);
     }
-
-    function init() {
-        if($stateParams.nodeid) {
-            $scope.getPDF('workspace://SpacesStore/' + $stateParams.nodeid);                
-        }
-    }
-
-    init();
 
 }

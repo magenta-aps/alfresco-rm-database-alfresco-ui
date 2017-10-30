@@ -1,3 +1,5 @@
+'use strict';
+
 angular
     .module('openDeskApp.declaration')
     .controller('DocumentToolbarController', DocumentToolbarController);
@@ -7,7 +9,12 @@ function DocumentToolbarController($scope, $mdDialog, $interval, $mdToast, entry
 
     $scope.toggleIcon = 'list';
 
-    $scope.case;
+    $scope.case = [];
+
+    $scope.toggleDocumentView = toggleDocumentView;
+    $scope.uploadDocumentsDialog = uploadDocumentsDialog;
+    $scope.deleteDocumentsDialog = deleteDocumentsDialog;
+    $scope.downloadDocuments = downloadDocuments;
 
     var currentUser = authService.getUserInfo().user;
 
@@ -21,13 +28,14 @@ function DocumentToolbarController($scope, $mdDialog, $interval, $mdToast, entry
         console.log(newVal);
         $scope.case = newVal;
     });
-
-    $scope.toggleDocumentView = function () {
+    
+    function toggleDocumentView() {
         documentToolbarService.toggleDocumentView();
         $scope.toggleIcon = documentToolbarService.getToggleIcon();
     }
 
-    $scope.uploadDocumentsDialog = function (event) {
+    
+    function uploadDocumentsDialog(event) {
         $mdDialog.show({
             controller: 'DocumentActionController',
             controllerAs: 'vm',
@@ -38,9 +46,10 @@ function DocumentToolbarController($scope, $mdDialog, $interval, $mdToast, entry
             preserveScope: true, // do not forget this if use parent scope
             clickOutsideToClose: true
         });
-    };
+    }
 
-    $scope.deleteDocumentsDialog = function (event) {
+    
+    function deleteDocumentsDialog(event) {
         $mdDialog.show({
             controller: 'DocumentActionController',
             controllerAs: 'vm',
@@ -53,13 +62,12 @@ function DocumentToolbarController($scope, $mdDialog, $interval, $mdToast, entry
         });
     }
 
-
-    $scope.downloadDocuments = function (event) {
+    function downloadDocuments(event) {
         console.log('download documents');
 
         var files = documentService.getSelectedFiles();
         var delay = 3000;
-        var toastLabel = 'Henter filer...'
+        var toastLabel = 'Henter filer...';
 
         if (files.length == 1) {
             files.forEach(function (file) {
@@ -88,6 +96,5 @@ function DocumentToolbarController($scope, $mdDialog, $interval, $mdToast, entry
             .position('top right')
             .hideDelay(delay)
         );
-
-    };
+    }
 }

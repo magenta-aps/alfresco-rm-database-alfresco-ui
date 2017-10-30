@@ -7,7 +7,8 @@ angular
 function DeclarationSearchController($scope, $state, $stateParams, $timeout, entryService, propertyService, filterService,loadingService) {
 
     var vm = this;
-    
+
+    vm.advancedSearchResults = [];
     $scope.caseid = null;
     $scope.showFilters = false;
     $scope.showResults = false;
@@ -38,7 +39,7 @@ function DeclarationSearchController($scope, $state, $stateParams, $timeout, ent
 
     $scope.$watch('selectedCase', function (newVal, oldVal) {
         if(newVal) {
-            $scope.gotoCase($scope.selectedCase.caseNumber);
+            gotoCase($scope.selectedCase.caseNumber);
         }
     }, true);
 
@@ -78,12 +79,10 @@ function DeclarationSearchController($scope, $state, $stateParams, $timeout, ent
             $state.go('declaration');
         }
     }
-
     
     function toggleResults() {
         $scope.results = !$scope.results;
     }
-
     
     function advancedSearch(params) {
         for (var filter in params) { 
@@ -101,7 +100,7 @@ function DeclarationSearchController($scope, $state, $stateParams, $timeout, ent
         }
         var filters = angular.copy(params);
 
-        $scope.advancedSearchResults = filterService.advancedEntrySearch($scope.allCases,filters);
+        vm.advancedSearchResults = filterService.advancedEntrySearch($scope.allCases,filters);
     }
 
     function getAllEntries() {

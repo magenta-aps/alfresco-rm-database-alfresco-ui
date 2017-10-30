@@ -4,7 +4,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('PatientInfoToolbarController', PatientInfoToolbarController);
 
-function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $mdToast, $transitions, entryService, propertyService, filterService, authService) {
+function PatientInfoToolbarController($scope, $mdDialog, $state, $mdToast, $transitions, entryService, propertyService, filterService, authService) {
 
     $scope.entryService = entryService;
     $scope.propertyService = propertyService;

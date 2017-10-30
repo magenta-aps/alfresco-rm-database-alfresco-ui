@@ -18,7 +18,6 @@ function DocumentActionController($scope, $state, $mdDialog, $mdToast, entryServ
         $scope.case = newVal;
     });
 
-    
     function upload(files) {
         var caseNodeRef = $scope.case['store-protocol'] + '://' + $scope.case['store-identifier'] + '/' + $scope.case['node-uuid'];
         for (var i = 0; i < files.length; i++) {

@@ -1,10 +1,13 @@
+'use strict';
+
 angular
     .module('openDeskApp.declaration')
     .controller('DeclarationController', DeclarationController);
 
 function DeclarationController($scope, $state, $stateParams, entryService, propertyService) {
 
-    $scope.entryService = entryService;
+    var vm = this;
+
     //sets the margin to the width of sidenav
     var sidebar = $(".md-sidenav-left");
     $(".od-info-declarations").css("margin-left", sidebar.width() + "px");
@@ -12,33 +15,33 @@ function DeclarationController($scope, $state, $stateParams, entryService, prope
     $scope.case = {};
 
     $scope.propertyValues = propertyService.getAllPropertyValues();
+    vm.viewDocuments = viewDocuments;
+    vm.viewPatientData = viewPatientData;
+    vm.isNumber = isNumber;
+    
+    activate();
 
-    function loadCase(caseid) {
-        if (caseid) {
-            entryService.getEntry(caseid).then(function (response) {
+    function activate() {
+        if ($stateParams.caseid) {
+            entryService.getEntry($stateParams.caseid).then(function (response) {
                 $scope.case = response;
-                console.log('case loaded');
-                console.log($scope.case);
             }, function (error) {
                 $scope.case = entryService.getCurrentCase();
             });
         }
     }
-    loadCase($stateParams.caseid);
 
-    $scope.viewDocuments = function () {
+    
+    function viewDocuments() {
         $state.go('declaration.show.documents');
     }
-
-    $scope.editDocuments = function () {
-        $state.go('declaration.show.documents.edit');
-    }
-
-    $scope.viewPatientData = function () {
+    
+    function viewPatientData() {
         $state.go('declaration.show.patientdata');
     }
 
-    $scope.isNumber = function (number) {
+    
+    function isNumber(number) {
         return isNaN(number) ? false : true;
     }
 }

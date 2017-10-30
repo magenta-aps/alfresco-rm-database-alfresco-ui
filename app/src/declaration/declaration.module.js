@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('openDeskApp.declaration', ['ngMaterial'])
     .config(config);
 
@@ -126,6 +128,5 @@ function config($stateProvider, USER_ROLES) {
         })
         .state('declaration.show.patientdata.edit', {
             
-        })
-
-};
+        });
+}

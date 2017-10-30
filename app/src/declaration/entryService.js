@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('openDeskApp.declaration').factory('entryService', function ($http, $window, $transitions, alfrescoNodeUtils) {
+angular.module('openDeskApp.declaration').factory('entryService', function ($http) {
 
     var edit = false;
     var newCase = {};

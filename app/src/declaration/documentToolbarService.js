@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('openDeskApp.declaration').factory('documentToolbarService', function (authService,preferenceService) {
     var toggleIcon = 'list';
     var currentCase = {};
@@ -10,22 +12,27 @@ angular.module('openDeskApp.declaration').factory('documentToolbarService', func
         tableView = response['dk.magenta.sites.retspsyk.tableView'] == 'true' ? true : false;
     });
 
-    return {
-        toggleDocumentView: function() {
-            console.log(tableView);
-            tableView = !tableView;
+    var service = {
+        toggleDocumentView: toggleDocumentView,
+        getToggleIcon: getToggleIcon,
+        getDocumentView: getDocumentView,
+    };
 
-            preferenceService.setPreferences(currentUser.userName,{"dk.magenta.sites.retspsyk.tableView" : tableView});
-            toggleIcon = tableView ? 'view_module' : 'list';
-        },
+    return service;
 
-        getToggleIcon: function() {
-            return toggleIcon;
-        },
+    function toggleDocumentView() {
+        console.log(tableView);
+        tableView = !tableView;
 
-        getDocumentView: function() {
-            return tableView;
-        },
+        preferenceService.setPreferences(currentUser.userName,{"dk.magenta.sites.retspsyk.tableView" : tableView});
+        toggleIcon = tableView ? 'view_module' : 'list';
     }
 
+    function getToggleIcon() {
+        return toggleIcon;
+    }
+
+    function getDocumentView() {
+        return tableView;
+    }
 });

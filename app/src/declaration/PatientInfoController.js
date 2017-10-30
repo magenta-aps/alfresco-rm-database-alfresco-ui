@@ -4,7 +4,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('PatientInfoController', PatientInfoController);
 
-function PatientInfoController($scope, $rootScope, $state, $stateParams, entryService, filterService, loadingService, cprService) {
+function PatientInfoController($scope, $mdToast, entryService, filterService, loadingService, cprService) {
 
     $scope.entryService = entryService;
     $scope.loadingService = loadingService;
@@ -16,6 +16,10 @@ function PatientInfoController($scope, $rootScope, $state, $stateParams, entrySe
         active: null,
         total: null
     };
+
+    $scope.propertyFilter = propertyFilter;
+    $scope.addNewBidiagnosis = addNewBidiagnosis;
+    $scope.lookupCPR = lookupCPR;
 
     loadingService.setLoading(true);
 
@@ -35,12 +39,12 @@ function PatientInfoController($scope, $rootScope, $state, $stateParams, entrySe
         entryService.updateNewCase(newVal);
         $scope.waitTime = getWaitingTimes(newVal);
     }, true);
-
-    $scope.propertyFilter = function(array, query) {
+    
+    function propertyFilter(array, query) {
         return filterService.propertyFilter(array, query);
     }
-
-    $scope.addNewBidiagnosis = function () {
+    
+    function addNewBidiagnosis() {
         console.log('add new bidiagnosis');
         // var newItemNo = $scope.case.biDiagnoses.length + 1;
         console.log($scope.case.biDiagnoses.indexOf(''));
@@ -50,9 +54,9 @@ function PatientInfoController($scope, $rootScope, $state, $stateParams, entrySe
         }
 
         console.log($scope.case.biDiagnoses);
-    };
-
-    $scope.lookupCPR = function () {
+    }
+    
+    function lookupCPR() {
         cprService.getCPRData($scope.case.cprNumber).then(function(response) {
             var res = response.data[0];
             console.log(response.data[0]);

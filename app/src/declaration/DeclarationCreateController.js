@@ -11,6 +11,9 @@ function DeclarationCreateController($scope, $rootScope, $timeout, $mdToast, ent
     $scope.case.biDiagnoses = [];
     $scope.case.creationDate = new Date();
     $scope.propertyValues = propertyService.getAllPropertyValues();
+    $scope.propertyFilter = propertyFilter;
+    $scope.addNewBidiagnosis = addNewBidiagnosis;
+    $scope.lookupCPR = lookupCPR;
 
     entryService.setLoading(true);
 
@@ -21,20 +24,19 @@ function DeclarationCreateController($scope, $rootScope, $timeout, $mdToast, ent
     $scope.$watch('case', function (newVal, oldVal) {
         entryService.updateNewCase(newVal);
     }, true);
-
-
-    $scope.propertyFilter = function(array, query) {
+    
+    function propertyFilter(array, query) {
         return filterService.propertyFilter(array, query);
     }
-
-    $scope.addNewBidiagnosis = function () {
+    
+    function addNewBidiagnosis() {
         var newItemNo = $scope.case.biDiagnoses.length + 1;
         if ($scope.case.biDiagnoses.indexOf(null) < 0) {
             $scope.case.biDiagnoses.push(null);
         }
-    };
-
-    $scope.lookupCPR = function () {
+    }
+    
+    function lookupCPR() {
         cprService.getCPRData($scope.case.cprNumber).then(function(response) {
             var res = response.data[0];
             console.log(response.data[0]);
