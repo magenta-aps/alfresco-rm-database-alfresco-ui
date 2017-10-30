@@ -8,7 +8,7 @@
                 md-items="case in filterCases(entrySearchQuery, ['cprNumber', 'caseNumber', 'fullName'])"
                 md-item-text="'Erklæring #'+ case.caseNumber + ' - ' + case.firstName + ' ' + case.lastName + ' (' + case.cprNumber + ')'" 
                 md-min-length="1" 
-                ng-enter="gotoCase(selectedCase.caseNumber)"
+                ng-enter="vm.gotoCase(selectedCase.caseNumber)"
                 placeholder="{{'DECLARATION.SEARCH_NAME_CPR_DECLARATION' | translate}}" flex>
                 <md-item-template>
                     <span md-highlight-text="entrySearchQuery" md-highlight-flags="gi">
@@ -18,12 +18,12 @@
                 </md-item-template>
             </md-autocomplete>
 
-            <md-button class="md-icon-button" ng-click="toggleFilters()">
+            <md-button class="md-icon-button" ng-click="vm.toggleFilters()">
             <md-icon>filter_list</md-icon>
             <md-tooltip md-direction="top" md-delay="500">{{'DECLARATION.ADVANCED_SEARCH' | translate}}</md-tooltip>
             </md-button>
         </div>
-        <div layout="row" layout-align="center" style="margin-top:16px" ng-click="gotoWaitinglist()">
+        <div layout="row" layout-align="center" style="margin-top:16px" ng-click="vm.gotoWaitinglist()">
             <a>{{'DECLARATION.SEE_CURRENT_WAITINGLIST' | translate}}</a>
         </div>
     </div>

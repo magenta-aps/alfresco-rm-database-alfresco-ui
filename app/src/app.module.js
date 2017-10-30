@@ -1,3 +1,5 @@
+'use strict';
+
 angular
     .module('openDeskApp', [
         'ngSanitize',
@@ -17,25 +19,20 @@ angular
         'openDeskApp.site',
         'openDeskApp.translations.init',
         'openDeskApp.header',
-        'openDeskApp.dashboard',
+        // 'openDeskApp.dashboard',
         'openDeskApp.lool',
         'openDeskApp.documents',
         'openDeskApp.administration',
         'openDeskApp.users',
         'openDeskApp.systemsettings',
         'openDeskApp.search',
-        //'openDeskApp.calendar',
-        //'openDeskApp.nogletal',
-
         'openDeskApp.common.directives',
         'openDeskApp.common.directives.filter',
         'm43nu.auto-height',
         'dcbImgFallback',
         'openDeskApp.notifications',
-        //'openDeskApp.discussion',
-        // 'openDeskApp.chat',
         'openDeskApp.user',
-        'openDeskApp.menu',
+        // 'openDeskApp.menu',
         'openDeskApp.declaration',
         'md.data.table',
 

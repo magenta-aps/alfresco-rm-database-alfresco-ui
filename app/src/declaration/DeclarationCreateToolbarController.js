@@ -1,10 +1,17 @@
+'use strict';
+
 angular
     .module('openDeskApp.declaration')
     .controller('DeclarationCreateToolbarController', DeclarationCreateToolbarController);
 
-function DeclarationCreateToolbarController($scope, $state, $mdToast, entryService) {
+function DeclarationCreateToolbarController($state, $mdToast, entryService) {
 
-    $scope.submit = function() {
+    var vm = this;
+
+    vm.submit = submit;
+    vm.createNewDeclaration = createNewDeclaration;
+    
+    function submit() {
         var newCase = entryService.getNewCaseInfo();
         newCase.fullName = newCase.firstName + ' ' + newCase.lastName;
         
@@ -18,10 +25,10 @@ function DeclarationCreateToolbarController($scope, $state, $mdToast, entryServi
                 .position('top right')
                 .hideDelay(3000)
             );
-        })
+        });
     }
-
-    $scope.createNewDeclaration = function() {
+    
+    function createNewDeclaration() {
         $state.go('declaration.create');
     }
 }

@@ -8,6 +8,26 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
     var caseTitle = '';
     var loading = true;
 
+    var service = {
+        toggleEdit: toggleEdit,
+        isEditing: isEditing,
+        setLoading: setLoading,
+        isLoading: isLoading,
+        setCurrentCaseAfterCreation: setCurrentCaseAfterCreation,
+        getCurrentCase: getCurrentCase,
+        updateNewCase: updateNewCase,
+        getNewCaseInfo: getNewCaseInfo,
+        getCaseTitle: getCaseTitle,
+        getEntry: getEntry,
+        getAllEntries: getAllEntries,
+        updateEntry: updateEntry,
+        createEntry: createEntry,
+        unlockEntry: unlockEntry,
+        getContents: getContents,
+    };
+
+    return service;
+
     function setCaseTitle(newCase) {
         caseTitle = newCase.firstName + ' ' + newCase.lastName + ' (' + newCase.caseNumber + ')';
     }
@@ -21,91 +41,89 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
 
         return res;
     }
+    
+    function toggleEdit(state) {
+        edit = state;
+    }
 
-    return {
-        toggleEdit: function (state) {
-            edit = state;
-        },
+    function isEditing() {
+        return edit;
+    }
 
-        isEditing: function () {
-            return edit;
-        },
-        
-        setLoading: function(state) {
-            loading = state;
-        },
+    function setLoading(state) {
+        loading = state;
+    }
+    
+    function isLoading() {
+        return loading;
+    }
 
-        isLoading: function() {
-            return loading;
-        },
+    function setCurrentCaseAfterCreation(newCase) {
+        currentCase = formatCase(newCase);
+        setCaseTitle(currentCase);
+    }
 
-        setCurrentCaseAfterCreation: function (newCase) {
-            currentCase = formatCase(newCase);
-            setCaseTitle(currentCase);
-        },
+    function getCurrentCase() {
+        return currentCase;
+    }
 
-        getCurrentCase: function () {
+    function updateNewCase(caseUpdate) {
+        newCase = caseUpdate;
+    }
+
+    function getNewCaseInfo() {
+        return newCase;
+    }
+
+    function getCaseTitle() {
+        return caseTitle;
+    }
+
+    function getEntry(caseNumber) {
+        return $http.get("/alfresco/s/database/retspsyk/entry/" + caseNumber, {}).then(function (response) {
+            var res = response.data;
+            setCaseTitle(res);
+            currentCase = formatCase(res);
             return currentCase;
-        },
+        });
+    }
 
-        updateNewCase: function (caseUpdate) {
-            newCase = caseUpdate;
-        },
+    function getAllEntries() {
+        return $http.get("/alfresco/s/database/retspsyk/entries", {}).then(function (response) {
+            return response.data;
+        });
+    }
 
-        getNewCaseInfo: function () {
-            return newCase;
-        },
+    function updateEntry(properties) {
+        return $http.put("/alfresco/s/entry/" + properties['node-uuid'], {
+            "properties": properties
+        }).then(function (response) {
+            setCaseTitle(response.data);
+            var res = formatCase(response.data);
+            return res;
+        });
+    }
+    
+    function createEntry(properties) {
+        return $http.post("/alfresco/s/database/retspsyk/entry", {
+            "type": "forensicPsychiatryDeclaration",
+            "properties": properties
+        }).then(function (response) {
+            console.log(response.data);
+            return response.data;
 
-        getCaseTitle: function () {
-            return caseTitle;
-        },
+        });
+    }
 
-        getEntry: function (caseNumber) {
-            return $http.get("/alfresco/s/database/retspsyk/entry/" + caseNumber, {}).then(function (response) {
-                var res = response.data;
-                setCaseTitle(res);
-                currentCase = formatCase(res);
-                return currentCase;
-            });
-        },
+    function unlockEntry(properties) {
+        return $http.put("/alfresco/s/entry/" + properties['node-uuid'] + '/unlock').then(function (response) {
+            return response.data;
+        });
+    }
 
-        getAllEntries: function () {
-            return $http.get("/alfresco/s/database/retspsyk/entries", {}).then(function (response) {
-                return response.data;
-            });
-        },
-
-        updateEntry: function (properties) {
-            return $http.put("/alfresco/s/entry/" + properties['node-uuid'], {
-                "properties": properties
-            }).then(function (response) {
-                setCaseTitle(response.data);
-                var res = formatCase(response.data);
-                return res;
-            });
-        },
-
-        createEntry: function (properties) {
-            return $http.post("/alfresco/s/database/retspsyk/entry", {
-                "type": "forensicPsychiatryDeclaration",
-                "properties": properties
-            }).then(function (response) {
-                console.log(response.data);
-                return response.data;
-
-            });
-        },
-
-        unlockEntry: function(properties) {
-            return $http.put("/alfresco/s/entry/" + properties['node-uuid'] + '/unlock').then(function (response) {
-                return response.data;
-            });
-        },
-
-        getContents: function (node) {
-            return $http.get("/alfresco/service/contents?node=" + node).then(function (response) {
-                return response.data;
-            });
-        },
-    };
+    function getContents(node) {
+        return $http.get("/alfresco/service/contents?node=" + node).then(function (response) {
+            return response.data;
+        });
+    }
 });

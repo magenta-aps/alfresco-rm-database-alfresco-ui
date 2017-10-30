@@ -1,13 +1,17 @@
+'use strict';
+
 angular
     .module('openDeskApp.declaration')
     .controller('DeclarationSearchController', DeclarationSearchController);
 
 function DeclarationSearchController($scope, $state, $stateParams, $timeout, entryService, propertyService, filterService,loadingService) {
 
-    $scope.caseid;
+    var vm = this;
+    
+    $scope.caseid = null;
     $scope.showFilters = false;
     $scope.showResults = false;
-    $scope.allCases;
+    $scope.allCases = [];
     $scope.waitingListCases = [];
     $scope.searchParams = {};
     $scope.selectedCase = null;
@@ -15,8 +19,17 @@ function DeclarationSearchController($scope, $state, $stateParams, $timeout, ent
 
     $scope.query = {
         order: 'caseNumber'
-    }
+    };
 
+    $scope.filterCases = filterCases;
+    $scope.propertyFilter = propertyFilter;
+    $scope.search = search;
+    vm.gotoCase = gotoCase;
+    vm.gotoWaitinglist = gotoWaitinglist;
+    vm.toggleFilters = toggleFilters;
+    vm.toggleResults = toggleResults;
+    vm.advancedSearch = advancedSearch;
+    
     loadingService.setLoading(true);
 
     $timeout(function () {
@@ -29,28 +42,34 @@ function DeclarationSearchController($scope, $state, $stateParams, $timeout, ent
         }
     }, true);
 
-    $scope.filterCases = function(query, filters) {
+    
+    function filterCases(query, filters) {
         return filterService.entrySearch($scope.allCases, query, filters);
     }
 
-    $scope.propertyFilter = function(array, query) {
+    
+    function propertyFilter(array, query) {
         return filterService.propertyFilter(array, query);
     }
 
-    $scope.search = function() {
+    
+    function search() {
         $state.go('declaration.show', {caseid: $scope.caseid});
     }
 
-    $scope.gotoCase = function(caseNumber) {
+    
+    function gotoCase(caseNumber) {
         $state.go('declaration.show', {caseid: caseNumber});
     }
 
-    $scope.gotoWaitinglist = function() {
+    
+    function gotoWaitinglist() {
         $state.go('declaration.waitinglist');
     }
     
 
-    $scope.toggleFilters = function() {
+    
+    function toggleFilters() {
         $scope.showFilters = !$scope.showFilters;
         if($scope.showFilters) {
             $state.go('declaration.advancedSearch');
@@ -60,11 +79,13 @@ function DeclarationSearchController($scope, $state, $stateParams, $timeout, ent
         }
     }
 
-    $scope.toggleResults = function() {
+    
+    function toggleResults() {
         $scope.results = !$scope.results;
     }
 
-    $scope.advancedSearch = function(params) {
+    
+    function advancedSearch(params) {
         for (var filter in params) { 
             if (params[filter] == null || params[filter] == "") {
                 delete params[filter];

@@ -1,3 +1,5 @@
+'use strict';
+
 angular
     .module('openDeskApp.declaration')
     .controller('DocumentActionController', DocumentActionController);
@@ -5,6 +7,9 @@ angular
 function DocumentActionController($scope, $state, $mdDialog, $mdToast, entryService, documentService) {
     var vm = this;
 
+    vm.upload = upload;
+    vm.deleteFiles = deleteFiles;
+    vm.cancel = cancel;
     $scope.entryService = entryService;
     $scope.selectedFiles = documentService.getSelectedFiles();
     $scope.case = {};
@@ -13,7 +18,8 @@ function DocumentActionController($scope, $state, $mdDialog, $mdToast, entryServ
         $scope.case = newVal;
     });
 
-    vm.upload = function (files) {
+    
+    function upload(files) {
         var caseNodeRef = $scope.case['store-protocol'] + '://' + $scope.case['store-identifier'] + '/' + $scope.case['node-uuid'];
         for (var i = 0; i < files.length; i++) {
             documentService.uploadFiles(files[i], caseNodeRef).then(function (response) {
@@ -31,9 +37,10 @@ function DocumentActionController($scope, $state, $mdDialog, $mdToast, entryServ
         $scope.selectedFiles = [];
         documentService.resetSelectedFiles();
         $mdDialog.cancel();
-    };
+    }
 
-    vm.deleteFiles = function () {
+    
+    function deleteFiles() {
         $scope.selectedFiles.forEach(function (file) {
             documentService.deleteFile(file.nodeRef).then(function (response) {
                 entryService.getContents($scope.case['node-uuid']).then(function (response) {
@@ -51,7 +58,8 @@ function DocumentActionController($scope, $state, $mdDialog, $mdToast, entryServ
         $mdDialog.cancel();
     }
 
-    vm.cancel = function () {
+    
+    function cancel() {
         $mdDialog.cancel();
     }
 

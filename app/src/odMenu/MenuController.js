@@ -1,3 +1,5 @@
+'use strict';
+
 angular
     .module('openDeskApp.menu')
     .controller('MenuController', MenuController)

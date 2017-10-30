@@ -1,3 +1,5 @@
+'use strict';
+
 angular
     .module('openDeskApp.declaration')
     .controller('PatientInfoToolbarController', PatientInfoToolbarController);
@@ -8,7 +10,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
     $scope.propertyService = propertyService;
     $scope.editMode = false;
     $scope.caseTitle = '';
-    $scope.currentCase;
+    $scope.currentCase = [];
     $scope.closeCaseParams = {
         closed: null,
         reason: null,
@@ -16,7 +18,15 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
     };
     $scope.editor = {};
     $scope.canCurrentlyEdit = true;
-    $scope.propertyValues;
+    $scope.propertyValues = [];
+
+    $scope.saveEdit = saveEdit;
+    $scope.lockCaseDialog = lockCaseDialog;
+    $scope.closeCase = closeCase;
+    $scope.back = back;
+    $scope.propertyFilter = propertyFilter;
+    $scope.cancel = cancel;
+    $scope.unlockEntry = unlockEntry;
 
     $scope.canReopenEntries = false;
 
@@ -95,8 +105,8 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
             );
         }
     }
-
-    $scope.saveEdit = function () {
+    
+    function saveEdit() {
         clickedSave = true;
         var newCase = entryService.getNewCaseInfo();
         newCase.fullName = newCase.firstName + ' ' + newCase.lastName;
@@ -106,8 +116,9 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
             console.log(response);
         });
     }
-
-    $scope.lockCaseDialog = function () {
+    
+    
+    function lockCaseDialog() {
         $mdDialog.show({
             templateUrl: 'app/src/declaration/view/lock-dialog.html',
             parent: angular.element(document.body),
@@ -117,7 +128,8 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
         });
     }
 
-    $scope.closeCase = function () {
+    
+    function closeCase() {
         $scope.currentCase.locked4edit = false;
         $scope.currentCase.locked4editBy = {};
         
@@ -126,15 +138,16 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
         if($scope.closeCaseParams.closed == 'no-declaration') {
             $scope.currentCase.closedWithoutDeclaration = true;
         }
-
+        
         $scope.currentCase.closedWithoutDeclarationReason = $scope.closeCaseParams.reason;
         $scope.currentCase.closedWithoutDeclarationSentTo = $scope.closeCaseParams.sentTo;
         
         entryService.updateEntry($scope.currentCase);
         $mdDialog.cancel();
     }
-
-    $scope.back = function () {
+    
+    
+    function back() {
         $state.go('declaration');
     }
 
@@ -143,10 +156,12 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
             'node-uuid': $scope.currentCase['node-uuid'],
             'locked4edit': lock,
             'locked4editBy': lock ? currentUser : {}
-        }
+        };
+
         entryService.updateEntry(locked).then(function (response) {
             console.log(response);
         });
+
         console.log('locked: ' + lock);
     }
 
@@ -161,11 +176,13 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
         }
     });
 
-    $scope.propertyFilter = function(array, query, filters) {
+    
+    function propertyFilter(array, query, filters) {
         return filterService.propertyFilter(array, query, filters);
     }
 
-    $scope.cancel = function() {
+    
+    function cancel() {
         $mdDialog.cancel();
     }
 
@@ -174,7 +191,8 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $stateParams, $
     }
     canReopenEntries();
 
-    $scope.unlockEntry = function () {
+    
+    function unlockEntry() {
         console.log('unlock');
         console.log($scope.currentCase);
         entryService.unlockEntry($scope.currentCase).then(function(response) {
