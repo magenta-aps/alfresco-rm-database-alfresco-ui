@@ -1,0 +1,35 @@
+<md-menu>
+    <md-button class="md-icon-button" ng-click="$mdMenu.open()">
+        <md-icon md-menu-origin>more_vert</md-icon>
+    </md-button>
+
+    <md-menu-content width="4">
+        <md-menu-item ng-if="content.contentType == 'cmis:document'">
+            <md-button ng-click="downloadDocument(content.nodeRef, content.name)">
+                <md-icon md-menu-align-target>get_app</md-icon>
+                {{'COMMON.DOWNLOAD' | translate }}
+            </md-button>
+        </md-menu-item>
+
+        <md-menu-item ng-if="content.contentType == 'cmis:document'">
+            <md-button ng-click="previewDocument(content.nodeRef)">
+                <md-icon md-menu-align-target>search</md-icon>
+                {{'COMMON.PREVIEW' | translate }}
+            </md-button>
+        </md-menu-item>
+
+        <md-menu-item ng-if="content.loolEditable && vm.permissions.canEdit && content.contentType == 'cmis:document'">
+            <md-button ng-click="goToLOEditPage(content.nodeRef)">
+                <md-icon md-menu-align-target>edit</md-icon>
+                {{'COMMON.EDIT' | translate }}
+            </md-button>
+        </md-menu-item>
+
+        <md-menu-item ng-if="content.canMoveAndDelete">
+            <md-button ng-click="vm.deleteContentDialog($event, content)">
+                <md-icon md-menu-align-target>remove_circle_outline</md-icon>
+                {{'COMMON.REMOVE' | translate }}
+            </md-button>
+        </md-menu-item>
+    </md-menu-content>
+</md-menu>

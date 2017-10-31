@@ -7,9 +7,9 @@ angular
 function DocumentActionController($scope, $state, $mdDialog, $mdToast, entryService, documentService) {
     var vm = this;
 
-    vm.upload = upload;
+    vm.uploadFiles = upload;
     vm.deleteFiles = deleteFiles;
-    vm.cancel = cancel;
+    vm.cancelDialog = cancel;
     $scope.entryService = entryService;
     $scope.selectedFiles = documentService.getSelectedFiles();
     $scope.case = {};

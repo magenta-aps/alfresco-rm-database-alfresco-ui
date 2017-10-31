@@ -38,7 +38,6 @@ function SiteService($q, $http, $rootScope, alfrescoNodeUtils, sessionService, n
         updateSite: updateSite,
         removeMemberFromSite: removeMemberFromSite,
         deleteSite: deleteSite,
-        deleteFile: deleteFile,
         uploadFiles: uploadFiles,
         uploadNewVersion: uploadNewVersion,
         updateNode: updateNode,
@@ -255,13 +254,6 @@ function SiteService($q, $http, $rootScope, alfrescoNodeUtils, sessionService, n
             PARAM_SITE_SHORT_NAME: siteName
         }).then(function (response) {
             return response.data;
-        });
-    }
-
-    function deleteFile(nodeRef) {
-        var url = '/slingshot/doclib/action/file/node/' + alfrescoNodeUtils.processNodeRef(nodeRef).uri;
-        return $http.delete(url).then(function (result) {
-            return result.data;
         });
     }
 

@@ -7,20 +7,8 @@
   right: 0;
   top: 0;
   z-index: 2;
-}
 
-.od-user-header-menu {
-  position: fixed;
-  right: 0;
-  top: 0;
-  z-index: 1;
-
-  h2 {
-    color: #fff;
+  h2 { 
     display: inline-block;
-    font-size: $u * 1.5;
-    font-weight: 400;
-    line-height: $u * 3;
-    margin: 0;
   }
 }

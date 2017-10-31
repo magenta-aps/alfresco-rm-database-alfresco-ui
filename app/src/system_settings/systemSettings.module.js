@@ -54,13 +54,10 @@ function config($stateProvider,USER_ROLES) {
         params: {
             authorizedRoles: [USER_ROLES.admin],
             path: "/Data Dictionary/Node Templates",
-            isSite: false
         },
         views: {
             'systemsetting-view': {
                 templateUrl: 'app/src/filebrowser/view/filebrowserCard.html',
-                controller: 'FilebrowserController',
-                controllerAs: 'vm'
             }
         }
     })

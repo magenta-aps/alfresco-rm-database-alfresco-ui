@@ -39,7 +39,7 @@ function DocumentToolbarController($scope, $mdDialog, $interval, $mdToast, entry
         $mdDialog.show({
             controller: 'DocumentActionController',
             controllerAs: 'vm',
-            templateUrl: 'app/src/sites/view/uploadDocuments.tmpl.html',
+            templateUrl: 'app/src/filebrowser/upload/upload.view.html',
             parent: angular.element(document.body),
             targetEvent: event,
             scope: $scope, // use parent scope in template
