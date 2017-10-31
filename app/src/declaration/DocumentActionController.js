@@ -21,7 +21,7 @@ function DocumentActionController($scope, $state, $mdDialog, $mdToast, entryServ
     function upload(files) {
         var caseNodeRef = $scope.case['store-protocol'] + '://' + $scope.case['store-identifier'] + '/' + $scope.case['node-uuid'];
         for (var i = 0; i < files.length; i++) {
-            documentService.uploadFiles(files[i], caseNodeRef).then(function (response) {
+            documentService.uploadFiles(files[i], caseNodeRef).then(function () {
                 entryService.getContents($scope.case['node-uuid']).then(function (response) {
                     documentService.setCaseFiles(response);
                     $mdToast.show(

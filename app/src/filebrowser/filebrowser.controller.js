@@ -22,7 +22,6 @@ function FilebrowserController($state, $stateParams, $scope, $rootScope, $mdDial
     vm.isLoading = true;
     vm.uploading = false;
     vm.uploadDocumentsDialog = uploadDocumentsDialog;
-    // vm.uploadFiles = uploadFiles;
 
     //de her er dublikeret i document.controller!
     $scope.downloadDocument = downloadDocument;
@@ -45,15 +44,22 @@ function FilebrowserController($state, $stateParams, $scope, $rootScope, $mdDial
     activate();
 
     function activate() {
-        siteService.getNode($stateParams.projekt, "documentLibrary", $stateParams.path).then(function (val) {
-            setFolder(val.parent.nodeRef);
-        });
+        setFolderAndPermissions($stateParams.path);
+    }
 
-
-        filebrowserService.getTemplates("Document").then(function (documentTemplates) {
-            vm.documentTemplates = documentTemplates;
-            if (vm.documentTemplates !== undefined)
-                processContent(vm.documentTemplates);
+    function setFolderAndPermissions(path) {
+        filebrowserService.getCompanyHome().then(function (val) {
+            var companyHomeUri = alfrescoNodeUtils.processNodeRef(val).uri;
+            filebrowserService.getNode(companyHomeUri, path).then(
+                function (response) {
+                    setFolder(response.metadata.parent.nodeRef);
+                    vm.permissions.canEdit = response.metadata.parent.permissions.userAccess.edit;
+                },
+                function (error) {
+                    vm.isLoading = false;
+                    vm.error = true;
+                }
+            );
         });
     }
 
@@ -160,22 +166,6 @@ function FilebrowserController($state, $stateParams, $scope, $rootScope, $mdDial
             clickOutsideToClose: true
         });
     }
-
-    // function uploadFiles(files) {
-    //     vm.uploading = true;
-
-    //     angular.forEach(files, function (file) {
-    //         siteService.uploadFiles(file, folderNodeRef).then(function (response) {
-    //             if ($scope.isSite) {
-    //                 siteService.createDocumentNotification(response.data.nodeRef, response.data.fileName);
-    //             }
-    //             vm.uploading = false;
-    //             cancelDialog();
-    //         });
-    //     });
-
-    //     $scope.files = [];
-    // }
 
     function downloadDocument(nodeRef, name) {
         alfrescoDownloadService.downloadFile(nodeRef, name);
