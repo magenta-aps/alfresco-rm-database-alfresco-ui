@@ -27,8 +27,8 @@ function fileBrowserService($http, alfrescoNodeUtils) {
     }
 
     function getCompanyHome() {
-        return $http.get("/alfresco/service/filebrowser?method=getCompanyHome", {}).then(function (response) {
-            return response.data[0].nodeRef;
+        return $http.get("/alfresco/service/contents/companyHome", {}).then(function (response) {
+            return response.data.nodeRef;
         });
     }
 
