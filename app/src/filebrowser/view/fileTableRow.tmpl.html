@@ -1,21 +1,21 @@
-<td style="width:45%">
-    <a class="od-filebrowser-link" ui-sref="{{vm.getLink(content)}}" ui-sref-active="active">
-        <i class="material-icons">
-                                    {{content.contentType == 'cmis:folder' ? 'folder_open' : ''}}
-                                    {{content.contentType == 'cmis:link' ? 'link' : ''}}
-                                    <img class="md-avatar" 
-                                         ng-show="content.contentType === 'cmis:document'" 
-                                         ng-src="app/assets/img/filetypes/{{content.thumbNailURL}}"
-                                         onerror="this.src='app/assets/img/filetypes/generic-file-24.png'">
-                                    </i> 
-                                    <span class='content-name'>{{content.name}}</span>
+<td>
+    <a ui-sref="{{vm.getLink(content)}}">
+        <md-icon>
+            {{content.contentType == 'cmis:folder' ? 'folder_open' : ''}}
+            {{content.contentType == 'cmis:link' ? 'link' : ''}}
+            <img class="md-avatar" 
+                ng-show="content.contentType === 'cmis:document'" 
+                ng-src="app/assets/images/filetypes/{{content.thumbNailURL}}"
+                onerror="this.src='app/assets/images/filetypes/generic-file-24.png'">
+        </md-icon> 
+        <span>{{content.name}}</span>
     </a>
 </td>
-<td style="width:40%" hide show-gt-sm>
-    <a class="od-filebrowser-link" ui-sref="{{vm.getLink(content)}}" ui-sref-active="active">
+<td hide show-gt-sm>
+    <a ui-sref="{{vm.getLink(content)}}">
         {{content.lastChanged | openeDate}}&nbsp;-&nbsp;{{content.lastChangedBy}}
     </a>
 </td>
-<td style="width:5%">
-    <div ng-include=" 'app/src/filebrowser/actions/actionMenu.html' "></div>
+<td style="text-align:right">
+    <od-action-menu></od-action-menu>
 </td>

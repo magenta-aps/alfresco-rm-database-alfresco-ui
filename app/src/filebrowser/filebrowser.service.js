@@ -13,7 +13,8 @@ function fileBrowserService($http, alfrescoNodeUtils) {
         getCurrentFolderNodeRef: getCurrentFolderNodeRef,
         getNode: getNode,
         getTemplates: getTemplates,
-        setCurrentFolder: setCurrentFolder
+        setCurrentFolder: setCurrentFolder,
+        uploadFiles: uploadFiles
     };
     
     return service;
@@ -42,6 +43,28 @@ function fileBrowserService($http, alfrescoNodeUtils) {
         return $http.get('/slingshot/doclib/doclist/all/node/' + nodeRef + '/' + path).then(function (response) {
             return response.data;
         });
+    }
+
+    function uploadFiles(file, destination) {
+        // return $http.post("/alfresco/service/sites", {
+        //     PARAM_METHOD: "returnFileName",
+        //     PARAM_FILENAME: file.name,
+        //     PARAM_DESTINATION: destination
+        // }).then(function (response) {
+            var formData = new FormData();
+            formData.append("filedata", file);
+            // formData.append("filename", response.data[0].fileName);
+            formData.append("destination", destination ? destination : null);
+
+            return $http.post("/api/upload", formData, {
+                transformRequest: angular.identity,
+                headers: {
+                    'Content-Type': undefined
+                }
+            }).then(function (response) {
+                return response;
+            });
+        // });
     }
 
     function getTemplates(type) {

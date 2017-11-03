@@ -1,15 +1,15 @@
-<div class="filebrowser">
-    <breadcrumb paths="vm.paths" id="filebrowser-breadcrumb"></breadcrumb>
+<div>
+    <breadcrumb paths="vm.paths"></breadcrumb>
 
     <md-progress-linear md-mode="indeterminate" ng-show="uploading"></md-progress-linear>
 
     <div ngf-drop ng-model="filesToFilebrowser" ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true">
-        <md-list class="sort-head" ng-show="vm.contentListLength > 0" id="table-container">
-            <table class="od-members od-members-row">
+            <table  ng-show="vm.contentListLength > 0" style="width:100%">
                 <thead ng-show="vm.contentListLength > 0" fix-head>
-                    <tr>
+                    <tr style="text-align:left">
                         <th sort-table="name" sort-default="!reverse" title="Sortér kolonne">{{'PROJECT.NAME' | translate }}</th>
                         <th hide show-gt-sm sort-table="lastChanged" title="Sortér kolonne">{{'PROJECT.HISTORY' | translate }}</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody ng-repeat="contentTypeList in vm.contentList">
@@ -17,7 +17,6 @@
                     </tr>
                 </tbody>
             </table>
-        </md-list>
     </div>
 
     <div ng-if="vm.isLoading" layout="row" layout-sm="column" layout-align="space-around" flex>

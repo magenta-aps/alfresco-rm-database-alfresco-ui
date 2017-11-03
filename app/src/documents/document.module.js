@@ -1,3 +1,5 @@
+'use strict';
+
 angular
     .module('openDeskApp.documents', ['ngMaterial', 'pascalprecht.translate'])
     .constant('EDITOR_CONFIG', {

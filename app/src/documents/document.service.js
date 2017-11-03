@@ -133,7 +133,7 @@
 angular.module('openDeskApp.documents')
     .factory('documentService', documentService);
 
-function documentService($http, alfrescoNodeUtils) {
+function documentService($http, alfrescoNodeUtils, EDITOR_CONFIG) {
 
     var selectedFiles = [];
     var caseFiles = [];

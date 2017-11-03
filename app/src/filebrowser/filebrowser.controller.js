@@ -53,7 +53,7 @@ function FilebrowserController($state, $stateParams, $scope, $rootScope, $mdDial
             filebrowserService.getNode(companyHomeUri, path).then(
                 function (response) {
                     setFolder(response.metadata.parent.nodeRef);
-                    vm.permissions.canEdit = response.metadata.parent.permissions.userAccess.edit;
+                    //vm.permissions.canEdit = response.metadata.parent.permissions.userAccess.edit;
                 },
                 function (error) {
                     vm.isLoading = false;
@@ -187,7 +187,7 @@ function FilebrowserController($state, $stateParams, $scope, $rootScope, $mdDial
     function deleteContentDialog(event, content) {
         $scope.content = content;
         $mdDialog.show({
-            templateUrl: 'app/src/filebrowser/view/content/deleteContent.tmpl.html',
+            templateUrl: 'app/src/filebrowser/delete/deleteContent.view.html',
             targetEvent: event,
             scope: $scope, // use parent scope in template
             preserveScope: true, // do not forget this if use parent scope
