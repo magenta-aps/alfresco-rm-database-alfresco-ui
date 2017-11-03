@@ -4,7 +4,7 @@ angular
     .module('openDeskApp.filebrowser')
     .controller('FilebrowserController', FilebrowserController);
 
-function FilebrowserController($state, $stateParams, $scope, $rootScope, $mdDialog, Upload, siteService, fileUtilsService,
+function FilebrowserController($state, $stateParams, $scope, $rootScope, $mdDialog, Upload, fileUtilsService,
     filebrowserService, alfrescoDownloadService, documentPreviewService, documentService, alfrescoNodeUtils) {
 
     var vm = this;

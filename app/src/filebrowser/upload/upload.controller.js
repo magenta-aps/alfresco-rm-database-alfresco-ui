@@ -13,6 +13,7 @@ function UploadController($rootScope, $mdDialog, Upload, filebrowserService) {
     vm.cancelDialog = cancelDialog;
     vm.uploadFiles = uploadFiles;
     vm.files = [];
+    vm.uploading = false;
 
     function uploadFiles() {
         vm.uploading = true;
