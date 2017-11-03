@@ -5,7 +5,9 @@ angular
 .directive('odFilebrowser', function () {
     return {
         restrict: 'E',
-        scope: {},
+        scope: {
+            breadcrumb: '=odBreadcrumb'
+        },
         templateUrl: 'app/src/filebrowser/view/filebrowser.html',
         controller: 'FilebrowserController',
         controllerAs: 'vm'

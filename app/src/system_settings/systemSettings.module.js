@@ -57,7 +57,10 @@ function config($stateProvider,USER_ROLES) {
         },
         views: {
             'systemsetting-view': {
-                templateUrl: 'app/src/filebrowser/view/filebrowserCard.html',
+                templateUrl: 'app/src/system_settings/documentTemplates/documentTemplates.view.html',
+            },
+            'toolbar-tools-left@site': {
+                template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Dokumentskabeloner</h2>"
             }
         }
     })
