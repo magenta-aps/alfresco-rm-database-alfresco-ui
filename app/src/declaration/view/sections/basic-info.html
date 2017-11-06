@@ -5,14 +5,15 @@
         </md-card-title-text>
     </md-card-title>
     <md-card-content>
-        <!--<md-input-container class="md-block">
-            <label>Sagsnummer</label>
-            <input ng-model="case.caseNumber" ng-disabled="!editPatientData">
-        </md-input-container>-->
-        <md-input-container class="md-block">
-            <label>CPR</label>
-            <input ng-model="case.cprNumber" maxlength="10" minlength="10" ng-disabled="!editPatientData" required>
-        </md-input-container>
+        <div layout="row">
+            <md-input-container class="md-block" flex>
+                <label>CPR</label>
+                <input ng-model="case.cprNumber" maxlength="10" minlength="10" ng-disabled="!editPatientData" name="cprNo" required>
+            </md-input-container>
+            <md-button class="md-icon-button" ng-click="lookupCPR()" ng-disabled="!editPatientData || $root.declarationForm.cprNo.$invalid">
+                <md-icon>cached</md-icon>
+            </md-button>
+        </div>
         <md-input-container class="md-block">
             <label>Fornavne</label>
             <input ng-model="case.firstName" ng-disabled="!editPatientData" required>

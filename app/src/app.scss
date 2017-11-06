@@ -317,14 +317,16 @@ md-autocomplete[md-floating-label] .md-show-clear-button button {
 
 .document-thumbnail {
   overflow: hidden;
-  padding-bottom: 100%;
+  // padding-bottom: 100%;
   position: relative;
   width: 100%;
 
   img {
-    min-width: 100%;
-    min-height: 100%;
-    position: absolute;
+    display: block;
+    margin: 0 auto;
+    // min-width: 100%;
+    // min-height: 100%;
+    // position: absolute;
     width: auto;
   }
 }
