@@ -22,6 +22,7 @@ function FilebrowserController($state, $stateParams, $scope, $rootScope, $mdDial
     vm.isLoading = true;
     vm.uploading = false;
     vm.uploadDocumentsDialog = uploadDocumentsDialog;
+    vm.newFolderDialog = newFolderDialog;
 
     //de her er dublikeret i document.controller!
     $scope.downloadDocument = downloadDocument;
@@ -102,24 +103,12 @@ function FilebrowserController($state, $stateParams, $scope, $rootScope, $mdDial
             return 'document({doc: "' + content.shortRef + '"})';
         }
         if (content.contentType === 'cmis:folder') {
-            if ($scope.isSite)
-                return 'project.filebrowser({projekt: "' + $stateParams.projekt +
-                    '", path: "' + $stateParams.path + '/' + content.name + '"})';
-            else
-                return 'systemsettings.filebrowser({path: "' + $stateParams.path + '/' + content.name + '"})';
-        }
-        if (content.contentType === 'cmis:link') {
-            return 'project({projekt: "' + content.destination_link + '"})';
+                return $state.current.name + '({path: "' + $stateParams.path + '/' + content.name + '"})';
         }
     }
 
     function buildBreadCrumbPath() {
-        var homeLink;
-
-        if ($scope.isSite)
-            homeLink = 'project.filebrowser({projekt: "' + $stateParams.projekt + '", path: ""})';
-        else
-            homeLink = 'systemsettings.filebrowser({path: ""})';
+        var homeLink = $state.current.name + '({path: ""})';
 
         var paths = [{
             title: 'Home',
@@ -131,12 +120,7 @@ function FilebrowserController($state, $stateParams, $scope, $rootScope, $mdDial
             var pathLink = '/';
             for (var a in pathArr) {
                 if (pathArr[a] !== '') {
-                    var link;
-                    if ($scope.isSite)
-                        link = 'project.filebrowser({projekt: "' + $stateParams.projekt +
-                        '", path: "' + pathLink + pathArr[a] + '"})';
-                    else
-                        link = 'systemsettings.filebrowser({path: "' + pathLink + pathArr[a] + '"})';
+                    var link = $state.current.name + '({path: "' + pathLink + pathArr[a] + '"})';
                     paths.push({
                         title: pathArr[a],
                         link: link
@@ -162,6 +146,15 @@ function FilebrowserController($state, $stateParams, $scope, $rootScope, $mdDial
         $mdDialog.show({
             templateUrl: 'app/src/filebrowser/upload/upload.view.html',
             controller: 'UploadController',
+            controllerAs: 'vm',
+            clickOutsideToClose: true
+        });
+    }
+
+    function newFolderDialog() {
+        $mdDialog.show({
+            templateUrl: 'app/src/filebrowser/folder/newFolder.view.html',
+            controller: 'NewFolderController',
             controllerAs: 'vm',
             clickOutsideToClose: true
         });

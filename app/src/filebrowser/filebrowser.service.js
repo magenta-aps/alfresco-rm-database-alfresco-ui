@@ -3,11 +3,12 @@
 angular.module('openDeskApp.filebrowser')
     .factory('filebrowserService', fileBrowserService);
 
-function fileBrowserService($http, alfrescoNodeUtils) {
+function fileBrowserService($http, $rootScope, alfrescoNodeUtils) {
 
     var currentFolderNodeRef;
 
     var service = {
+        createFolder: createFolder,
         getCompanyHome: getCompanyHome,
         getContentList: getContentList,
         getCurrentFolderNodeRef: getCurrentFolderNodeRef,
@@ -42,6 +43,19 @@ function fileBrowserService($http, alfrescoNodeUtils) {
     function getNode(nodeRef, path) {
         return $http.get('/slingshot/doclib/doclist/all/node/' + nodeRef + '/' + path).then(function (response) {
             return response.data;
+        });
+    }
+
+    function createFolder(contentName, destination) {
+        var props = {
+            prop_cm_name: contentName,
+            prop_cm_title: contentName,
+            alf_destination: destination
+        };
+
+        return $http.post('/api/type/cm:folder/formprocessor', props).then(function (response) {
+            $rootScope.$broadcast('updateFilebrowser');
+            return response;
         });
     }
 

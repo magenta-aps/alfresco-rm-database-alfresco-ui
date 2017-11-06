@@ -37,5 +37,11 @@
             <md-tooltip md-direction="top">{{'COMMON.UPLOAD' | translate}} {{'DOCUMENT.DOCUMENTS' | translate | lowercase}}</md-tooltip>
             <md-icon>file_upload</md-icon>
         </md-button>
+
+        <md-button ng-if="createFolders" ng-click="vm.newFolderDialog()" class="md-icon-button md-primary" aria-label="{{'COMMON.NEW_FOLDER' | translate}}">
+            <md-tooltip md-direction="top">{{'COMMON.NEW_FOLDER' | translate}}</md-tooltip>
+            <md-icon>create_new_folder</md-icon>
+        </md-button>
+
     </md-card-actions>
 </div>

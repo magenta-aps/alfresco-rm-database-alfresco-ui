@@ -1,5 +1,5 @@
 <td>
-    <a ui-sref="{{vm.getLink(content)}}">
+    <a ui-sref="{{preview ? vm.getLink(content) : ''}}">
         <md-icon>
             {{content.contentType == 'cmis:folder' ? 'folder_open' : ''}}
             {{content.contentType == 'cmis:link' ? 'link' : ''}}
@@ -12,7 +12,7 @@
     </a>
 </td>
 <td hide show-gt-sm>
-    <a ui-sref="{{vm.getLink(content)}}">
+    <a ui-sref="{{preview ? vm.getLink(content) : ''}}">
         {{content.lastChanged | openeDate}}&nbsp;-&nbsp;{{content.lastChangedBy}}
     </a>
 </td>

@@ -6,7 +6,9 @@ angular
     return {
         restrict: 'E',
         scope: {
-            breadcrumb: '=odBreadcrumb'
+            breadcrumb: '=odBreadcrumb',
+            createFolders: '=odFolders',
+            preview: "=odPreview"
         },
         templateUrl: 'app/src/filebrowser/view/filebrowser.html',
         controller: 'FilebrowserController',

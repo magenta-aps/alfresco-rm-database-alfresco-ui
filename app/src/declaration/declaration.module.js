@@ -130,5 +130,22 @@ function config($stateProvider, USER_ROLES) {
         })
         .state('declaration.show.patientdata.edit', {
             
+        })
+        .state('declaration.documents', {
+            url: '/dokumenter',
+            params: {
+                path: "/Shared",
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'app/src/filebrowser/view/filebrowserCard.html',
+                    controller: 'SystemSettingsController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools-left@site': {
+                    template: '<h2>Dokumenter</h2>',
+                }
+            }
+
         });
 }

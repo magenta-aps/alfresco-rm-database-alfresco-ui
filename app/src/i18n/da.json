@@ -103,7 +103,9 @@
     "CLOSEEDIT": "Luk redigering",
     "FILETYPE": "Dokumenttype",
     "LOCAL_DOCUMENT": "Lokalt dokument",
-    "REPLY": "Besvar"
+    "REPLY": "Besvar",
+    "MISSING_FOLDER": "Mappen findes ikke",
+    "NEW_FOLDER": "Ny mappe"
   },
   "DECLARATION": {
     "NEW_DECLARATION": "Ny erklæring",

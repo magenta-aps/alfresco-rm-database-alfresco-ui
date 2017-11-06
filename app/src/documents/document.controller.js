@@ -5,7 +5,7 @@ angular.module('openDeskApp.documents')
 
 function DocumentController($scope, $timeout, $translate, documentService, userService, $stateParams, $location, $state,
     documentPreviewService, alfrescoDownloadService, browserService, $mdDialog, notificationsService, authService,
-                            siteService, headerService, $window, editOnlineMSOfficeService) {
+    siteService, headerService, $window, editOnlineMSOfficeService) {
 
     var vm = this;
 
@@ -53,7 +53,7 @@ function DocumentController($scope, $timeout, $translate, documentService, userS
         if ($location.search().archived !== undefined && $location.search().archived === "true") {
             vm.showArchived = true;
         }
-        
+
         documentService.getHistory(parentDocumentNode).then(function (val) {
             $scope.history = val;
             var currentNoOfHistory = $scope.history.length;
@@ -149,7 +149,7 @@ function DocumentController($scope, $timeout, $translate, documentService, userS
             vm.wf_from = $location.search().from;
             vm.wf = paramValue === "wf";
             vm.wfr = paramValue === "wf-response";
-    
+
             var NID = $location.search().NID;
             notificationsService.getInfo(NID).then(function (response) {
                 vm.wf_comment = response.message;
@@ -178,7 +178,7 @@ function DocumentController($scope, $timeout, $translate, documentService, userS
 
     function highlightVersion() {
         var elm = document.getElementById(selectedDocumentNode);
-        if ( elm === undefined)
+        if (elm === undefined)
             elm = document.getElementById(firstDocumentNode);
 
         if (elm === null) {
@@ -192,14 +192,16 @@ function DocumentController($scope, $timeout, $translate, documentService, userS
     function getDocument() {
         documentService.getDocument(parentDocumentNode).then(function (response) {
 
-        vm.doc = response.item;
-        vm.loolEditable = documentService.isLoolEditable(vm.doc.node.mimetype);
-        vm.msOfficeEditable = documentService.isMsOfficeEditable(vm.doc.node.mimetype);
+            vm.doc = response.item;
+            vm.loolEditable = documentService.isLoolEditable(vm.doc.node.mimetype);
+            vm.msOfficeEditable = documentService.isMsOfficeEditable(vm.doc.node.mimetype);
 
             vm.docMetadata = response.metadata;
 
             // Compile paths for breadcrumb directive
             vm.paths = buildBreadCrumbPath(response);
+
+            //vm.paths = breadcrumbService.buildPath(response);
 
             vm.site = vm.doc.location.site.name;
 
@@ -213,36 +215,37 @@ function DocumentController($scope, $timeout, $translate, documentService, userS
 
             browserService.setTitle(response.item.node.properties["cm:name"]);
 
-            function buildBreadCrumbPath(response) {
-                var paths = [{
-                    title: response.item.location.siteTitle,
-                    link: 'project.filebrowser({projekt: "' + response.item.location.site.name + '", path: ""})'
-                }];
-                var pathArr = response.item.location.path.split('/');
-                var pathLink = '/';
-                for (var a in pathArr) {
-                    if (pathArr[a] !== '') {
-                        var link;
-                        if (response.item.location.site === "") {
-                            link = 'systemsettings.filebrowser({path: "' + pathLink + pathArr[a] + '"})';
-                        } else {
-                            link = 'project.filebrowser({projekt: "' + response.item.location.site.name +
-                                '", path: "' + pathLink + pathArr[a] + '"})';
-                        }
-                        paths.push({
-                            title: pathArr[a],
-                            link: link
-                        });
-                        pathLink = pathLink + pathArr[a] + '/';
-                    }
+        });
+    }
+
+    function buildBreadCrumbPath(response) {
+        var paths = [{
+            title: response.item.location.siteTitle,
+            link: 'project.filebrowser({projekt: "' + response.item.location.site.name + '", path: ""})'
+        }];
+        var pathArr = response.item.location.path.split('/');
+        var pathLink = '/';
+        for (var a in pathArr) {
+            if (pathArr[a] !== '') {
+                var link;
+                if (response.item.location.site === "") {
+                    link = 'administration.document_templates({path: "' + pathLink + pathArr[a] + '"})';
+                } else {
+                    link = 'project.filebrowser({projekt: "' + response.item.location.site.name +
+                        '", path: "' + pathLink + pathArr[a] + '"})';
                 }
                 paths.push({
-                    title: response.item.location.file,
-                    link: response.item.location.path
+                    title: pathArr[a],
+                    link: link
                 });
-                return paths;
+                pathLink = pathLink + pathArr[a] + '/';
             }
+        }
+        paths.push({
+            title: response.item.location.file,
+            link: response.item.location.path
         });
+        return paths;
     }
 
     function loadPreview() {
@@ -327,33 +330,9 @@ function DocumentController($scope, $timeout, $translate, documentService, userS
     function editInMSOffice() {
         editOnlineMSOfficeService.editOnline(vm.siteNodeRef, vm.doc, vm.docMetadata);
     }
-    
+
     function downloadDocument() {
         var versionRef = vm.store + $stateParams.doc;
         alfrescoDownloadService.downloadFile(versionRef, vm.doc.location.file);
     }
-
-
-    function reviewDocumentsDialog(event) {
-        $mdDialog.show({
-            templateUrl: 'app/src/filebrowser/view/content/document/reviewDocument.tmpl.html',
-            parent: angular.element(document.body),
-            targetEvent: event,
-            scope: $scope, // use parent scope in template
-            preserveScope: true, // do not forget this if use parent scope
-            clickOutsideToClose: true
-        });
-    }
-    
-    function createReviewNotification(userName, comment) {
-        siteService.createReviewNotification(vm.doc.node.nodeRef, userName, comment);
-        $mdDialog.cancel();
-    }
-
-    //this should be removed, do not edit dom in controller!
-    angular.element(document).ready(function () {
-        if ($window.location.href.split('/')[4] != "lool") {
-            vm.highlightVersion();
-        }
-    });
 }
