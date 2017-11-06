@@ -2,7 +2,7 @@
 
 angular
     .module('openDeskApp.declaration')
-    .controller('DocumentController', DocumentController);
+    .controller('DeclarationDocumentController', DocumentController);
 
 function DocumentController($scope, $state, $stateParams, $timeout, entryService, documentToolbarService, loadingService,
     documentService, documentPreviewService, preferenceService, authService, sessionService) {

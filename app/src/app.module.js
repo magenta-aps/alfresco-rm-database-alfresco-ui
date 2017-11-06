@@ -15,6 +15,7 @@ angular
         'isteven-multi-select',
         'openDeskApp.init',
         'openDeskApp.auth',
+        'openDeskApp.backendConfig',
         'openDeskApp.translations.init',
         'openDeskApp.header',
         'openDeskApp.lool',

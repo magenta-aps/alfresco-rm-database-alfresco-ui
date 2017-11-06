@@ -81,7 +81,7 @@ function config($stateProvider, USER_ROLES) {
             views: {
                 'declarations': {
                     templateUrl: 'app/src/declaration/view/documents.html',
-                    controller: 'DocumentController',
+                    controller: 'DeclarationDocumentController',
                     controllerAs: 'vm'
                 },
                 'toolbar-tools-right@site': {
@@ -100,7 +100,7 @@ function config($stateProvider, USER_ROLES) {
             views: {
                 'declarations@declaration.show': {
                     templateUrl: 'app/src/declaration/view/document-view.html',
-                    controller: 'DocumentController',
+                    controller: 'DeclarationDocumentController',
                 },
                 'toolbar-tools-right@site': {
                     template: '',
