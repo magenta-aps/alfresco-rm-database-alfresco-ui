@@ -6,6 +6,7 @@ angular
 
 function PatientInfoController($scope, $mdToast, entryService, filterService, loadingService, cprService) {
 
+    var vm = this;
     $scope.entryService = entryService;
     $scope.loadingService = loadingService;
     $scope.editPatientData = false;
@@ -19,7 +20,7 @@ function PatientInfoController($scope, $mdToast, entryService, filterService, lo
 
     $scope.propertyFilter = propertyFilter;
     $scope.addNewBidiagnosis = addNewBidiagnosis;
-    $scope.lookupCPR = lookupCPR;
+    vm.lookupCPR = lookupCPR;
 
     loadingService.setLoading(true);
 

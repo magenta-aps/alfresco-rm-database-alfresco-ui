@@ -10,7 +10,7 @@ function config($stateProvider, USER_ROLES) {
             url: '/erklaeringer',
             views: {
                 'content@': {
-                    templateUrl: 'app/src/declaration/view/search.html',
+                    templateUrl: 'app/src/declaration/search/search.view.html',
                     controller: 'DeclarationSearchController',
                     controllerAs: 'vm'
                 },
@@ -25,7 +25,7 @@ function config($stateProvider, USER_ROLES) {
             url: '/advanceret-soegning',
             views: {
                 'content@': {
-                    templateUrl: 'app/src/declaration/view/search-advanced.html',
+                    templateUrl: 'app/src/declaration/advancedSearch/advancedSearch.view.html',
                     controller: 'DeclarationSearchController',
                     controllerAs: 'vm'
                 },
@@ -38,8 +38,8 @@ function config($stateProvider, USER_ROLES) {
             url: '/venteliste',
             views: {
                 'content@': {
-                    templateUrl: 'app/src/declaration/view/waitinglist.html',
-                    controller: 'DeclarationSearchController',
+                    templateUrl: 'app/src/declaration/waitinglist/waitinglist.view.html',
+                    controller: 'WaitinglistController',
                     controllerAs: 'vm'
                 },
                 'toolbar-tools-left@site': {

@@ -63,12 +63,9 @@ function DeclarationSearchController($scope, $state, $stateParams, $timeout, ent
         $state.go('declaration.show', {caseid: caseNumber});
     }
 
-    
     function gotoWaitinglist() {
         $state.go('declaration.waitinglist');
     }
-    
-
     
     function toggleFilters() {
         $scope.showFilters = !$scope.showFilters;
@@ -107,24 +104,6 @@ function DeclarationSearchController($scope, $state, $stateParams, $timeout, ent
         entryService.getAllEntries().then(function (response) {
             console.log('get all entries');
             $scope.allCases = response;
-
-            angular.forEach($scope.allCases, function(declaration) {
-                if(!declaration.hasOwnProperty('closed')) {
-                    var date = new Date(declaration.creationDate);
-
-                    var day = ('0' + date.getDate()).slice(-2);
-                    var month = ('0' + (date.getMonth() + 1)).slice(-2);
-                    var year = date.getFullYear();
-
-                    declaration.creationDateFormatted = day + '/' + month + '/' + year;
-                    var days = (new Date() - date) / 1000 / 60 / 60 / 24;
-
-                    
-
-                    declaration.waitingTime = days < 0.5 ? 0 : Math.ceil(days);
-                    $scope.waitingListCases.push(declaration);
-                }
-            });
         }, function(err) {
             console.log(err);
         });

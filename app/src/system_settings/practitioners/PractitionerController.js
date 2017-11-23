@@ -8,8 +8,6 @@ function PractitionerController($scope, $state, $stateParams, $timeout, practiti
 
     $scope.practitionerService = practitionerService;
 
-    // var groupNames = ['GROUP_reopen_cases', 'GROUP_edit_lists', 'GROUP_assign_roles'];
-
     $scope.isEditing = false;
     $scope.allUsers = [];
 
@@ -36,11 +34,11 @@ function PractitionerController($scope, $state, $stateParams, $timeout, practiti
         practitionerService.updateUsers(newVal);
     }, true);
 
+    init();
+
     function init() {
         userService.getAllUsers().then(function (response) {
-
             var users = response.people;
-
             practitionerService.getPermissionGroups().then(function(permissionGroups) {
                 permissionGroups.forEach(function (group) {
                     groupService.getUserGroups(group).then(function (userGroup) {
@@ -61,6 +59,5 @@ function PractitionerController($scope, $state, $stateParams, $timeout, practiti
         });
     }
 
-    init();
 
 }

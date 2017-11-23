@@ -2,13 +2,13 @@
     <md-card-title>
             <span flex></span>
             <div layout="row" layout-align="center center">
-              <div>Antal: <span class="md-body-2">{{waitingListCases.length}}</span></div>
+              <div>Antal: <span class="md-body-2">{{vm.waitingListCases.length}}</span></div>
             </div>
     </md-card-title>
     <md-card-content>
     <md-table-container>
             <table md-table>
-                <thead md-head md-order="query.order">
+                <thead md-head md-order="vm.query.order">
                     <tr md-row>
                         <th md-column md-numeric md-order-by="caseNumber">{{'DECLARATION.DECLARATION_NUMBER' | translate}}</th>
                         <th md-column md-order-by="fullName">{{'COMMON.NAME' | translate}}</th>
@@ -17,7 +17,7 @@
                         <th md-column md-numeric md-order-by="creationDate">Ventetid (dage)</th>
                     </tr>
                 </thead>
-                <tbody md-body ng-repeat="case in waitingListCases | orderBy: query.order">
+                <tbody md-body ng-repeat="case in vm.waitingListCases | orderBy: vm.query.order">
                     <tr md-row class="clickable" ng-click="vm.gotoCase(case.caseNumber)">
                         <td md-cell>{{case.caseNumber}}</td>
                         <td md-cell>{{case.fullName}}</td>

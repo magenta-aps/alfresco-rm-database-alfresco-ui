@@ -198,6 +198,7 @@ function GroupService(ALFRESCO_URI, $http, $q) {
         };
 
         return $http.put('/alfresco/s/database/'+ siteShortName + '/user/' + userName, json).then(function(response) {
+            console.log(response);
             return response.data;
         }, function(err) {
             console.log('error updating userroles for user:' + userName + ' and site:' + siteShortName);

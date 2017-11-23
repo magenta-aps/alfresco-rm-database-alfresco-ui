@@ -21,6 +21,8 @@ function PractitionerToolbarController($scope, practitionerService, groupService
         var users = practitionerService.getUpdatedUsers();
         var original = practitionerService.getOriginalUsers();
 
+        console.log(users);
+
         angular.forEach(users, function(user,key) {
             var addedTo = [];
             var removedFrom = [];
@@ -29,6 +31,7 @@ function PractitionerToolbarController($scope, practitionerService, groupService
                 permissionGroups.forEach(function (group) {
                     if (user.hasOwnProperty(group)) {
                         if (user[group] && (!original[key][group] || !original[key].hasOwnProperty(group))) {
+                            console.log(group);
                             addedTo.push(group);
                         }
 

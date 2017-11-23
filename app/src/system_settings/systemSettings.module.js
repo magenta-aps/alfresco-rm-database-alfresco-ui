@@ -17,7 +17,7 @@ function config($stateProvider,USER_ROLES) {
             }
         },
         params: {
-            authorizedRoles: [USER_ROLES.admin, USER_ROLES.roleManager, USER_ROLES.propertyValueManager]
+            authorizedRoles: [USER_ROLES.admin, USER_ROLES.roleManager, USER_ROLES.propertyValueManager, USER_ROLES.templateFolderValueManager]
         },
         redirectTo: 'administration.dashboard'
     })
@@ -52,8 +52,8 @@ function config($stateProvider,USER_ROLES) {
     .state('administration.document_templates', {
         url: '/dokumentskabeloner',
         params: {
-            authorizedRoles: [USER_ROLES.admin],
-            path: "/Data Dictionary/Node Templates",
+            authorizedRoles: [USER_ROLES.templateFolderValueManager],
+            path: "/Sites/retspsyk/documentTemplates",
         },
         views: {
             'systemsetting-view': {

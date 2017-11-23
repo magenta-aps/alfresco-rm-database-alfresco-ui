@@ -10,7 +10,7 @@
                 <label>CPR</label>
                 <input ng-model="case.cprNumber" maxlength="10" minlength="10" ng-disabled="!editPatientData" name="cprNo" required>
             </md-input-container>
-            <md-button class="md-icon-button" ng-click="lookupCPR()" ng-disabled="!editPatientData || $root.declarationForm.cprNo.$invalid">
+            <md-button class="md-icon-button" ng-click="vm.lookupCPR()" ng-disabled="!editPatientData || $root.declarationForm.cprNo.$invalid">
                 <md-icon>cached</md-icon>
             </md-button>
         </div>

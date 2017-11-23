@@ -4,7 +4,9 @@ angular
     .module('openDeskApp.declaration')
     .controller('DeclarationCreateController', DeclarationCreateController);
 
-function DeclarationCreateController($scope, $rootScope, $timeout, $mdToast, entryService, propertyService, filterService, loadingService, cprService) {
+function DeclarationCreateController($scope, $timeout, $mdToast, entryService, propertyService, filterService, loadingService, cprService) {
+
+    var vm = this;
 
     $scope.editPatientData = true;
     $scope.case = {};
@@ -13,7 +15,7 @@ function DeclarationCreateController($scope, $rootScope, $timeout, $mdToast, ent
     $scope.propertyValues = propertyService.getAllPropertyValues();
     $scope.propertyFilter = propertyFilter;
     $scope.addNewBidiagnosis = addNewBidiagnosis;
-    $scope.lookupCPR = lookupCPR;
+    vm.lookupCPR = lookupCPR;
 
     entryService.setLoading(true);
 
