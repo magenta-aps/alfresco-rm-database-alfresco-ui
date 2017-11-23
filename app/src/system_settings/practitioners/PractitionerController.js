@@ -1,3 +1,5 @@
+'use strict';
+
 angular
     .module('openDeskApp.declaration')
     .controller('PractitionerController', PractitionerController);
@@ -6,14 +8,12 @@ function PractitionerController($scope, $state, $stateParams, $timeout, practiti
 
     $scope.practitionerService = practitionerService;
 
-    // var groupNames = ['GROUP_reopen_cases', 'GROUP_edit_lists', 'GROUP_assign_roles'];
-
     $scope.isEditing = false;
     $scope.allUsers = [];
 
     $scope.query = {
         order: 'firstName'
-    }
+    };
 
     loadingService.setLoading(true);
 
@@ -34,11 +34,11 @@ function PractitionerController($scope, $state, $stateParams, $timeout, practiti
         practitionerService.updateUsers(newVal);
     }, true);
 
+    init();
+
     function init() {
         userService.getAllUsers().then(function (response) {
-
             var users = response.people;
-
             practitionerService.getPermissionGroups().then(function(permissionGroups) {
                 permissionGroups.forEach(function (group) {
                     groupService.getUserGroups(group).then(function (userGroup) {
@@ -47,7 +47,7 @@ function PractitionerController($scope, $state, $stateParams, $timeout, practiti
                                 if (user.userName == userInGroup.shortName) {
                                     user[group] = true;
                                 }
-                            })
+                            });
                         });
                     },function(err) { 
                         console.log(err);
@@ -59,6 +59,5 @@ function PractitionerController($scope, $state, $stateParams, $timeout, practiti
         });
     }
 
-    init();
 
 }

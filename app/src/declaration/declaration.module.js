@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('openDeskApp.declaration', ['ngMaterial'])
     .config(config);
 
@@ -8,13 +10,14 @@ function config($stateProvider, USER_ROLES) {
             url: '/erklaeringer',
             views: {
                 'content@': {
-                    templateUrl: 'app/src/declaration/view/search.html',
+                    templateUrl: 'app/src/declaration/search/search.view.html',
                     controller: 'DeclarationSearchController',
                     controllerAs: 'vm'
                 },
                 'toolbar-tools-right@site': {
                     templateUrl: 'app/src/declaration/view/create-toolbar.html',
                     controller: 'DeclarationCreateToolbarController',
+                    controllerAs: 'vm'
                 },
             }
         })
@@ -22,7 +25,7 @@ function config($stateProvider, USER_ROLES) {
             url: '/advanceret-soegning',
             views: {
                 'content@': {
-                    templateUrl: 'app/src/declaration/view/search-advanced.html',
+                    templateUrl: 'app/src/declaration/advancedSearch/advancedSearch.view.html',
                     controller: 'DeclarationSearchController',
                     controllerAs: 'vm'
                 },
@@ -35,8 +38,8 @@ function config($stateProvider, USER_ROLES) {
             url: '/venteliste',
             views: {
                 'content@': {
-                    templateUrl: 'app/src/declaration/view/waitinglist.html',
-                    controller: 'DeclarationSearchController',
+                    templateUrl: 'app/src/declaration/waitinglist/waitinglist.view.html',
+                    controller: 'WaitinglistController',
                     controllerAs: 'vm'
                 },
                 'toolbar-tools-left@site': {
@@ -55,6 +58,7 @@ function config($stateProvider, USER_ROLES) {
                 'toolbar-tools-right@site': {
                     templateUrl: 'app/src/declaration/view/create-toolbar.html',
                     controller: 'DeclarationCreateToolbarController',
+                    controllerAs: 'vm'
                 },
                 'toolbar-tools-left@site': {
                     template: "<h2>Opret ny erklæring</h2>"
@@ -77,7 +81,7 @@ function config($stateProvider, USER_ROLES) {
             views: {
                 'declarations': {
                     templateUrl: 'app/src/declaration/view/documents.html',
-                    controller: 'DocumentController',
+                    controller: 'DeclarationDocumentController',
                     controllerAs: 'vm'
                 },
                 'toolbar-tools-right@site': {
@@ -96,7 +100,7 @@ function config($stateProvider, USER_ROLES) {
             views: {
                 'declarations@declaration.show': {
                     templateUrl: 'app/src/declaration/view/document-view.html',
-                    controller: 'DocumentController',
+                    controller: 'DeclarationDocumentController',
                 },
                 'toolbar-tools-right@site': {
                     template: '',
@@ -127,5 +131,21 @@ function config($stateProvider, USER_ROLES) {
         .state('declaration.show.patientdata.edit', {
             
         })
+        .state('declaration.documents', {
+            url: '/dokumenter',
+            params: {
+                path: "/Shared",
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'app/src/filebrowser/view/filebrowserCard.html',
+                    controller: 'SystemSettingsController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools-left@site': {
+                    template: '<h2>Dokumenter</h2>',
+                }
+            }
 
-};
+        });
+}

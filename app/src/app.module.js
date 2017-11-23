@@ -1,3 +1,5 @@
+'use strict';
+
 angular
     .module('openDeskApp', [
         'ngSanitize',
@@ -13,30 +15,19 @@ angular
         'isteven-multi-select',
         'openDeskApp.init',
         'openDeskApp.auth',
-        'openDeskApp.sites',
-        'openDeskApp.site',
+        'openDeskApp.backendConfig',
         'openDeskApp.translations.init',
         'openDeskApp.header',
-        'openDeskApp.dashboard',
         'openDeskApp.lool',
         'openDeskApp.documents',
-        'openDeskApp.administration',
-        'openDeskApp.users',
         'openDeskApp.systemsettings',
-        'openDeskApp.search',
-        //'openDeskApp.calendar',
-        //'openDeskApp.nogletal',
-
-        'openDeskApp.common.directives',
-        'openDeskApp.common.directives.filter',
         'm43nu.auto-height',
         'dcbImgFallback',
         'openDeskApp.notifications',
-        //'openDeskApp.discussion',
-        // 'openDeskApp.chat',
-        'openDeskApp.user',
-        'openDeskApp.menu',
+        'openDeskApp.users',
         'openDeskApp.declaration',
+        'openDeskApp.filebrowser',
+        'openDeskApp.site',
         'md.data.table',
 
         /*DO NOT REMOVE MODULES PLACEHOLDER!!!*/ //openDesk-modules
@@ -113,7 +104,7 @@ function config(USER_ROLES, $stateProvider, $mdDateLocaleProvider, $mdThemingPro
         abstract: true,
         views: {
             'header@': {
-                templateUrl: 'app/src/header/view/header.html'
+                templateUrl: 'app/src/header/header.view.html'
             },
             'footer@': {
                 template: '<img src="app/assets/images/rm-weblogo.jpg" class="rm-logo">'

@@ -1,9 +1,9 @@
 <div layout="row" layout-wrap ng-repeat="content in contents" ng-if="!tableView">
     <md-card ng-repeat="c in content" flex-gt-sm="15" flex='45'>
         <md-checkbox class="document-checkbox" aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox>
-        <span ng-click="!isEditing ? viewFile(c) : null">
+        <span ng-click="!isEditing ? vm.viewFile(c) : null">
             <div class="document-thumbnail">
-                <img ng-src="{{thumbnailUrl(c.thumbnail)}}" class="md-card-image">
+                <img ng-src="{{vm.thumbnailUrl(c.thumbnail)}}" class="md-card-image">
             </div>
             <md-card-content class="document-filename">
                 <span class="md-subhead">{{c.name}}</span>

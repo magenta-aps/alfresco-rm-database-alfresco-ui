@@ -1,3 +1,5 @@
+'use strict';
+
 angular
     .module('openDeskApp.systemsettings')
     .controller('SystemSettingsController', SystemSettingsCtrl);
@@ -7,26 +9,14 @@ function SystemSettingsCtrl($scope, $state, $stateParams, systemSettingsPagesSer
 
     $scope.templateSites = [];
 
-    $scope.auth = {};
+    vm.viewState = viewState;
 
     //sets the margin to the width of sidenav
     var sidebar = $(".md-sidenav-left");
     $(".od-info-declarations").css("margin-left", sidebar.width()+"px");
-
-    $scope.viewDashboard = function() {
-        $state.go('administration.systemsettings.dashboard');
-    }
-
-    $scope.viewPractitioners = function() {
-        $state.go('administration.systemsettings.practitioners');
-    }
-
-    $scope.viewDiagnosis = function() {
-        $state.go('administration.systemsettings.diagnosis');
-    }
-
-    $scope.viewState = function(newState) {
-        $state.go('administration.systemsettings.' + newState);
+    
+    function viewState(newState) {
+        $state.go('administration.' + newState);
     }
 
     function getUserRoles () {
@@ -35,12 +25,10 @@ function SystemSettingsCtrl($scope, $state, $stateParams, systemSettingsPagesSer
     getUserRoles();
 
     function loadTemplates() {
-
         systemSettingsService.getTemplates().then (function(response) {
             $scope.templateSites = response;
         });
     }
-    //loadTemplates();
 
     vm.isAdmin = sessionService.isAdmin();
 

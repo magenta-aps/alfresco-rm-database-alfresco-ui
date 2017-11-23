@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('openDeskApp.systemsettings').provider('systemSettingsPagesService', SystemSettingsPagesServiceProvider);
 
 function SystemSettingsPagesServiceProvider() {
@@ -18,7 +20,7 @@ function SystemSettingsPagesServiceProvider() {
             isAdminOnly: isAdminOnly,
             icon: icon || 'content_copy'
         });
-        return this;
+        //return this;
     }
 
     function SystemSettingsPagesService() {

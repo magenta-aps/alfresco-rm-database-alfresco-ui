@@ -14,10 +14,8 @@ angular.module('openDeskApp.systemsettings').factory('systemSettingsService', fu
         getTemplates: function() {
             return $http.post("/alfresco/service/sites", {
                 PARAM_METHOD : "getTemplates"
-
             }).then(function(response) {
                 console.log(response);
-
                 return response.data;
             });
         },

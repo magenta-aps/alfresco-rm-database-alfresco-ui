@@ -1,3 +1,5 @@
+'use strict';
+
 angular
     .module('openDeskApp.declaration')
     .controller('ListToolbarController', ListToolbarController);
@@ -15,16 +17,22 @@ function ListToolbarController($scope, $mdDialog, $transitions, propertyService)
         $scope.count = newVal.length;
     }, true);
 
-    $scope.toggleEdit = function () {
+    $scope.toggleEdit = toggleEdit;
+    
+    function toggleEdit() {
         $scope.isEditing = !$scope.isEditing;
         propertyService.setEdit($scope.isEditing);
     }
 
-    $scope.saveChanges = function() {
+    $scope.saveChanges = saveChanges;
+    
+    function saveChanges() {
         propertyService.saveChanges();
     }
 
-    $scope.addNewDialog = function (event) {
+    $scope.addNewDialog = addNewDialog;
+    
+    function addNewDialog(event) {
         $mdDialog.show({
             controller: 'ListActionController',
             controllerAs: 'vm',
@@ -36,9 +44,11 @@ function ListToolbarController($scope, $mdDialog, $transitions, propertyService)
             preserveScope: true, // do not forget this if use parent scope
             clickOutsideToClose: true
         });
-    };
+    }
 
-    $scope.deleteDialog = function (event) {
+    $scope.deleteDialog = deleteDialog;
+    
+    function deleteDialog(event) {
         $mdDialog.show({
             controller: 'ListActionController',
             controllerAs: 'vm',
@@ -50,10 +60,10 @@ function ListToolbarController($scope, $mdDialog, $transitions, propertyService)
             preserveScope: true, // do not forget this if use parent scope
             clickOutsideToClose: true
         });
-    };
+    }
 
     $transitions.onStart({
-        from: 'administration.systemsettings.*'
+        from: 'administration.*'
     }, function (trans) {
 
         if ($scope.isEditing) {

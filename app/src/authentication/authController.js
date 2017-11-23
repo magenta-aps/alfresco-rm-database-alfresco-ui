@@ -1,3 +1,5 @@
+'use strict';
+
 angular
     .module('openDeskApp')
     .controller('AuthController', AuthController);
@@ -95,7 +97,7 @@ function AuthController(APP_CONFIG, $scope, $state, $stateParams, authService, u
                 }
             );
         };
-    };
+    }
 
     function showForgotDialog(ev) {
         $mdDialog.show({

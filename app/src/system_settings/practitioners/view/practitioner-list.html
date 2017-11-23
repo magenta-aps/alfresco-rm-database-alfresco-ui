@@ -8,6 +8,7 @@
                         <th md-column md-numeric md-order-by="GROUP_reopen_cases">Genåbne sager</th>
                         <th md-column md-numeric md-order-by="GROUP_site_retspsyk_SiteListManager">Redigere lister</th>
                         <th md-column md-numeric md-order-by="GROUP_site_retspsyk_SiteRoleManager">Tildele roller</th>
+                        <th md-column md-numeric md-order-by="GROUP_site_retspsyk_TemplateFolderValueManager">Oprette dokumentskabeloner</th>
                     </tr>
                 </thead>
                 <tbody md-body ng-repeat="user in allUsers | orderBy: query.order" ng-if="user.userName!='admin'">
@@ -16,6 +17,7 @@
                         <td md-cell><md-checkbox aria-label="genåbne sager" ng-model="user.GROUP_site_retspsyk_SiteEntryLockManager" ng-disabled="!isEditing || (user.userName == 'admin')"></md-checkbox></td>
                         <td md-cell><md-checkbox aria-label="redigere lister" ng-model="user.GROUP_site_retspsyk_SitePropertyValueManager" ng-disabled="!isEditing || (user.userName == 'admin')"></md-checkbox></td>
                         <td md-cell><md-checkbox aria-label="tildele roller" ng-model="user.GROUP_site_retspsyk_SiteRoleManager" ng-disabled="!isEditing || (user.userName == 'admin')"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="Oprette dokumentskabeloner" ng-model="user.GROUP_site_retspsyk_TemplateFolderValueManager" ng-disabled="!isEditing || (user.userName == 'admin')"></md-checkbox></td>
                     </tr>
                 </tbody>
             </table>

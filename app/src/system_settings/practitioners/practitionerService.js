@@ -1,39 +1,50 @@
+'use strict';
+
 angular.module('openDeskApp.declaration').factory('practitionerService', function (groupService) {
-    var isEditing = false;
+    var isCurrentlyEditing = false;
     var users = {};
     var usersBeforeEdit = {};
     var permissionGroups = [];
 
-    return {
-        setEdit: function(state) {
-            isEditing = state;
-        },
+    var service = {
+        setEdit: setEdit,
+        isEditing: isEditing,
+        updateUsers: updateUsers,
+        setUsersBeforeEdit: setUsersBeforeEdit,
+        getOriginalUsers: getOriginalUsers,
+        getUpdatedUsers: getUpdatedUsers,
+        getPermissionGroups: getPermissionGroups,
+    };
 
-        isEditing: function() {
-            return isEditing;
-        },
-
-        updateUsers: function(update) {
-            users = update;
-        },
-
-        setUsersBeforeEdit: function(save) {
-            usersBeforeEdit = angular.copy(save);
-        },
-
-        getOriginalUsers: function() {
-            return usersBeforeEdit;
-        },
-
-        getUpdatedUsers: function() {
-            return users;
-        },
-
-        getPermissionGroups: function() {
-            return groupService.getGroupNamesForSite('retspsyk').then(function (response) {
-                return response.permissionGroups;
-            })
-        }
+    return service;
+    
+    function setEdit(state) {
+        isCurrentlyEditing = state;
     }
 
+    function isEditing() {
+        return isCurrentlyEditing;
+    }
+
+    function updateUsers(update) {
+        users = update;
+    }
+    
+    function setUsersBeforeEdit(save) {
+        usersBeforeEdit = angular.copy(save);
+    }
+
+    function getOriginalUsers() {
+        return usersBeforeEdit;
+    }
+
+    function getUpdatedUsers() {
+        return users;
+    }
+
+    function getPermissionGroups() {
+        return groupService.getGroupNamesForSite('retspsyk').then(function (response) {
+            return response.permissionGroups;
+        });
+    }
 });

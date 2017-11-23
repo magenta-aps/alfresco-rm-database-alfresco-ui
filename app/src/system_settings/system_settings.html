@@ -1,58 +1,64 @@
 <div layout="row">
     <md-sidenav class="md-sidenav-left sidenav-fixed" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
-        <md-button class="md-text-icon-button" aria-label="Dashboard" ng-click="viewDashboard()">
+        <md-button class="md-text-icon-button" aria-label="Dashboard" ng-click="vm.viewState('dashboard')">
             <md-icon>dashboard</md-icon> Dashboard
         </md-button>
+
         <md-button ng-if="userRoles.indexOf('SiteRoleManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Behandlere" ng-click="viewPractitioners()">
+            aria-label="Behandlere" ng-click="vm.viewState('practitioners')">
             <md-icon>people</md-icon> Brugerrettigheder
         </md-button>
+
+        <md-button ng-if="userRoles.indexOf('TemplateFolderValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
+            aria-label="Dokumentskabeloner" ng-click="vm.viewState('document_templates')">
+            <md-icon>content_copy</md-icon> Dokumentskabeloner
+        </md-button>
         <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Læger" ng-click="viewState('doctors')">
+            aria-label="Læger" ng-click="vm.viewState('doctors')">
             <md-icon>healing</md-icon> Læger
         </md-button>
         <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Psykologer" ng-click="viewState('psychologists')">
+            aria-label="Psykologer" ng-click="vm.viewState('psychologists')">
             <md-icon>healing</md-icon> Psykologer
         </md-button>
         <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Socialrådgivere" ng-click="viewState('socialworkers')">
+            aria-label="Socialrådgivere" ng-click="vm.viewState('socialworkers')">
             <md-icon>healing</md-icon> Socialrådgivere
         </md-button>
         <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Sekretærer" ng-click="viewState('secretaries')">
+            aria-label="Sekretærer" ng-click="vm.viewState('secretaries')">
             <md-icon>healing</md-icon> Sekretærer
         </md-button>
         <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Sigtelser" ng-click="viewState('referingAgencies')">
+            aria-label="Sigtelser" ng-click="vm.viewState('referingAgencies')">
             <md-icon>store</md-icon> Henvisende instanser
         </md-button>
         <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Sigtelser" ng-click="viewState('mainCharge')">
+            aria-label="Sigtelser" ng-click="vm.viewState('mainCharge')">
             <md-icon>pan_tool</md-icon> Sigtelser
         </md-button>
         <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Sanktioner" ng-click="viewState('sanctions')">
+            aria-label="Sanktioner" ng-click="vm.viewState('sanctions')">
             <md-icon>gavel</md-icon> Sanktioner
         </md-button>
         <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Placeringer" ng-click="viewState('placement')">
+            aria-label="Placeringer" ng-click="vm.viewState('placement')">
             <md-icon>play_for_work</md-icon> Placeringer
         </md-button>
         <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Diagnoser" ng-click="viewState('diagnosis')">
+            aria-label="Diagnoser" ng-click="vm.viewState('diagnosis')">
             <md-icon>assignment</md-icon> Diagnoser
         </md-button>
         <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Etniciteter" ng-click="viewState('ethnicities')">
+            aria-label="Etniciteter" ng-click="vm.viewState('ethnicities')">
             <md-icon>face</md-icon> Etniciteter
         </md-button>
         <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Statusser" ng-click="viewState('status')">
+            aria-label="Statusser" ng-click="vm.viewState('status')">
             <md-icon>flag</md-icon> Status
         </md-button>
         <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Afsluttet ud erklæring" ng-click="viewState('noDeclaration')">
+            aria-label="Afsluttet ud erklæring" ng-click="vm.viewState('noDeclaration')">
             <md-icon>check</md-icon> Afsluttet uden erklæring
         </md-button>
 
