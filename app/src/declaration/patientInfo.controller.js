@@ -21,6 +21,7 @@ function PatientInfoController($scope, $mdToast, entryService, filterService, lo
     $scope.propertyFilter = propertyFilter;
     $scope.addNewBidiagnosis = addNewBidiagnosis;
     vm.lookupCPR = lookupCPR;
+    vm.isNumber = isNumber;
 
     loadingService.setLoading(true);
 
@@ -90,6 +91,10 @@ function PatientInfoController($scope, $mdToast, entryService, filterService, lo
         wait.total = Math.ceil((declarationDate - creationDate) / 1000 / 60 / 60 / 24);
 
         return wait;
+    }
+
+    function isNumber(number) {
+        return isNaN(number) ? false : true;
     }
 
 }
