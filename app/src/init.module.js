@@ -21,7 +21,7 @@ angular
         phone: /^[+]?[0-9\- ]+$/
     })
     .constant('APP_CONFIG', {
-        appName: 'Retspsykiatriske erklæringer',
+        appName: 'Observand DAtabase',
         logoSrc: './app/assets/images/logo-light.svg',
         ssoLoginEnabled: "false",
         landingPage: "declaration"
