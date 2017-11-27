@@ -7,21 +7,22 @@ angular
 function DocumentActionController($scope, $state, $mdDialog, $mdToast, entryService, documentService) {
     var vm = this;
 
-    vm.uploadFiles = upload;
+    vm.uploadFiles = uploadFiles;
     vm.deleteFiles = deleteFiles;
     vm.cancelDialog = cancel;
     $scope.entryService = entryService;
     $scope.selectedFiles = documentService.getSelectedFiles();
     $scope.case = {};
+    vm.files = [];
 
     $scope.$watch('entryService.getCurrentCase()', function (newVal) {
         $scope.case = newVal;
     });
 
-    function upload(files) {
+    function uploadFiles() {
         var caseNodeRef = $scope.case['store-protocol'] + '://' + $scope.case['store-identifier'] + '/' + $scope.case['node-uuid'];
-        for (var i = 0; i < files.length; i++) {
-            documentService.uploadFiles(files[i], caseNodeRef).then(function () {
+        angular.forEach(vm.files, function(file) {
+            documentService.uploadFiles(file, caseNodeRef).then(function () {
                 entryService.getContents($scope.case['node-uuid']).then(function (response) {
                     documentService.setCaseFiles(response);
                     $mdToast.show(
@@ -32,7 +33,7 @@ function DocumentActionController($scope, $state, $mdDialog, $mdToast, entryServ
                     );
                 });
             });
-        }
+        });
         $scope.selectedFiles = [];
         documentService.resetSelectedFiles();
         $mdDialog.cancel();

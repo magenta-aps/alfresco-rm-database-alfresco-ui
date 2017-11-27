@@ -7,8 +7,11 @@ angular
 function BreadcrumbController($scope, breadcrumbService) {
 
     var vm = this;
-    
-    //vm.path = [];
 
+    $scope.$watch('bcPath', function(newVal) {
+        if($scope.bcPath.length >= 2) {
+            $scope.bcPath.splice(1, 1);
+        }
+    });
 
 }

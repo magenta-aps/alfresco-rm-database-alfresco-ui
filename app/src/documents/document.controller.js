@@ -51,7 +51,8 @@ function DocumentController($scope, $translate, documentService, $stateParams, $
     }
 
     function goBack() {
-        window.history.go(-2);
+        window.history.go(-1);
+
     }
 
     function setPDFViewerHeight() {

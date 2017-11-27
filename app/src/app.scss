@@ -14,7 +14,7 @@ $gray-60: #999;
 $gray-40: #666;
 $gray-20: #333;
 
-$rm-primary: rgb(153,0,51);
+$rm-primary: rgb(153, 0, 51);
 //$primary-color: rgb(63, 81, 181);
 $primary-color: $rm-primary;
 $primary-color-light: lighten($primary-color, 15%);
@@ -98,6 +98,11 @@ dl {
 .od-body {
   margin: $u * 8 0 auto;
   z-index: 1;
+}
+
+.md-icon--large {
+  font-size: $u * 6 !important;
+  height: $u * 6;
 }
 
 

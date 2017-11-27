@@ -11,6 +11,8 @@ function breadcrumb() {
         scope: {
             bcPath: '=paths'
         },
-        templateUrl: 'app/src/shared/directives/breadcrumb/breadcrumb.html'
+        templateUrl: 'app/src/shared/directives/breadcrumb/breadcrumb.html',
+        controller: 'BreadcrumbController',
+        controllerAs: 'vm'
     };
 }

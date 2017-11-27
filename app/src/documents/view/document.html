@@ -2,8 +2,10 @@
 	<div layout="row">
 		<md-card flex="75">
 			<md-card-content>
-				<breadcrumb paths="vm.paths"></breadcrumb>
-
+				<md-button ng-click="vm.goBack()">
+					<md-icon>arrow_back</md-icon>
+					Tilbage
+				</md-button>
 				<div>
 					<ng-include src="viewerTemplateUrl"></ng-include>
 				</div>
