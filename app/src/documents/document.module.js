@@ -135,6 +135,11 @@ function config($stateProvider, USER_ROLES) {
                 templateUrl: 'app/src/documents/view/document.html',
                 controller: 'DocumentController',
                 controllerAs: 'vm'
+            },
+            'toolbar-tools-left@site': {
+                templateUrl: 'app/src/documents/view/preview-toolbar.html',
+                controller: 'DocumentController',
+                controllerAs: 'vm'
             }
         },
         params: {
