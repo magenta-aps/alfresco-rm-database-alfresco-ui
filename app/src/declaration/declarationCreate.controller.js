@@ -40,22 +40,14 @@ function DeclarationCreateController($scope, $timeout, $mdToast, entryService, p
     
     function lookupCPR() {
         cprService.getCPRData($scope.case.cprNumber).then(function(response) {
-            var res = response.data[0];
-            var name = res.NAVN.split(',');
+            var name = response.NAVN.split(',');
 
             $scope.case.firstName = name[1];
             $scope.case.lastName = name[0];
-            $scope.case.address = res.GADE;
-            $scope.case.postbox = res.POSTNR;
-            $scope.case.city = res.BY;
+            $scope.case.address = response.GADE;
+            $scope.case.postbox = response.POSTNR;
+            $scope.case.city = response.BY;
             
-        }).error(function(err) {
-            $mdToast.show(
-                $mdToast.simple()
-                  .textContent('Ingen person med CPR nummeret ' + $scope.case.cprNumber)
-                  .position('top right')
-                  .hideDelay(3000)
-              );
         });
     }
 }

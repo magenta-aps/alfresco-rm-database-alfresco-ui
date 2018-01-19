@@ -1,0 +1,90 @@
+<definitions name='MidtCPRServiceBeanService' targetNamespace='http://midt.cpr.serviceclient.facade.as2007.wmdata.com/' xmlns='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:tns='http://midt.cpr.serviceclient.facade.as2007.wmdata.com/' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+ <types>
+  <xs:schema targetNamespace='http://midt.cpr.serviceclient.facade.as2007.wmdata.com/' version='1.0' xmlns:tns='http://midt.cpr.serviceclient.facade.as2007.wmdata.com/' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+   <xs:element name='hentAlleOplysninger' type='tns:hentAlleOplysninger'/>
+   <xs:element name='hentAlleOplysningerForListe' type='tns:hentAlleOplysningerForListe'/>
+   <xs:element name='hentAlleOplysningerForListeResponse' type='tns:hentAlleOplysningerForListeResponse'/>
+   <xs:element name='hentAlleOplysningerResponse' type='tns:hentAlleOplysningerResponse'/>
+   <xs:complexType name='hentAlleOplysninger'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='arg0' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='hentAlleOplysningerResponse'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='return' type='tns:field'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='field'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='description' type='xs:string'/>
+     <xs:element minOccurs='0' name='name' type='xs:string'/>
+     <xs:element minOccurs='0' name='value' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='hentAlleOplysningerForListe'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='cpr' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='hentAlleOplysningerForListeResponse'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='cpr-result' type='tns:fieldContainer'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='fieldContainer'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='field' nillable='true' type='tns:field'/>
+    </xs:sequence>
+   </xs:complexType>
+  </xs:schema>
+ </types>
+ <message name='MidtCPRServiceBean_hentAlleOplysninger'>
+  <part element='tns:hentAlleOplysninger' name='hentAlleOplysninger'></part>
+ </message>
+ <message name='MidtCPRServiceBean_hentAlleOplysningerResponse'>
+  <part element='tns:hentAlleOplysningerResponse' name='hentAlleOplysningerResponse'></part>
+ </message>
+ <message name='MidtCPRServiceBean_hentAlleOplysningerForListeResponse'>
+  <part element='tns:hentAlleOplysningerForListeResponse' name='hentAlleOplysningerForListeResponse'></part>
+ </message>
+ <message name='MidtCPRServiceBean_hentAlleOplysningerForListe'>
+  <part element='tns:hentAlleOplysningerForListe' name='hentAlleOplysningerForListe'></part>
+ </message>
+ <portType name='MidtCPRServiceBean'>
+  <operation name='hentAlleOplysninger' parameterOrder='hentAlleOplysninger'>
+   <input message='tns:MidtCPRServiceBean_hentAlleOplysninger'></input>
+   <output message='tns:MidtCPRServiceBean_hentAlleOplysningerResponse'></output>
+  </operation>
+  <operation name='hentAlleOplysningerForListe' parameterOrder='hentAlleOplysningerForListe'>
+   <input message='tns:MidtCPRServiceBean_hentAlleOplysningerForListe'></input>
+   <output message='tns:MidtCPRServiceBean_hentAlleOplysningerForListeResponse'></output>
+  </operation>
+ </portType>
+ <binding name='MidtCPRServiceBeanBinding' type='tns:MidtCPRServiceBean'>
+  <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http'/>
+  <operation name='hentAlleOplysninger'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='hentAlleOplysningerForListe'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+ </binding>
+ <service name='MidtCPRServiceBeanService'>
+  <port binding='tns:MidtCPRServiceBeanBinding' name='MidtCPRServiceBeanPort'>
+   <soap:address location='http://rmtest0015.onerm.dk/cpr-service-cpr-service-ejb/MidtCPRServiceBean'/>
+  </port>
+ </service>
+</definitions>

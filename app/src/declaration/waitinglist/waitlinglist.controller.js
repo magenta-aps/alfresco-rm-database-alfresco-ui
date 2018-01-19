@@ -10,8 +10,9 @@ function WaitinglistController($state, entryService) {
     vm.waitingListCases = [];
     vm.gotoCase = gotoCase;
     vm.query = {
-        order: 'caseNumber'
+        order: '-waitingTime'
     };
+
 
     getWaitinglist();
 
@@ -20,11 +21,13 @@ function WaitinglistController($state, entryService) {
     }
 
     function getWaitinglist() {
-        entryService.getAllEntries().then(function (entries) {
+        entryService.getWaitingList(0,25).then(function (entries) {
             console.log('waiting list');
 
-            angular.forEach(entries, function (declaration) {
-                if (!declaration.hasOwnProperty('closed')) {
+            angular.forEach(entries.entries, function (declaration) {
+
+                    console.log("declaration");
+                    console.log(declaration);
                     var date = new Date(declaration.creationDate);
 
                     var day = ('0' + date.getDate()).slice(-2);
@@ -34,9 +37,9 @@ function WaitinglistController($state, entryService) {
                     declaration.creationDateFormatted = day + '/' + month + '/' + year;
                     var days = (new Date() - date) / 1000 / 60 / 60 / 24;
 
-                    declaration.waitingTime = days < 0.5 ? 0 : Math.ceil(days);
+                    //declaration.waitingTime = days < 0.5 ? 0 : Math.ceil(days);
                     vm.waitingListCases.push(declaration);
-                }
+
             });
         }, function (err) {
             console.log(err);

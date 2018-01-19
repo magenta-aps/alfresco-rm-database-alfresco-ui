@@ -3,13 +3,13 @@
 angular.module('openDeskApp.declaration').factory('cprService', function ($http) {
 
     var service = {
-        getCPRData: getCPRData,
+        getCPRData: getCPRData
     };
 
     return service;
 
     function getCPRData(cprNo) {
-        return $http.get("/app/src/declaration/testdata.json").then(function (response) {
+        return $http.get("/alfresco/s/cpr?cpr=" + cprNo).then(function (response) {
             return response.data;
         });
     }

@@ -100,8 +100,8 @@ function DeclarationSearchController($scope, $state, $stateParams, $timeout, ent
         vm.advancedSearchResults = filterService.advancedEntrySearch($scope.allCases,filters);
     }
 
-    function getAllEntries() {
-        entryService.getAllEntries().then(function (response) {
+    function getAllEntries(input) {
+        entryService.getAllEntries(0,25,input).then(function (response) {
             console.log('get all entries');
             $scope.allCases = response;
         }, function(err) {

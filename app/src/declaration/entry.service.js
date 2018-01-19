@@ -20,6 +20,8 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
         getCaseTitle: getCaseTitle,
         getEntry: getEntry,
         getAllEntries: getAllEntries,
+        getWaitingList: getWaitingList,
+        getEntries: getEntries,
         updateEntry: updateEntry,
         createEntry: createEntry,
         unlockEntry: unlockEntry,
@@ -90,6 +92,24 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
 
     function getAllEntries() {
         return $http.get("/alfresco/s/database/retspsyk/entries", {}).then(function (response) {
+            return response.data;
+        });
+    }
+
+    function getAutoComleteEntries(skip, max, input) {
+        return $http.get("/alfresco/s/database/retspsyk/entries" + "?skip=" + skip + "&maxItems=" + max + "&input=" + input, {}).then(function (response) {
+            return response.data;
+        });
+    }
+
+    function getEntries(skip, max, query) {
+        return $http.get("/alfresco/s/database/retspsyk/page_entries", {}).then(function (response) {
+            return response.data;
+        });
+    }
+
+    function getWaitingList(skip, max) {
+        return $http.get("/alfresco/s/database/retspsyk/waitinglist" + "?skip=" + skip + "&maxItems=" + max,{}).then(function (response) {
             return response.data;
         });
     }
