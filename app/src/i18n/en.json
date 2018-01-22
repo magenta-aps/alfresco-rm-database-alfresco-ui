@@ -118,7 +118,7 @@
     "CLOSED_WITHOUT_DECLARATION": "Closed without declaration",
     "WAITINGLIST": "Waitinglist",
     "SEE_CURRENT_WAITINGLIST": "See the current waitinglist",
-    "SEARCH_NAME_CPR_DECLARATION": "Search for name, CPR or declaration number", 
+    "SEARCH_NAME_CPR": "Search for name or CPR number", 
     "ADVANCED_SEARCH": "Advanced search",
     "DECLARATION_NUMBER": "Declaration number",
     "DECLARATION": "Declaration"

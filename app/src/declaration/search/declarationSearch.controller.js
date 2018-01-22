@@ -9,27 +9,28 @@ function DeclarationSearchController($scope, $state, $stateParams, $timeout, ent
     var vm = this;
 
     vm.advancedSearchResults = [];
-    $scope.caseid = null;
+    // $scope.caseid = null;
     $scope.showFilters = false;
     $scope.showResults = false;
     $scope.allCases = [];
-    $scope.waitingListCases = [];
+    // $scope.waitingListCases = [];
     $scope.searchParams = {};
     $scope.selectedCase = null;
     $scope.propertyValues = propertyService.getAllPropertyValues();
 
-    $scope.query = {
-        order: 'caseNumber'
-    };
+    // $scope.query = {
+    //     order: 'caseNumber'
+    // };
 
-    $scope.filterCases = filterCases;
+    // $scope.filterCases = filterCases;
     $scope.propertyFilter = propertyFilter;
-    $scope.search = search;
+    // $scope.search = search;
     vm.gotoCase = gotoCase;
     vm.gotoWaitinglist = gotoWaitinglist;
     vm.toggleFilters = toggleFilters;
     vm.toggleResults = toggleResults;
     vm.advancedSearch = advancedSearch;
+    vm.getEntries = getEntries;
     
     loadingService.setLoading(true);
 
@@ -44,9 +45,9 @@ function DeclarationSearchController($scope, $state, $stateParams, $timeout, ent
     }, true);
 
     
-    function filterCases(query, filters) {
-        return filterService.entrySearch($scope.allCases, query, filters);
-    }
+    // function filterCases(query, filters) {
+    //     return filterService.entrySearch($scope.allCases, query, filters);
+    // }
 
     
     function propertyFilter(array, query) {
@@ -54,9 +55,9 @@ function DeclarationSearchController($scope, $state, $stateParams, $timeout, ent
     }
 
     
-    function search() {
-        $state.go('declaration.show', {caseid: $scope.caseid});
-    }
+    // function search() {
+    //     $state.go('declaration.show', {caseid: $scope.caseid});
+    // }
 
     
     function gotoCase(caseNumber) {
@@ -101,7 +102,8 @@ function DeclarationSearchController($scope, $state, $stateParams, $timeout, ent
     }
 
     function getAllEntries(input) {
-        entryService.getAllEntries(0,25,input).then(function (response) {
+        entryService.getAllEntries(0,25,input)
+        .then(function (response) {
             console.log('get all entries');
             $scope.allCases = response;
         }, function(err) {
@@ -109,5 +111,11 @@ function DeclarationSearchController($scope, $state, $stateParams, $timeout, ent
         });
     }
 
-    getAllEntries();
+    function getEntries(query) {
+        return entryService.getAutoComleteEntries(0,5,query)
+        .then(function(response) {
+            console.log(response)
+            return response.entries;
+        })
+    }
 }

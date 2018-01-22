@@ -8,36 +8,41 @@ function WaitinglistController($state, entryService) {
     var vm = this;
 
     vm.waitingListCases = [];
+    vm.totalCases = 0;
     vm.gotoCase = gotoCase;
     vm.query = {
-        order: '-waitingTime'
+        order: '-waitingTime',
+        limit: 5,
+        page: 1
     };
+    var next = 0;
+    vm.nextPage = nextPage;
 
 
-    getWaitinglist();
+    getWaitinglist(0,25);
 
     function gotoCase(caseNumber) {
         $state.go('declaration.show', {caseid: caseNumber});
     }
 
-    function getWaitinglist() {
-        entryService.getWaitingList(0,25).then(function (entries) {
-            console.log('waiting list');
+    function nextPage() {
+        getWaitinglist(next,25)
+    }
+
+    function getWaitinglist(skip,max) {
+        entryService.getWaitingList(skip,max).then(function (entries) {
+
+            vm.totalCases = entries.total;
+            next = entries.next;
 
             angular.forEach(entries.entries, function (declaration) {
-
-                    console.log("declaration");
-                    console.log(declaration);
                     var date = new Date(declaration.creationDate);
 
                     var day = ('0' + date.getDate()).slice(-2);
                     var month = ('0' + (date.getMonth() + 1)).slice(-2);
                     var year = date.getFullYear();
-
                     declaration.creationDateFormatted = day + '/' + month + '/' + year;
-                    var days = (new Date() - date) / 1000 / 60 / 60 / 24;
 
-                    //declaration.waitingTime = days < 0.5 ? 0 : Math.ceil(days);
                     vm.waitingListCases.push(declaration);
 
             });

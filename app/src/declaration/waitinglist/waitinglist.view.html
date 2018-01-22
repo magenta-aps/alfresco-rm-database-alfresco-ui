@@ -2,13 +2,15 @@
     <md-card-title>
             <span flex></span>
             <div layout="row" layout-align="center center">
-              <div>Antal: <span class="md-body-2">{{vm.waitingListCases.length}}</span></div>
+              <div>Antal: <span class="md-body-2">{{vm.totalCases}}</span></div>
             </div>
     </md-card-title>
     <md-card-content>
     <md-table-container>
             <table md-table>
-                <thead md-head md-order="vm.query.order">
+                <thead 
+                    md-head 
+                    md-order="vm.query.order">
                     <tr md-row>
                         <th md-column md-numeric md-order-by="caseNumber">{{'DECLARATION.DECLARATION_NUMBER' | translate}}</th>
                         <th md-column md-order-by="fullName">{{'COMMON.NAME' | translate}}</th>
@@ -28,5 +30,11 @@
                 </tbody>
             </table>
         </md-table-container>
+
+        <div layout="row" layout-align="center center">
+            <md-button flex ng-click="vm.nextPage()">
+                Vis flere
+            </md-button>
+        </div>
     </md-card-content>
 </md-card>  

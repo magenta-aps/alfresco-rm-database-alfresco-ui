@@ -120,7 +120,7 @@
     "CLOSED_WITHOUT_DECLARATION": "Afsluttet uden erklæring",
     "WAITINGLIST": "Venteliste",
     "SEE_CURRENT_WAITINGLIST": "Se den aktuelle venteliste",
-    "SEARCH_NAME_CPR_DECLARATION": "Søg efter CPR, navn eller erklæringsnummer", 
+    "SEARCH_NAME_CPR": "Søg efter navn eller CPR nummer", 
     "ADVANCED_SEARCH": "Avanceret søgning",
     "DECLARATION_NUMBER": "Erklæringsnummer",
     "DECLARATION": "Erklæring"
