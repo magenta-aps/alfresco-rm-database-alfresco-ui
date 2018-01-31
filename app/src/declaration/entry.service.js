@@ -19,10 +19,9 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
         getNewCaseInfo: getNewCaseInfo,
         getCaseTitle: getCaseTitle,
         getEntry: getEntry,
-        getAllEntries: getAllEntries,
         getAutoComleteEntries: getAutoComleteEntries,
         getWaitingList: getWaitingList,
-        getEntries: getEntries,
+        advancedSearch: advancedSearch,
         updateEntry: updateEntry,
         createEntry: createEntry,
         unlockEntry: unlockEntry,
@@ -92,13 +91,6 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
         });
     }
 
-    function getAllEntries() {
-        return $http.get("/alfresco/s/database/retspsyk/entries")
-        .then(function (response) {
-            return response.data;
-        });
-    }
-
     function getAutoComleteEntries(skip, max, input) {
         return $http.get("/alfresco/s/database/retspsyk/autocompleteentries" + "?skip=" + skip + "&maxItems=" + max + "&input=" + input)
         .then(function (response) {
@@ -106,15 +98,15 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
         });
     }
 
-    function getEntries(skip, max, query) {
-        return $http.get("/alfresco/s/database/retspsyk/page_entries")
-        .then(function (response) {
+    function advancedSearch(skip, max, query) {
+        return $http.post(`/alfresco/s/database/retspsyk/page_entries?skip=${skip}&maxItems=${max}`,query)
+        .then(response => {
             return response.data;
         });
     }
 
     function getWaitingList(skip, max) {
-        return $http.get("/alfresco/s/database/retspsyk/waitinglist" + "?skip=" + skip + "&maxItems=" + max)
+        return $http.get(`/alfresco/s/database/retspsyk/waitinglist?skip=${skip}&maxItems=${max}`)
         .then(function (response) {
             console.log(response.data);
             return response.data;

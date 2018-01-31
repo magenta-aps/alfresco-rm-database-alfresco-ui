@@ -26,7 +26,7 @@ function config($stateProvider, USER_ROLES) {
             views: {
                 'content@': {
                     templateUrl: 'app/src/declaration/advancedSearch/advancedSearch.view.html',
-                    controller: 'DeclarationSearchController',
+                    controller: 'AdvancedSearchController',
                     controllerAs: 'vm'
                 },
                 'toolbar-tools-left@site': {

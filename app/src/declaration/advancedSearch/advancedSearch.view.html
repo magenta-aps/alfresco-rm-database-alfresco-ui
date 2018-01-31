@@ -1,4 +1,4 @@
-<div layout="row" layout-align="center center" ng-show="!results">
+<div layout="row" layout-align="center center" ng-show="!showResults">
     <div layout="column" flex="50">
         <div layout="column">
             <div style="height:50px">
@@ -10,8 +10,15 @@
             <div layout="column" flex="45">
                 <div layout="column">
                 <div>
-                    <md-autocomplete md-selected-item="searchParams.mainCharge" md-search-text="mainChargeSearch" md-items="mainCarge in propertyFilter(propertyValues['mainCharge'],mainChargeSearch)"
-                        md-item-text="mainCarge" md-min-length="0" md-floating-label="Hovedsigtelse">
+                    <md-autocomplete 
+                        md-selected-item="searchParams.mainCharge" 
+                        md-search-text="mainChargeSearch" 
+                        md-items="mainCarge in propertyFilter(propertyValues['mainCharge'],mainChargeSearch)"
+                        md-item-text="mainCarge" 
+                        md-min-length="0" 
+                        md-floating-label="Hovedsigtelse"
+                        md-require-match="true"
+                        md-clear-button="true">
                         <md-item-template>
                             <span md-highlight-text="mainChargeSearch" md-highlight-flags="gi">{{mainCarge}}</span>
                         </md-item-template>
@@ -20,8 +27,15 @@
                 </div>
 
                 <div>
-                    <md-autocomplete md-selected-item="searchParams.sanctionProposal" md-search-text="sanctionProposalSearch" md-items="sanctionProposal in propertyFilter(propertyValues['sanctionProposal'],sanctionProposalSearch)"
-                        md-item-text="sanctionProposal" md-min-length="0" md-floating-label="Sanktionsforslag">
+                    <md-autocomplete 
+                    md-selected-item="searchParams.sanctionProposal" 
+                    md-search-text="sanctionProposalSearch" 
+                    md-items="sanctionProposal in propertyFilter(propertyValues['sanctionProposal'],sanctionProposalSearch)"
+                    md-item-text="sanctionProposal" 
+                    md-min-length="0" 
+                    md-floating-label="Sanktionsforslag"
+                    md-require-match="true"
+                    md-clear-button="true">
                         <md-item-template>
                             <span md-highlight-text="sanctionProposalSearch" md-highlight-flags="gi">{{sanctionProposal}}</span>
                         </md-item-template>
@@ -83,8 +97,15 @@
 
             <div layout="column" flex="45" flex-offset="10">
                 <div flex>
-                    <md-autocomplete md-selected-item="searchParams.placement" md-search-text="placementSearch" md-items="placement in propertyFilter(propertyValues['placement'],placementSearch)"
-                        md-item-text="placement" md-min-length="0" md-floating-label="Placering">
+                    <md-autocomplete 
+                        md-selected-item="searchParams.placement" 
+                        md-search-text="placementSearch" 
+                        md-items="placement in propertyFilter(propertyValues['placement'],placementSearch)"
+                        md-item-text="placement" 
+                        md-min-length="0" 
+                        md-floating-label="Placering"
+                        md-require-match="true"
+                        md-clear-button="true">
                         <md-item-template>
                             <span md-highlight-text="placementSearch" md-highlight-flags="gi">{{placement}}</span>
                         </md-item-template>
@@ -93,8 +114,15 @@
                 </div>
 
                 <div flex>
-                    <md-autocomplete md-selected-item="searchParams.diagnosis" md-search-text="diagnosisSearch" md-items="diagnosis in propertyFilter(propertyValues['diagnosis'],diagnosisSearch)"
-                        md-item-text="diagnosis" md-min-length="0" md-floating-label="Hoveddiagnose">
+                    <md-autocomplete 
+                        md-selected-item="searchParams.mainDiagnosis" 
+                        md-search-text="diagnosisSearch" 
+                        md-items="diagnosis in propertyFilter(propertyValues['diagnosis'],diagnosisSearch)"
+                        md-item-text="diagnosis" 
+                        md-min-length="0" 
+                        md-floating-label="Hoveddiagnose"
+                        md-require-match="true"
+                        md-clear-button="true">
                         <md-item-template>
                             <span md-highlight-text="diagnosisSearch" md-highlight-flags="gi">{{diagnosis}}</span>
                         </md-item-template>
@@ -103,8 +131,15 @@
                     <md-tooltip md-direction="top" md-delay="500" ng-if="searchParams.placement != null">{{searchParams.placement}}</md-tooltip>
                 </div>
 
-                <md-autocomplete md-selected-item="searchParams.status" md-search-text="statusSearch" md-items="status in propertyFilter(propertyValues['status'],statusSearch)"
-                    md-item-text="status" md-min-length="0" md-floating-label="Status">
+                <md-autocomplete 
+                    md-selected-item="searchParams.status" 
+                    md-search-text="statusSearch" 
+                    md-items="status in propertyFilter(propertyValues['status'],statusSearch)"
+                    md-item-text="status" 
+                    md-min-length="0" 
+                    md-floating-label="Status"
+                    md-require-match="true"
+                    md-clear-button="true">
                     <md-item-template>
                         <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
                     </md-item-template>
@@ -122,7 +157,9 @@
                         md-items="psychologist in propertyFilter(propertyValues['psychologist'],psychSearch)" 
                         md-item-text="psychologist" 
                         md-min-length="0" 
-                        md-floating-label="Psykolog">
+                        md-floating-label="Psykolog"
+                        md-require-match="true"
+                        md-clear-button="true">
                         <md-item-template>
                             <span md-highlight-text="psychSearch" md-highlight-flags="gi">{{psychologist}}</span>
                         </md-item-template>
@@ -142,7 +179,9 @@
                         md-items="doctor in propertyFilter(propertyValues['doctor'],doctorSearch)" 
                         md-item-text="doctor" 
                         md-min-length="0" 
-                        md-floating-label="Læge">
+                        md-floating-label="Læge"
+                        md-require-match="true"
+                        md-clear-button="true">
                         <md-item-template>
                             <span md-highlight-text="doctorSearch" md-highlight-flags="gi">{{doctor}}</span>
                         </md-item-template>
@@ -161,7 +200,9 @@
                     md-items="socialworker in propertyFilter(propertyValues['socialworker'],socialworkerSearch)" 
                     md-item-text="socialworker" 
                     md-min-length="0" 
-                    md-floating-label="Socialrådgiver">
+                    md-floating-label="Socialrådgiver"
+                    md-require-match="true"
+                    md-clear-button="true">
                     <md-item-template>
                         <span md-highlight-text="socialworkerSearch" md-highlight-flags="gi">{{socialworker}}</span>
                     </md-item-template>
@@ -180,7 +221,9 @@
                     md-items="reason in propertyFilter(propertyValues['noDeclarationReason'],reasonSearch)" 
                     md-item-text="reason" 
                     md-min-length="0" 
-                    md-floating-label="Årsag">
+                    md-floating-label="Årsag"
+                    md-require-match="true"
+                    md-clear-button="true">
                     <md-item-template>
                         <span md-highlight-text="reasonSearch" md-highlight-flags="gi">{{reason}}</span>
                     </md-item-template>
@@ -190,19 +233,19 @@
             </div>
         </div>
 
-        <md-button ng-click="vm.advancedSearch(searchParams); vm.toggleResults()">
+        <md-button ng-click="vm.advancedSearch(0, 25, searchParams); vm.toggleResults()">
             Søg
         </md-button>
     </div>
 </div>
 
 
-<md-card ng-show="results">
+<md-card ng-show="showResults">
     <md-card-title>
-        <md-button ng-click="vm.toggleResults()">Ret søgning</md-button>
+        <md-button ng-click="vm.toggleResults(); vm.clearResults()">Ret søgning</md-button>
         <span flex></span>
         <div layout="row" layout-align="center center">
-            <div>Antal: <span class="md-body-2">{{vm.advancedSearchResults.length}}</span></div>
+            <div>Antal: <span class="md-body-2">{{vm.totalResults}}</span></div>
         </div>
     </md-card-title>
     <md-card-content>
@@ -216,20 +259,12 @@
                         <th md-column md-order-by="doctor">Læge</th>
                         <th md-column md-order-by="closed">Erklæring afgivet</th>
                         <th md-column md-order-by="psychologist">Psykologisk undersøgelse</th>
-                        <th md-column md-order-by="socialworker" ng-if="searchParams.socialEval">Socialrådgiver</th>
-                        <th md-column md-order-by="mainCharge" ng-if="searchParams.mainCharge">Hovedsigtelse</th>
-                        <th md-column md-order-by="placement" ng-if="searchParams.placement">Placering</th>
-                        <th md-column md-order-by="sanctionProposal" ng-if="searchParams.sanctionProposal">Sanktionsforslag</th>
-                        <th md-column md-order-by="diagnosis" ng-if="searchParams.diagnosis">Hoveddiagnose</th>
-                        <th md-column md-order-by="passiveWaitTime" ng-if="searchParams.waitingTime.time == 'passive'">Passiv ventetid</th>
-                        <th md-column md-order-by="activeWaitTime" ng-if="searchParams.waitingTime.time == 'active'">Aktiv ventetid</th>
-                        <th md-column md-order-by="totalWaitTime" ng-if="searchParams.waitingTime.time == 'total'">Samlet ventetid</th>
                     </tr>
                 </thead>
-                <tbody md-body ng-if="vm.advancedSearchResults.length == 0">
+                <tbody md-body ng-if="vm.searchResults.length === 0">
                     <td md-cell colspan="13" style="text-align:center">Ingen erklæringer passer på din søgning</td>
                 </tbody>
-                <tbody md-body ng-repeat="case in vm.advancedSearchResults | orderBy : query.order ">
+                <tbody md-body ng-repeat="case in vm.searchResults | orderBy : query.order ">
                     <tr md-row ng-click="vm.gotoCase(case.caseNumber)">
                         <td md-cell>{{case.caseNumber}}</td>
                         <td md-cell>{{case.fullName}}</td>
@@ -244,16 +279,14 @@
                             </span>
                         </td>
                         <td md-cell>{{case.psychologist}}</td>
-                        <td md-cell ng-if="searchParams.socialEval">{{case.socialworker}}</td>
-                        <td md-cell ng-if="searchParams.mainCharge">{{case.mainCharge}}</td>
-                        <td md-cell ng-if="searchParams.placement">{{case.placement}}</td>
-                        <td md-cell ng-if="searchParams.diagnosis">{{case.diagnosis}}</td>
-                        <td md-cell ng-if="searchParams.waitingTime.time == 'passive'">{{case.passiveWaitTime}}</td>
-                        <td md-cell ng-if="searchParams.waitingTime.time == 'active'">{{case.activeWaitTime}}</td>
-                        <td md-cell ng-if="searchParams.waitingTime.time == 'total'">{{case.totalWaitTime}}</td>
                     </tr>
                 </tbody>
             </table>
         </md-table-container>
+        <div layout="row" layout-align="center center" ng-if="vm.next < vm.totalResults">
+                <md-button flex ng-click="vm.nextPage()">
+                    Vis flere
+                </md-button>
+            </div>
     </md-card-content>
 </md-card>
