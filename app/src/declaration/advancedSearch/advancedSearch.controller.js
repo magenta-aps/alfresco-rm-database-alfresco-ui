@@ -13,6 +13,7 @@ function AdvancedSearchController($scope, $state, $timeout, entryService, filter
     vm.searchResults = [];
     vm.totalResults = 0;
     vm.next = 0;
+    vm.isLoading = false;
     $scope.showResults = false;
     vm.gotoCase = gotoCase;
     $scope.propertyValues = propertyService.getAllPropertyValues();
@@ -46,10 +47,12 @@ function AdvancedSearchController($scope, $state, $timeout, entryService, filter
     }
     
     function advancedSearch(skip, max, query) {
-      clean(query)
+      clean(query);
+      vm.isLoading = true;
       entryService.advancedSearch(skip, max, query)
       .then(response => {
         // vm.searchResults = response;
+        vm.isLoading = false;
         vm.totalResults = Number(response.total);
         vm.next = Number(response.next);
 
