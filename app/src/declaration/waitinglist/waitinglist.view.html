@@ -1,12 +1,13 @@
   <md-card>
     <md-card-title>
             <span flex></span>
-            <div layout="row" layout-align="center center">
+            <div layout="row" layout-align="center center" ng-show="!vm.isloading">
               <div>Antal: <span class="md-body-2">{{vm.totalCases}}</span></div>
             </div>
     </md-card-title>
     <md-card-content>
-    <md-table-container>
+    <md-progress-linear md-mode="indeterminate" ng-show="vm.isLoading"></md-progress-linear>
+    <md-table-container ng-show="!vm.isLoading">
             <table md-table>
                 <thead 
                     md-head 
@@ -30,11 +31,5 @@
                 </tbody>
             </table>
         </md-table-container>
-
-        <div layout="row" layout-align="center center">
-            <md-button flex ng-click="vm.nextPage()">
-                Vis flere
-            </md-button>
-        </div>
     </md-card-content>
 </md-card>  
