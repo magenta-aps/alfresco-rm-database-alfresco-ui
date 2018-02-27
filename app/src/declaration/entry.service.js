@@ -108,7 +108,6 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
     function getWaitingList(skip, max) {
         return $http.get(`/alfresco/s/database/retspsyk/waitinglist?skip=${skip}&maxItems=${max}`)
         .then(function (response) {
-            console.log(response.data);
             return response.data;
         });
     }

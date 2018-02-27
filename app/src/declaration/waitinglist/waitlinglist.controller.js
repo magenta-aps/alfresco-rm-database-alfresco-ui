@@ -9,6 +9,7 @@ function WaitinglistController($state, entryService) {
 
     vm.waitingListCases = [];
     vm.totalCases = 0;
+    vm.isLoading = false;
     vm.gotoCase = gotoCase;
     vm.query = {
         order: '-waitingTime',
@@ -19,19 +20,21 @@ function WaitinglistController($state, entryService) {
     vm.nextPage = nextPage;
 
 
-    getWaitinglist(0,25);
+    getWaitinglist(0,1000);
 
     function gotoCase(caseNumber) {
         $state.go('declaration.show', {caseid: caseNumber});
     }
 
     function nextPage() {
-        getWaitinglist(next,25)
+        getWaitinglist(next,1000)
     }
 
     function getWaitinglist(skip,max) {
-        entryService.getWaitingList(skip,max).then(function (entries) {
-
+        vm.isLoading = true;
+        entryService.getWaitingList(skip,max)
+        .then(entries => {
+            vm.isLoading = false;
             vm.totalCases = entries.total;
             next = entries.next;
 
