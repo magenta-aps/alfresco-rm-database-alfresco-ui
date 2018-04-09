@@ -23,6 +23,6 @@ angular
     .constant('APP_CONFIG', {
         appName: 'Observand DAtabase',
         logoSrc: './app/assets/images/logo-light.svg',
-        ssoLoginEnabled: "false",
+        ssoLoginEnabled: false,
         landingPage: "declaration"
     });
