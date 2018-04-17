@@ -7,6 +7,7 @@ angular
 function DocumentToolbarController($scope, $mdDialog, $interval, $mdToast, entryService, documentToolbarService, documentService,
     preferenceService, authService, documentPreviewService, alfrescoDownloadService) {
 
+    var vm = this
     $scope.toggleIcon = 'list';
 
     $scope.case = [];
@@ -17,6 +18,16 @@ function DocumentToolbarController($scope, $mdDialog, $interval, $mdToast, entry
     $scope.downloadDocuments = downloadDocuments;
 
     var currentUser = authService.getUserInfo().user;
+    vm.canEdit = false;
+
+    activated()
+
+    function activated () {
+        var roles = authService.getUserRoles();
+        if (!(roles.indexOf("SiteConsumer") > -1)) {
+            vm.canEdit = true
+        }
+    }
 
     preferenceService.getPreferences(currentUser.userName, 'dk.magenta.sites.retspsyk.tableView').then(function (response) {
         $scope.toggleIcon = response['dk.magenta.sites.retspsyk.tableView'] == 'true' ? 'view_module' : 'list';

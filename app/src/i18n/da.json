@@ -108,8 +108,8 @@
     "NEW_FOLDER": "Ny mappe"
   },
   "DECLARATION": {
-    "NEW_DECLARATION": "Ny erklæring",
-    "CREATE_NEW_DECLARATION": "Opret ny erklæring",
+    "NEW_DECLARATION": "Ny sag",
+    "CREATE_NEW_DECLARATION": "Opret ny sag",
     "PATIENT_DATA": "Patient Data",
     "SAVE_AND_LOCK": "Gem og afslut",
     "LOCK": "Afslut",
@@ -122,7 +122,7 @@
     "SEE_CURRENT_WAITINGLIST": "Se den aktuelle venteliste",
     "SEARCH_NAME_CPR": "Søg efter navn eller CPR nummer", 
     "ADVANCED_SEARCH": "Avanceret søgning",
-    "DECLARATION_NUMBER": "Erklæringsnummer",
+    "DECLARATION_NUMBER": "Sagsnummer",
     "DECLARATION": "Erklæring"
   },
   "SIMPLE_CASE": {

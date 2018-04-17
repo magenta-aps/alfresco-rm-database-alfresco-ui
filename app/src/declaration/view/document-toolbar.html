@@ -1,19 +1,21 @@
-<span ng-if="!case.hasOwnProperty('closed') && !case.hasOwnProperty('closedWithoutDeclaration')">
-<span class="toolbar-contextual" ng-if="'declaration.show.documents.edit' | isState">
+<span ng-if="vm.canEdit">
+    <span ng-if="!case.hasOwnProperty('closed') && !case.hasOwnProperty('closedWithoutDeclaration')">
+        <span class="toolbar-contextual" ng-if="'declaration.show.documents.edit' | isState">
 
-     <md-button class="md-icon-button" aria-label="download" ng-click="downloadDocuments($event)">
-        <md-icon>file_download</md-icon>
-        <md-tooltip md-direction="top" md-delay="500">Download</md-tooltip>
-    </md-button> 
-    <md-button class="md-icon-button" aria-label="edit" ng-click="deleteDocumentsDialog($event)">
-        <md-icon>delete</md-icon>
-        <md-tooltip md-direction="top" md-delay="500">Slet</md-tooltip>
-    </md-button>
-</span>
+            <md-button class="md-icon-button" aria-label="download" ng-click="downloadDocuments($event)">
+                <md-icon>file_download</md-icon>
+                <md-tooltip md-direction="top" md-delay="500">Download</md-tooltip>
+            </md-button> 
+            <md-button class="md-icon-button" aria-label="edit" ng-click="deleteDocumentsDialog($event)">
+                <md-icon>delete</md-icon>
+                <md-tooltip md-direction="top" md-delay="500">Slet</md-tooltip>
+            </md-button>
+        </span>
 
-<md-button class="md-text-icon-button" aria-label="edit" ng-click="uploadDocumentsDialog($event)">
-    <md-icon>file_upload</md-icon> Nyt dokument
-</md-button>
+        <md-button class="md-text-icon-button" aria-label="edit" ng-click="uploadDocumentsDialog($event)">
+            <md-icon>file_upload</md-icon> Nyt dokument
+        </md-button>
+    </span>
 </span>
 
 <span ng-if="case.hasOwnProperty('closed') || case.hasOwnProperty('closedWithoutDeclaration')">

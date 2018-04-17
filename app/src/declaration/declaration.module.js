@@ -61,7 +61,7 @@ function config($stateProvider, USER_ROLES) {
                     controllerAs: 'vm'
                 },
                 'toolbar-tools-left@site': {
-                    template: "<h2>Opret ny erklæring</h2>"
+                    template: "<h2>Opret ny sag</h2>"
                 }
             }
         })

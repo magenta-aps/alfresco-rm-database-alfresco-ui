@@ -1,10 +1,12 @@
 
-<md-button ng-click="vm.createNewDeclaration()" ng-if="'declaration' | isState">
-    <md-icon>add</md-icon>
-    <span>{{'DECLARATION.NEW_DECLARATION' | translate}}</span>
-</md-button>
+<span ng-if="vm.canCreate">
+    <md-button ng-click="vm.createNewDeclaration()" ng-if="'declaration' | isState">
+        <md-icon>add</md-icon>
+        <span>{{'DECLARATION.NEW_DECLARATION' | translate}}</span>
+    </md-button>
 
-<md-button ng-click="vm.submit()" ng-if="'declaration.create' | isState" ng-disabled="$root.declarationForm.$invalid">
-    <md-icon>save</md-icon>
-    <span>{{'COMMON.SAVE' | translate}}</span>
-</md-button>
+    <md-button ng-click="vm.submit()" ng-if="'declaration.create' | isState" ng-disabled="$root.declarationForm.$invalid">
+        <md-icon>save</md-icon>
+        <span>{{'COMMON.SAVE' | translate}}</span>
+    </md-button>
+</span>

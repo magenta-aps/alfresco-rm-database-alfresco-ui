@@ -1,34 +1,36 @@
-<span ng-hide="canCurrentlyEdit">
-<md-icon>warning</md-icon> 
-<md-tooltip>Sagen redigeres i øjeblikket af {{editor.displayName}}</md-tooltip>
-</span>
+<span ng-if="vm.canEdit">
+    <span ng-hide="canCurrentlyEdit">
+        <md-icon>warning</md-icon> 
+        <md-tooltip>Sagen redigeres i øjeblikket af {{editor.displayName}}</md-tooltip>
+    </span>
 
-<span ng-if="(currentCase.hasOwnProperty('closed') && currentCase.closed) || (currentCase.hasOwnProperty('closedWithoutDeclaration') && currentCase.closedWithoutDeclaration)">
-    <md-icon>done</md-icon> {{'DECLARATION.DECLARATION_CLOSED' | translate}}
+    <span ng-if="(currentCase.hasOwnProperty('closed') && currentCase.closed) || (currentCase.hasOwnProperty('closedWithoutDeclaration') && currentCase.closedWithoutDeclaration)">
+        <md-icon>done</md-icon> {{'DECLARATION.DECLARATION_CLOSED' | translate}}
 
-    <md-button ng-if="canReopenEntries" class="md-text-icon-button" aria-label="genåben erklæringen" ng-click="unlockEntry()">
-        <md-icon>lock_open</md-icon> {{'DECLARATION.REOPEN' | translate}}
-    </md-button>
-</span>
+        <md-button ng-if="canReopenEntries" class="md-text-icon-button" aria-label="genåben erklæringen" ng-click="unlockEntry()">
+            <md-icon>lock_open</md-icon> {{'DECLARATION.REOPEN' | translate}}
+        </md-button>
+    </span>
 
-<span ng-if="(!currentCase.hasOwnProperty('closed') || !currentCase.closed) && (!currentCase.hasOwnProperty('closedWithoutDeclaration') || !currentCase.closedWithoutDeclaration )">
+    <span ng-if="(!currentCase.hasOwnProperty('closed') || !currentCase.closed) && (!currentCase.hasOwnProperty('closedWithoutDeclaration') || !currentCase.closedWithoutDeclaration )">
 
-<span ng-if="!editMode">
-    <md-button class="md-text-icon-button" aria-label="lås sagen" ng-click="lockCaseDialog()" ng-disabled="!canCurrentlyEdit">
-        <md-icon>lock</md-icon> {{'DECLARATION.LOCK' | translate}}
-    </md-button>
-    <md-button class="md-text-icon-button" aria-label="edit" ng-click="toggleEdit()" ng-disabled="!canCurrentlyEdit">
-        <md-icon>edit</md-icon> {{'COMMON.EDIT' | translate}}
-    </md-button>
-</span>
+        <span ng-if="!editMode">
+            <md-button class="md-text-icon-button" aria-label="lås sagen" ng-click="lockCaseDialog()" ng-disabled="!canCurrentlyEdit">
+                <md-icon>lock</md-icon> {{'DECLARATION.LOCK' | translate}}
+            </md-button>
+            <md-button class="md-text-icon-button" aria-label="edit" ng-click="toggleEdit()" ng-disabled="!canCurrentlyEdit">
+                <md-icon>edit</md-icon> {{'COMMON.EDIT' | translate}}
+            </md-button>
+        </span>
 
-<span ng-if="editMode">
-    <md-button class="md-text-icon-button" aria-label="lås sagen" ng-click="lockCaseDialog()" ng-disabled="$root.declarationForm.$invalid">
-        <md-icon>lock</md-icon> {{'DECLARATION.SAVE_AND_LOCK' | translate}}
-    </md-button>
+        <span ng-if="editMode">
+            <md-button class="md-text-icon-button" aria-label="lås sagen" ng-click="lockCaseDialog()" ng-disabled="$root.declarationForm.$invalid">
+                <md-icon>lock</md-icon> {{'DECLARATION.SAVE_AND_LOCK' | translate}}
+            </md-button>
 
-    <md-button class="md-text-icon-button" aria-label="edit" ng-click="toggleEdit(); saveEdit()" ng-disabled="$root.declarationForm.$invalid">
-        <md-icon>save</md-icon> {{'COMMON.SAVE' | translate}}
-    </md-button>
-</span>
+            <md-button class="md-text-icon-button" aria-label="edit" ng-click="toggleEdit(); saveEdit()" ng-disabled="$root.declarationForm.$invalid">
+                <md-icon>save</md-icon> {{'COMMON.SAVE' | translate}}
+            </md-button>
+        </span>
+    </span>
 </span>

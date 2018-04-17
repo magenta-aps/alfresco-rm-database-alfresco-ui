@@ -5,6 +5,8 @@
                 <thead md-head md-order="query.order">
                     <tr md-row>
                         <th md-column md-order-by="firstName">Navn</th>
+                        <th md-column md-numeric md-order-by="">Aktiveret</th>
+                        <th md-column md-numeric md-order-by="GROUP_site_retspsyk_SiteConsumer">Kun læse</th>
                         <th md-column md-numeric md-order-by="GROUP_reopen_cases">Genåbne sager</th>
                         <th md-column md-numeric md-order-by="GROUP_site_retspsyk_SiteListManager">Redigere lister</th>
                         <th md-column md-numeric md-order-by="GROUP_site_retspsyk_SiteRoleManager">Tildele roller</th>
@@ -14,6 +16,8 @@
                 <tbody md-body ng-repeat="user in allUsers | orderBy: query.order" ng-if="user.userName!='admin'">
                     <tr md-row>
                         <td md-cell>{{user.firstName}} {{user.lastName}}</td>
+                        <td md-cell><md-checkbox aria-label="aktiveret" ng-model="" ng-disabled="!isEditing || (user.userName == 'admin')"></md-checkbox></td>
+                        <td md-cell><md-checkbox aria-label="kun læse" ng-model="user.GROUP_site_retspsyk_SiteConsumer" ng-disabled="!isEditing || (user.userName == 'admin')"></md-checkbox></td>
                         <td md-cell><md-checkbox aria-label="genåbne sager" ng-model="user.GROUP_site_retspsyk_SiteEntryLockManager" ng-disabled="!isEditing || (user.userName == 'admin')"></md-checkbox></td>
                         <td md-cell><md-checkbox aria-label="redigere lister" ng-model="user.GROUP_site_retspsyk_SitePropertyValueManager" ng-disabled="!isEditing || (user.userName == 'admin')"></md-checkbox></td>
                         <td md-cell><md-checkbox aria-label="tildele roller" ng-model="user.GROUP_site_retspsyk_SiteRoleManager" ng-disabled="!isEditing || (user.userName == 'admin')"></md-checkbox></td>

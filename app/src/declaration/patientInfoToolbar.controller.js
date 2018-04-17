@@ -6,6 +6,7 @@ angular
 
 function PatientInfoToolbarController($scope, $mdDialog, $state, $mdToast, $transitions, entryService, propertyService, filterService, authService) {
 
+    var vm = this;
     $scope.entryService = entryService;
     $scope.propertyService = propertyService;
     $scope.editMode = false;
@@ -33,6 +34,16 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $mdToast, $tran
     var clickedSave = false;
 
     var currentUser = authService.getUserInfo().user;
+    vm.canEdit = false;
+
+    activated()
+
+    function activated () {
+        var roles = authService.getUserRoles();
+        if (!(roles.indexOf("SiteConsumer") > -1)) {
+            vm.canEdit = true
+        }
+    }
 
     $scope.$watch('entryService.getCaseTitle()', function (newVal) {
         $scope.caseTitle = newVal;

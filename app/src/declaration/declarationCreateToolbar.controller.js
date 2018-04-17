@@ -4,12 +4,22 @@ angular
     .module('openDeskApp.declaration')
     .controller('DeclarationCreateToolbarController', DeclarationCreateToolbarController);
 
-function DeclarationCreateToolbarController($state, $mdToast, entryService) {
+function DeclarationCreateToolbarController($state, $mdToast, entryService, authService) {
 
     var vm = this;
 
     vm.submit = submit;
     vm.createNewDeclaration = createNewDeclaration;
+    vm.canCreate = false;
+
+    activated()
+
+    function activated () {
+        var roles = authService.getUserRoles();
+        if (!(roles.indexOf("SiteConsumer") > -1)) {
+            vm.canCreate = true
+        }
+    }
     
     function submit() {
         var newCase = entryService.getNewCaseInfo();
