@@ -37,10 +37,6 @@ function DocumentController($scope, $translate, documentService, $stateParams, $
     activate();
 
     function activate() {
-        documentService.getEditPermission(parentDocumentNode).then(function (val) {
-            vm.canEdit = val;
-        });
-
         setPDFViewerHeight();
         loadPreview();
         getDocument();
@@ -51,7 +47,7 @@ function DocumentController($scope, $translate, documentService, $stateParams, $
     }
 
     function goBack() {
-        window.history.go(-1);
+        window.history.go(-2);
 
     }
 
@@ -75,15 +71,13 @@ function DocumentController($scope, $translate, documentService, $stateParams, $
         documentService.getDocument(parentDocumentNode).then(function (response) {
 
             vm.doc = response.item;
-            vm.loolEditable = documentService.isLoolEditable(vm.doc.node.mimetype);
-            vm.msOfficeEditable = documentService.isMsOfficeEditable(vm.doc.node.mimetype);
-
             vm.docMetadata = response.metadata;
+
+            vm.loolEditable = documentService.isLoolEditable(vm.doc.mimetype);
+            vm.canEdit = vm.doc.permissions.userAccess.edit;
 
             // Compile paths for breadcrumb directive
             vm.paths = buildBreadCrumbPath(response);
-
-            browserService.setTitle(response.item.node.properties["cm:name"]);
 
         });
     }
@@ -172,7 +166,7 @@ function DocumentController($scope, $translate, documentService, $stateParams, $
             confirmLoolEditDocDialog();
         } else {
             $state.go('lool', {
-                'nodeRef': vm.doc.node.nodeRef
+                'nodeRef': vm.doc.nodeRef
             });
         }
     }

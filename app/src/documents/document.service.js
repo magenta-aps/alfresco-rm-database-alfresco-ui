@@ -147,7 +147,6 @@ function documentService($http, alfrescoNodeUtils, EDITOR_CONFIG) {
         getDocument: getDocument,
         getPath: getPath,
         getHistory: getHistory,
-        getEditPermission: getEditPermission,
         UploadNewVersion: uploadNewVersion,
         createThumbnail: createThumbnail,
         cleanupThumbnail: cleanupThumbnail,
@@ -204,15 +203,6 @@ function documentService($http, alfrescoNodeUtils, EDITOR_CONFIG) {
 
         return $http.get(url).then(function (response) {
             return response.data;
-        });
-    }
-
-    function getEditPermission(documentNodeRef) {
-
-        var url = '/alfresco/s/permissions?method=getEditPermission&NODE_ID=' + documentNodeRef + '&STORE_TYPE=workspace&STORE_ID=SpacesStore';
-
-        return $http.get(url).then(function (response) {
-            return response.data[0].edit_permission == "ALLOWED";
         });
     }
 
