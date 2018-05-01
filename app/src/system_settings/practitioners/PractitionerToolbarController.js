@@ -21,17 +21,24 @@ function PractitionerToolbarController($scope, practitionerService, groupService
         var users = practitionerService.getUpdatedUsers();
         var original = practitionerService.getOriginalUsers();
 
-        console.log(users);
-
         angular.forEach(users, function(user,key) {
             var addedTo = [];
             var removedFrom = [];
+
+            console.log(key)
+
+            if(user.active && !original[key].active) {
+                practitionerService.activateUser(user.userName)
+            }
+
+            if(!user.active && original[key].active) {
+                practitionerService.deactivateUser(user.userName)
+            }
 
             practitionerService.getPermissionGroups().then(function (permissionGroups) {
                 permissionGroups.forEach(function (group) {
                     if (user.hasOwnProperty(group)) {
                         if (user[group] && (!original[key][group] || !original[key].hasOwnProperty(group))) {
-                            console.log(group);
                             addedTo.push(group);
                         }
 
@@ -45,7 +52,6 @@ function PractitionerToolbarController($scope, practitionerService, groupService
                     groupService.updateUserRoles(user.userName, 'retspsyk', addedTo, removedFrom);
                 }
 
-                console.log('finished editing');
                 practitionerService.setUsersBeforeEdit(users);
             });
         });

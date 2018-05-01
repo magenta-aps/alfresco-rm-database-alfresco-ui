@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('openDeskApp.declaration').factory('practitionerService', function (groupService) {
+angular.module('openDeskApp.declaration').factory('practitionerService', function ($http, groupService) {
     var isCurrentlyEditing = false;
     var users = {};
     var usersBeforeEdit = {};
@@ -13,7 +13,11 @@ angular.module('openDeskApp.declaration').factory('practitionerService', functio
         setUsersBeforeEdit: setUsersBeforeEdit,
         getOriginalUsers: getOriginalUsers,
         getUpdatedUsers: getUpdatedUsers,
+        getUserPermissions: getUserPermissions,
         getPermissionGroups: getPermissionGroups,
+        activateUser: activateUser,
+        deactivateUser: deactivateUser,
+        isUserMember: isUserMember
     };
 
     return service;
@@ -42,9 +46,40 @@ angular.module('openDeskApp.declaration').factory('practitionerService', functio
         return users;
     }
 
+    function getUserPermissions () {
+        return $http.get('/alfresco/s/userpermissions')
+            .then(function (response) {
+                return response
+            })
+    }
+
     function getPermissionGroups() {
         return groupService.getGroupNamesForSite('retspsyk').then(function (response) {
             return response.permissionGroups;
         });
+    }
+
+    function activateUser(userName) {
+        return $http.get(`alfresco/s/activateUser?userName=${userName}`).then(function (response) {
+            return response
+        })
+    }
+
+    function deactivateUser(userName) {
+        return $http.get(`alfresco/s/deactivateUser?userName=${userName}`).then(function (response) {
+            return response
+        })
+    }
+
+    function isUserMember(userName) {
+        return $http.get(`/api/people/${userName}/sites`).then(function (response) {
+            var isMember = false
+            response.data.forEach(site => {
+                if( site.shortName === 'retspsyk') {
+                    isMember = true
+                }
+            });
+            return isMember
+        })
     }
 });
