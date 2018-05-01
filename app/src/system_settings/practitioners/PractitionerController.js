@@ -37,26 +37,9 @@ function PractitionerController($scope, $state, $stateParams, $timeout, practiti
     init();
 
     function init() {
-        userService.getAllUsers().then(function (response) {
-            var users = response.people;
-            practitionerService.getPermissionGroups().then(function(permissionGroups) {
-                permissionGroups.forEach(function (group) {
-                    groupService.getUserGroups(group).then(function (userGroup) {
-                        angular.forEach(users, function (user) {
-                            angular.forEach(userGroup.data, function (userInGroup) {
-                                if (user.userName == userInGroup.shortName) {
-                                    user[group] = true;
-                                }
-                            });
-                        });
-                    },function(err) { 
-                        console.log(err);
-                    });
-                });
-            });
-
-            $scope.allUsers = users;
-        });
+        practitionerService.getUserPermissions().then(function(response) {
+            $scope.allUsers = response.data
+        })
     }
 
 
