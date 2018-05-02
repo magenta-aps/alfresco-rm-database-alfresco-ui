@@ -31,7 +31,10 @@
                                ng-disabled="vm.form.$invalid">
                         {{ 'LOGIN.LOGIN' | translate }}
                     </md-button>
-
+                    <p style="color:red" ng-if="vm.errorMsg">
+                        <md-icon>warning</md-icon>
+                        {{vm.errorMsg}}
+                    </p>
                 </div>
             </form>
 
