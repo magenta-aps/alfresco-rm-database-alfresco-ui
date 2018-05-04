@@ -60,7 +60,7 @@ angular.module('openDeskApp.declaration').factory('practitionerService', functio
     }
 
     function activateUser(userName) {
-        return $http.get(`alfresco/s/activateUser?userName=${userName}`).then(function (response) {
+        return $http.get('alfresco/s/activateUser?userName=' + userName).then(function (response) {
             return response
         })
     }
