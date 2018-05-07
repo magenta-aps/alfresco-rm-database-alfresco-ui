@@ -107,6 +107,7 @@
   },
   "DECLARATION": {
     "NEW_DECLARATION": "New Declaration",
+    "NEW_BUA_DECLARATION": "Ny BUA-sag",
     "CREATE_NEW_DECLARATION": "Create new declaration",
     "PATIENT_DATA": "Patient Data",
     "SAVE_AND_LOCK": "Save and lock",

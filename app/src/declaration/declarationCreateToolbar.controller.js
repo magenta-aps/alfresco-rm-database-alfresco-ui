@@ -10,6 +10,7 @@ function DeclarationCreateToolbarController($state, $mdToast, entryService, auth
 
     vm.submit = submit;
     vm.createNewDeclaration = createNewDeclaration;
+    vm.createNewBuaDeclaration = createNewBuaDeclaration;
     vm.canCreate = false;
 
     activated()
@@ -39,6 +40,10 @@ function DeclarationCreateToolbarController($state, $mdToast, entryService, auth
     }
     
     function createNewDeclaration() {
+        $state.go('declaration.create');
+    }
+
+    function createNewBuaDeclaration() {
         $state.go('declaration.create');
     }
 }

@@ -109,6 +109,7 @@
   },
   "DECLARATION": {
     "NEW_DECLARATION": "Ny sag",
+    "NEW_BUA_DECLARATION": "Ny BUA-sag",
     "CREATE_NEW_DECLARATION": "Opret ny sag",
     "PATIENT_DATA": "Patient Data",
     "SAVE_AND_LOCK": "Gem og afslut",

@@ -1,6 +1,10 @@
 
 <span ng-if="vm.canCreate">
-    <md-button ng-click="vm.createNewDeclaration()" ng-if="'declaration' | isState">
+    <md-button ng-click="vm.createNewBuaDeclaration()" ng-if="'declaration' | isState">
+        <md-icon>add</md-icon>
+        <span>{{'DECLARATION.NEW_BUA_DECLARATION' | translate}}</span>
+    </md-button>
+    <md-button class="md-raised md-primary md-hue-2" ng-click="vm.createNewDeclaration()" ng-if="'declaration' | isState">
         <md-icon>add</md-icon>
         <span>{{'DECLARATION.NEW_DECLARATION' | translate}}</span>
     </md-button>
