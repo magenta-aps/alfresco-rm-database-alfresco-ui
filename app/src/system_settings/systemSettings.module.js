@@ -338,5 +338,28 @@ function config($stateProvider,USER_ROLES) {
                     controllerAs: 'vm'
                 }
             }
+        })
+        .state('administration.email_authorities', {
+            url: '/myndigheder',
+            params: {
+                listTitle: 'Myndighed',
+                listData: 'email_authorities',
+                authorizedRoles: [USER_ROLES.propertyValueManager]
+            },
+            views: {
+                'systemsetting-view': {
+                    templateUrl: 'app/src/system_settings/lists/view/list.html',
+                    controller: 'ListController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools-left@site': {
+                    template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Myndigheder</h2>"
+                },
+                'toolbar-tools-right@site': {
+                    templateUrl: 'app/src/system_settings/lists/view/list-toolbar.html',
+                    controller: 'ListToolbarController',
+                    controllerAs: 'vm'
+                }
+            }
         });
 }

@@ -107,7 +107,6 @@ function DocumentController($scope, $state, $stateParams, $timeout, entryService
     }
 
     function loadFiles(node) {
-        console.log('load files');
         entryService.getContents(node).then(function (response) {
             // response.thumbnail = sessionService.makeURL(response.thumbnail);
             documentService.setCaseFiles(response);
@@ -116,7 +115,6 @@ function DocumentController($scope, $state, $stateParams, $timeout, entryService
                 $scope.contentLength += contentTypeList.length;
             });
             $scope.selectedFiles = []; //reset selected files
-            console.log(response);
         });
     }
     

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('openDeskApp.declaration', ['ngMaterial'])
+angular.module('openDeskApp.declaration', ['oda.authorityMail'])
     .config(config);
 
 function config($stateProvider, USER_ROLES) {

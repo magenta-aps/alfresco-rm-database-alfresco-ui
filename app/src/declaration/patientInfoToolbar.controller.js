@@ -41,7 +41,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $mdToast, $tran
     function activated () {
         var roles = authService.getUserRoles();
         if (!(roles.indexOf("SiteConsumer") > -1)) {
-            vm.canEdit = true
+            vm.canEdit = true;
         }
     }
 
