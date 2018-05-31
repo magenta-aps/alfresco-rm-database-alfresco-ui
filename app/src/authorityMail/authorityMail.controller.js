@@ -4,7 +4,7 @@ angular
     .module('oda.authorityMail')
     .controller('AuthorityMailController', AuthorityMailController);
 
-function AuthorityMailController($mdDialog, authorityMail, documentService, propertyService) {
+function AuthorityMailController($mdDialog, authorityMail, documentService, propertyService, filterService) {
   var vm = this;
 
   vm.payload = {};
@@ -13,6 +13,7 @@ function AuthorityMailController($mdDialog, authorityMail, documentService, prop
   vm.selectedFiles = documentService.getSelectedFiles();
   vm.properties = propertyService.getAllPropertyValues();
 
+  vm.propertyFilter = propertyFilter;
   vm.send = send;
   vm.cancel = cancel;
 
@@ -24,8 +25,14 @@ function AuthorityMailController($mdDialog, authorityMail, documentService, prop
     });
   }
 
+  function propertyFilter(array, query) {
+    return filterService.propertyFilter(array, query);
+}
+
   function send () {
-    authorityMail.send();
+    authorityMail.send(vm.payload).then(function () {
+      vm.cancel();
+    })
   }
 
   function cancel() {

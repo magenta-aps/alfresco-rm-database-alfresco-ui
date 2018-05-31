@@ -1,5 +1,5 @@
 
-<md-dialog aria-label="Send til myndighed">
+<md-dialog aria-label="Send til myndighed" style="width:66%">
     <form name="authorityMailForm" ng-submit="vm.send()">
 
         <md-toolbar>
@@ -16,7 +16,7 @@
             <md-autocomplete flex 
             md-selected-item="vm.payload.authority" 
             md-search-text="authoritySearch"
-            md-items="auth in propertyFilter(propertyValues['email_authorities'],authoritySearch)" 
+            md-items="auth in vm.propertyFilter(vm.properties['emailAuthorities'],authoritySearch)" 
             md-item-text="auth" 
             md-min-length="0" 
             md-floating-label="Myndighed"
@@ -26,6 +26,11 @@
                 <span md-highlight-text="authoritySearch" md-highlight-flags="gi">{{auth}}</span>
             </md-item-template>
         </md-autocomplete>
+
+        <md-input-container class="md-block">
+            <label>Emne</label>
+            <input ng-model="vm.payload.subject">
+          </md-input-container>
 
         <md-input-container class="md-block">
           <label>Besked</label>

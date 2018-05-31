@@ -339,11 +339,11 @@ function config($stateProvider,USER_ROLES) {
                 }
             }
         })
-        .state('administration.email_authorities', {
+        .state('administration.emailAuthorities', {
             url: '/myndigheder',
             params: {
                 listTitle: 'Myndighed',
-                listData: 'email_authorities',
+                listData: 'emailAuthorities',
                 authorizedRoles: [USER_ROLES.propertyValueManager]
             },
             views: {
