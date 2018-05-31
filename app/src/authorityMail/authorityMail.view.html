@@ -1,0 +1,49 @@
+
+<md-dialog aria-label="Send til myndighed" style="width:66%">
+    <form name="authorityMailForm" ng-submit="vm.send()">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Send til myndighed</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="vm.cancel()">
+                    <i class="material-icons" aria-label="Luk dialogboks">close</i>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content class="md-padding">
+            <md-autocomplete flex 
+            md-selected-item="vm.payload.authority" 
+            md-search-text="authoritySearch"
+            md-items="auth in vm.propertyFilter(vm.properties['emailAuthorities'],authoritySearch)" 
+            md-item-text="auth" 
+            md-min-length="0" 
+            md-floating-label="Myndighed"
+            md-clear-button="true"
+            md-require-match="true">
+            <md-item-template>
+                <span md-highlight-text="authoritySearch" md-highlight-flags="gi">{{auth}}</span>
+            </md-item-template>
+        </md-autocomplete>
+
+        <md-input-container class="md-block">
+            <label>Emne</label>
+            <input ng-model="vm.payload.subject">
+          </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Besked</label>
+          <textarea class="textarea-highlight" ng-model="vm.payload.body" rows="10"></textarea>
+        </md-input-container>
+
+          vedhæftede filer:
+          <p ng-repeat="file in vm.selectedFiles"><em>{{file.name}}</em></p>
+
+        </md-dialog-content>
+
+        <md-dialog-actions>
+            <md-button type="submit" class="md-primary" aria-label="{{'COMMON.SEND' | translate}}">{{'COMMON.SEND' | translate}}</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

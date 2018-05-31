@@ -295,7 +295,6 @@ function documentService($http, alfrescoNodeUtils, EDITOR_CONFIG) {
     }
 
     function downloadFiles(files) {
-        console.log('download files service');
         var fileNodeRefs = [];
 
         files.forEach(function(file) {
