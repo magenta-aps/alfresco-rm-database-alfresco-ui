@@ -14,6 +14,7 @@
                     md-order="vm.query.order">
                     <tr md-row>
                         <th md-column md-numeric md-order-by="caseNumber">{{'DECLARATION.DECLARATION_NUMBER' | translate}}</th>
+                        <th md-column md-order-by="bua">Type</th>
                         <th md-column md-order-by="fullName">{{'COMMON.NAME' | translate}}</th>
                         <th md-column md-numeric md-order-by="cprNumber">CPR</th>
                         <th md-column md-numeric md-order-by="creationDate">Oprettet</th>
@@ -23,6 +24,7 @@
                 <tbody md-body ng-repeat="case in vm.waitingListCases | orderBy: vm.query.order">
                     <tr md-row class="clickable" ng-click="vm.gotoCase(case.caseNumber)">
                         <td md-cell>{{case.caseNumber}}</td>
+                        <td md-cell>{{case.bua === "true" ? 'BUA' : 'PS'}}</td>
                         <td md-cell>{{case.fullName}}</td>
                         <td md-cell>{{case.cprNumber}}</td>
                         <td md-cell>{{case.creationDateFormatted}}</td>
