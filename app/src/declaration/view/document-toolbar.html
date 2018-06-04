@@ -1,7 +1,10 @@
 <span ng-if="vm.canEdit">
     <span ng-if="!case.hasOwnProperty('closed') && !case.hasOwnProperty('closedWithoutDeclaration')">
         <span class="toolbar-contextual" ng-if="'declaration.show.documents.edit' | isState">
-
+            <md-button class="md-icon-button" aria-label="edit" ng-click="vm.authorityMailDialog($event)">
+                <md-icon>mail</md-icon>
+                <md-tooltip md-direction="top" md-delay="500">Send til myndighed</md-tooltip>
+            </md-button>
             <md-button class="md-icon-button" aria-label="download" ng-click="downloadDocuments($event)">
                 <md-icon>file_download</md-icon>
                 <md-tooltip md-direction="top" md-delay="500">Download</md-tooltip>

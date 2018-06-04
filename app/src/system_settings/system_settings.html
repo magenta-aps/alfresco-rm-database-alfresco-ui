@@ -61,6 +61,10 @@
             aria-label="Afsluttet ud erklæring" ng-click="vm.viewState('noDeclaration')">
             <md-icon>check</md-icon> Afsluttet uden erklæring
         </md-button>
+        <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
+                aria-label="Myndigheder" ng-click="vm.viewState('emailAuthorities')">
+                <md-icon>check</md-icon> Myndigheder
+            </md-button>
 
     </md-sidenav>
 

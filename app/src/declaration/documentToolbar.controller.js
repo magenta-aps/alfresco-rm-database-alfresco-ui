@@ -17,6 +17,8 @@ function DocumentToolbarController($scope, $mdDialog, $interval, $mdToast, entry
     $scope.deleteDocumentsDialog = deleteDocumentsDialog;
     $scope.downloadDocuments = downloadDocuments;
 
+    vm.authorityMailDialog = authorityMailDialog;
+
     var currentUser = authService.getUserInfo().user;
     vm.canEdit = false;
 
@@ -25,7 +27,7 @@ function DocumentToolbarController($scope, $mdDialog, $interval, $mdToast, entry
     function activated () {
         var roles = authService.getUserRoles();
         if (!(roles.indexOf("SiteConsumer") > -1)) {
-            vm.canEdit = true
+            vm.canEdit = true;
         }
     }
 
@@ -36,7 +38,6 @@ function DocumentToolbarController($scope, $mdDialog, $interval, $mdToast, entry
     $scope.entryService = entryService;
 
     $scope.$watch('entryService.getCurrentCase()', function (newVal) {
-        console.log(newVal);
         $scope.case = newVal;
     });
     
@@ -45,30 +46,29 @@ function DocumentToolbarController($scope, $mdDialog, $interval, $mdToast, entry
         $scope.toggleIcon = documentToolbarService.getToggleIcon();
     }
 
-    
     function uploadDocumentsDialog(event) {
         $mdDialog.show({
             controller: 'DocumentActionController',
             controllerAs: 'vm',
             templateUrl: 'app/src/filebrowser/upload/upload.view.html',
-            parent: angular.element(document.body),
-            targetEvent: event,
-            scope: $scope, // use parent scope in template
-            preserveScope: true, // do not forget this if use parent scope
             clickOutsideToClose: true
         });
     }
 
-    
     function deleteDocumentsDialog(event) {
         $mdDialog.show({
             controller: 'DocumentActionController',
             controllerAs: 'vm',
             templateUrl: 'app/src/declaration/view/deleteFiles.tmpl.html',
-            parent: angular.element(document.body),
-            targetEvent: event,
-            scope: $scope, // use parent scope in template
-            preserveScope: true, // do not forget this if use parent scope
+            clickOutsideToClose: true
+        });
+    }
+
+    function authorityMailDialog() {
+        $mdDialog.show({
+            controller: 'AuthorityMailController',
+            controllerAs: 'vm',
+            templateUrl: 'app/src/authorityMail/authorityMail.view.html',
             clickOutsideToClose: true
         });
     }
