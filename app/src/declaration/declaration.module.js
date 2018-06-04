@@ -65,6 +65,24 @@ function config($stateProvider, USER_ROLES) {
                 }
             }
         })
+        .state('declaration.create-bua', {
+            url: '/opret-bua',
+            views: {
+                'content@': {
+                    templateUrl: 'app/src/declaration/view/info-cards.html',
+                    controller: 'DeclarationCreateController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools-right@site': {
+                    templateUrl: 'app/src/declaration/view/create-toolbar.html',
+                    controller: 'DeclarationCreateToolbarController',
+                    controllerAs: 'vm'
+                },
+                'toolbar-tools-left@site': {
+                    template: "<h2>Opret ny BUA-sag</h2>"
+                }
+            }
+        })
         .state('declaration.show', {
             url: '/sag/:caseid',
             views: {

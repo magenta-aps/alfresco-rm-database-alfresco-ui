@@ -4,7 +4,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('DeclarationCreateController', DeclarationCreateController);
 
-function DeclarationCreateController($scope, $timeout, $mdToast, entryService, propertyService, filterService, loadingService, cprService) {
+function DeclarationCreateController($scope, $state, $timeout, $mdToast, entryService, propertyService, filterService, loadingService, cprService) {
 
     var vm = this;
 
@@ -19,14 +19,21 @@ function DeclarationCreateController($scope, $timeout, $mdToast, entryService, p
 
     entryService.setLoading(true);
 
+    activated();
+
     $timeout(function () {
         loadingService.setLoading(false);
     });
-
+    
     $scope.$watch('case', function (newVal, oldVal) {
         entryService.updateNewCase(newVal);
     }, true);
     
+    function activated () {
+        console.log($state.current.name)
+        $scope.case.bua = $state.current.name === 'declaration.create-bua' ? true : false;
+    }
+
     function propertyFilter(array, query) {
         return filterService.propertyFilter(array, query);
     }

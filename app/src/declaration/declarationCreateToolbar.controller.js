@@ -23,10 +23,15 @@ function DeclarationCreateToolbarController($state, $mdToast, entryService, auth
     }
     
     function submit() {
-        var newCase = entryService.getNewCaseInfo();
-        newCase.fullName = newCase.firstName + ' ' + newCase.lastName;
+        var newCase = {
+            bua: $state.current.name === 'declaration.create-bua' ? true : false,
+            properties: entryService.getNewCaseInfo()
+        }
+
+        newCase.properties.fullName = newCase.properties.firstName + ' ' + newCase.properties.lastName;
         
-        entryService.createEntry(newCase).then(function (response) {
+        entryService.createEntry(newCase)
+        .then(function (response) {
             entryService.setCurrentCaseAfterCreation(response);
             $state.go('declaration.show.patientdata', {caseid: response.caseNumber});
 
@@ -44,6 +49,6 @@ function DeclarationCreateToolbarController($state, $mdToast, entryService, auth
     }
 
     function createNewBuaDeclaration() {
-        $state.go('declaration.create');
+        $state.go('declaration.create-bua');
     }
 }

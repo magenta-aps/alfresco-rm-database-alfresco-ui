@@ -32,6 +32,8 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
 
     function setCaseTitle(newCase) {
         caseTitle = newCase.firstName + ' ' + newCase.lastName + ' (' + newCase.caseNumber + ')';
+
+        caseTitle += newCase.bua ? ' BUA' : '';
     }
 
     function formatCase(res) {
@@ -122,10 +124,11 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
         });
     }
     
-    function createEntry(properties) {
+    function createEntry(entry) {
         return $http.post("/alfresco/s/database/retspsyk/entry", {
             "type": "forensicPsychiatryDeclaration",
-            "properties": properties
+            "properties": entry.properties,
+            "bua": entry.bua
         }).then(function (response) {
             console.log(response.data);
             return response.data;

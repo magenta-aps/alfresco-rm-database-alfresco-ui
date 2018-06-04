@@ -9,7 +9,7 @@
         <span>{{'DECLARATION.NEW_DECLARATION' | translate}}</span>
     </md-button>
 
-    <md-button ng-click="vm.submit()" ng-if="'declaration.create' | isState" ng-disabled="$root.declarationForm.$invalid">
+    <md-button ng-click="vm.submit()" ng-if="('declaration.create' | isState) || ('declaration.create-bua' | isState)" ng-disabled="$root.declarationForm.$invalid">
         <md-icon>save</md-icon>
         <span>{{'COMMON.SAVE' | translate}}</span>
     </md-button>
