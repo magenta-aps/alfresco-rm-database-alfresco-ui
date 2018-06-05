@@ -1,8 +1,7 @@
 <div layout="row" layout-align="center center" ng-show="!showResults">
     <div layout="column" flex="50">
         <div layout="column">
-            <div style="height:50px">
-            </div>
+            <div style="height:50px"></div>
         </div>
         <span class="md-title">Vis alle sager med:</span>
         <br>
@@ -94,20 +93,35 @@
                 </div>
                 
                 <md-input-container>
-                        <label>Sagsstatus</label>
-                        <md-select ng-model="searchParams.closed">
-                            <md-option ng-value="true" selected>
-                                Afsluttet
-                            </md-option>
-                            <md-option ng-value="false">
-                                Ikke afsluttet
-                            </md-option>
-                            <md-option ng-value="undefined">
-                                Alle
-                            </md-option>
-                        </md-select>
-                    </md-input-container>
-                </div>
+                    <label>Sagsstatus</label>
+                    <md-select ng-model="searchParams.closed">
+                        <md-option ng-value="'CLOSED'" selected>
+                            Afsluttet
+                        </md-option>
+                        <md-option ng-value="'OPEN'">
+                            Ikke afsluttet
+                        </md-option>
+                        <md-option ng-value="undefined">
+                            Alle
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-input-container style="margin-top:12pt;">
+                    <label>Type</label>
+                    <md-select ng-model="searchParams.bua">
+                        <md-option ng-value="undefined" selected>
+                            Både PS og BUA
+                        </md-option>
+                        <md-option ng-value="'PS'">
+                            Kun PS
+                        </md-option>
+                        <md-option ng-value="'BUA'">
+                            Kun BUA
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
             </div>
 
             <div layout="column" flex="45" flex-offset="10">
