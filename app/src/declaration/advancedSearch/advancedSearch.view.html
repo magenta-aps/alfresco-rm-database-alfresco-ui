@@ -110,14 +110,14 @@
                 <md-input-container style="margin-top:12pt;">
                     <label>Type</label>
                     <md-select ng-model="searchParams.bua">
-                        <md-option ng-value="undefined" selected>
-                            Både PS og BUA
-                        </md-option>
-                        <md-option ng-value="'PS'">
-                            Kun PS
+                        <md-option ng-value="'PS'" selected>
+                            PS
                         </md-option>
                         <md-option ng-value="'BUA'">
-                            Kun BUA
+                            BUA
+                        </md-option>
+                        <md-option ng-value="undefined">
+                            Alle
                         </md-option>
                     </md-select>
                 </md-input-container>

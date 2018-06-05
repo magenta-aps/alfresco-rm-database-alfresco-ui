@@ -21,7 +21,8 @@
             md-min-length="0" 
             md-floating-label="Myndighed"
             md-clear-button="true"
-            md-require-match="true">
+            md-require-match="true"
+            required>
             <md-item-template>
                 <span md-highlight-text="authoritySearch" md-highlight-flags="gi">{{auth}}</span>
             </md-item-template>
@@ -29,12 +30,12 @@
 
         <md-input-container class="md-block">
             <label>Emne</label>
-            <input ng-model="vm.payload.subject">
+            <input ng-model="vm.payload.subject" required>
           </md-input-container>
 
         <md-input-container class="md-block">
           <label>Besked</label>
-          <textarea class="textarea-highlight" ng-model="vm.payload.body" rows="10"></textarea>
+          <textarea class="textarea-highlight" ng-model="vm.payload.body" rows="10" required></textarea>
         </md-input-container>
 
           vedhæftede filer:
@@ -43,7 +44,16 @@
         </md-dialog-content>
 
         <md-dialog-actions>
-            <md-button type="submit" class="md-primary" aria-label="{{'COMMON.SEND' | translate}}">{{'COMMON.SEND' | translate}}</md-button>
+            <md-button 
+                ng-if="!vm.loading"
+                ng-disabled="authorityMailForm.$invalid"
+                type="submit" 
+                class="md-primary" 
+                aria-label="{{'COMMON.SEND' | translate}}"
+            >
+                {{'COMMON.SEND' | translate}}
+            </md-button>
+            <md-progress-circular ng-if="vm.loading" md-mode="indeterminate"></md-progress-circular>
         </md-dialog-actions>
     </form>
 </md-dialog>
