@@ -4,7 +4,7 @@ angular
     .module('oda.authorityMail')
     .controller('AuthorityMailController', AuthorityMailController);
 
-function AuthorityMailController($mdDialog, authorityMail, documentService, propertyService, filterService) {
+function AuthorityMailController($mdDialog, $mdToast, authorityMail, documentService, propertyService, filterService) {
   var vm = this;
 
   vm.payload = {};
@@ -16,6 +16,7 @@ function AuthorityMailController($mdDialog, authorityMail, documentService, prop
   vm.propertyFilter = propertyFilter;
   vm.send = send;
   vm.cancel = cancel;
+  vm.loading = false;
 
   activated()
 
@@ -30,8 +31,16 @@ function AuthorityMailController($mdDialog, authorityMail, documentService, prop
 }
 
   function send () {
+    vm.loading = true;
     authorityMail.send(vm.payload).then(function () {
+      vm.loading = false;
       vm.cancel();
+      $mdToast.show(
+        $mdToast.simple()
+        .textContent('Mailen blev sendt')
+        .position('top right')
+        .hideDelay(3000)
+      );
     })
   }
 
