@@ -33,7 +33,7 @@ angular.module('openDeskApp.declaration').factory('entryService', function ($htt
     function setCaseTitle(newCase) {
         caseTitle = newCase.firstName + ' ' + newCase.lastName + ' (' + newCase.caseNumber + ')';
 
-        caseTitle += newCase.bua ? ' BUA' : '';
+        caseTitle += newCase.bua === "true" ? ' BUA' : '';
     }
 
     function formatCase(res) {
