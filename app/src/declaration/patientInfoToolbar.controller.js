@@ -110,7 +110,7 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $mdToast, $tran
         else {
             $mdToast.show(
                 $mdToast.simple()
-                    .textContent('Erklæringen redigeres allerede af ' + $scope.editor.displayName)
+                    .textContent('Sagen redigeres allerede af ' + $scope.editor.displayName)
                     .position('top right')
                     .hideDelay(3000)
             );
