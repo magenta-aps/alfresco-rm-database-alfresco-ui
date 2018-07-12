@@ -53,11 +53,11 @@ function config($stateProvider,USER_ROLES) {
         url: '/dokumentskabeloner',
         params: {
             authorizedRoles: [USER_ROLES.templateFolderValueManager],
-            path: "/Sites/retspsyk/documentTemplates",
+            path: "/Sites/retspsyk/documentTemplates"
         },
         views: {
             'systemsetting-view': {
-                templateUrl: 'app/src/system_settings/documentTemplates/documentTemplates.view.html',
+                templateUrl: 'app/src/filebrowser/view/filebrowserCard.html'
             },
             'toolbar-tools-left@site': {
                 template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Dokumentskabeloner</h2>"

@@ -4,9 +4,7 @@ angular
     .module('openDeskApp')
     .controller('BreadcrumbController', BreadcrumbController);
 
-function BreadcrumbController($scope, breadcrumbService) {
-
-    var vm = this;
+function BreadcrumbController($scope) {
 
     $scope.$watch('bcPath', function(newVal) {
         if($scope.bcPath.length >= 2) {
