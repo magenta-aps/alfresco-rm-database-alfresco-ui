@@ -37,7 +37,7 @@ function DeclarationCreateToolbarController($state, $mdToast, entryService, auth
 
             $mdToast.show(
                 $mdToast.simple()
-                .textContent('Erklæringen er oprettet')
+                .textContent('Sagen er oprettet')
                 .position('top right')
                 .hideDelay(3000)
             );

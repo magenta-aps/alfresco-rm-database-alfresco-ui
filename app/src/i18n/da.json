@@ -92,7 +92,7 @@
     "FOLDER": "Mappe",
     "CHOOSE": "Vælg",
     "EMPTY_FOLDER": "Denne mappe er tom",
-    "NO_SEARCH_RESULTS" : "Søgningen matchede ikke noget",
+    "NO_SEARCH_RESULTS": "Søgningen matchede ikke noget",
     "FILTER": "Filtre",
     "LAST_MODIFIED": "Senest ændret",
     "LAST_MODIFIED_BY": "Senest ændret af",
@@ -117,11 +117,11 @@
     "LOCK_DECLARATION": "Afslut",
     "UNLOCK": "Genåben",
     "REOPEN": "Genåben",
-    "DECLARATION_CLOSED": "Erklæringen er afsluttet",
+    "DECLARATION_CLOSED": "Sagen er afsluttet",
     "CLOSED_WITHOUT_DECLARATION": "Afsluttet uden erklæring",
     "WAITINGLIST": "Venteliste",
     "SEE_CURRENT_WAITINGLIST": "Se den aktuelle venteliste",
-    "SEARCH_NAME_CPR": "Søg efter navn eller CPR nummer", 
+    "SEARCH_NAME_CPR": "Søg efter navn eller CPR nummer",
     "ADVANCED_SEARCH": "Avanceret søgning",
     "DECLARATION_NUMBER": "Sagsnummer",
     "DECLARATION": "Erklæring"
@@ -913,7 +913,6 @@
   "@{http://openesdh.dk/model/case/base/1.0}endDate": "Slutdato",
   "@{http://openesdh.dk/model/openesdh/1.0}journalKeyIndexed": "Journalnøgle",
   "@{http://openesdh.dk/model/openesdh/1.0}journalFacetIndexed": "Journalfacet",
-
   "PROJECT": {
     "HEADER": "Projekter/Grupperum",
     "PROJECT": "Projekt",
@@ -935,19 +934,16 @@
     "PROJECTLINK": "Projektlink",
     "NO_ACCESS_PROJECT": "Du har ikke adgang til dette projekt.",
     "NO_ACCESS_GROUPROOM": "Du har ikke adgang til dette grupperum.",
-
     "STATUS": {
       "STATUS": "Status",
       "CLOSED": "Afsluttet",
       "ACTIVE": "Igang"
     },
-
     "GROUPS": {
       "SiteManager": "Projektleder",
       "SiteCollaborator": "Kan skrive",
       "SiteContributor": "Kan skrive begrænset",
       "SiteConsumer": "Kan læse",
-
       "PD_PROJECTMANAGER": "Projektleder",
       "PD_PROJECTOWNER": "Projektejer",
       "PD_PROJECTGROUP": "Projektgruppe",
@@ -959,7 +955,6 @@
   "NOTIFICATION": {
     "NOTIFICATION": "Notifikation",
     "NOTIFICATIONS": "Notifikationer",
-
     "LABEL": {
       "REVIEW_REQUEST": "Review forespørgsel",
       "REVIEW_RESPONSE": "Review svar",
@@ -974,7 +969,6 @@
     "CREATED_AT": "Oprettet",
     "REPLIES": "Svar",
     "NO_DISCUSSIONS": "Ingen kommentarer",
-    
     "SORT": {
       "SORT": "Sorter efter",
       "ALL": "Alle",
