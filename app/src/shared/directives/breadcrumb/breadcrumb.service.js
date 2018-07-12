@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('openDeskApp')
-.factory('breadcrumbService', function ($http) {
+.factory('breadcrumbService', function () {
 
     var path = [];
 

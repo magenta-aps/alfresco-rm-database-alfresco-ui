@@ -4,11 +4,10 @@ angular
     .module('openDeskApp.filebrowser')
     .controller('FilebrowserController', FilebrowserController);
 
-function FilebrowserController($state, $stateParams, $scope, $rootScope, $mdDialog, Upload, fileUtilsService,
+function FilebrowserController($state, $stateParams, $scope, $rootScope, $mdDialog, fileUtilsService,
     filebrowserService, alfrescoDownloadService, documentPreviewService, documentService, alfrescoNodeUtils) {
 
     var vm = this;
-    var documentNodeRef = "";
     var folderNodeRef = "";
 
     vm.cancelDialog = cancelDialog;
@@ -103,8 +102,9 @@ function FilebrowserController($state, $stateParams, $scope, $rootScope, $mdDial
             return 'document({doc: "' + content.shortRef + '"})';
         }
         if (content.contentType === 'cmis:folder') {
-                return $state.current.name + '({path: "' + $stateParams.path + '/' + content.name + '"})';
+            return $state.current.name + '({path: "' + $stateParams.path + '/' + content.name + '"})';
         }
+
     }
 
     function buildBreadCrumbPath() {
