@@ -2,28 +2,24 @@
     <div layout="column" style="height:144px" flex-gt-sm="50" flex>
         <span flex></span>
         <div layout="row">
-            <!-- md-items="case in filterCases(entrySearchQuery, ['cprNumber', 'fullName'])" -->
-            <md-autocomplete
-                md-selected-item="selectedCase"
-                md-search-text="entrySearchQuery"
-                md-items="case in vm.getEntries(entrySearchQuery)"
-                md-item-text="'Erklæring #'+ case.caseNumber + ' - ' + case.firstName + ' ' + case.lastName + ' (' + case.cprNumber + ')'" 
-                md-min-length="2"
-                placeholder="{{'DECLARATION.SEARCH_NAME_CPR' | translate}}" flex>
+            <md-autocomplete md-selected-item="selectedCase" md-search-text="entrySearchQuery" md-items="case in vm.getEntries(entrySearchQuery)"
+                md-item-text="'Erklæring #'+ case.caseNumber + ' - ' + case.firstName + ' ' + case.lastName + ' (' + case.cprNumber + ')'"
+                md-min-length="2" placeholder="{{'DECLARATION.SEARCH_NAME_CPR' | translate}}" flex>
                 <md-item-template>
                     <span md-highlight-text="entrySearchQuery" md-highlight-flags="gi">
                         {{case.cprNumber}} - {{case.firstName}} {{case.lastName}}
                     </span>
+                    ({{case.caseNumber}})
                     <md-icon ng-show="(case.hasOwnProperty('closed') && case.closed) || (case.hasOwnProperty('closedWithoutDeclaration') && case.closedWithoutDeclaration)">done</md-icon>
                 </md-item-template>
             </md-autocomplete>
 
             <md-button class="md-icon-button" ui-sref="declaration.advancedSearch">
-            <md-icon>filter_list</md-icon>
-            <md-tooltip md-direction="top" md-delay="500">{{'DECLARATION.ADVANCED_SEARCH' | translate}}</md-tooltip>
+                <md-icon>filter_list</md-icon>
+                <md-tooltip md-direction="top" md-delay="500">{{'DECLARATION.ADVANCED_SEARCH' | translate}}</md-tooltip>
             </md-button>
         </div>
-        <div layout="row" layout-align="center" style="margin-top:16px" >
+        <div layout="row" layout-align="center" style="margin-top:16px">
             <a ui-sref="declaration.waitinglist">{{'DECLARATION.SEE_CURRENT_WAITINGLIST' | translate}}</a>
         </div>
     </div>
