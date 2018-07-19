@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('openDeskApp.declaration')
+    .module('oda.waitinglist')
     .controller('WaitinglistController', WaitinglistController);
 
 function WaitinglistController($state, entryService) {
@@ -33,7 +33,7 @@ function WaitinglistController($state, entryService) {
     function getWaitinglist(skip,max) {
         vm.isLoading = true;
         entryService.getWaitingList(skip,max)
-        .then(entries => {
+        .then(function (entries) {
             vm.isLoading = false;
             vm.totalCases = entries.total;
             next = entries.next;

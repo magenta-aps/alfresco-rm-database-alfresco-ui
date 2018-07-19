@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('openDeskApp.declaration')
-    .factory('propertyService', function ($http, entryService) {
+    .factory('propertyService', function ($http) {
 
         var isEditing = false;
         var count = 0;

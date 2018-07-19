@@ -1,4 +1,4 @@
-<div layout="row" layout-wrap ng-repeat="content in contents" ng-if="!tableView">
+<!-- <div layout="row" layout-wrap ng-repeat="content in contents" ng-if="!tableView">
     <md-card ng-repeat="c in content" flex-gt-sm="15" flex='45'>
         <md-checkbox class="document-checkbox" aria-label="Checkbox {{c.shortRef}}" ng-model="c.shortRef" ng-click="selectedFile(c)"></md-checkbox>
         <span ng-click="!isEditing ? vm.viewFile(c) : null">
@@ -34,6 +34,12 @@
                 </tbody>
             </table>
         </md-table-container>
+    </md-card-content>
+</md-card> -->
+
+<md-card ng-show="contentLength > 0">
+    <md-card-content>
+        <file-browser od-breadcrumb="true" od-disable-actions="true" od-case-uuid="case['store-protocol'] + '://' + case['store-identifier'] + '/' + case['node-uuid']"></file-browser>>
     </md-card-content>
 </md-card>
 

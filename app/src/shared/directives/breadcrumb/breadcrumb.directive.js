@@ -9,10 +9,9 @@ function breadcrumb() {
     return {
         restrict: 'E',
         scope: {
-            bcPath: '=paths'
+            path: "="
         },
         templateUrl: 'app/src/shared/directives/breadcrumb/breadcrumb.html',
-        controller: 'BreadcrumbController',
-        controllerAs: 'vm'
+        controller: 'BreadcrumbController'
     };
 }

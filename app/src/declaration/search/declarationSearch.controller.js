@@ -26,7 +26,6 @@ function DeclarationSearchController($scope, $state, $timeout, entryService, loa
     function getEntries(query) {
         return entryService.getAutoComleteEntries(0,5,query)
         .then(function(response) {
-            console.log(response)
             return response.entries;
         })
     }

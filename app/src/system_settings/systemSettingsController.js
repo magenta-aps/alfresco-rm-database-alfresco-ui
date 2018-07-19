@@ -4,7 +4,7 @@ angular
     .module('openDeskApp.systemsettings')
     .controller('SystemSettingsController', SystemSettingsCtrl);
 
-function SystemSettingsCtrl($scope, $state, $stateParams, systemSettingsPagesService, sessionService, authService, systemSettingsService) {
+function SystemSettingsCtrl($scope, $state, systemSettingsPagesService, sessionService, authService) {
     var vm = this;
 
     $scope.templateSites = [];
@@ -24,17 +24,7 @@ function SystemSettingsCtrl($scope, $state, $stateParams, systemSettingsPagesSer
     }
     getUserRoles();
 
-    function loadTemplates() {
-        systemSettingsService.getTemplates().then (function(response) {
-            $scope.templateSites = response;
-        });
-    }
-
     vm.isAdmin = sessionService.isAdmin();
-
-    // systemSettingsService.getDocumentTemplateSite().then(function (response) {
-    //     vm.shortName = response.shortName;
-    // });
 
     vm.pages = systemSettingsPagesService.getPages()
         .filter(function (page) {

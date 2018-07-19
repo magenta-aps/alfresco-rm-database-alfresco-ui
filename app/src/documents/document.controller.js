@@ -3,8 +3,8 @@
 angular.module('openDeskApp.documents')
     .controller('DocumentController', DocumentController);
 
-function DocumentController($scope, $translate, documentService, $stateParams, $location, $state,
-    documentPreviewService, alfrescoDownloadService, browserService, $mdDialog, $window) {
+function DocumentController($scope, documentService, $stateParams, $location, $state,
+    documentPreviewService, alfrescoDownloadService, $mdDialog, $window) {
 
     var vm = this;
 

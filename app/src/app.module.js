@@ -6,7 +6,6 @@ angular
         'ngMaterial',
         'ngMessages',
         'ngCookies',
-        'material.wizard',
         'ui.router',
         'rt.encodeuri',
         'ngResource',
@@ -21,13 +20,11 @@ angular
         'openDeskApp.lool',
         'openDeskApp.documents',
         'openDeskApp.systemsettings',
+        'oda.waitinglist',
         'm43nu.auto-height',
         'dcbImgFallback',
-        'openDeskApp.notifications',
-        'openDeskApp.users',
         'openDeskApp.declaration',
         'openDeskApp.filebrowser',
-        'openDeskApp.site',
         'md.data.table',
 
         /*DO NOT REMOVE MODULES PLACEHOLDER!!!*/ //openDesk-modules
@@ -35,7 +32,7 @@ angular
         'openDeskApp.translations'
     ]) //TRANSLATIONS IS ALWAYS LAST!
     .config(config)
-    .run(function ($rootScope, $transitions, $state, $mdDialog, authService, sessionService, APP_CONFIG) {
+    .run(function ($rootScope, $state, APP_CONFIG) {
         $rootScope.ssoLoginEnabled = APP_CONFIG.ssoLoginEnabled;
         angular.element(window.document)[0].title = APP_CONFIG.appName;
         $rootScope.appName = APP_CONFIG.appName;

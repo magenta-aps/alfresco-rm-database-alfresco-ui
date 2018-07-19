@@ -1,0 +1,12 @@
+<tr>
+  <td>
+
+    <content-icon content="content"></content-icon>
+    <span>{{content.displayName}}</span>
+
+  </td>
+  <td>{{content.modifiedOn | customDate}} - {{content.modifiedBy}}</td>
+  <td style="text-align:right" ng-click="$event.stopPropagation()">
+    <content-action content="content"></content-action>
+  </td>
+</tr>

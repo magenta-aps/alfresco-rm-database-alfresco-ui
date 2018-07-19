@@ -4,7 +4,7 @@ angular
     .module('openDeskApp')
     .controller('AuthController', AuthController);
 
-function AuthController(APP_CONFIG, $scope, $state, $http, $stateParams, authService, userService, $mdDialog, sessionService, $window, loadingService) {
+function AuthController(APP_CONFIG, $scope, $state, $http, $stateParams, authService, $mdDialog, sessionService, $window, loadingService) {
     var vm = this;
     var loginErrorMessage = angular.fromJson($stateParams.error);
 
@@ -41,7 +41,7 @@ function AuthController(APP_CONFIG, $scope, $state, $http, $stateParams, authSer
             .then(function(response) {
                 console.log(response.data.member)
                 if (response.data.member) {
-                    userService.getPerson(credentials.username)
+                    authService.getUser(credentials.username)
                     .then(function (response) {
                         vm.user = response;
                         restoreLocation();

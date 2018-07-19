@@ -6,21 +6,21 @@ angular.module('openDeskApp.declaration', ['oda.authorityMail'])
 function config($stateProvider, USER_ROLES) {
 
     $stateProvider.state('declaration', {
-            parent: 'site',
-            url: '/erklaeringer',
-            views: {
-                'content@': {
-                    templateUrl: 'app/src/declaration/search/search.view.html',
-                    controller: 'DeclarationSearchController',
-                    controllerAs: 'vm'
-                },
-                'toolbar-tools-right@site': {
-                    templateUrl: 'app/src/declaration/view/create-toolbar.html',
-                    controller: 'DeclarationCreateToolbarController',
-                    controllerAs: 'vm'
-                },
-            }
-        })
+        parent: 'site',
+        url: '/erklaeringer',
+        views: {
+            'content@': {
+                templateUrl: 'app/src/declaration/search/search.view.html',
+                controller: 'DeclarationSearchController',
+                controllerAs: 'vm'
+            },
+            'toolbar-tools-right@site': {
+                templateUrl: 'app/src/declaration/view/create-toolbar.html',
+                controller: 'DeclarationCreateToolbarController',
+                controllerAs: 'vm'
+            },
+        }
+    })
         .state('declaration.advancedSearch', {
             url: '/advanceret-soegning',
             views: {
@@ -96,6 +96,9 @@ function config($stateProvider, USER_ROLES) {
         })
         .state('declaration.show.documents', {
             url: '/dokumenter',
+            params: {
+                path: "/Sites/retspsyk/documentLibary",
+            },
             views: {
                 'declarations': {
                     templateUrl: 'app/src/declaration/view/documents.html',
@@ -147,7 +150,7 @@ function config($stateProvider, USER_ROLES) {
             }
         })
         .state('declaration.show.patientdata.edit', {
-            
+
         })
         .state('declaration.documents', {
             url: '/dokumenter',

@@ -16,6 +16,7 @@ function DocumentToolbarController($scope, $mdDialog, $interval, $mdToast, entry
     $scope.uploadDocumentsDialog = uploadDocumentsDialog;
     $scope.deleteDocumentsDialog = deleteDocumentsDialog;
     $scope.downloadDocuments = downloadDocuments;
+    $scope.newFolderDialog = newFolderDialog;
 
     vm.authorityMailDialog = authorityMailDialog;
 
@@ -51,6 +52,15 @@ function DocumentToolbarController($scope, $mdDialog, $interval, $mdToast, entry
             controller: 'DocumentActionController',
             controllerAs: 'vm',
             templateUrl: 'app/src/filebrowser/upload/upload.view.html',
+            clickOutsideToClose: true
+        });
+    }
+
+    function newFolderDialog(event) {
+        $mdDialog.show({
+            controller: 'NewFolderController',
+            controllerAs: 'vm',
+            templateUrl: 'app/src/filebrowser/folder/newFolder.view.html',
             clickOutsideToClose: true
         });
     }

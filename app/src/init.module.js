@@ -16,10 +16,6 @@ angular
         serviceAccessUrl: 'https://staging.opendesk.dk/alfresco/s',
         webClientServiceProxy: '/alfresco/service'
     })
-    .constant('PATTERNS', {
-        fileName: /^[a-zA-Z0-9_\-,!@#$%^&()=+ ]+$/,
-        phone: /^[+]?[0-9\- ]+$/
-    })
     .constant('APP_CONFIG', {
         appName: 'Observand DAtabase',
         logoSrc: './app/assets/images/logo-light.svg',

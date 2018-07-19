@@ -4,7 +4,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('PractitionerController', PractitionerController);
 
-function PractitionerController($scope, $state, $stateParams, $timeout, practitionerService, userService, groupService, loadingService) {
+function PractitionerController($scope, $timeout, practitionerService, loadingService) {
 
     $scope.practitionerService = practitionerService;
 

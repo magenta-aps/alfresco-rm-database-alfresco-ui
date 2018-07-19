@@ -30,9 +30,7 @@ var environment = {
 
 var paths = {
     scripts: ['app/src/**/*.module.js', 'app/src/**/*.js', '!app/src/**/*Spec.js', '!app/src/modules/test/**/*.js', '!app/src/modules/**/tests/**/*.js'],
-    scss: ['app/src/app.scss', 'app/src/**/*.scss'],
-    e2e_tests: ['app/tests/e2e/**/*test.js', 'app/src/modules/**/*test.js'],
-    protractorConfigFile: 'app/tests/e2e/conf.js'
+    scss: ['app/src/app.scss', 'app/src/**/*.scss']
 };
 
 var dist = {
@@ -79,10 +77,7 @@ function createWebserver(config) {
 gulp.task('scripts', function () {
     return gulp.src(paths.scripts)
         .pipe($.wrap('(function(){\n"use strict";\n<%= contents %>\n})();'))
-        //.pipe($.jshint('.jshintrc'))
-        //.pipe($.jshint.reporter('jshint-stylish'))
         .pipe($.concat(dist.name + '.js'))
-        .pipe($.change(includeAppConfigParams))
         .pipe(gulp.dest(dist.folder))
         .pipe($.rename({suffix: '.min'}))
         .pipe($.stripDebug())
@@ -108,27 +103,6 @@ gulp.task('css', function () {
         .pipe(gulp.dest(dist.folder))
         .on('error', $.util.log);
 });
-
-//UI tests
-gulp.task('e2e-tests', function () {
-    gulp.src(paths.e2e_tests)
-        .pipe($.protractor.protractor({
-            configFile: paths.protractorConfigFile
-        }))
-        .on('error', function (e) {
-            throw e;
-        });
-});
-function includeAppConfigParams(content) {
-    var argv = require('yargs').argv;
-    if (argv.title) {
-        content = content.replace("appName: 'OpenDesk'", "appName: '" + argv.title + "'");
-    }
-    if (argv.logo) {
-        content = content.replace("logoSrc: './app/assets/images/logo-light.svg'", "logoSrc: '" + argv.logo + "'");
-    }
-    return content;
-}
 
 // Accessibility check
 gulp.task('acc_check', function () {

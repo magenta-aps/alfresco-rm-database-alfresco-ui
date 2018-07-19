@@ -5,7 +5,7 @@ angular
     .controller('DeclarationDocumentController', DocumentController);
 
 function DocumentController($scope, $state, $stateParams, $timeout, entryService, documentToolbarService, loadingService,
-    documentService, documentPreviewService, preferenceService, authService, sessionService) {
+    documentService, documentPreviewService, preferenceService, authService, sessionService, ContentService) {
     var vm = this;
 
     $scope.selectedFiles = [];
@@ -19,7 +19,6 @@ function DocumentController($scope, $state, $stateParams, $timeout, entryService
     $scope.contentLength = 0;
     $scope.selectedFile = selectedFile;
     vm.viewFile = viewFile;
-    // vm.getPDF = getPDF;
     vm.thumbnailUrl = thumbnailUrl;
 
     $scope.case = {};
@@ -27,7 +26,7 @@ function DocumentController($scope, $state, $stateParams, $timeout, entryService
     var currentUser = authService.getUserInfo().user;
     $scope.tableView = false;
 
-    preferenceService.getPreferences(currentUser.userName,'dk.magenta.sites.retspsyk.tableView').then(function(response) {
+    preferenceService.getPreferences(currentUser.userName, 'dk.magenta.sites.retspsyk.tableView').then(function (response) {
         $scope.tableView = response['dk.magenta.sites.retspsyk.tableView'] == 'true' ? true : false;
     });
 
@@ -37,7 +36,7 @@ function DocumentController($scope, $state, $stateParams, $timeout, entryService
 
     loadingService.setLoading(true);
 
-     $timeout(function () {
+    $timeout(function () {
         loadingService.setLoading(false);
     });
 
@@ -55,6 +54,8 @@ function DocumentController($scope, $state, $stateParams, $timeout, entryService
         $scope.case = newVal;
         if (newVal['node-uuid']) {
             loadFiles($scope.case['node-uuid']);
+            var newFolder = newVal['store-protocol'] + '://' + newVal['store-identifier'] + '/' + newVal['node-uuid'];
+            ContentService.setCurrentFolderNodeRef(newFolder);
         }
     });
 
@@ -66,9 +67,9 @@ function DocumentController($scope, $state, $stateParams, $timeout, entryService
 
     $scope.$watch('contents', function (newVal) {
         newVal.forEach(function (contentTypeList) {
-                $scope.contentLength += contentTypeList.length;
-            });
-    },true);
+            $scope.contentLength += contentTypeList.length;
+        });
+    }, true);
 
     //change view
     $scope.$watch('documentToolbarService.getDocumentView()', function (newVal) {
@@ -76,13 +77,13 @@ function DocumentController($scope, $state, $stateParams, $timeout, entryService
     });
 
     activate();
-    
+
     function activate() {
-        if($stateParams.nodeid) {
-            getPDF('workspace://SpacesStore/' + $stateParams.nodeid);                
+        if ($stateParams.nodeid) {
+            getPDF('workspace://SpacesStore/' + $stateParams.nodeid);
         }
     }
-    
+
     function selectedFile(file) {
         if ($scope.selectedFiles.indexOf(file) > -1) {
             $scope.selectedFiles.splice($scope.selectedFiles.indexOf(file), 1);
@@ -98,8 +99,8 @@ function DocumentController($scope, $state, $stateParams, $timeout, entryService
             $state.go('declaration.show.documents');
         }
     }
-    
-    
+
+
     function viewFile(file) {
         $state.go('declaration.show.documents.view-file', {
             nodeid: file.shortRef,
@@ -117,7 +118,7 @@ function DocumentController($scope, $state, $stateParams, $timeout, entryService
             $scope.selectedFiles = []; //reset selected files
         });
     }
-    
+
     function getPDF(nodeRef) {
         documentPreviewService.previewDocumentPlugin(nodeRef).then(function (plugin) {
             $scope.config = plugin;
@@ -129,7 +130,7 @@ function DocumentController($scope, $state, $stateParams, $timeout, entryService
 
         });
     }
-    
+
     function thumbnailUrl(url) {
         return sessionService.makeURL(url);
     }

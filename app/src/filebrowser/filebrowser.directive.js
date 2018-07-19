@@ -1,17 +1,12 @@
 'use strict';
 
 angular
-.module('openDeskApp.filebrowser')
-.directive('odFilebrowser', function () {
-    return {
-        restrict: 'E',
-        scope: {
-            breadcrumb: '=odBreadcrumb',
-            createFolders: '=odFolders',
-            preview: "=odPreview"
-        },
-        templateUrl: 'app/src/filebrowser/view/filebrowser.html',
-        controller: 'FilebrowserController',
-        controllerAs: 'vm'
-    };
-});
+    .module('openDeskApp.filebrowser')
+    .directive('fileBrowser', function () {
+        return {
+            restrict: 'E',
+            scope: {},
+            templateUrl: 'app/src/filebrowser/view/filebrowser.html',
+            controller: 'FilebrowserController as vm'
+        };
+    });

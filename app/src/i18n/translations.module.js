@@ -7,10 +7,8 @@ angular
     .config(config);
 
 var availableLanguages = {
-    keys: ['en', 'da'],
+    keys: ['da'],
     localesKeys: {
-        'en_US': 'en',
-        'en_UK': 'en',
         'da_DK': 'da'
     }
 };
@@ -31,7 +29,7 @@ function config($translateProvider, languageFilesProvider) {
 
     //set default language if browsers langugage not found
     if (availableLanguages.keys.indexOf($translateProvider.preferredLanguage()) === -1) {
-        $translateProvider.preferredLanguage(availableLanguages.keys[1]);
+        $translateProvider.preferredLanguage(availableLanguages.keys[0]);
     }
 }
 
