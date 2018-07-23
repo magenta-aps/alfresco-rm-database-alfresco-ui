@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('openDeskApp.systemsettings', ['ngMaterial', 'pascalprecht.translate'])
+    .module('openDeskApp.systemsettings', ['openDeskApp.filebrowser'])
     .config(config);
 
 function config($stateProvider, USER_ROLES) {
@@ -53,11 +53,13 @@ function config($stateProvider, USER_ROLES) {
             url: '/dokumentskabeloner',
             params: {
                 authorizedRoles: [USER_ROLES.templateFolderValueManager],
-                path: "/Sites/retspsyk/documentTemplates"
+                path: "/Sites/retspsyk/documentTemplates",
+                breadcrumbPath: []
             },
             views: {
                 'systemsetting-view': {
-                    templateUrl: 'app/src/filebrowser/view/filebrowserCard.html'
+                    templateUrl: 'app/src/system_settings/documentTemplate/documentTemplate.html',
+                    controller: 'DocumentTemplateController as vm'
                 },
                 'toolbar-tools-left@site': {
                     template: "<h2>{{ 'ADMIN.ADMINISTRATION' | translate }} – Dokumentskabeloner</h2>"

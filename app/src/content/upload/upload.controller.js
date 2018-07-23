@@ -7,7 +7,6 @@ angular
 function UploadController($rootScope, $mdDialog, ContentService) {
 
     var vm = this;
-    var currentFolderNodeRef = ContentService.getCurrentFolderNodeRef();
 
     vm.cancelDialog = cancelDialog;
     vm.upload = uploadFiles;
@@ -19,7 +18,7 @@ function UploadController($rootScope, $mdDialog, ContentService) {
         vm.uploading = true;
 
         angular.forEach(vm.files, function (file) {
-            ContentService.uploadFiles(file, currentFolderNodeRef)
+            ContentService.uploadFiles(file)
                 .then(function () {
                     vm.uploading = false;
                     cancelDialog();

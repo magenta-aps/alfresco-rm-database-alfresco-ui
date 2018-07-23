@@ -13,8 +13,7 @@ function FolderController($mdDialog, ContentService) {
     vm.folderName = '';
 
     function createFolder() {
-        var destination = ContentService.getCurrentFolderNodeRef();
-        ContentService.createFolder(vm.folderName, destination)
+        ContentService.createFolder(vm.folderName)
             .then(function () {
                 cancelDialog();
             });

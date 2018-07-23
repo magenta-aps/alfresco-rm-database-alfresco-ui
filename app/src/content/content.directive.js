@@ -6,8 +6,8 @@ angular
     return {
       restrict: 'E',
       scope: {
-        contentPath: '=',
-        folderNodeRef: '='
+        contentList: '=',
+        clickAction: '&'
       },
       templateUrl: 'app/src/content/contentList/contentList.html',
       controller: 'ContentListController'
@@ -28,9 +28,9 @@ angular
         content: '='
       },
       template: `<md-icon>
-        {{content.nodeType == 'cm:folder' ? 'folder_open' : ''}}
+        {{content.contentType == 'cmis:folder' ? 'folder_open' : ''}}
         <img class="md-avatar" 
-            ng-show="content.nodeType === 'cm:content'" 
+            ng-show="content.contentType === 'cmis:document'" 
             ng-src="app/assets/images/filetypes/{{content.thumbNailURL}}"
             onerror="this.src='app/assets/images/filetypes/generic-file-24.png'">
         </md-icon> `

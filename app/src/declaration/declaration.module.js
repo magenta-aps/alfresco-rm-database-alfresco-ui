@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('openDeskApp.declaration', ['oda.authorityMail'])
+angular.module('openDeskApp.declaration', ['oda.authorityMail', 'openDeskApp.filebrowser'])
     .config(config);
 
 function config($stateProvider, USER_ROLES) {
@@ -98,6 +98,7 @@ function config($stateProvider, USER_ROLES) {
             url: '/dokumenter',
             params: {
                 path: "/Sites/retspsyk/documentLibary",
+                breadcrumbPath: []
             },
             views: {
                 'declarations': {
@@ -106,9 +107,7 @@ function config($stateProvider, USER_ROLES) {
                     controllerAs: 'vm'
                 },
                 'toolbar-tools-right@site': {
-                    templateUrl: 'app/src/declaration/view/document-toolbar.html',
-                    controller: 'DocumentToolbarController',
-                    controllerAs: 'vm'
+                    template: ''
                 },
                 'toolbar-tools-left@site': {
                     templateUrl: 'app/src/declaration/view/patient-toolbar.html',
@@ -150,23 +149,6 @@ function config($stateProvider, USER_ROLES) {
             }
         })
         .state('declaration.show.patientdata.edit', {
-
-        })
-        .state('declaration.documents', {
-            url: '/dokumenter',
-            params: {
-                path: "/Shared",
-            },
-            views: {
-                'content@': {
-                    templateUrl: 'app/src/filebrowser/view/filebrowserCard.html',
-                    controller: 'SystemSettingsController',
-                    controllerAs: 'vm'
-                },
-                'toolbar-tools-left@site': {
-                    template: '<h2>Dokumenter</h2>',
-                }
-            }
 
         });
 }

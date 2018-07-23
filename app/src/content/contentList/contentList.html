@@ -1,4 +1,4 @@
-<table ng-show="hasContent() && !isLoading">
+<table ng-if="hasContent">
     <thead>
         <tr>
             <th sort-table="name" sort-default="!reverse" title="Sortér kolonne">{{'PROJECT.NAME' | translate }}</th>
@@ -6,16 +6,12 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
-        <tr content-template ng-repeat="content in contentList" content="content" ng-click="open(content)"></tr>
+    <tbody ng-repeat="content in contentList">
+        <tr content-template ng-repeat="c in content" content="c" ng-click="open(c)"></tr>
     </tbody>
 </table>
 
-<div layout="column" ng-show="!hasContent() && !isLoading">
+<div layout="column" ng-if="!hasContent">
     <md-icon class="md-icon--large">folder</md-icon>
-    <h1 class="md-display-1" style="text-align:center">{{'COMMON.' + (vm.error ? 'MISSING_FOLDER' : 'EMPTY_FOLDER') | translate}}</h1>
-</div>
-
-<div ng-if="isLoading" layout="row" layout-sm="column" layout-align="space-around" flex>
-    <md-progress-circular md-mode="indeterminate" md-diameter="96"></md-progress-circular>
+    <h1 class="md-display-1" style="text-align:center">{{'COMMON.EMPTY_FOLDER' | translate}}</h1>
 </div>

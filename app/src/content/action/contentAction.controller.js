@@ -19,12 +19,12 @@ function ContentActionController($scope, $mdDialog, ContentService) {
   activate();
 
   function activate() {
-    switch ($scope.content.actionSet) {
-      case 'folder':
+    switch ($scope.content.contentType) {
+      case 'cmis:folder':
         $scope.action.rename = true;
         $scope.action.delete = true;
         break;
-      case 'document':
+      case 'cmis:document':
         $scope.action.download = true
         $scope.action.rename = true;
         $scope.action.delete = true;

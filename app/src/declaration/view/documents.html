@@ -37,13 +37,9 @@
     </md-card-content>
 </md-card> -->
 
-<md-card ng-show="contentLength > 0">
-    <md-card-content>
-        <file-browser od-breadcrumb="true" od-disable-actions="true" od-case-uuid="case['store-protocol'] + '://' + case['store-identifier'] + '/' + case['node-uuid']"></file-browser>>
-    </md-card-content>
-</md-card>
+<file-browser folder-uuid="folderUuid"></file-browser>
 
-<div layout="column" ng-show="contentLength == 0">
+<!-- <div layout="column" ng-show="contentLength == 0">
     <md-icon class="md-icon--large">insert_drive_file</md-icon>
     <p class="md-display-1" style="text-align:center">Ingen dokumenter tilknyttet denne sag endnu.</p>
-</div>
+</div> -->

@@ -1,4 +1,4 @@
 'use strict';
 
 angular
-    .module('oda.content', [])
+    .module('oda.content', ['ngFileUpload'])

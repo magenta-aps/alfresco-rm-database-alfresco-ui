@@ -5,7 +5,9 @@ angular
     .directive('fileBrowser', function () {
         return {
             restrict: 'E',
-            scope: {},
+            scope: {
+                folderUuid: '='
+            },
             templateUrl: 'app/src/filebrowser/view/filebrowser.html',
             controller: 'FilebrowserController as vm'
         };

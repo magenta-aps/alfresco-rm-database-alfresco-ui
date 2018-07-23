@@ -5,16 +5,12 @@ table {
   th {
     text-align: left;
   }
-
-  tbody {
-    tr {
-      &:nth-child(odd) {
-        background-color: $gray-90;
-      }
   
+  tbody {
+    tr {  
       &:hover {
         background-color: $gray-85;
       }
-    }
+    }  
   }
 }

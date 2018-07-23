@@ -21,6 +21,7 @@ angular
         'openDeskApp.documents',
         'openDeskApp.systemsettings',
         'oda.waitinglist',
+        'oda.sharedDocuments',
         'm43nu.auto-height',
         'dcbImgFallback',
         'openDeskApp.declaration',
@@ -58,7 +59,7 @@ function config(USER_ROLES, $stateProvider, $mdDateLocaleProvider, $mdThemingPro
         var stateData = parent(state);
 
         state.resolve = state.resolve || {};
-        state.resolve.authorize = ['authService', '$q', 'sessionService', '$state', '$rootScope', '$stateParams','propertyService',
+        state.resolve.authorize = ['authService', '$q', 'sessionService', '$state', '$rootScope', '$stateParams', 'propertyService',
             function (authService, $q, sessionService, $state, $rootScope, $stateParams, propertyService) {
                 var d = $q.defer();
 

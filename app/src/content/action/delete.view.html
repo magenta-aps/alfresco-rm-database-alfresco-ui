@@ -4,8 +4,8 @@
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2>{{'COMMON.REMOVE' | translate}}
-                    <span ng-show="content.nodeType == 'cm:content'">{{'DOCUMENT.DOCUMENT' | translate | lowercase}}</span>
-                    <span ng-show="content.nodeType == 'cm:folder'">{{'COMMON.FOLDER' | translate | lowercase}}</span>
+                    <span ng-show="content.contentType == 'cmis:document'">{{'DOCUMENT.DOCUMENT' | translate | lowercase}}</span>
+                    <span ng-show="content.contentType == 'cmis:folder'">{{'COMMON.FOLDER' | translate | lowercase}}</span>
                 </h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="cancelDialog()">
@@ -16,7 +16,7 @@
 
         <md-dialog-content class="md-padding">
             <p>{{'COMMON.SURETOREMOVE' | translate}}
-                <em>{{content.fileName}}</em>?</p>
+                <em>{{content.name}}</em>?</p>
         </md-dialog-content>
 
         <md-dialog-actions>

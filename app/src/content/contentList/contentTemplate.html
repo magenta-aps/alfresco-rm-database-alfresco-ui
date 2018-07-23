@@ -2,10 +2,10 @@
   <td>
 
     <content-icon content="content"></content-icon>
-    <span>{{content.displayName}}</span>
+    <span>{{content.name}}</span>
 
   </td>
-  <td>{{content.modifiedOn | customDate}} - {{content.modifiedBy}}</td>
+  <td>{{content.lastChanged | customDate}} - {{content.lastChangedBy}}</td>
   <td style="text-align:right" ng-click="$event.stopPropagation()">
     <content-action content="content"></content-action>
   </td>

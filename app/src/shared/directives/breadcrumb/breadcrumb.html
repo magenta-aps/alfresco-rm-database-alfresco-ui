@@ -1,8 +1,8 @@
 <ol class="od-breadcrumb">
     <li ng-repeat="crumb in crumbs" ng-click="go(crumb)">
-        <a ng-hide="$last || $first" ui-sref-active="active">{{ crumb.title }}</a>
+        <a ng-hide="$last || $first">{{ crumb.title }}</a>
 
-        <md-button ng-show="$first" class="md-primary md-icon-button" ui-sref-active="active">
+        <md-button ng-show="$first" class="md-primary md-icon-button">
             <md-icon>folder</md-icon>
         </md-button>
 

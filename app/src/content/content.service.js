@@ -9,29 +9,57 @@ function ContentService($http, $rootScope, alfrescoNodeUtils, fileUtilsService, 
 
   var service = {
     get: getContent,
+    getContentList: getContentList,
     createFolder: createFolder,
     getNode: getNode,
     uploadFiles: uploadFiles,
     download: download,
     delete: deleteFile,
     getCurrentFolderNodeRef: getCurrentFolderNodeRef,
-    setCurrentFolderNodeRef: setCurrentFolderNodeRef
+    setCurrentFolderNodeRef: setCurrentFolderNodeRef,
+    getFolderNodeRefFromPath: getFolderNodeRefFromPath
   };
 
   return service;
+
+  function getFolderNodeRefFromPath(path) {
+    return getCompanyHome().then(function (companyHomeUri) {
+      return getNode(companyHomeUri, path)
+        .then(function (response) {
+          currentFolderNodeRef = response.metadata.parent.nodeRef;
+          return alfrescoNodeUtils.processNodeRef(currentFolderNodeRef).id;
+        });
+    });
+  }
+
 
   function getContent(path) {
     return getCompanyHome().then(function (companyHomeUri) {
       return getNode(companyHomeUri, path)
         .then(function (response) {
-          console.log(response)
           currentFolderNodeRef = response.metadata.parent.nodeRef;
-          const items = response.items;
-          angular.forEach(items, function (item) {
-            item.thumbNailURL = fileUtilsService.getFileIconByMimetype(item.mimetype, 24);
-          });
-          return items
+          return getContentList(alfrescoNodeUtils.processNodeRef(currentFolderNodeRef).id)
+            .then(function (response) {
+              return response
+            })
         });
+    });
+  }
+
+  function getContentList(node) {
+    return $http.get("/alfresco/service/contents?node=" + node)
+      .then(function (response) {
+        var lists = response.data
+        angular.forEach(lists, function (list) {
+          processContent(list);
+        });
+        return lists;
+      });
+  }
+
+  function processContent(content) {
+    angular.forEach(content, function (item) {
+      item.thumbNailURL = fileUtilsService.getFileIconByMimetype(item.mimeType, 24);
     });
   }
 
@@ -51,6 +79,7 @@ function ContentService($http, $rootScope, alfrescoNodeUtils, fileUtilsService, 
   }
 
   function createFolder(contentName, destination) {
+    destination = destination ? destination : currentFolderNodeRef;
     var props = {
       prop_cm_name: contentName,
       prop_cm_title: contentName,
@@ -65,9 +94,12 @@ function ContentService($http, $rootScope, alfrescoNodeUtils, fileUtilsService, 
   }
 
   function uploadFiles(file, destination) {
+    destination = destination ? destination : currentFolderNodeRef;
     var formData = new FormData();
     formData.append("filedata", file);
-    formData.append("destination", destination ? destination : null);
+    formData.append("destination", destination);
+    console.log('uplaod fil')
+    console.log(destination)
 
     return $http.post("/api/upload", formData, {
       transformRequest: angular.identity,

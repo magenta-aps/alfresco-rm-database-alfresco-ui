@@ -22,7 +22,8 @@
             <div layout="row" layout-sm="column" layout-align="space-around">
                 <md-progress-circular md-mode="indeterminate" ng-show="vm.uploading"></md-progress-circular>
             </div>
-            <md-button class="md-primary" type="submit" ng-disabled="vm.files.length === 0 || vm.uploading">
+
+            <md-button class="md-primary" type="submit" ng-disabled="vm.files.length == 0 || vm.uploading">
                 <md-icon>file_upload</md-icon>
                 {{'COMMON.UPLOAD' | translate}} {{'DOCUMENT.DOCUMENTS' | translate | lowercase}}
             </md-button>

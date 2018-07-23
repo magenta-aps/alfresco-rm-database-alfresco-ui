@@ -1,7 +1,7 @@
-<md-card>
+<md-card ng-if="!isLoading">
     <md-card-content>
-        <breadcrumb path="contentPath"></breadcrumb>
-        <content-list content-path="contentPath"></content-list>
+        <breadcrumb crumbs="crumbs" click-action="openBreadcrumb"></breadcrumb>
+        <content-list content-list="content" click-action="open"></content-list>
     </md-card-content>
 
     <md-card-actions layout="row" layout-align="start center" ng-if="!disableActions">
@@ -16,3 +16,7 @@
         </md-button>
     </md-card-actions>
 </md-card>
+
+<div ng-if="isLoading" layout="row" layout-sm="column" layout-align="space-around" flex>
+    <md-progress-circular md-mode="indeterminate" md-diameter="96"></md-progress-circular>
+</div>
