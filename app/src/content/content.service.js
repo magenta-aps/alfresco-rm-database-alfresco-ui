@@ -98,8 +98,6 @@ function ContentService($http, $rootScope, alfrescoNodeUtils, fileUtilsService, 
     var formData = new FormData();
     formData.append("filedata", file);
     formData.append("destination", destination);
-    console.log('uplaod fil')
-    console.log(destination)
 
     return $http.post("/api/upload", formData, {
       transformRequest: angular.identity,

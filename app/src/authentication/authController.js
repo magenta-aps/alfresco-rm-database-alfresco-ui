@@ -4,7 +4,7 @@ angular
     .module('openDeskApp')
     .controller('AuthController', AuthController);
 
-function AuthController(APP_CONFIG, $scope, $state, $http, $stateParams, authService, $mdDialog, sessionService, $window, loadingService) {
+function AuthController(APP_CONFIG, $state, $http, $stateParams, authService, $mdDialog, sessionService, $window, loadingService) {
     var vm = this;
     var loginErrorMessage = angular.fromJson($stateParams.error);
 
@@ -25,33 +25,33 @@ function AuthController(APP_CONFIG, $scope, $state, $http, $stateParams, authSer
 
     function login(credentials) {
         authService.login(credentials.username, credentials.password)
-        .then(function (response) {
-            // If incorrect values            
-            if (response.status == 403) {
-                vm.form.password.$setValidity("loginFailure", false);
-                vm.errorMsg = "Forkert brugernavn eller kodeord."
-                return 
-            } else if (response.status == 500) {
-                vm.form.password.$setValidity("loginError", false);
-                vm.errorMsg = "Forkert brugernavn eller kodeord."
-                return
-            }
-
-            $http.get(`/alfresco/service/isActivated?userName=${credentials.username}`)
-            .then(function(response) {
-                console.log(response.data.member)
-                if (response.data.member) {
-                    authService.getUser(credentials.username)
-                    .then(function (response) {
-                        vm.user = response;
-                        restoreLocation();
-                    });
-                } else {
-                    vm.errorMsg = 'Du er ikke aktiveret. Kontakt din nærmeste leder.'
-                    vm.logout()
+            .then(function (response) {
+                // If incorrect values            
+                if (response.status == 403) {
+                    vm.form.password.$setValidity("loginFailure", false);
+                    vm.errorMsg = "Forkert brugernavn eller kodeord."
+                    return
+                } else if (response.status == 500) {
+                    vm.form.password.$setValidity("loginError", false);
+                    vm.errorMsg = "Forkert brugernavn eller kodeord."
+                    return
                 }
+
+                $http.get(`/alfresco/service/isActivated?userName=${credentials.username}`)
+                    .then(function (response) {
+                        console.log(response.data.member)
+                        if (response.data.member) {
+                            authService.getUser(credentials.username)
+                                .then(function (response) {
+                                    vm.user = response;
+                                    restoreLocation();
+                                });
+                        } else {
+                            vm.errorMsg = 'Du er ikke aktiveret. Kontakt din nærmeste leder.'
+                            vm.logout()
+                        }
+                    })
             })
-        })
     }
 
     function restoreLocation() {

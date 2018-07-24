@@ -40,10 +40,6 @@ function authService($q, $http, $window, $state, sessionService) {
         });
     }
 
-    function authFailedSafari(response) {
-        return response.data && response.data.indexOf('Safari') != -1;
-    }
-
     function login(username, password) {
         var userInfo = {};
         return $http.post("/api/login", {
@@ -62,7 +58,7 @@ function authService($q, $http, $window, $state, sessionService) {
     function logout() {
         var userInfo = sessionService.getUserInfo();
 
-
+        console.log(userInfo)
         if (userInfo) {
             var ticket = userInfo.ticket;
             sessionService.clearRetainedLocation();

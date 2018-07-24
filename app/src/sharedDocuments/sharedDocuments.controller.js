@@ -4,12 +4,13 @@ angular
   .module('oda.sharedDocuments')
   .controller('SharedDocumentsController', SharedDocumentsController);
 
-function SharedDocumentsController($scope, $stateParams, ContentService) {
+function SharedDocumentsController($scope, $stateParams, $translate, ContentService, HeaderService) {
   var vm = this;
 
   $scope.folderUuid = [];
 
-  activate()
+  HeaderService.setTitle($translate.instant('DOCUMENT.DOCUMENTS'))
+  activate();
 
   function activate() {
     $scope.isLoading = true;

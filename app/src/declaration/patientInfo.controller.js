@@ -1,100 +1,131 @@
 'use strict';
 
 angular
-    .module('openDeskApp.declaration')
-    .controller('PatientInfoController', PatientInfoController);
+	.module('openDeskApp.declaration')
+	.controller('PatientInfoController', PatientInfoController);
 
-function PatientInfoController($scope, $mdToast, entryService, filterService, loadingService, cprService) {
+function PatientInfoController($scope, $rootScope, $stateParams, $mdToast, $mdDialog, entryService, filterService, loadingService, cprService, HeaderService) {
 
-    var vm = this;
-    $scope.entryService = entryService;
-    $scope.loadingService = loadingService;
-    $scope.editPatientData = false;
-    $scope.case = {};
+	var vm = this;
+	$scope.entryService = entryService;
+	$scope.editPatientData = false;
+	$scope.case;
 
-    $scope.waitTime = {
-        passive: null,
-        active: null,
-        total: null
-    };
+	$scope.waitTime = {
+		passive: null,
+		active: null,
+		total: null
+	};
 
-    $scope.propertyFilter = propertyFilter;
-    $scope.addNewBidiagnosis = addNewBidiagnosis;
-    vm.lookupCPR = lookupCPR;
-    vm.isNumber = isNumber;
+	$scope.propertyFilter = propertyFilter;
+	$scope.addNewBidiagnosis = addNewBidiagnosis;
+	vm.lookupCPR = lookupCPR;
+	vm.isNumber = isNumber;
 
-    loadingService.setLoading(true);
+	HeaderService.resetActions();
+	loadingService.setLoading(true);
+	activated();
 
-    angular.element(document).ready(function() {
-        loadingService.setLoading(false);
-    });
+	angular.element(document).ready(function () {
+		loadingService.setLoading(false);
+	});
 
-    $scope.$watch('entryService.getCurrentCase()', function (newVal) {
-        $scope.case = newVal;
-    });
+	function activated() {
+		entryService.getEntry($stateParams.caseid)
+			.then(function (response) {
+				$scope.case = response
+				$scope.waitTime = getWaitingTimes(response);
+				var bua = response.bua ? ' (BUA)' : '';
+				HeaderService.setTitle(response.firstName + ' ' + response.lastName + ' (' + response.caseNumber + ')' + bua);
+				HeaderService.setClosed(response.closed);
+				if (!response.closed) {
+					HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog)
+					HeaderService.addAction('COMMON.EDIT', 'edit')
+				}
+			})
+	}
 
-    $scope.$watch('entryService.isEditing()', function (newVal) {
-        $scope.editPatientData = newVal;
-    });
+	$scope.$watch('entryService.isEditing()', function (newVal) {
+		$scope.editPatientData = newVal;
+	});
 
-    $scope.$watch('case', function (newVal) {
-        entryService.updateNewCase(newVal);
-        $scope.waitTime = getWaitingTimes(newVal);
-    }, true);
-    
-    function propertyFilter(array, query) {
-        return filterService.propertyFilter(array, query);
-    }
-    
-    function addNewBidiagnosis() {
-        console.log('add new bidiagnosis');
-        // var newItemNo = $scope.case.biDiagnoses.length + 1;
-        console.log($scope.case.biDiagnoses.indexOf(''));
+	function propertyFilter(array, query) {
+		return filterService.propertyFilter(array, query);
+	}
 
-        if ($scope.case.biDiagnoses.indexOf('') < 0) {
-            $scope.case.biDiagnoses.push('');
-        }
+	function addNewBidiagnosis() {
+		console.log($scope.case.biDiagnoses.indexOf(''));
 
-        console.log($scope.case.biDiagnoses);
-    }
-    
-    function lookupCPR() {
-        cprService.getCPRData($scope.case.cprNumber).then(function(response) {
-            var res = response.data[0];
-            console.log(response.data[0]);
-            var name = res.NAVN.split(',');
+		if ($scope.case.biDiagnoses.indexOf('') < 0) {
+			$scope.case.biDiagnoses.push('');
+		}
+	}
 
-            $scope.case.firstName = name[1];
-            $scope.case.lastName = name[0];
-            $scope.case.address = res.GADE;
-            $scope.case.postbox = res.POSTNR;
-            $scope.case.city = res.BY;
-        }).error(function(err) {
-            $mdToast.show(
-                $mdToast.simple()
-                  .textContent('Ingen person med CPR nummeret ' + $scope.case.cprNumber)
-                  .position('top right')
-                  .hideDelay(3000)
-              );
-        });
-    }
+	function lookupCPR() {
+		cprService.getCPRData($scope.case.cprNumber)
+			.then(function (response) {
+				var res = response.data[0];
+				var name = res.NAVN.split(',');
 
-    function getWaitingTimes(res) {
-        var creationDate = new Date(res.creationDate);
-        var observationDate = new Date(res.observationDate);
-        var declarationDate = new Date(res.declarationDate);
+				$scope.case.firstName = name[1];
+				$scope.case.lastName = name[0];
+				$scope.case.address = res.GADE;
+				$scope.case.postbox = res.POSTNR;
+				$scope.case.city = res.BY;
+			}).error(function (err) {
+				$mdToast.show(
+					$mdToast.simple()
+						.textContent('Ingen person med CPR nummeret ' + $scope.case.cprNumber)
+						.position('top right')
+						.hideDelay(3000)
+				);
+			});
+	}
 
-        var wait = {};
+	function getWaitingTimes(res) {
+		var creationDate = new Date(res.creationDate);
+		var observationDate = new Date(res.observationDate);
+		var declarationDate = new Date(res.declarationDate);
 
-        wait.passive = Math.ceil((observationDate - creationDate) / 1000 / 60 / 60 / 24);
-        wait.active = Math.ceil((declarationDate - observationDate) / 1000 / 60 / 60 / 24);
-        wait.total = Math.ceil((declarationDate - creationDate) / 1000 / 60 / 60 / 24);
+		var wait = {};
 
-        return wait;
-    }
+		wait.passive = Math.ceil((observationDate - creationDate) / 1000 / 60 / 60 / 24);
+		wait.active = Math.ceil((declarationDate - observationDate) / 1000 / 60 / 60 / 24);
+		wait.total = Math.ceil((declarationDate - creationDate) / 1000 / 60 / 60 / 24);
 
-    function isNumber(number) {
-        return isNaN(number) ? false : true;
-    }
+		return wait;
+	}
 
+	function isNumber(number) {
+		return isNaN(number) ? false : true;
+	}
+
+	function lockCaseDialog() {
+		$mdDialog.show({
+			templateUrl: 'app/src/declaration/view/lock-dialog.html',
+			scope: $scope, // use parent scope in template
+			preserveScope: true, // do not forget this if use parent scope
+			clickOutsideToClose: true
+		});
+	}
+
+	$scope.closeCase = function () {
+		$scope.case.locked4edit = false;
+		$scope.case.locked4editBy = {};
+
+		$scope.case.closed = true;
+
+		if ($scope.closeCaseParams.closed == 'no-declaration') {
+			$scope.case.closedWithoutDeclaration = true;
+		}
+
+		$scope.case.closedWithoutDeclarationReason = $scope.closeCaseParams.reason;
+		$scope.case.closedWithoutDeclarationSentTo = $scope.closeCaseParams.sentTo;
+
+		entryService.updateEntry($scope.case)
+			.then(function () {
+				HeaderService.setClosed(true);
+				$mdDialog.cancel();
+			})
+	}
 }

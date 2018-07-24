@@ -18,7 +18,7 @@ function DeclarationController($scope, $state, $stateParams, entryService, prope
     vm.viewDocuments = viewDocuments;
     vm.viewPatientData = viewPatientData;
     vm.isNumber = isNumber;
-    
+
     activate();
 
     function activate() {
@@ -31,16 +31,16 @@ function DeclarationController($scope, $state, $stateParams, entryService, prope
         }
     }
 
-    
+
     function viewDocuments() {
         $state.go('declaration.show.documents');
     }
-    
+
     function viewPatientData() {
         $state.go('declaration.show.patientdata');
     }
 
-    
+
     function isNumber(number) {
         return isNaN(number) ? false : true;
     }

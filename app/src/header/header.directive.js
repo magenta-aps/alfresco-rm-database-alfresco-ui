@@ -2,7 +2,7 @@
 
 angular
     .module('openDeskApp.header')
-    .directive('rmHeader', function() {
+    .directive('odaHeader', function () {
         return {
             restrict: 'E',
             scope: {},

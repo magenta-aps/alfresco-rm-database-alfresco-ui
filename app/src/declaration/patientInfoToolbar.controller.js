@@ -169,7 +169,8 @@ function PatientInfoToolbarController($scope, $mdDialog, $state, $mdToast, $tran
             'locked4editBy': lock ? currentUser : {}
         };
 
-        entryService.updateEntry(locked).then(function (response) {
+        entryService.updateEntry(locked)
+        .then(function (response) {
             console.log(response);
         });
 

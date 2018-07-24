@@ -13,12 +13,7 @@ function config($stateProvider, USER_ROLES) {
                 templateUrl: 'app/src/declaration/search/search.view.html',
                 controller: 'DeclarationSearchController',
                 controllerAs: 'vm'
-            },
-            'toolbar-tools-right@site': {
-                templateUrl: 'app/src/declaration/view/create-toolbar.html',
-                controller: 'DeclarationCreateToolbarController',
-                controllerAs: 'vm'
-            },
+            }
         }
     })
         .state('declaration.advancedSearch', {
@@ -28,9 +23,6 @@ function config($stateProvider, USER_ROLES) {
                     templateUrl: 'app/src/declaration/advancedSearch/advancedSearch.view.html',
                     controller: 'AdvancedSearchController',
                     controllerAs: 'vm'
-                },
-                'toolbar-tools-left@site': {
-                    template: "<md-button class='md-icon-button' aria-label='Back' ui-sref='declaration'><md-icon>arrow_back</md-icon></md-button><span>{{'DECLARATION.ADVANCED_SEARCH' | translate}}</span>"
                 }
             }
         })
@@ -38,12 +30,9 @@ function config($stateProvider, USER_ROLES) {
             url: '/venteliste',
             views: {
                 'content@': {
-                    templateUrl: 'app/src/declaration/waitinglist/waitinglist.view.html',
+                    templateUrl: 'app/src/waitinglist/waitinglist.view.html',
                     controller: 'WaitinglistController',
                     controllerAs: 'vm'
-                },
-                'toolbar-tools-left@site': {
-                    template: "<h2>{{'DECLARATION.WAITINGLIST' | translate}}</h2>"
                 }
             }
         })
@@ -54,14 +43,6 @@ function config($stateProvider, USER_ROLES) {
                     templateUrl: 'app/src/declaration/view/info-cards.html',
                     controller: 'DeclarationCreateController',
                     controllerAs: 'vm'
-                },
-                'toolbar-tools-right@site': {
-                    templateUrl: 'app/src/declaration/view/create-toolbar.html',
-                    controller: 'DeclarationCreateToolbarController',
-                    controllerAs: 'vm'
-                },
-                'toolbar-tools-left@site': {
-                    template: "<h2>Opret ny sag</h2>"
                 }
             }
         })
@@ -72,14 +53,6 @@ function config($stateProvider, USER_ROLES) {
                     templateUrl: 'app/src/declaration/view/info-cards.html',
                     controller: 'DeclarationCreateController',
                     controllerAs: 'vm'
-                },
-                'toolbar-tools-right@site': {
-                    templateUrl: 'app/src/declaration/view/create-toolbar.html',
-                    controller: 'DeclarationCreateToolbarController',
-                    controllerAs: 'vm'
-                },
-                'toolbar-tools-left@site': {
-                    template: "<h2>Opret ny BUA-sag</h2>"
                 }
             }
         })
@@ -105,13 +78,6 @@ function config($stateProvider, USER_ROLES) {
                     templateUrl: 'app/src/declaration/view/documents.html',
                     controller: 'DeclarationDocumentController',
                     controllerAs: 'vm'
-                },
-                'toolbar-tools-right@site': {
-                    template: ''
-                },
-                'toolbar-tools-left@site': {
-                    templateUrl: 'app/src/declaration/view/patient-toolbar.html',
-                    controller: 'PatientInfoToolbarController',
                 }
             }
         })
@@ -136,15 +102,6 @@ function config($stateProvider, USER_ROLES) {
                     templateUrl: 'app/src/declaration/view/info-cards.html',
                     controller: 'PatientInfoController',
                     controllerAs: 'vm'
-                },
-                'toolbar-tools-right@site': {
-                    templateUrl: 'app/src/declaration/view/patient-info-toolbar.html',
-                    controller: 'PatientInfoToolbarController',
-                    controllerAs: 'vm'
-                },
-                'toolbar-tools-left@site': {
-                    templateUrl: 'app/src/declaration/view/patient-toolbar.html',
-                    controller: 'PatientInfoToolbarController',
                 }
             }
         })

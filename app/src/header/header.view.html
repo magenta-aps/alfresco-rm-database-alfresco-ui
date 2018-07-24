@@ -4,37 +4,38 @@
             <h2 ui-sref="declaration" style="cursor:pointer;font-variant:small-caps">
                 <strong>O</strong>bservand
                 <strong>DA</strong>tabase</h2>
-
             <span flex></span>
-
-            <div ng-controller="AuthController as ac">
+            <div>
                 <div>
-                    <h2 class="od-user-name">
-                        {{ ac.getUserInfo().user.firstName }} {{ ac.getUserInfo().user.lastName }}
-                    </h2>
+                    <h2 class="od-user-name">{{ vm.getUserName() }}</h2>
 
                     <md-button class="md-icon-button" title="Dokumenter" ui-sref="shared-documents">
                         <md-icon>insert_drive_file</md-icon>
                         <md-tooltip md-delay="500" md-direction="bottom">Dokumenter</md-tooltip>
                     </md-button>
 
-                    <md-button ng-if="ac.userRoles.indexOf('SiteManager') > -1 || ac.userRoles.indexOf('SiteRoleManager') > -1 || ac.userRoles.indexOf('SitePropertyValueManager') > -1 || ac.userRoles.indexOf('SiteRoleManager') > -1 || ac.userRoles.indexOf('TemplateFolderValueManager') > -1"
-                        class="md-icon-button" title="Indstillinger" ui-sref="administration">
+                    <md-button ng-if="vm.canAccessSettings()" class="md-icon-button" title="Indstillinger" ui-sref="administration">
                         <md-icon>settings</md-icon>
                         <md-tooltip md-delay="500" md-direction="bottom">Indstillinger</md-tooltip>
                     </md-button>
 
-                    <md-button ng-click="ac.logout()">
+                    <md-button ng-click="vm.logout()">
                         {{ 'MENU.LOGOUT' | translate }}
                     </md-button>
                 </div>
             </div>
         </span>
         <span class="md-toolbar-tools" layout="row">
-            <ui-view name="toolbar-tools-left"></ui-view>
-            <!-- <h2>{{vm.leftHeaderTitle}}</h2> -->
+            <h2>{{vm.title}}</h2>
             <span flex></span>
-            <ui-view name="toolbar-tools-right"></ui-view>
+            <h2 ng-if="vm.isClosed">
+                <md-icon>done</md-icon> {{'DECLARATION.DECLARATION_CLOSED' | translate}}
+            </h2>
+            <md-button ng-repeat="action in vm.actions" ng-click="action.action()" ng-class="action.primary ? 'md-raised md-primary md-hue-2' : ''"
+                ng-disabled="action.icon === 'save' ? $root.declarationForm.$invalid : ''">
+                <md-icon>{{action.icon}}</md-icon>
+                <span>{{action.label | translate}}</span>
+            </md-button>
         </span>
     </md-toolbar>
 </header>

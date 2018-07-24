@@ -11,13 +11,11 @@
                 <tbody md-body>
                     <tr md-row ng-repeat="content in listContent | orderBy: query.order">
                         <td md-cell>
-                            <md-checkbox aria-label="{{content.title}}" ng-model="content.selected" ng-disabled="!isEditing"></md-checkbox>
+                            <md-checkbox aria-label="{{content.title}}" ng-model="content.selected"></md-checkbox>
                         </td>
                         <td md-cell>
                             <span>
-                                <img class="list-edit clickable" ng-if="isEditing" ng-click="renameDialog(content)" ng-src="app/assets/images/edit.svg">
-                                <i class="list-edit clickable" ng-if="isEditing" ng-click="renameDialog(content)"></i>
-                                {{content.title}}
+                                <img class="list-edit clickable" ng-click="renameDialog(content)" ng-src="app/assets/images/edit.svg"> {{content.title}}
                             </span>
                         </td>
                     </tr>

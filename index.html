@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="da">
+
 <head>
     <title>Retspsykiatriske erklæringer</title>
 
@@ -50,7 +51,7 @@
     <script src="./bower_components/ng-file-upload/ng-file-upload.min.js"></script>
 
     <!-- angular tables -->
-    <link href="bower_components/angular-material-data-table/dist/md-data-table.min.css" rel="stylesheet" type="text/css"/>
+    <link href="bower_components/angular-material-data-table/dist/md-data-table.min.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="bower_components/angular-material-data-table/dist/md-data-table.min.js"></script>
 
     <!-- OpenDesk App -->
@@ -59,9 +60,9 @@
 </head>
 
 <body ng-app="openDeskApp" class="od-app">
-    
-    <header ui-view="header" class="od-header"></header>
-    <!-- <rm-header></rm-header> -->
+
+    <!-- <header ui-view="header" class="od-header"></header> -->
+    <oda-header></oda-header>
     <div ng-controller="LoadingController" style="position:fixed;margin-top:128px;width:100%">
         <md-progress-linear md-mode="indeterminate" ng-if="isLoading"></md-progress-linear>
     </div>

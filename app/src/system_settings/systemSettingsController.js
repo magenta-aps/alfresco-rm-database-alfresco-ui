@@ -4,7 +4,7 @@ angular
     .module('openDeskApp.systemsettings')
     .controller('SystemSettingsController', SystemSettingsCtrl);
 
-function SystemSettingsCtrl($scope, $state, systemSettingsPagesService, sessionService, authService) {
+function SystemSettingsCtrl($scope, $state, $translate, systemSettingsPagesService, sessionService, authService, HeaderService) {
     var vm = this;
 
     $scope.templateSites = [];
@@ -13,21 +13,20 @@ function SystemSettingsCtrl($scope, $state, systemSettingsPagesService, sessionS
 
     //sets the margin to the width of sidenav
     var sidebar = $(".md-sidenav-left");
-    $(".od-info-declarations").css("margin-left", sidebar.width()+"px");
-    
+    $(".od-info-declarations").css("margin-left", sidebar.width() + "px");
+
+    HeaderService.resetActions();
+    HeaderService.setTitle($translate.instant('ADMIN.ADMINISTRATION'));
+
     function viewState(newState) {
         $state.go('administration.' + newState);
+        HeaderService.setTitle($translate.instant('ADMIN.ADMINISTRATION') + ' - ' + $translate.instant('ADMIN.' + newState.toUpperCase()))
     }
 
-    function getUserRoles () {
+    function getUserRoles() {
         $scope.userRoles = authService.getUserRoles();
     }
     getUserRoles();
 
     vm.isAdmin = sessionService.isAdmin();
-
-    vm.pages = systemSettingsPagesService.getPages()
-        .filter(function (page) {
-            return true;
-        });
 }

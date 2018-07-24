@@ -4,7 +4,7 @@ angular
     .module('oda.waitinglist')
     .controller('WaitinglistController', WaitinglistController);
 
-function WaitinglistController($state, entryService) {
+function WaitinglistController($state, $translate, entryService, HeaderService) {
     var vm = this;
 
     vm.waitingListCases = [];
@@ -19,26 +19,27 @@ function WaitinglistController($state, entryService) {
     var next = 0;
     vm.nextPage = nextPage;
 
-
-    getWaitinglist(0,1000);
+    HeaderService.resetActions();
+    HeaderService.setTitle($translate.instant('DECLARATION.WAITINGLIST'));
+    getWaitinglist(0, 1000);
 
     function gotoCase(caseNumber) {
-        $state.go('declaration.show', {caseid: caseNumber});
+        $state.go('declaration.show', { caseid: caseNumber });
     }
 
     function nextPage() {
-        getWaitinglist(next,1000)
+        getWaitinglist(next, 1000)
     }
 
-    function getWaitinglist(skip,max) {
+    function getWaitinglist(skip, max) {
         vm.isLoading = true;
-        entryService.getWaitingList(skip,max)
-        .then(function (entries) {
-            vm.isLoading = false;
-            vm.totalCases = entries.total;
-            next = entries.next;
+        entryService.getWaitingList(skip, max)
+            .then(function (entries) {
+                vm.isLoading = false;
+                vm.totalCases = entries.total;
+                next = entries.next;
 
-            angular.forEach(entries.entries, function (declaration) {
+                angular.forEach(entries.entries, function (declaration) {
                     var date = new Date(declaration.creationDate);
 
                     var day = ('0' + date.getDate()).slice(-2);
@@ -48,9 +49,9 @@ function WaitinglistController($state, entryService) {
 
                     vm.waitingListCases.push(declaration);
 
+                });
+            }, function (err) {
+                console.log(err);
             });
-        }, function (err) {
-            console.log(err);
-        });
     }
 }

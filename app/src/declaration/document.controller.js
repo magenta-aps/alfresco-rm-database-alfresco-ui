@@ -4,7 +4,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('DeclarationDocumentController', DocumentController);
 
-function DocumentController($scope, $state, $stateParams, $timeout, entryService, documentToolbarService, loadingService,
+function DocumentController($scope, $state, $stateParams, $timeout, entryService, loadingService,
     documentService, documentPreviewService, preferenceService, authService, sessionService, ContentService) {
     var vm = this;
 
@@ -12,7 +12,6 @@ function DocumentController($scope, $state, $stateParams, $timeout, entryService
     // $scope.isEditing = false;
 
     // $scope.documentService = documentService;
-    // $scope.documentToolbarService = documentToolbarService;
     // $scope.entryService = entryService;
 
     // $scope.contents = [];
@@ -31,25 +30,12 @@ function DocumentController($scope, $state, $stateParams, $timeout, entryService
     activate();
 
     function activate() {
-        activate2();
-        console.log('doc controller')
         entryService.getEntry($stateParams.caseid)
             .then(function (response) {
                 console.log(response)
                 const nodeRef = response['store-protocol'] + '://' + response['store-identifier'] + '/' + response['node-uuid']
                 ContentService.setCurrentFolderNodeRef(nodeRef);
                 $scope.folderUuid = response['node-uuid'];
-            })
-    }
-
-    function activate2() {
-        console.log('ac2')
-        console.log($stateParams.path)
-        ContentService.getFolderNodeRefFromPath($stateParams.path)
-            .then(function (response) {
-                console.log('hello from a2')
-                console.log(response)
-                // $scope.folderUuid = response;
             })
     }
 
@@ -97,11 +83,6 @@ function DocumentController($scope, $state, $stateParams, $timeout, entryService
     //         $scope.contentLength += contentTypeList.length;
     //     });
     // }, true);
-
-    //change view
-    // $scope.$watch('documentToolbarService.getDocumentView()', function (newVal) {
-    //     $scope.tableView = newVal;
-    // });
 
     // activate();
 
