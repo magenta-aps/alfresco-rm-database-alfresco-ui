@@ -48,7 +48,7 @@ angular.module('openDeskApp.declaration')
 				propertyName = property;
 				propertyContent = [];
 				var content = getValuesForProperty(property);
-				if (!content) return []
+				if (!content) return propertyContent;
 
 				content.forEach(function (elem, key) {
 					propertyContent.push({

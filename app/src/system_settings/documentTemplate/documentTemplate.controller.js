@@ -4,11 +4,12 @@ angular
   .module('openDeskApp.systemsettings')
   .controller('DocumentTemplateController', DocumentTemplateController);
 
-function DocumentTemplateController($scope, $stateParams, ContentService) {
+function DocumentTemplateController($scope, $stateParams, ContentService, HeaderService) {
   var vm = this;
 
   $scope.folderUuid = [];
 
+  HeaderService.resetActions();
   activate()
 
   function activate() {

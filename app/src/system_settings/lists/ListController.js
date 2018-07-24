@@ -4,7 +4,7 @@ angular
     .module('openDeskApp.declaration')
     .controller('ListController', ListController);
 
-function ListController($scope, $stateParams, $mdDialog, propertyService, loadingService, HeaderService) {
+function ListController($scope, $stateParams, $mdDialog, $mdToast, propertyService, loadingService, HeaderService) {
 
     $scope.selectedContent = [];
     $scope.newEntry = '';
@@ -13,7 +13,6 @@ function ListController($scope, $stateParams, $mdDialog, propertyService, loadin
     $scope.listTitle = $stateParams.listTitle;
     $scope.listContent = propertyService.getPropertyContent($stateParams.listData);
 
-    HeaderService.resetActions();
     HeaderService.addAction('COMMON.ADD', 'add', addNewDialog);
 
     $scope.query = {
@@ -77,18 +76,23 @@ function ListController($scope, $stateParams, $mdDialog, propertyService, loadin
 
     $scope.addNew = function () {
         propertyService.addPropertyValue($scope.newEntry);
+        showToast($scope.newEntry + ' blev tilføjet');
         $scope.newEntry = '';
         $scope.cancel();
     }
 
     $scope.delete = function () {
         propertyService.deletePropertyValues($scope.selectedContent);
+        angular.forEach($scope.selectedContent, function (deleted) {
+            showToast(deleted.title + ' blev slettet');
+        })
         $scope.selectedContent = [];
         $scope.cancel();
     }
 
     $scope.rename = function () {
         propertyService.renamePropertyValue($scope.renameOriginal, { title: $scope.newEntry });
+        showToast($scope.renameOriginal.title + ' blev omdøbt til ' + $scope.newEntry);
         $scope.newEntry = '';
         $scope.renameOriginal = {};
         $scope.cancel();
@@ -96,5 +100,14 @@ function ListController($scope, $stateParams, $mdDialog, propertyService, loadin
 
     $scope.cancel = function () {
         $mdDialog.cancel();
+    }
+
+    function showToast(msg) {
+        $mdToast.show(
+            $mdToast.simple()
+                .textContent(msg)
+                .position('top right')
+                .hideDelay(3000)
+        );
     }
 }

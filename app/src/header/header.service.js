@@ -39,6 +39,7 @@ function HeaderService($rootScope, authService) {
     function resetActions() {
         actions = [];
         closed = false;
+        $rootScope.$broadcast('updateHeader');
     }
 
     function addAction(label, icon, action, primary) {

@@ -4,7 +4,7 @@ angular
     .module('openDeskApp.systemsettings')
     .controller('SystemSettingsController', SystemSettingsCtrl);
 
-function SystemSettingsCtrl($scope, $state, $translate, systemSettingsPagesService, sessionService, authService, HeaderService) {
+function SystemSettingsCtrl($scope, $state, $translate, authService, HeaderService) {
     var vm = this;
 
     $scope.templateSites = [];
@@ -20,13 +20,11 @@ function SystemSettingsCtrl($scope, $state, $translate, systemSettingsPagesServi
 
     function viewState(newState) {
         $state.go('administration.' + newState);
-        HeaderService.setTitle($translate.instant('ADMIN.ADMINISTRATION') + ' - ' + $translate.instant('ADMIN.' + newState.toUpperCase()))
+        HeaderService.setTitle($translate.instant('ADMIN.ADMINISTRATION') + ' - ' + $translate.instant('ADMIN.' + newState.toUpperCase()));
     }
 
     function getUserRoles() {
         $scope.userRoles = authService.getUserRoles();
     }
     getUserRoles();
-
-    vm.isAdmin = sessionService.isAdmin();
 }
