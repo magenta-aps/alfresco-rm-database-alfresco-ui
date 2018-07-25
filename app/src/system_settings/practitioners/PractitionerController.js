@@ -4,7 +4,7 @@ angular
   .module('openDeskApp.declaration')
   .controller('PractitionerController', PractitionerController);
 
-function PractitionerController($scope, practitionerService, $mdToast, loadingService, HeaderService) {
+function PractitionerController($scope, practitionerService, Toast, loadingService, HeaderService) {
 
   $scope.allUsers = [];
 
@@ -28,7 +28,7 @@ function PractitionerController($scope, practitionerService, $mdToast, loadingSe
           var removeGroup = !value ? [key] : [];
           practitionerService.updateUserRoles(user.userName, addGroup, removeGroup)
           var msg = 'Rettighederne er blevet opdateret for ' + user.firstName + ' ' + user.lastName;
-          showToast(msg)
+          Toast.show(msg)
         }
       })
     })
@@ -41,14 +41,5 @@ function PractitionerController($scope, practitionerService, $mdToast, loadingSe
       .then(function (response) {
         $scope.allUsers = response.data;
       })
-  }
-
-  function showToast(msg) {
-    $mdToast.show(
-      $mdToast.simple()
-        .textContent(msg)
-        .position('top right')
-        .hideDelay(3000)
-    );
   }
 }

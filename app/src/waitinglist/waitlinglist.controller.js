@@ -4,7 +4,7 @@ angular
     .module('oda.waitinglist')
     .controller('WaitinglistController', WaitinglistController);
 
-function WaitinglistController($state, $translate, entryService, HeaderService) {
+function WaitinglistController($state, $translate, DeclarationService, HeaderService) {
     var vm = this;
 
     vm.waitingListCases = [];
@@ -33,7 +33,7 @@ function WaitinglistController($state, $translate, entryService, HeaderService) 
 
     function getWaitinglist(skip, max) {
         vm.isLoading = true;
-        entryService.getWaitingList(skip, max)
+        DeclarationService.getWaitingList(skip, max)
             .then(function (entries) {
                 vm.isLoading = false;
                 vm.totalCases = entries.total;

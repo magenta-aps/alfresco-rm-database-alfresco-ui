@@ -1,16 +1,16 @@
 'use strict';
 
 angular
-    .module('oda.authorityMail')
-    .controller('AuthorityMailController', AuthorityMailController);
+  .module('oda.authorityMail')
+  .controller('AuthorityMailController', AuthorityMailController);
 
-function AuthorityMailController($mdDialog, $mdToast, authorityMail, documentService, propertyService, filterService) {
+function AuthorityMailController($scope, $mdDialog, $mdToast, authorityMail, propertyService, filterService) {
   var vm = this;
 
   vm.payload = {};
   vm.payload.nodeRefs = [];
 
-  vm.selectedFiles = documentService.getSelectedFiles();
+  vm.selectedFiles = $scope.selectedContent;
   vm.properties = propertyService.getAllPropertyValues();
 
   vm.propertyFilter = propertyFilter;
@@ -20,7 +20,7 @@ function AuthorityMailController($mdDialog, $mdToast, authorityMail, documentSer
 
   activated()
 
-  function activated () {
+  function activated() {
     vm.selectedFiles.forEach(file => {
       vm.payload.nodeRefs.push(file.nodeRef);
     });
@@ -28,20 +28,21 @@ function AuthorityMailController($mdDialog, $mdToast, authorityMail, documentSer
 
   function propertyFilter(array, query) {
     return filterService.propertyFilter(array, query);
-}
+  }
 
-  function send () {
+  function send() {
     vm.loading = true;
-    authorityMail.send(vm.payload).then(function () {
-      vm.loading = false;
-      vm.cancel();
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('Mailen blev sendt')
-        .position('top right')
-        .hideDelay(3000)
-      );
-    })
+    authorityMail.send(vm.payload)
+      .then(function () {
+        vm.loading = false;
+        vm.cancel();
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Mailen blev sendt')
+            .position('top right')
+            .hideDelay(3000)
+        );
+      })
   }
 
   function cancel() {

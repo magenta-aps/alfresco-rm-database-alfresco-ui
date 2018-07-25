@@ -14,25 +14,20 @@
         <md-dialog-content class="md-padding">
             <md-radio-group ng-model="closeCaseParams.closed" required>
                 <md-radio-button value="closed"> {{'DECLARATION.LOCK' | translate}}</md-radio-button>
-                <md-radio-button value="no-declaration">  {{'DECLARATION.CLOSED_WITHOUT_DECLARATION' | translate}}</md-radio-button>
+                <md-radio-button value="no-declaration"> {{'DECLARATION.CLOSED_WITHOUT_DECLARATION' | translate}}</md-radio-button>
             </md-radio-group>
 
             <span ng-show="closeCaseParams.closed == 'no-declaration'">
-                <md-autocomplete flex 
-            md-selected-item="closeCaseParams.reason" 
-            md-search-text="reasonSearch"
-            md-items="reason in propertyFilter(propertyValues['noDeclarationReason'],reasonSearch)" 
-            md-item-text="reason" 
-            md-min-length="0" 
-            md-floating-label="Årsag">
-            <md-item-template>
-                <span md-highlight-text="reasonSearch" md-highlight-flags="gi">{{reason}}</span>
-            </md-item-template>
-        </md-autocomplete>
-            <md-input-container class="md-block">
-                <label>Sendt til</label> 
-                <input type="text" name="sentTo" ng-model="closeCaseParams.sentTo">
-            </md-input-container>
+                <md-autocomplete flex md-selected-item="closeCaseParams.reason" md-search-text="reasonSearch" md-items="reason in propertyFilter(propertyValues['noDeclarationReason'],reasonSearch)"
+                    md-item-text="reason" md-min-length="0" md-floating-label="Årsag">
+                    <md-item-template>
+                        <span md-highlight-text="reasonSearch" md-highlight-flags="gi">{{reason}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+                <md-input-container class="md-block">
+                    <label>Sendt til</label>
+                    <input type="text" name="sentTo" ng-model="closeCaseParams.sentTo">
+                </md-input-container>
             </span>
         </md-dialog-content>
 

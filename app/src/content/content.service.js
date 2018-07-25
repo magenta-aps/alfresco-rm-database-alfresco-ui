@@ -3,7 +3,7 @@
 angular.module('oda.content')
   .factory('ContentService', ContentService);
 
-function ContentService($http, $rootScope, alfrescoNodeUtils, fileUtilsService, alfrescoDownloadService) {
+function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUtilsService, alfrescoDownloadService) {
 
   var currentFolderNodeRef;
 
@@ -14,6 +14,7 @@ function ContentService($http, $rootScope, alfrescoNodeUtils, fileUtilsService, 
     getNode: getNode,
     uploadFiles: uploadFiles,
     download: download,
+    downloadZippedFiles: downloadZippedFiles,
     delete: deleteFile,
     getCurrentFolderNodeRef: getCurrentFolderNodeRef,
     setCurrentFolderNodeRef: setCurrentFolderNodeRef,
@@ -23,27 +24,29 @@ function ContentService($http, $rootScope, alfrescoNodeUtils, fileUtilsService, 
   return service;
 
   function getFolderNodeRefFromPath(path) {
-    return getCompanyHome().then(function (companyHomeUri) {
-      return getNode(companyHomeUri, path)
-        .then(function (response) {
-          currentFolderNodeRef = response.metadata.parent.nodeRef;
-          return alfrescoNodeUtils.processNodeRef(currentFolderNodeRef).id;
-        });
-    });
+    return getCompanyHome()
+      .then(function (companyHomeUri) {
+        return getNode(companyHomeUri, path)
+          .then(function (response) {
+            currentFolderNodeRef = response.metadata.parent.nodeRef;
+            return alfrescoNodeUtils.processNodeRef(currentFolderNodeRef).id;
+          });
+      });
   }
 
 
   function getContent(path) {
-    return getCompanyHome().then(function (companyHomeUri) {
-      return getNode(companyHomeUri, path)
-        .then(function (response) {
-          currentFolderNodeRef = response.metadata.parent.nodeRef;
-          return getContentList(alfrescoNodeUtils.processNodeRef(currentFolderNodeRef).id)
-            .then(function (response) {
-              return response
-            })
-        });
-    });
+    return getCompanyHome()
+      .then(function (companyHomeUri) {
+        return getNode(companyHomeUri, path)
+          .then(function (response) {
+            currentFolderNodeRef = response.metadata.parent.nodeRef;
+            return getContentList(alfrescoNodeUtils.processNodeRef(currentFolderNodeRef).id)
+              .then(function (response) {
+                return response
+              })
+          });
+      });
   }
 
   function getContentList(node) {
@@ -110,7 +113,32 @@ function ContentService($http, $rootScope, alfrescoNodeUtils, fileUtilsService, 
   }
 
   function download(nodeRef, name) {
+    console.log(nodeRef)
+    console.log(name)
     alfrescoDownloadService.downloadFile(nodeRef, name);
+  }
+
+  function downloadZippedFiles(files) {
+    var fileNodeRefs = [];
+
+    files.forEach(function (file) {
+      fileNodeRefs.push(file.nodeRef);
+    });
+
+    var payload = { nodeRefs: fileNodeRefs }
+
+    return $http.post('/alfresco/s/contents/download', payload)
+      .then(function (response) {
+        var dl = $interval(function () {
+          getDownloadStatus(response.data.downloadNodeRef)
+            .then(function (status) {
+              if (status == 'DONE') {
+                download(response.data.downloadNodeRef, 'download.zip')
+                $interval.cancel(dl);
+              }
+            });
+        }, 1000, 20);
+      });
   }
 
   function deleteFile(nodeRef) {
@@ -123,6 +151,13 @@ function ContentService($http, $rootScope, alfrescoNodeUtils, fileUtilsService, 
   }
 
   /** PRIVATE FUNCTIONS */
+
+  function getDownloadStatus(nodeRef) {
+    return $http.get('/alfresco/s/contents/download/status?nodeRef=' + nodeRef)
+      .then(function (result) {
+        return result.data.downloadStatus;
+      });
+  }
 
   function getCompanyHome() {
     return $http.get("/alfresco/service/contents/companyHome")

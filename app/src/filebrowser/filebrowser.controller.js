@@ -9,11 +9,24 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
   $scope.folderUuid = ''; //from directive definition
   $scope.crumbs = [];
   $scope.content = [];
+  $scope.selectedContent = [];
   $scope.isLoading = false;
 
   $scope.$watch('folderUuid', function (newVal) {
     if (newVal) getContent(newVal);
   })
+
+  $scope.$watch('content', function (contentList) {
+    var selectedContent = [];
+    angular.forEach(contentList, function (content) {
+      angular.forEach(content, function (c) {
+        if (c.selected) {
+          selectedContent.push(c);
+        }
+      })
+    })
+    $scope.selectedContent = selectedContent;
+  }, true);
 
   $rootScope.$on('updateFilebrowser', function () {
     getContent($scope.folderUuid);

@@ -9,8 +9,6 @@ function AuthController(APP_CONFIG, $state, $http, $stateParams, authService, $m
     var loginErrorMessage = angular.fromJson($stateParams.error);
 
     vm.login = login;
-    vm.logout = logout;
-    vm.loggedin = loggedin;
     vm.getUserInfo = getUserInfo;
     vm.errorMsg = loginErrorMessage ? loginErrorMessage : "";
     vm.showForgotDialog = showForgotDialog;
@@ -39,7 +37,6 @@ function AuthController(APP_CONFIG, $state, $http, $stateParams, authService, $m
 
                 $http.get(`/alfresco/service/isActivated?userName=${credentials.username}`)
                     .then(function (response) {
-                        console.log(response.data.member)
                         if (response.data.member) {
                             authService.getUser(credentials.username)
                                 .then(function (response) {
@@ -48,7 +45,8 @@ function AuthController(APP_CONFIG, $state, $http, $stateParams, authService, $m
                                 });
                         } else {
                             vm.errorMsg = 'Du er ikke aktiveret. Kontakt din nærmeste leder.'
-                            vm.logout()
+                            delete vm.user;
+                            authService.logout();
                         }
                     })
             })
@@ -61,16 +59,6 @@ function AuthController(APP_CONFIG, $state, $http, $stateParams, authService, $m
         } else {
             $window.location = retainedLocation;
         }
-    }
-
-    function logout() {
-        //chatService.logout();
-        delete vm.user;
-        authService.logout();
-    }
-
-    function loggedin() {
-        return authService.loggedin();
     }
 
     function updateValidator() {

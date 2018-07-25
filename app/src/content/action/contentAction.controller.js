@@ -6,7 +6,11 @@ angular
 
 function ContentActionController($scope, $mdDialog, ContentService) {
 
+  var vm = this;
+  vm.contentList = [];
+
   $scope.content;
+
 
   $scope.action = {
     move: false,
@@ -19,7 +23,19 @@ function ContentActionController($scope, $mdDialog, ContentService) {
   activate();
 
   function activate() {
-    switch ($scope.content.contentType) {
+    if (($scope.content instanceof Array)) {
+      vm.contentList = angular.copy($scope.content);
+    } else {
+      vm.contentList = [angular.copy($scope.content)];
+    }
+
+    if ($scope.selectedContent) {
+      vm.contentList = $scope.selectedContent;
+    }
+
+    if (vm.contentList.length == 0) return;
+
+    switch (vm.contentList[0].contentType) {
       case 'cmis:folder':
         $scope.action.rename = true;
         $scope.action.delete = true;
@@ -50,9 +66,11 @@ function ContentActionController($scope, $mdDialog, ContentService) {
   }
 
   $scope.delete = function () {
-    ContentService.delete($scope.content.nodeRef)
-      .then(function () {
-        $scope.cancelDialog();
-      });
+    angular.forEach(vm.contentList, function (content) {
+      ContentService.delete(content.nodeRef)
+        .then(function () {
+          $scope.cancelDialog();
+        });
+    })
   }
 }

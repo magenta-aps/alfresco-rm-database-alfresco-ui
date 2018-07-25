@@ -86,6 +86,10 @@
     "FORGOT_PASSWORD_SUCCESS": "Instruktioner er blevet sendt til den email forudsat. Tjek din e-mail og følg vejledningen.",
     "FORGOT_PASSWORD_PROMPT": "Indtast din e-mailadresse og vi sender dig oplysninger om, hvordan du nulstiller din adgangskode."
   },
+  "CONTENT": {
+    "SEND_TO_AUTHORITY": "Send til myndighed",
+    "NEW_DOCUMENT": "Nyt dokument"
+  },
   "MEMBER": {
     "NAME": "Navn",
     "ROLE": "Rolle"

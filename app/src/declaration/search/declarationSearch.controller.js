@@ -1,51 +1,51 @@
 'use strict';
 
 angular
-    .module('openDeskApp.declaration')
-    .controller('DeclarationSearchController', DeclarationSearchController);
+  .module('openDeskApp.declaration')
+  .controller('DeclarationSearchController', DeclarationSearchController);
 
-function DeclarationSearchController($scope, $state, entryService, loadingService, authService, HeaderService) {
+function DeclarationSearchController($scope, $state, DeclarationService, loadingService, authService, HeaderService) {
 
-    var vm = this;
+  var vm = this;
 
-    $scope.selectedCase = null;
-    vm.getEntries = getEntries;
+  $scope.selectedCase = null;
+  vm.getEntries = getEntries;
 
-    loadingService.setLoading(false);
+  loadingService.setLoading(false);
 
-    activated();
+  activated();
 
-    $scope.$watch('selectedCase', function (newCase) {
-        if (newCase) {
-            $state.go('declaration.show', { caseid: newCase.caseNumber });
-        }
-    }, true);
+  $scope.$watch('selectedCase', function (newCase) {
+    if (newCase) {
+      $state.go('declaration.show', { caseid: newCase.caseNumber });
+    }
+  }, true);
 
 
-    function activated() {
-        HeaderService.setTitle('');
-        HeaderService.resetActions();
+  function activated() {
+    HeaderService.setTitle('');
+    HeaderService.resetActions();
 
-        var roles = authService.getUserRoles();
-        if (!(roles.indexOf("SiteConsumer") > -1)) {
-            HeaderService.addAction('DECLARATION.NEW_BUA_DECLARATION', 'add', createNewBuaDeclaration);
-            HeaderService.addAction('DECLARATION.NEW_DECLARATION', 'add', createNewDeclaration, true);
-        }
-
+    var roles = authService.getUserRoles();
+    if (!(roles.indexOf("SiteConsumer") > -1)) {
+      HeaderService.addAction('DECLARATION.NEW_BUA_DECLARATION', 'add', createNewBuaDeclaration);
+      HeaderService.addAction('DECLARATION.NEW_DECLARATION', 'add', createNewDeclaration, true);
     }
 
-    function getEntries(query) {
-        return entryService.getAutoComleteEntries(0, 5, query)
-            .then(function (response) {
-                return response.entries;
-            })
-    }
+  }
 
-    function createNewDeclaration() {
-        $state.go('declaration.create');
-    }
+  function getEntries(query) {
+    return DeclarationService.getAutoComleteEntries(0, 5, query)
+      .then(function (response) {
+        return response.entries;
+      })
+  }
 
-    function createNewBuaDeclaration() {
-        $state.go('declaration.create-bua');
-    }
+  function createNewDeclaration() {
+    $state.go('declaration.create');
+  }
+
+  function createNewBuaDeclaration() {
+    $state.go('declaration.create-bua');
+  }
 }

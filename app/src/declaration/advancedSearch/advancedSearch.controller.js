@@ -4,7 +4,7 @@ angular
   .module('openDeskApp.declaration')
   .controller('AdvancedSearchController', AdvancedSearchController);
 
-function AdvancedSearchController($scope, $state, $translate, entryService, filterService, propertyService, loadingService, HeaderService) {
+function AdvancedSearchController($scope, $state, $translate, DeclarationService, filterService, propertyService, loadingService, HeaderService) {
 
   var vm = this;
 
@@ -52,9 +52,8 @@ function AdvancedSearchController($scope, $state, $translate, entryService, filt
   function advancedSearch(skip, max, query) {
     clean(query);
     vm.isLoading = true;
-    entryService.advancedSearch(skip, max, query)
+    DeclarationService.advancedSearch(skip, max, query)
       .then(response => {
-        // vm.searchResults = response;
         vm.isLoading = false;
         vm.totalResults = Number(response.total);
         vm.next = Number(response.next);

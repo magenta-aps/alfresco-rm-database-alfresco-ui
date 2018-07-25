@@ -1,4 +1,7 @@
 <tr>
+  <td ng-click="$event.stopPropagation()">
+    <md-checkbox ng-if="content.contentType == 'cmis:document'" aria-label="{{content.name}}" ng-model="content.selected"></md-checkbox>
+  </td>
   <td>
     <content-icon content="content"></content-icon>
     <span>{{content.name}}</span>

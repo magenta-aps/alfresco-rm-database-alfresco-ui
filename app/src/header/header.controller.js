@@ -4,13 +4,14 @@ angular
     .module('openDeskApp')
     .controller('HeaderController', HeaderController);
 
-function HeaderController($scope, HeaderService) {
+function HeaderController($scope, HeaderService, authService) {
 
     var vm = this;
 
     vm.title = '';
     vm.actions = [];
     vm.isClosed = false;
+    vm.loggedIn = false;
 
     vm.canAccessSettings = canAccessSettings;
     vm.getUserName = getUserName;
@@ -20,7 +21,12 @@ function HeaderController($scope, HeaderService) {
         updateHeaderTitle();
         updateHeaderActions();
         updateIsClosed();
+        isLoggedIn();
     });
+
+    function isLoggedIn() {
+        vm.loggedIn = authService.loggedin();
+    }
 
     function updateHeaderTitle() {
         vm.title = HeaderService.getTitle();
@@ -39,7 +45,7 @@ function HeaderController($scope, HeaderService) {
     }
 
     function logout() {
-        return HeaderService.logout();
+        return authService.logout();
     }
 
     function updateIsClosed() {

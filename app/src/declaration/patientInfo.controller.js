@@ -4,10 +4,10 @@ angular
 	.module('openDeskApp.declaration')
 	.controller('PatientInfoController', PatientInfoController);
 
-function PatientInfoController($scope, $rootScope, $stateParams, $mdToast, $mdDialog, entryService, filterService, loadingService, cprService, HeaderService) {
+function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationService, filterService, loadingService, cprService, authService, Toast, HeaderService) {
 
 	var vm = this;
-	$scope.entryService = entryService;
+	$scope.DeclarationService = DeclarationService;
 	$scope.editPatientData = false;
 	$scope.case;
 
@@ -22,7 +22,6 @@ function PatientInfoController($scope, $rootScope, $stateParams, $mdToast, $mdDi
 	vm.lookupCPR = lookupCPR;
 	vm.isNumber = isNumber;
 
-	HeaderService.resetActions();
 	loadingService.setLoading(true);
 	activated();
 
@@ -31,23 +30,23 @@ function PatientInfoController($scope, $rootScope, $stateParams, $mdToast, $mdDi
 	});
 
 	function activated() {
-		entryService.getEntry($stateParams.caseid)
+		DeclarationService.get($stateParams.caseid)
 			.then(function (response) {
 				$scope.case = response
 				$scope.waitTime = getWaitingTimes(response);
 				var bua = response.bua ? ' (BUA)' : '';
+				HeaderService.resetActions();
 				HeaderService.setTitle(response.firstName + ' ' + response.lastName + ' (' + response.caseNumber + ')' + bua);
 				HeaderService.setClosed(response.closed);
+
 				if (!response.closed) {
-					HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog)
-					HeaderService.addAction('COMMON.EDIT', 'edit')
+					HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
+					HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+				} else {
+					if (HeaderService.canUnlockCases()) HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unlockCase);
 				}
 			})
 	}
-
-	$scope.$watch('entryService.isEditing()', function (newVal) {
-		$scope.editPatientData = newVal;
-	});
 
 	function propertyFilter(array, query) {
 		return filterService.propertyFilter(array, query);
@@ -72,13 +71,6 @@ function PatientInfoController($scope, $rootScope, $stateParams, $mdToast, $mdDi
 				$scope.case.address = res.GADE;
 				$scope.case.postbox = res.POSTNR;
 				$scope.case.city = res.BY;
-			}).error(function (err) {
-				$mdToast.show(
-					$mdToast.simple()
-						.textContent('Ingen person med CPR nummeret ' + $scope.case.cprNumber)
-						.position('top right')
-						.hideDelay(3000)
-				);
 			});
 	}
 
@@ -109,10 +101,50 @@ function PatientInfoController($scope, $rootScope, $stateParams, $mdToast, $mdDi
 		});
 	}
 
-	$scope.closeCase = function () {
+	function unlockCase() {
+		DeclarationService.unlock($scope.case)
+			.then(function () {
+				HeaderService.resetActions();
+				activated();
+				Toast.show('Sagen er låst op')
+			});
+	}
+
+	function editCase() {
+		$scope.editPatientData = true;
+		lockedForEdit(true);
+		HeaderService.resetActions();
+		HeaderService.addAction('DECLARATION.SAVE_AND_LOCK', 'save', lockCaseDialog)
+		HeaderService.addAction('COMMON.SAVE', 'save', saveCase)
+	}
+
+	function lockedForEdit(lock) {
+		var currentUser = authService.getUserInfo().user;
+		var locked = {
+			'node-uuid': $scope.case['node-uuid'],
+			locked4edit: lock,
+			locked4editBy: lock ? currentUser : {}
+		};
+
+		DeclarationService.update(locked);
+	}
+
+	function saveCase() {
+		$scope.case.fullName = $scope.case.firstName + ' ' + $scope.case.lastName;
 		$scope.case.locked4edit = false;
 		$scope.case.locked4editBy = {};
 
+		DeclarationService.update($scope.case)
+			.then(function () {
+				$scope.editPatientData = false;
+				activated();
+				Toast.show('Ændringerne er gemt');
+			});
+	}
+
+	$scope.closeCase = function () {
+		$scope.case.locked4edit = false;
+		$scope.case.locked4editBy = {};
 		$scope.case.closed = true;
 
 		if ($scope.closeCaseParams.closed == 'no-declaration') {
@@ -122,10 +154,16 @@ function PatientInfoController($scope, $rootScope, $stateParams, $mdToast, $mdDi
 		$scope.case.closedWithoutDeclarationReason = $scope.closeCaseParams.reason;
 		$scope.case.closedWithoutDeclarationSentTo = $scope.closeCaseParams.sentTo;
 
-		entryService.updateEntry($scope.case)
+		DeclarationService.update($scope.case)
 			.then(function () {
+				HeaderService.resetActions();
 				HeaderService.setClosed(true);
+				activated();
 				$mdDialog.cancel();
 			})
+	}
+
+	$scope.cancel = function () {
+		$mdDialog.cancel();
 	}
 }
