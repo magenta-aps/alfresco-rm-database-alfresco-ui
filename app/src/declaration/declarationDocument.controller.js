@@ -4,8 +4,7 @@ angular
   .module('openDeskApp.declaration')
   .controller('DeclarationDocumentController', DocumentController);
 
-function DocumentController($scope, $mdDialog, $stateParams, DeclarationService, loadingService, Toast,
-  documentService, documentPreviewService, authService, sessionService, ContentService, HeaderService) {
+function DocumentController($scope, $mdDialog, $stateParams, DeclarationService, Toast, ContentService, HeaderService) {
   var vm = this;
 
   var hasSelectedContent = false;
@@ -19,17 +18,7 @@ function DocumentController($scope, $mdDialog, $stateParams, DeclarationService,
     updateHeaderActions();
   }, true)
 
-  // $scope.case = {};
-
-  // var currentUser = authService.getUserInfo().user;
-  // $scope.tableView = false;
-
-  loadingService.setLoading(true);
   activate();
-
-  angular.element(document).ready(function () {
-    loadingService.setLoading(false);
-  });
 
   function activate() {
     DeclarationService.get($stateParams.caseid)

@@ -4,14 +4,12 @@ angular
   .module('openDeskApp.declaration')
   .controller('DeclarationSearchController', DeclarationSearchController);
 
-function DeclarationSearchController($scope, $state, DeclarationService, loadingService, authService, HeaderService) {
+function DeclarationSearchController($scope, $state, DeclarationService, authService, HeaderService) {
 
   var vm = this;
 
   $scope.selectedCase = null;
   vm.getEntries = getEntries;
-
-  loadingService.setLoading(false);
 
   activated();
 

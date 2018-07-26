@@ -4,7 +4,7 @@ angular
 	.module('openDeskApp.declaration')
 	.controller('PatientInfoController', PatientInfoController);
 
-function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationService, filterService, loadingService, cprService, authService, Toast, HeaderService) {
+function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationService, filterService, cprService, authService, Toast, HeaderService) {
 
 	var vm = this;
 	$scope.DeclarationService = DeclarationService;
@@ -22,17 +22,18 @@ function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationServi
 	vm.lookupCPR = lookupCPR;
 	vm.isNumber = isNumber;
 
-	loadingService.setLoading(true);
-	activated();
-
-	angular.element(document).ready(function () {
-		loadingService.setLoading(false);
+	$scope.$on('$destroy', function () {
+		if ($scope.case.locked4edit) {
+			lockedForEdit(false);
+		}
 	});
+
+	activated();
 
 	function activated() {
 		DeclarationService.get($stateParams.caseid)
 			.then(function (response) {
-				$scope.case = response
+				$scope.case = response;
 				$scope.waitTime = getWaitingTimes(response);
 				var bua = response.bua ? ' (BUA)' : '';
 				HeaderService.resetActions();

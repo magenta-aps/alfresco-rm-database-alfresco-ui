@@ -7,8 +7,8 @@ angular
       restrict: 'E',
       scope: {
         folderUuid: '=',
-        hideActions: '=',
-        selectedContent: '='
+        hideActions: '=?',
+        selectedContent: '=?'
       },
       templateUrl: 'app/src/filebrowser/view/filebrowser.html',
       controller: 'FilebrowserController as vm'

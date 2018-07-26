@@ -4,7 +4,7 @@ angular
   .module('openDeskApp.declaration')
   .controller('ListController', ListController);
 
-function ListController($scope, $stateParams, $mdDialog, Toast, propertyService, loadingService, HeaderService) {
+function ListController($scope, $stateParams, $mdDialog, Toast, propertyService, HeaderService) {
 
   $scope.selectedContent = [];
   $scope.newEntry = '';
@@ -18,12 +18,6 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
   $scope.query = {
     order: 'title'
   }
-
-  loadingService.setLoading(true);
-
-  angular.element(document).ready(function () {
-    loadingService.setLoading(false);
-  });
 
   $scope.$watch('listContent', function (newVal) {
     var selectedContent = [];

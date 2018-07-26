@@ -4,7 +4,7 @@ angular
   .module('openDeskApp.declaration')
   .controller('AdvancedSearchController', AdvancedSearchController);
 
-function AdvancedSearchController($scope, $state, $translate, DeclarationService, filterService, propertyService, loadingService, HeaderService) {
+function AdvancedSearchController($scope, $state, $translate, DeclarationService, filterService, propertyService, HeaderService) {
 
   var vm = this;
 
@@ -23,14 +23,8 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   vm.nextPage = nextPage;
   vm.clearResults = clearResults;
 
-  loadingService.setLoading(true);
-
   HeaderService.resetActions();
   HeaderService.setTitle($translate.instant('DECLARATION.ADVANCED_SEARCH'))
-
-  angular.element(document).ready(function () {
-    loadingService.setLoading(false);
-  });
 
   function gotoCase(caseNumber) {
     $state.go('declaration.show', { caseid: caseNumber });

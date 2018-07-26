@@ -113,8 +113,6 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
   }
 
   function download(nodeRef, name) {
-    console.log(nodeRef)
-    console.log(name)
     alfrescoDownloadService.downloadFile(nodeRef, name);
   }
 

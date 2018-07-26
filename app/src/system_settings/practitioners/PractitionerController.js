@@ -4,7 +4,7 @@ angular
   .module('openDeskApp.declaration')
   .controller('PractitionerController', PractitionerController);
 
-function PractitionerController($scope, practitionerService, Toast, loadingService, HeaderService) {
+function PractitionerController($scope, practitionerService, Toast, HeaderService) {
 
   $scope.allUsers = [];
 
@@ -13,11 +13,6 @@ function PractitionerController($scope, practitionerService, Toast, loadingServi
   };
 
   HeaderService.resetActions();
-  loadingService.setLoading(true);
-
-  angular.element(document).ready(function () {
-    loadingService.setLoading(false);
-  });
 
   $scope.$watch('allUsers', function (newVal, oldVal) {
     if (newVal.length == 0 || oldVal.length == 0) return;

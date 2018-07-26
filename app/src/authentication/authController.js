@@ -4,7 +4,7 @@ angular
     .module('openDeskApp')
     .controller('AuthController', AuthController);
 
-function AuthController(APP_CONFIG, $state, $http, $stateParams, authService, $mdDialog, sessionService, $window, loadingService) {
+function AuthController(APP_CONFIG, $state, $http, $stateParams, authService, $mdDialog, sessionService, $window) {
     var vm = this;
     var loginErrorMessage = angular.fromJson($stateParams.error);
 
@@ -13,8 +13,6 @@ function AuthController(APP_CONFIG, $state, $http, $stateParams, authService, $m
     vm.errorMsg = loginErrorMessage ? loginErrorMessage : "";
     vm.showForgotDialog = showForgotDialog;
     vm.updateValidator = updateValidator;
-
-    loadingService.setLoading(false);
 
     function getUserRoles() {
         vm.userRoles = authService.getUserRoles();
