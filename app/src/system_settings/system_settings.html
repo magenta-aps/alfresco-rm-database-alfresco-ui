@@ -1,5 +1,5 @@
 <div layout="row">
-    <md-sidenav class="md-sidenav-left sidenav-fixed" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+    <div flex-gt-md="10" flex="15">
         <md-button class="md-text-icon-button" aria-label="Dashboard" ng-click="vm.viewState('dashboard')">
             <md-icon>dashboard</md-icon> Dashboard
         </md-button>
@@ -62,11 +62,11 @@
             <md-icon>check</md-icon> Afsluttet uden erklæring
         </md-button>
         <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-                aria-label="Myndigheder" ng-click="vm.viewState('emailAuthorities')">
-                <md-icon>check</md-icon> Myndigheder
-            </md-button>
+            aria-label="Myndigheder" ng-click="vm.viewState('emailAuthorities')">
+            <md-icon>check</md-icon> Myndigheder
+        </md-button>
 
-    </md-sidenav>
+    </div>
 
     <div class="od-info-declarations" flex>
         <div ui-view='systemsetting-view'></div>

@@ -9,8 +9,6 @@ function DeclarationService($http) {
   var currentCase = {};
 
   var service = {
-    setCurrentCaseAfterCreation: setCurrentCaseAfterCreation,
-    getCurrentCase: getCurrentCase,
     get: getEntry,
     create: createEntry,
     unlock: unlockEntry,
@@ -32,20 +30,10 @@ function DeclarationService($http) {
     return res;
   }
 
-  function setCurrentCaseAfterCreation(newCase) {
-    currentCase = formatCase(newCase);
-  }
-
-  function getCurrentCase() {
-    return currentCase;
-  }
-
   function getEntry(caseNumber) {
     return $http.get("/alfresco/s/database/retspsyk/entry/" + caseNumber)
       .then(function (response) {
-        var res = response.data;
-        currentCase = formatCase(res);
-        return currentCase;
+        return formatCase(response.data);
       });
   }
 

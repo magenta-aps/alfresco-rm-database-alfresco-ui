@@ -67,24 +67,6 @@ img {
   width: 100%;
 }
 
-dl {
-  dt {
-    color: $primary-color-light, 20%;
-    font-size: $u * .9;
-  }
-  dd {
-    margin: 0;
-    padding: 0 0 $u;
-  }
-}
-
-// Muted (greyed) text
-.muted {
-  font-size: .9em;
-  opacity: .66;
-}
-
-
 /*
  * Molecule level styles
  */
@@ -120,11 +102,6 @@ dl {
  * General media queries 
  */
 
-// Screens larger than small (breaks between small and medium screens)
-@media screen and (min-width: $br-sm-md) {}
-
-
-
 md-list-item, md-list-item .md-list-item-inner {
   min-height: 20px;
   height: 25px;
@@ -133,45 +110,6 @@ md-list-item, md-list-item .md-list-item-inner {
 //fix position of x for autocompletes
 md-autocomplete[md-floating-label] .md-show-clear-button button {
   top: 0;
-}
-
-//hover checkboxes in patient documents
-.document-checkbox {
-  left: $u * .5;
-  position: absolute;
-  top: $u * .5;
-  z-index: 1;
-}
-
-.document-thumbnail {
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-
-  img {
-    display: block;
-    margin: 0 auto;
-    width: auto;
-  }
-}
-
-.sidenav-fixed {
-  background-color: transparent;
-  bottom: 0;
-  position: fixed !important;
-  top: $u * 8;
-
-  .md-button {
-    text-align: left;
-  }
-}
-
-.toolbar-contextual {
-  border-right: 1px solid $white;
-}
-
-.textarea-highlight {
-  background-color: rgba(0 ,0 ,0 , .02) !important;
 }
 
 md-toolbar {
@@ -185,11 +123,6 @@ md-toolbar {
   left: 53px;
 }
 
-.document-filename {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis
-}
 .md-autocomplete-suggestions {
   li {
     color: rgb(117,117,117);
@@ -200,25 +133,13 @@ md-toolbar {
   font-weight: 900;
 }
 
-
-@media (min-width: 600px) {
-  md-sidenav {
-    max-width: 250px !important;
-  }
-}
-
 .md-datepicker-input-container {
     width: calc(100% - 64px) !important;
-}
-
-.text-strike-through {
-  text-decoration: line-through;
 }
 
 .list-edit {
     width: $u;
     border: none;
-    // width: 100%;
     outline: none;
 }
 

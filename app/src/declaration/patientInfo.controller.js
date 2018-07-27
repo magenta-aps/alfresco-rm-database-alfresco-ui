@@ -4,12 +4,13 @@ angular
 	.module('openDeskApp.declaration')
 	.controller('PatientInfoController', PatientInfoController);
 
-function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationService, filterService, cprService, authService, Toast, HeaderService) {
+function PatientInfoController($scope, $stateParams, $mdDialog, $interval, DeclarationService, filterService, cprService, authService, Toast, HeaderService) {
 
 	var vm = this;
 	$scope.DeclarationService = DeclarationService;
 	$scope.editPatientData = false;
 	$scope.case;
+	$scope.isLoading = false;
 
 	$scope.waitTime = {
 		passive: null,
@@ -31,22 +32,27 @@ function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationServi
 	activated();
 
 	function activated() {
-		DeclarationService.get($stateParams.caseid)
-			.then(function (response) {
-				$scope.case = response;
-				$scope.waitTime = getWaitingTimes(response);
-				var bua = response.bua ? ' (BUA)' : '';
-				HeaderService.resetActions();
-				HeaderService.setTitle(response.firstName + ' ' + response.lastName + ' (' + response.caseNumber + ')' + bua);
-				HeaderService.setClosed(response.closed);
+		$scope.isLoading = true;
+		var dl = $interval(function () {
+			DeclarationService.get($stateParams.caseid)
+				.then(function (response) {
+					$scope.case = response;
+					$scope.waitTime = getWaitingTimes(response);
+					var bua = response.bua ? ' (BUA)' : '';
+					HeaderService.resetActions();
+					HeaderService.setTitle(response.firstName + ' ' + response.lastName + ' (' + response.caseNumber + ')' + bua);
+					HeaderService.setClosed(response.closed);
 
-				if (!response.closed) {
-					HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
-					HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
-				} else {
-					if (HeaderService.canUnlockCases()) HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unlockCase);
-				}
-			})
+					if (!response.closed) {
+						HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
+						HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+					} else {
+						if (HeaderService.canUnlockCases()) HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unlockCase);
+					}
+					$scope.isLoading = false;
+					$interval.cancel(dl);
+				})
+		}, 1000, 20);
 	}
 
 	function propertyFilter(array, query) {

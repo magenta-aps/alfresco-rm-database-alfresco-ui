@@ -60,7 +60,6 @@ function DeclarationCreateController($scope, $state, $translate, DeclarationServ
 
     DeclarationService.create(newCase)
       .then(function (response) {
-        DeclarationService.setCurrentCaseAfterCreation(response);
         $state.go('declaration.show.patientdata', { caseid: response.caseNumber });
 
         Toast.show('Sagen er oprettet');

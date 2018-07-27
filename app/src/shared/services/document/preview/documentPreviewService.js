@@ -2,67 +2,23 @@ angular
     .module('openDeskApp')
     .factory('documentPreviewService', DocumentPreviewService);
 
-function DocumentPreviewService($mdDialog, $timeout, alfrescoDocumentService, alfrescoDownloadService, sessionService, $http, $sce, ALFRESCO_URI) {
+function DocumentPreviewService(alfrescoDocumentService, sessionService, $http, $sce, ALFRESCO_URI) {
 
     var templatesUrl = 'app/src/shared/services/document/preview/view/';
 
     var service = {
         templatesUrl: templatesUrl,
-        previewDocument: previewDocument,
         previewDocumentPlugin: previewDocumentPlugin,
         _getPluginByMimeType: _getPluginByMimeType,
         plugins: getPlugins()
     };
     return service;
 
-    function previewDocument(nodeRef) {
-        var _this = this;
-        this.previewDocumentPlugin(nodeRef).then(function (plugin) {
-            previewDialog(plugin);
-        });
-    }
-
     function previewDocumentPlugin(nodeRef) {
         var _this = this;
         return alfrescoDocumentService.retrieveSingleDocument(nodeRef).then(function (item) {
             return _this._getPluginByMimeType(item);
         });
-    }
-
-    function previewDialog(plugin) {
-        return $mdDialog.show({
-            controller: DialogController,
-            templateUrl: templatesUrl + 'previewDialog.html',
-            parent: angular.element(document.body),
-            targetEvent: null,
-            clickOutsideToClose: true,
-            locals: {
-                plugin: plugin
-            }
-        });
-    };
-
-    function DialogController($scope, $mdDialog, plugin) {
-
-        $scope.config = plugin;
-        $scope.viewerTemplateUrl = templatesUrl + plugin.templateUrl;
-
-        $scope.cancel = function () {
-            $mdDialog.cancel();
-        };
-
-        $scope.close = function () {
-            $mdDialog.hide();
-        };
-
-        $scope.download = function () {
-            alfrescoDownloadService.downloadFile($scope.config.nodeRef, $scope.config.fileName);
-        };
-
-        if (plugin.initScope) {
-            plugin.initScope($scope);
-        }
-
     }
 
     function getPlugins() {

@@ -1,14 +1,14 @@
 <div layout="row">
-    <md-sidenav class="md-sidenav-left sidenav-fixed" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+    <div flex-gt-md="10" flex="15">
         <md-button class="md-text-icon-button" aria-label="edit" ui-sref="declaration.show.patientdata">
             <md-icon>assignment</md-icon> Patient data
         </md-button>
         <md-button class="md-text-icon-button" aria-label="edit" ui-sref="declaration.show.documents">
             <md-icon>insert_drive_file</md-icon> Dokumenter
         </md-button>
-    </md-sidenav>
+    </div>
 
-    <div class="od-info-declarations" flex>
+    <div flex>
         <div ui-view='declarations'></div>
     </div>
 </div>

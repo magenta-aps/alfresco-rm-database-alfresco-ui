@@ -11,10 +11,6 @@ function SystemSettingsCtrl($scope, $state, $translate, authService, HeaderServi
 
     vm.viewState = viewState;
 
-    //sets the margin to the width of sidenav
-    var sidebar = $(".md-sidenav-left");
-    $(".od-info-declarations").css("margin-left", sidebar.width() + "px");
-
     HeaderService.resetActions();
     HeaderService.setTitle($translate.instant('ADMIN.ADMINISTRATION'));
 

@@ -1,4 +1,4 @@
-<form name="$root.declarationForm">
+<form name="$root.declarationForm" ng-hide="isLoading">
     <div layout="row" layout-wrap>
         <div layout="column" flex-gt-sm="25" flex-sm="50" flex="100">
             <ng-include src="'app/src/declaration/view/sections/basic-info.html'"></ng-include>
@@ -20,3 +20,5 @@
         </div>
     </div>
 </form>
+
+<md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
