@@ -1,0 +1,16 @@
+table {
+  width: 100%;
+  border-spacing: 0;
+
+  th {
+    text-align: left;
+  }
+  
+  tbody {
+    tr {  
+      &:hover {
+        background-color: $gray-85;
+      }
+    }  
+  }
+}

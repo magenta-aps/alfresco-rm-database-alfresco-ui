@@ -1,58 +1,98 @@
 'use strict';
 
 angular
-    .module('openDeskApp.declaration')
-    .controller('ListController', ListController);
+  .module('openDeskApp.declaration')
+  .controller('ListController', ListController);
 
-function ListController($scope, $state, $stateParams, $mdDialog, $timeout, propertyService, loadingService) {
+function ListController($scope, $stateParams, $mdDialog, Toast, propertyService, HeaderService) {
 
-    $scope.propertyService = propertyService;
+  $scope.selectedContent = [];
+  $scope.newEntry = '';
+  $scope.renameOriginal = {};
 
-    $scope.isEditing = false;
-    $scope.listTitle = $stateParams.listTitle;
-    $scope.listContent = propertyService.getPropertyContent($stateParams.listData);
+  $scope.listTitle = $stateParams.listTitle;
+  $scope.listContent = propertyService.getPropertyContent($stateParams.listData);
 
-    propertyService.setPropertyName($stateParams.listData);
+  HeaderService.addAction('COMMON.ADD', 'add', addNewDialog);
 
-    $scope.query = {
-        order: 'title'
+  $scope.query = {
+    order: 'title'
+  }
+
+  $scope.$watch('listContent', function (newVal) {
+    var selectedContent = [];
+    newVal.forEach(function (element) {
+      if (element.selected) {
+        selectedContent.push(element);
+      }
+    }, this);
+    $scope.selectedContent = selectedContent;
+
+    if (selectedContent.length > 0) {
+      HeaderService.resetActions();
+      HeaderService.addAction('COMMON.DELETE', 'delete', deleteDialog);
+      HeaderService.addAction('COMMON.ADD', 'add', addNewDialog);
+    } else {
+      HeaderService.resetActions();
+      HeaderService.addAction('COMMON.ADD', 'add', addNewDialog);
     }
+  }, true);
 
-    loadingService.setLoading(true);
-
-    $timeout(function () {
-        loadingService.setLoading(false);
+  function addNewDialog() {
+    $mdDialog.show({
+      templateUrl: 'app/src/system_settings/lists/view/list-create.html',
+      scope: $scope, // use parent scope in template
+      preserveScope: true, // do not forget this if use parent scope
+      clickOutsideToClose: true
     });
+  }
 
-    $scope.$watch('propertyService.isEditing()', function (newVal) {
-        $scope.isEditing = newVal;
+  function deleteDialog() {
+    $mdDialog.show({
+      templateUrl: 'app/src/system_settings/lists/view/list-delete.html',
+      scope: $scope, // use parent scope in template
+      preserveScope: true, // do not forget this if use parent scope
+      clickOutsideToClose: true
     });
+  }
 
-    $scope.$watch('listContent', function (newVal) {
-        var count = 0;
-        var selectedContent = [];
-        newVal.forEach(function (element) {
-            count += element.selected ? 1 : 0;
-            if(element.selected) {
-                selectedContent.push(element);
-            }
-        }, this);
-        propertyService.updateCount(count);
-        propertyService.updateSelectedContent(selectedContent);
-        propertyService.updateContent(newVal);
-    }, true);
+  $scope.renameDialog = function (value) {
+    $scope.renameOriginal = angular.copy(value);
+    $scope.newEntry = value.title;
 
+    $mdDialog.show({
+      templateUrl: 'app/src/system_settings/lists/view/list-rename.html',
+      scope: $scope, // use parent scope in template
+      preserveScope: true, // do not forget this if use parent scope
+      clickOutsideToClose: true
+    });
+  };
 
-    $scope.renameDialog = function (value) {
-        $mdDialog.show({
-            controller: 'ListActionController',
-            controllerAs: 'vm',
-            templateUrl: 'app/src/system_settings/lists/view/list-rename.html',
-            parent: angular.element(document.body),
-            locals: {selectedForRename: value},
-            scope: $scope, // use parent scope in template
-            preserveScope: true, // do not forget this if use parent scope
-            clickOutsideToClose: true
-        });
-    };
+  $scope.addNew = function () {
+    propertyService.addPropertyValue($scope.newEntry);
+    Toast.show($scope.newEntry + ' blev tilføjet');
+    $scope.newEntry = '';
+    $scope.cancel();
+  }
+
+  $scope.delete = function () {
+    propertyService.deletePropertyValues($scope.selectedContent);
+    angular.forEach($scope.selectedContent, function (deleted) {
+      Toast.show(deleted.title + ' blev slettet');
+    })
+    $scope.selectedContent = [];
+    $scope.cancel();
+  }
+
+  $scope.rename = function () {
+    propertyService.renamePropertyValue($scope.renameOriginal, { title: $scope.newEntry });
+    Toast.show($scope.renameOriginal.title + ' blev omdøbt til ' + $scope.newEntry);
+    $scope.newEntry = '';
+    $scope.renameOriginal = {};
+    $scope.cancel();
+  }
+
+  $scope.cancel = function () {
+    $mdDialog.cancel();
+  }
 }

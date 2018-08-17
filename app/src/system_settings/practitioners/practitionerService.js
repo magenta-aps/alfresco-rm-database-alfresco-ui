@@ -1,85 +1,67 @@
 'use strict';
 
-angular.module('openDeskApp.declaration').factory('practitionerService', function ($http, groupService) {
-    var isCurrentlyEditing = false;
-    var users = {};
-    var usersBeforeEdit = {};
-    var permissionGroups = [];
+angular.module('openDeskApp.declaration').factory('practitionerService', function ($http) {
+  var isCurrentlyEditing = false;
+  var users = {};
+  var usersBeforeEdit = {};
 
-    var service = {
-        setEdit: setEdit,
-        isEditing: isEditing,
-        updateUsers: updateUsers,
-        setUsersBeforeEdit: setUsersBeforeEdit,
-        getOriginalUsers: getOriginalUsers,
-        getUpdatedUsers: getUpdatedUsers,
-        getUserPermissions: getUserPermissions,
-        getPermissionGroups: getPermissionGroups,
-        activateUser: activateUser,
-        deactivateUser: deactivateUser,
-        isUserMember: isUserMember
+  var service = {
+    getUserPermissions: getUserPermissions,
+    updateUserRoles: updateUserRoles
+  };
+
+  return service;
+
+
+  function getUserPermissions() {
+    return $http.get('/alfresco/s/userpermissions')
+      .then(function (response) {
+        return response
+      })
+  }
+
+  function updateUserRoles(userName, addGroups, removeGroups) {
+    var json = {
+      addGroups: addGroups,
+      removeGroups: removeGroups
     };
 
-    return service;
-    
-    function setEdit(state) {
-        isCurrentlyEditing = state;
+    if (addGroups[0] === 'active') {
+      return activateUser(userName);
     }
 
-    function isEditing() {
-        return isCurrentlyEditing;
+    if (removeGroups[0] === 'active') {
+      return deactivateUser(userName);
     }
 
-    function updateUsers(update) {
-        users = update;
-    }
-    
-    function setUsersBeforeEdit(save) {
-        usersBeforeEdit = angular.copy(save);
-    }
+    return $http.put('/alfresco/s/database/retspsyk/user/' + userName, json)
+      .then(function (response) {
+        return response.data;
+      }, function (err) {
+        console.log('error updating userroles for user:' + userName + ' and site: retspsyk');
+      });
+  }
 
-    function getOriginalUsers() {
-        return usersBeforeEdit;
-    }
+  /** PRIVATE FUNCTIONS */
 
-    function getUpdatedUsers() {
-        return users;
-    }
+  function getPermissionGroups() {
+    return $http.get('/alfresco/s/api/sites/retspsyk/roles')
+      .then(function (response) {
+        return response.data.permissionGroups;
+      });
+  }
 
-    function getUserPermissions () {
-        return $http.get('/alfresco/s/userpermissions')
-            .then(function (response) {
-                return response
-            })
-    }
+  function activateUser(userName) {
+    return $http.get('/alfresco/s/activateUser?userName=' + userName)
+      .then(function (response) {
+        return response
+      })
+  }
 
-    function getPermissionGroups() {
-        return groupService.getGroupNamesForSite('retspsyk').then(function (response) {
-            return response.permissionGroups;
-        });
-    }
-
-    function activateUser(userName) {
-        return $http.get(`/alfresco/s/activateUser?userName=${userName}`).then(function (response) {
-            return response
-        })
-    }
-
-    function deactivateUser(userName) {
-        return $http.get(`/alfresco/s/deactivateUser?userName=${userName}`).then(function (response) {
-            return response
-        })
-    }
-
-    function isUserMember(userName) {
-        return $http.get(`/api/people/${userName}/sites`).then(function (response) {
-            var isMember = false
-            response.data.forEach(site => {
-                if( site.shortName === 'retspsyk') {
-                    isMember = true
-                }
-            });
-            return isMember
-        })
-    }
+  function deactivateUser(userName) {
+    return $http.get('/alfresco/s/deactivateUser?userName=' + userName)
+      .then(function (response) {
+        return response
+      })
+  }
 });

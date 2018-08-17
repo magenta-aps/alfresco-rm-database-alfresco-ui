@@ -12,8 +12,11 @@
         </md-toolbar>
 
         <md-dialog-content class="md-padding">
-            Er du sikker på du vil slette følgende:<br>
-            <p ng-repeat="c in selectedContent"><em>{{c.title}}</em></p>
+            Er du sikker på du vil slette følgende:
+            <br>
+            <p ng-repeat="c in selectedContent">
+                <em>{{c.title}}</em>
+            </p>
         </md-dialog-content>
 
         <md-dialog-actions>

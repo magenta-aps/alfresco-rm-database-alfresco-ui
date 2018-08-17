@@ -1,0 +1,28 @@
+<md-menu>
+    <md-button class="md-icon-button" ng-click="$mdMenu.open()">
+        <md-icon md-menu-origin>more_vert</md-icon>
+    </md-button>
+
+    <md-menu-content width="4">
+        <md-menu-item ng-if="action.download">
+            <md-button ng-click="download(content.nodeRef, content.fileName)">
+                <md-icon md-menu-align-target>get_app</md-icon>
+                {{'COMMON.DOWNLOAD' | translate }}
+            </md-button>
+        </md-menu-item>
+
+        <!-- <md-menu-item ng-if="action.edit">
+            <md-button ng-click="goToLOEditPage(content.nodeRef)">
+                <md-icon md-menu-align-target>edit</md-icon>
+                {{'COMMON.EDIT' | translate }}
+            </md-button>
+        </md-menu-item> -->
+
+        <md-menu-item ng-if="action.delete">
+            <md-button ng-click="deleteDialog()">
+                <md-icon md-menu-align-target>remove_circle_outline</md-icon>
+                {{'COMMON.REMOVE' | translate }}
+            </md-button>
+        </md-menu-item>
+    </md-menu-content>
+</md-menu>

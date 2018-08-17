@@ -1,127 +1,95 @@
 'use strict';
 
 angular.module('openDeskApp.declaration')
-    .factory('propertyService', function ($http, entryService) {
+	.factory('propertyService', function ($http) {
 
-        var isEditing = false;
-        var count = 0;
-        var selectedContent = [];
-        var content = [];
-        var propertyContent = [];
-        var propertyName = '';
-        var propertyValues = {};
+		var content = [];
+		var propertyContent = [];
+		var propertyName = '';
+		var propertyValues = {};
 
-        function getValuesForProperty(propertyName) {
-                return propertyValues[propertyName];
-            }
+		function getValuesForProperty(propertyName) {
+			return propertyValues[propertyName];
+		}
 
-        function setPropertyValues(property, values) {
-                return $http.put("/alfresco/s/propertyValues", {
-                    "siteShortName": "retspsyk",
-                    "property": property,
-                    "values": values,
-                }).then(function (response) {
-                    return response.data;
-                });
-            }
+		function setPropertyValues(property, values) {
+			return $http.put("/alfresco/s/propertyValues", {
+				"siteShortName": "retspsyk",
+				"property": property,
+				"values": values,
+			}).then(function (response) {
+				return response.data;
+			});
+		}
 
-        return {
-            toggleEdit: function () {
-                edit = !edit;
-            },
+		function saveChanges() {
+			var values = [];
+			propertyContent.forEach(function (property) {
+				values.push(property.title);
+			})
+			setPropertyValues(propertyName, values);
+		}
 
-            setEdit: function (state) {
-                isEditing = state;
-            },
+		return {
 
-            isEditing: function () {
-                return isEditing;
-            },
+			initPropertyValues: function () {
+				return $http.get("/alfresco/s/propertyValues?siteShortName=retspsyk")
+					.then(function (response) {
+						propertyValues = response.data;
+						return response.data;
+					});
+			},
 
-            updateCount: function (newCount) {
-                count = newCount;
-            },
+			getAllPropertyValues: function () {
+				return propertyValues;
+			},
 
-            getCount: function () {
-                return count;
-            },
+			getPropertyContent: function (property) {
+				propertyName = property;
+				propertyContent = [];
+				var content = getValuesForProperty(property);
+				if (!content) return propertyContent;
 
-            updateSelectedContent: function (content) {
-                selectedContent = content;
-            },
+				content.forEach(function (elem, key) {
+					propertyContent.push({
+						title: elem,
+						selected: false
+					});
+				}, this);
 
-            getSelectedContent: function () {
-                return selectedContent;
-            },
+				return propertyContent;
+			},
 
-            updateContent: function (updated) {
-                content = updated;
-            },
+			addPropertyValue: function (value) {
+				propertyContent.push({
+					title: value,
+					selected: false
+				});
+				saveChanges();
+			},
 
-            getContent: function () {
-                return content;
-            },
+			/**
+			 * rename a property
+			 * 
+			 */
+			renamePropertyValue: function (oldVal, newVal) {
+				propertyContent.forEach(function (prop, key) {
+					if (prop.title == oldVal.title)
+						propertyContent.splice(key, 1);
+				})
+				propertyContent.push(newVal);
+				saveChanges();
+			},
 
-            setPropertyName: function (name) {
-                propertyName = name;
-            },
-
-            saveChanges: function () {
-                var values = [];
-                propertyContent.forEach(function (property) {
-                    values.push(property.title);
-                })
-                setPropertyValues(propertyName, values);
-            },
-
-            initPropertyValues: function () {
-                return $http.get("/alfresco/s/propertyValues?siteShortName=retspsyk").then(function (response) {
-                    propertyValues = response.data;
-                    return response.data;
-                });
-            },
-
-            getAllPropertyValues: function () {
-                return propertyValues;
-            },
-
-            getPropertyContent: function (property) {
-                propertyContent = [];
-                var content = getValuesForProperty(property);
-
-                content.forEach(function (elem, key) {
-                    propertyContent.push({
-                        title: elem,
-                        selected: false
-                    });
-                }, this);
-
-                return propertyContent;
-            },
-
-            addPropertyValue: function (value) {
-                propertyContent.push({
-                    title: value,
-                    selected: false
-                });
-            },
-
-            renamePropertyValue: function (oldVal, newVal) {
-                propertyContent.forEach(function (prop, key) {
-                    if (prop.title == oldVal.title)
-                        propertyContent.splice(key, 1);
-                })
-                propertyContent.push(newVal);
-            },
-
-            deletePropertyValues: function (values) {
-                propertyContent.forEach(function (prop, key) {
-                    values.forEach(function (value) {
-                        if (prop.title == value.title) {
-                            propertyContent.splice(key, 1);
-                        }
-                    });
-                });
-            }
-        };
-    });
+			deletePropertyValues: function (values) {
+				propertyContent.forEach(function (prop, key) {
+					values.forEach(function (value) {
+						if (prop.title == value.title) {
+							propertyContent.splice(key, 1);
+						}
+					});
+				});
+				saveChanges();
+			}
+		};
+	});

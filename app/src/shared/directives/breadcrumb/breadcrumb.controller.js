@@ -6,10 +6,7 @@ angular
 
 function BreadcrumbController($scope) {
 
-    $scope.$watch('bcPath', function(newVal) {
-        if($scope.bcPath.length >= 2) {
-            $scope.bcPath.splice(1, 1);
-        }
-    });
-
+    $scope.go = function (content) {
+        $scope.clickAction()(content)
+    };
 }

@@ -1,0 +1,14 @@
+<tr>
+  <td ng-click="$event.stopPropagation()">
+    <md-checkbox ng-if="content.contentType == 'cmis:document'" aria-label="{{content.name}}" ng-model="content.selected"></md-checkbox>
+  </td>
+  <td>
+    <content-icon content="content"></content-icon>
+    <span>{{content.name}}</span>
+
+  </td>
+  <td>{{content.lastChanged | customDate}} - {{content.lastChangedBy}}</td>
+  <td style="text-align:right" ng-click="$event.stopPropagation()">
+    <content-action content="content"></content-action>
+  </td>
+</tr>

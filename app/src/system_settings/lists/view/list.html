@@ -1,28 +1,26 @@
 <md-card>
-    <md-card-content>
-        <md-table-container>
-            <table md-table>
-                <thead md-head md-order="query.order">
-                    <tr md-row>
-                        <th md-column style="width:50px"></th>
-                        <th md-column md-order-by="title">{{listTitle}}</th>
-                    </tr>
-                </thead>
-                <tbody md-body>
-                    <tr md-row ng-repeat="content in listContent | orderBy: query.order">
-                        <td md-cell>
-                            <md-checkbox aria-label="{{content.title}}" ng-model="content.selected" ng-disabled="!isEditing"></md-checkbox>
-                        </td>
-                        <td md-cell>
-                            <span>
-                                <img class="list-edit clickable" ng-if="isEditing" ng-click="renameDialog(content)" ng-src="app/assets/images/edit.svg">
-                                <i class="list-edit clickable" ng-if="isEditing" ng-click="renameDialog(content)"></i>
-                                {{content.title}}
-                            </span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </md-table-container>
-    </md-card-content>
+  <md-card-content>
+    <md-table-container>
+      <table md-table>
+        <thead md-head md-order="query.order">
+          <tr md-row>
+            <th md-column style="width:50px"></th>
+            <th md-column md-order-by="title">{{listTitle}}</th>
+          </tr>
+        </thead>
+        <tbody md-body>
+          <tr md-row ng-repeat="content in listContent | orderBy: query.order">
+            <td md-cell>
+              <md-checkbox aria-label="{{content.title}}" ng-model="content.selected"></md-checkbox>
+            </td>
+            <td md-cell>
+              <span>
+                <img class="list-edit clickable" ng-click="renameDialog(content)" ng-src="app/assets/images/edit.svg"> {{content.title}}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+  </md-card-content>
 </md-card>
