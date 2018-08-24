@@ -5,12 +5,15 @@ angular.module('openDeskApp.header').factory('HeaderService', HeaderService);
 function HeaderService($rootScope, authService) {
 
   var headerTitle = '';
+  var caseId;
   var actions = [];
   var closed = false;
 
   var service = {
     setTitle: setTitle,
     getTitle: getTitle,
+    setCaseId: setCaseId,
+    getCaseId: getCaseId,
     addAction: addAction,
     getActions: getActions,
     resetActions: resetActions,
@@ -29,6 +32,15 @@ function HeaderService($rootScope, authService) {
 
   function setTitle(newTitle) {
     headerTitle = newTitle;
+    $rootScope.$broadcast('updateHeader');
+  }
+
+  function getCaseId() {
+    return caseId;
+  }
+
+  function setCaseId(newId) {
+    caseId = newId;
     $rootScope.$broadcast('updateHeader');
   }
 

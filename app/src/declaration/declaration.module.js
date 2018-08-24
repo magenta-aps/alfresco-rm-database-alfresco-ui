@@ -3,7 +3,7 @@
 angular.module('openDeskApp.declaration', ['oda.authorityMail', 'openDeskApp.filebrowser'])
   .config(config);
 
-function config($stateProvider, USER_ROLES) {
+function config($stateProvider) {
 
   $stateProvider.state('declaration', {
     parent: 'site',

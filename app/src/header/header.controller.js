@@ -9,6 +9,7 @@ function HeaderController($scope, HeaderService, authService) {
     var vm = this;
 
     vm.title = '';
+    vm.caseId = 0;
     vm.actions = [];
     vm.isClosed = false;
     vm.loggedIn = false;
@@ -19,6 +20,7 @@ function HeaderController($scope, HeaderService, authService) {
 
     $scope.$on('updateHeader', function () {
         updateHeaderTitle();
+        updateCaseId();
         updateHeaderActions();
         updateIsClosed();
         isLoggedIn();
@@ -30,6 +32,10 @@ function HeaderController($scope, HeaderService, authService) {
 
     function updateHeaderTitle() {
         vm.title = HeaderService.getTitle();
+    }
+
+    function updateCaseId() {
+        vm.caseId = HeaderService.getCaseId();
     }
 
     function updateHeaderActions() {

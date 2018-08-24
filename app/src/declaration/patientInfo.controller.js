@@ -48,6 +48,7 @@ function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationServi
 		var bua = response.bua ? ' (BUA)' : '';
 		HeaderService.resetActions();
 		HeaderService.setTitle(response.firstName + ' ' + response.lastName + ' (' + response.caseNumber + ')' + bua);
+		HeaderService.setCaseId(response.caseNumber);
 		HeaderService.setClosed(response.closed);
 
 		if (!response.closed) {
