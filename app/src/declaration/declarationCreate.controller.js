@@ -32,7 +32,6 @@ function DeclarationCreateController($scope, $state, $translate, DeclarationServ
   }
 
   function addNewBidiagnosis() {
-    var newItemNo = $scope.case.biDiagnoses.length + 1;
     if ($scope.case.biDiagnoses.indexOf(null) < 0) {
       $scope.case.biDiagnoses.push(null);
     }
@@ -60,7 +59,7 @@ function DeclarationCreateController($scope, $state, $translate, DeclarationServ
 
     DeclarationService.create(newCase)
       .then(function (response) {
-        $state.go('declaration.show.patientdata', { caseid: response.caseNumber });
+        $state.go('declaration.show.patientdata', { caseid: response.caseNumber, caseData: response });
 
         Toast.show('Sagen er oprettet');
       });

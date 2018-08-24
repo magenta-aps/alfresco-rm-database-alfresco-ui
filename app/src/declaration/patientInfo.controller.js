@@ -4,7 +4,7 @@ angular
 	.module('openDeskApp.declaration')
 	.controller('PatientInfoController', PatientInfoController);
 
-function PatientInfoController($scope, $stateParams, $mdDialog, $interval, DeclarationService, filterService, cprService, authService, Toast, HeaderService) {
+function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationService, filterService, cprService, authService, Toast, HeaderService) {
 
 	var vm = this;
 	$scope.DeclarationService = DeclarationService;
@@ -32,27 +32,30 @@ function PatientInfoController($scope, $stateParams, $mdDialog, $interval, Decla
 	activated();
 
 	function activated() {
-		$scope.isLoading = true;
-		var dl = $interval(function () {
+		if (Object.keys($stateParams.caseData).length) {
+			setEverything($stateParams.caseData)
+		} else {
 			DeclarationService.get($stateParams.caseid)
 				.then(function (response) {
-					$scope.case = response;
-					$scope.waitTime = getWaitingTimes(response);
-					var bua = response.bua ? ' (BUA)' : '';
-					HeaderService.resetActions();
-					HeaderService.setTitle(response.firstName + ' ' + response.lastName + ' (' + response.caseNumber + ')' + bua);
-					HeaderService.setClosed(response.closed);
-
-					if (!response.closed) {
-						HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
-						HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
-					} else {
-						if (HeaderService.canUnlockCases()) HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unlockCase);
-					}
-					$scope.isLoading = false;
-					$interval.cancel(dl);
+					setEverything(response)
 				})
-		}, 1000, 20);
+		}
+	}
+
+	function setEverything(response) {
+		$scope.case = response;
+		$scope.waitTime = getWaitingTimes(response);
+		var bua = response.bua ? ' (BUA)' : '';
+		HeaderService.resetActions();
+		HeaderService.setTitle(response.firstName + ' ' + response.lastName + ' (' + response.caseNumber + ')' + bua);
+		HeaderService.setClosed(response.closed);
+
+		if (!response.closed) {
+			HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
+			HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+		} else {
+			if (HeaderService.canUnlockCases()) HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unlockCase);
+		}
 	}
 
 	function propertyFilter(array, query) {
