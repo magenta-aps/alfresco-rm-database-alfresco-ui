@@ -83,6 +83,9 @@ function config($stateProvider, USER_ROLES) {
     })
     .state('declaration.show.patientdata', {
       url: '/patientdata',
+      params: {
+        caseData: {}
+      },
       views: {
         'declarations': {
           templateUrl: 'app/src/declaration/view/info-cards.html',
