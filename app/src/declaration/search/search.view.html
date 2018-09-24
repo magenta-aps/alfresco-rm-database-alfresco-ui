@@ -3,13 +3,11 @@
         <span flex></span>
         <div layout="row">
             <md-autocomplete md-selected-item="selectedCase" md-search-text="entrySearchQuery" md-items="case in vm.getEntries(entrySearchQuery)"
-                md-item-text="'Erklæring #'+ case.caseNumber + ' - ' + case.firstName + ' ' + case.lastName + ' (' + case.cprNumber + ')'"
                 md-min-length="2" placeholder="{{'DECLARATION.SEARCH_NAME_CPR' | translate}}" flex>
                 <md-item-template>
                     <span md-highlight-text="entrySearchQuery" md-highlight-flags="gi">
-                        {{case.cprNumber}} - {{case.firstName}} {{case.lastName}}
+                        {{case.cprNumber}} - {{case.firstName}} {{case.lastName}} ({{case.caseNumber}})
                     </span>
-                    ({{case.caseNumber}})
                     <md-icon ng-show="(case.hasOwnProperty('closed') && case.closed) || (case.hasOwnProperty('closedWithoutDeclaration') && case.closedWithoutDeclaration)">done</md-icon>
                 </md-item-template>
             </md-autocomplete>
