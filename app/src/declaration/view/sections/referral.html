@@ -6,16 +6,9 @@
     </md-card-title>
     <md-card-content>
         <div>
-            <md-autocomplete flex 
-            md-selected-item="case.referingAgency" 
-            md-search-text="agencySearch" 
-            md-items="agency in propertyFilter(propertyValues['referingAgency'],agencySearch)"
-                md-item-text="agency" 
-                md-min-length="0" 
-                md-floating-label="Henvisende instans" 
-                ng-disabled="!editPatientData"
-                md-clear-button="editPatientData"
-                md-require-match="true">
+            <md-autocomplete flex md-selected-item="case.referingAgency" md-search-text="agencySearch" md-items="agency in propertyFilter(propertyValues['referingAgency'],agencySearch)"
+                md-item-text="agency" md-min-length="0" md-floating-label="Henvisende instans" ng-disabled="!editPatientData"
+                md-clear-button="editPatientData" md-require-match="true">
                 <md-item-template>
                     <span md-highlight-text="agencySearch" md-highlight-flags="gi">{{agency}}</span>
                 </md-item-template>
@@ -23,16 +16,9 @@
             <md-tooltip md-direction="top" md-delay="500" ng-if="case.referingAgency != null">{{case.referingAgency}}</md-tooltip>
         </div>
         <div>
-            <md-autocomplete flex 
-            md-selected-item="case.mainCharge" 
-            md-search-text="mainChargeSearch" 
-            md-items="mainCarge in propertyFilter(propertyValues['mainCharge'],mainChargeSearch)"
-                md-item-text="mainCarge" 
-                md-min-length="0" 
-                md-floating-label="Hovedsigtelse" 
-                ng-disabled="!editPatientData"
-                md-clear-button="editPatientData"
-                md-require-match="true">
+            <md-autocomplete flex md-selected-item="case.mainCharge" md-search-text="mainChargeSearch" md-items="mainCarge in propertyFilter(propertyValues['mainCharge'],mainChargeSearch)"
+                md-item-text="mainCarge" md-min-length="0" md-floating-label="Hovedsigtelse" ng-disabled="!editPatientData"
+                md-clear-button="editPatientData" md-require-match="true">
                 <md-item-template>
                     <span md-highlight-text="mainChargeSearch" md-highlight-flags="gi">{{mainCarge}}</span>
                 </md-item-template>
@@ -40,19 +26,28 @@
             <md-tooltip md-direction="top" md-delay="500" ng-if="case.mainCharge != null">{{case.mainCharge}}</md-tooltip>
         </div>
 
-        <md-autocomplete flex 
-        md-selected-item="case.status" 
-        md-search-text="statusSearch"
-        md-items="status in propertyFilter(propertyValues['status'],statusSearch)" 
-        md-item-text="status" 
-        md-min-length="0" 
-        md-floating-label="Status"
-        ng-disabled="!editPatientData"
-        md-clear-button="editPatientData"
-        md-require-match="true">
-        <md-item-template>
-            <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
-        </md-item-template>
+        <md-autocomplete flex md-selected-item="case.status" md-search-text="statusSearch" md-items="status in propertyFilter(propertyValues['status'],statusSearch)"
+            md-item-text="status" md-min-length="0" md-floating-label="Status" ng-disabled="!editPatientData"
+            md-clear-button="editPatientData" md-require-match="true">
+            <md-item-template>
+                <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
+            </md-item-template>
         </md-autocomplete>
+
+        <md-radio-group ng-model="case.group1" ng-disabled="!editPatientData">
+            <md-radio-button value="kendelse" class="md-primary">Kendelse</md-radio-button>
+            <md-radio-button value="samtykke">Samtykke</md-radio-button>
+        </md-radio-group>
+
+        <div ng-if="case.group1 === 'kendelse'">
+            <md-input-container flex>
+                <label>Kendelsesdato</label>
+                <md-datepicker ng-model="case.group3" ng-disabled="!editPatientData"></md-datepicker>
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Retten i</label>
+                <input ng-model="case.group2" ng-disabled="!editPatientData">
+            </md-input-container>
+        </div>
     </md-card-content>
 </md-card>
