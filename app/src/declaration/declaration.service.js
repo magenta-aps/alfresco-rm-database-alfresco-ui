@@ -78,6 +78,8 @@ function DeclarationService($http) {
     });
   }
 
+
+
   function unlockEntry(properties) {
     return $http.put("/alfresco/s/entry/" + properties['node-uuid'] + '/unlock')
       .then(function (response) {
