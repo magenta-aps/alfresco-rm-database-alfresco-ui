@@ -16,16 +16,13 @@ function DeclarationCreateController($scope, $state, $translate, DeclarationServ
   $scope.propertyFilter = propertyFilter;
   $scope.addNewBidiagnosis = addNewBidiagnosis;
   vm.lookupCPR = lookupCPR;
-  vm.hej = hej;
 
   HeaderService.resetActions();
   HeaderService.addAction('Gem', 'save', submit);
 
   activated();
 
-  function hej() {
-    alert("hej");
-  }
+
 
   function activated() {
     var title = $state.current.name === 'declaration.create-bua' ? 'DECLARATION.NEW_BUA_DECLARATION' : 'DECLARATION.NEW_DECLARATION';

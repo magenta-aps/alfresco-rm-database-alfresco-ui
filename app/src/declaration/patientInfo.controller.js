@@ -22,6 +22,7 @@ function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationServi
 	$scope.addNewBidiagnosis = addNewBidiagnosis;
 	vm.lookupCPR = lookupCPR;
 	vm.isNumber = isNumber;
+	vm.makeDeclarationDocument = makeDeclarationDocument;
 
 	$scope.$on('$destroy', function () {
 		if ($scope.case.locked4edit) {
@@ -30,6 +31,25 @@ function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationServi
 	});
 
 	activated();
+
+	function makeDeclarationDocument() {
+
+		console.log($scope.case);
+
+		if ($scope.case.group1 == "kendelse") {
+			console.log("kendelse");
+			console.log($scope.case.group3);
+			console.log($scope.case.group2);
+			DeclarationService.makeDeclarationDocument($scope.case["node-uuid"], "kendelse",$scope.case.group3, $scope.case.group2 );
+		}
+		else {
+			DeclarationService.makeDeclarationDocument($scope.case["node-uuid"], "samtykke","", "" );
+			console.log("samtykke");
+
+		}
+
+
+	}
 
 	function activated() {
 		if (Object.keys($stateParams.caseData).length) {

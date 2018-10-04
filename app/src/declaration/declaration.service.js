@@ -15,7 +15,8 @@ function DeclarationService($http) {
     update: updateEntry,
     getAutoComleteEntries: getAutoComleteEntries,
     getWaitingList: getWaitingList,
-    advancedSearch: advancedSearch
+    advancedSearch: advancedSearch,
+    makeDeclarationDocument: makeDeclarationDocument
   };
 
   return service;
@@ -76,6 +77,22 @@ function DeclarationService($http) {
       return response.data;
 
     });
+  }
+
+  function makeDeclarationDocument(entry, type, date, retten) {
+
+      return $http.post("/alfresco/s/contents/mergedoctemplate", {
+        "id": entry,
+        "type": type,
+        "retten": retten,
+        "dato": date
+      }).then(function (response) {
+        return response.data;
+
+      });
+
+
+
   }
 
 
