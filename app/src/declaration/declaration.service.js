@@ -81,6 +81,9 @@ function DeclarationService($http) {
 
   function makeDeclarationDocument(entry, type, date, retten) {
 
+
+
+
       return $http.post("/alfresco/s/contents/mergedoctemplate", {
         "id": entry,
         "type": type,

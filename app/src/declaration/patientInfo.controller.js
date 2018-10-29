@@ -37,10 +37,10 @@ function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationServi
 		console.log($scope.case);
 
 		if ($scope.case.group1 == "kendelse") {
-			console.log("kendelse");
-			console.log($scope.case.group3);
-			console.log($scope.case.group2);
-			DeclarationService.makeDeclarationDocument($scope.case["node-uuid"], "kendelse",$scope.case.group3, $scope.case.group2 );
+
+			var ddate = $scope.case.group3.getDate() + "-" + ($scope.case.group3.getMonth()+1) + "-" + $scope.case.group3.getFullYear();
+git s
+			DeclarationService.makeDeclarationDocument($scope.case["node-uuid"], "kendelse",ddate, $scope.case.group2 );
 		}
 		else {
 			DeclarationService.makeDeclarationDocument($scope.case["node-uuid"], "samtykke","", "" );
@@ -134,7 +134,7 @@ function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationServi
 
 	function unlockCase() {
 		DeclarationService.unlock($scope.case)
-			.then(function () {
+			.then(function () {laege
 				HeaderService.resetActions();
 				activated();
 				Toast.show('Sagen er låst op')
