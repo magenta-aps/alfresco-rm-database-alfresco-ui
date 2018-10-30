@@ -40,10 +40,12 @@
         </md-radio-group>
 
         <div ng-if="case.declarationType === 'kendelse'">
-            <md-input-container flex>
-                <label>Kendelsesdato</label>
-                <md-datepicker ng-model="case.rulingDate" ng-disabled="!editPatientData"></md-datepicker>
-            </md-input-container>
+            <div layout="row">
+                <md-input-container flex>
+                    <label>Kendelsesdato</label>
+                    <md-datepicker ng-model="case.rulingDate" ng-disabled="!editPatientData"></md-datepicker>
+                </md-input-container>
+            </div>
             <md-input-container class="md-block">
                 <label>Retten i</label>
                 <input ng-model="case.rulingCourt" ng-disabled="!editPatientData">
