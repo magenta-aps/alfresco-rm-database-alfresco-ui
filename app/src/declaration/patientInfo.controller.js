@@ -132,6 +132,7 @@ function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationServi
 	function unlockCase() {
 		DeclarationService.unlock($scope.case)
 			.then(function () {
+				laege
 				HeaderService.resetActions();
 				activated();
 				Toast.show('Sagen er låst op')
