@@ -45,7 +45,13 @@
     "SEARCH_NAME_CPR": "Søg efter navn, sagsnummer eller CPR-nummer",
     "ADVANCED_SEARCH": "Avanceret søgning",
     "DECLARATION_NUMBER": "Sagsnummer",
-    "DECLARATION": "Erklæring"
+    "DECLARATION": "Erklæring",
+    "doctor": "Læge",
+    "rulingCourt": "Retten i",
+    "rulingDate": "Kendelsesdato",
+    "referingAgency": "Henvisende instans",
+    "observationDate": "Observation Påbegyndt",
+    "declarationType": "Kendelse/samtykke"
   },
   "DOCUMENT": {
     "DOCUMENT": "Dokument",

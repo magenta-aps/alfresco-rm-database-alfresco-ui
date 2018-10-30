@@ -33,22 +33,26 @@ function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationServi
 	activated();
 
 	function makeDeclarationDocument() {
+		DeclarationService.makeDeclarationDocument($scope.case)
+	}
 
-		console.log($scope.case);
+	function canCreateDeclarationDocument(declaration) {
+		var result = true;
+		var props = ['doctor', 'referingAgency', 'observationDate', 'declarationType']
+		var missingProps = []
 
-		if ($scope.case.group1 == "kendelse") {
-			console.log("kendelse");
-			console.log($scope.case.group3);
-			console.log($scope.case.group2);
-			DeclarationService.makeDeclarationDocument($scope.case["node-uuid"], "kendelse",$scope.case.group3, $scope.case.group2 );
-		}
-		else {
-			DeclarationService.makeDeclarationDocument($scope.case["node-uuid"], "samtykke","", "" );
-			console.log("samtykke");
-
+		if (declaration.declarationType == 'kendelse') {
+			props.push('rulingDate')
+			props.push('rulingCourt')
 		}
 
-
+		for (var p in props) {
+			if (!declaration[props[p]]) {
+				result = false;
+				missingProps.push(props[p])
+			}
+		}
+		return [result, missingProps]
 	}
 
 	function activated() {
@@ -64,12 +68,19 @@ function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationServi
 
 	function setEverything(response) {
 		$scope.case = response;
-		$scope.waitTime = getWaitingTimes(response);
 		var bua = response.bua ? ' (BUA)' : '';
 		HeaderService.resetActions();
 		HeaderService.setTitle(response.firstName + ' ' + response.lastName + ' (' + response.caseNumber + ')' + bua);
 		HeaderService.setCaseId(response.caseNumber);
 		HeaderService.setClosed(response.closed);
+
+		var canCreate = canCreateDeclarationDocument(response)
+
+		var declarationSettings = {
+			disabled: !canCreate[0],
+			tooltip: canCreate[1].length > 0 ? canCreate[1] : undefined
+		}
+		HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings)
 
 		if (!response.closed) {
 			HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
@@ -103,20 +114,6 @@ function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationServi
 				$scope.case.postbox = res.POSTNR;
 				$scope.case.city = res.BY;
 			});
-	}
-
-	function getWaitingTimes(res) {
-		var creationDate = new Date(res.creationDate);
-		var observationDate = new Date(res.observationDate);
-		var declarationDate = new Date(res.declarationDate);
-
-		var wait = {};
-
-		wait.passive = Math.ceil((observationDate - creationDate) / 1000 / 60 / 60 / 24);
-		wait.active = Math.ceil((declarationDate - observationDate) / 1000 / 60 / 60 / 24);
-		wait.total = Math.ceil((declarationDate - creationDate) / 1000 / 60 / 60 / 24);
-
-		return wait;
 	}
 
 	function isNumber(number) {

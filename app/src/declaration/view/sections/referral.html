@@ -34,19 +34,19 @@
             </md-item-template>
         </md-autocomplete>
 
-        <md-radio-group ng-model="case.group1" ng-disabled="!editPatientData">
+        <md-radio-group ng-model="case.declarationType" ng-disabled="!editPatientData">
             <md-radio-button value="kendelse" class="md-primary">Kendelse</md-radio-button>
             <md-radio-button value="samtykke">Samtykke</md-radio-button>
         </md-radio-group>
 
-        <div ng-if="case.group1 === 'kendelse'">
+        <div ng-if="case.declarationType === 'kendelse'">
             <md-input-container flex>
                 <label>Kendelsesdato</label>
-                <md-datepicker ng-model="case.group3" ng-disabled="!editPatientData"></md-datepicker>
+                <md-datepicker ng-model="case.rulingDate" ng-disabled="!editPatientData"></md-datepicker>
             </md-input-container>
             <md-input-container class="md-block">
                 <label>Retten i</label>
-                <input ng-model="case.group2" ng-disabled="!editPatientData">
+                <input ng-model="case.rulingCourt" ng-disabled="!editPatientData">
             </md-input-container>
         </div>
     </md-card-content>
