@@ -80,11 +80,15 @@ function DeclarationService($http) {
   }
 
   function makeDeclarationDocument(desclaration) {
+
+    var d = new Date(desclaration.rulingDate);
+    var dformattet = d.getDate() + "-" + (d.getMonth()+1) + "-" + d.getFullYear();
+
     return $http.post("/alfresco/s/contents/mergedoctemplate", {
       "id": desclaration['node-uuid'],
       "type": desclaration.declarationType,
       "retten": desclaration.rulingCourt,
-      "dato": desclaration.rulingDate
+      "dato": dformattet
     }).then(function (response) {
       return response.data;
 
