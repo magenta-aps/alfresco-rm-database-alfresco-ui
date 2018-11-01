@@ -34,6 +34,9 @@ function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationServi
 
 	function makeDeclarationDocument() {
 		DeclarationService.makeDeclarationDocument($scope.case)
+			.then(function (response) {
+				$state.go('document', { doc: response.id });
+			});
 	}
 
 	function canCreateDeclarationDocument(declaration) {
