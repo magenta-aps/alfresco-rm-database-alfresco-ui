@@ -82,7 +82,7 @@ function DeclarationService($http) {
   function makeDeclarationDocument(desclaration) {
     return $http.post("/alfresco/s/contents/mergedoctemplate", {
       "id": desclaration['node-uuid'],
-      "type": desclaration.consent,
+      "type": desclaration.declarationType,
       "retten": desclaration.rulingCourt,
       "dato": desclaration.rulingDate
     }).then(function (response) {
