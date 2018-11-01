@@ -39,7 +39,7 @@ function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationServi
 		if ($scope.case.group1 == "kendelse") {
 
 			var ddate = $scope.case.group3.getDate() + "-" + ($scope.case.group3.getMonth()+1) + "-" + $scope.case.group3.getFullYear();
-git s
+
 			DeclarationService.makeDeclarationDocument($scope.case["node-uuid"], "kendelse",ddate, $scope.case.group2 );
 		}
 		else {
