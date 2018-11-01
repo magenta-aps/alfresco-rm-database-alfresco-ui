@@ -4,7 +4,7 @@ angular
 	.module('openDeskApp.declaration')
 	.controller('PatientInfoController', PatientInfoController);
 
-function PatientInfoController($scope, $stateParams, $mdDialog, DeclarationService, filterService, cprService, authService, Toast, HeaderService) {
+function PatientInfoController($scope, $state, $stateParams, $mdDialog, DeclarationService, filterService, cprService, authService, Toast, HeaderService) {
 
 	var vm = this;
 	$scope.DeclarationService = DeclarationService;
