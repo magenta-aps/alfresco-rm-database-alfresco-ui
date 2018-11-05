@@ -12,12 +12,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	$scope.case;
 	$scope.isLoading = false;
 
-	$scope.waitTime = {
-		passive: null,
-		active: null,
-		total: null
-	};
-
 	$scope.propertyFilter = propertyFilter;
 	$scope.addNewBidiagnosis = addNewBidiagnosis;
 	vm.lookupCPR = lookupCPR;
@@ -98,8 +92,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	}
 
 	function addNewBidiagnosis() {
-		console.log($scope.case.biDiagnoses.indexOf(''));
-
 		if ($scope.case.biDiagnoses.indexOf('') < 0) {
 			$scope.case.biDiagnoses.push('');
 		}
@@ -135,7 +127,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	function unlockCase() {
 		DeclarationService.unlock($scope.case)
 			.then(function () {
-				laege
 				HeaderService.resetActions();
 				activated();
 				Toast.show('Sagen er låst op')

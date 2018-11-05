@@ -33,15 +33,18 @@
             <h2 ng-if="vm.isClosed">
                 <md-icon>done</md-icon> {{'DECLARATION.DECLARATION_CLOSED' | translate}}
             </h2>
-            <md-button ng-repeat="action in vm.actions" ng-click="action.action()" ng-class="action.primary ? 'md-raised md-primary md-hue-2' : ''"
-                ng-disabled="(action.icon === 'save' ? $root.declarationForm.$invalid : '') || action.settings.disabled">
-                <md-icon>{{action.icon}}</md-icon>
-                <span>{{action.label | translate}}</span>
-                <md-tooltip class="tt-multiline" ng-if="action.settings.tooltip">
+            <div ng-repeat="action in vm.actions" ng-mouseover="action.showTooltip=true" ng-mouseleave="action.showTooltip=false">
+                <md-button ng-click="action.action()" ng-class="action.primary ? 'md-raised md-primary md-hue-2' : ''"
+                    ng-disabled="(action.icon === 'save' ? $root.declarationForm.$invalid : '') || action.settings.disabled">
+                    <md-icon>{{action.icon}}</md-icon>
+                    <span>{{action.label | translate}}</span>
+                </md-button>
+                <md-tooltip class="tt-multiline" ng-if="action.settings.tooltip" md-visible="action.showTooltip"
+                    md-autohide>
                     Følgende felter mangler at blive udfyldt:<br>
                     <span ng-repeat="missing in action.settings.tooltip">{{'DECLARATION.'+missing | translate}}<br></span>
                 </md-tooltip>
-            </md-button>
+            </div>
         </span>
     </md-toolbar>
 </header>

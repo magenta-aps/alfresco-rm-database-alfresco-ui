@@ -74,7 +74,7 @@ function DeclarationService($http) {
       "properties": entry.properties,
       "bua": entry.bua
     }).then(function (response) {
-      return response.data;
+      return formatCase(response.data);
 
     });
   }
@@ -82,7 +82,7 @@ function DeclarationService($http) {
   function makeDeclarationDocument(desclaration) {
 
     var d = new Date(desclaration.rulingDate);
-    var dformattet = d.getDate() + "-" + (d.getMonth()+1) + "-" + d.getFullYear();
+    var dformattet = d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear();
 
     return $http.post("/alfresco/s/contents/mergedoctemplate", {
       "id": desclaration['node-uuid'],
