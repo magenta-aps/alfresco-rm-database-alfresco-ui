@@ -74,31 +74,26 @@ function DeclarationService($http) {
       "properties": entry.properties,
       "bua": entry.bua
     }).then(function (response) {
-      return response.data;
+      return formatCase(response.data);
 
     });
   }
 
-  function makeDeclarationDocument(entry, type, date, retten) {
+  function makeDeclarationDocument(desclaration) {
 
+    var d = new Date(desclaration.rulingDate);
+    var dformattet = d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear();
 
+    return $http.post("/alfresco/s/contents/mergedoctemplate", {
+      "id": desclaration['node-uuid'],
+      "type": desclaration.declarationType,
+      "retten": desclaration.rulingCourt,
+      "dato": dformattet
+    }).then(function (response) {
+      return response.data;
 
-
-      return $http.post("/alfresco/s/contents/mergedoctemplate", {
-        "id": entry,
-        "type": type,
-        "retten": retten,
-        "dato": date
-      }).then(function (response) {
-        return response.data;
-
-      });
-
-
-
+    });
   }
-
-
 
   function unlockEntry(properties) {
     return $http.put("/alfresco/s/entry/" + properties['node-uuid'] + '/unlock')

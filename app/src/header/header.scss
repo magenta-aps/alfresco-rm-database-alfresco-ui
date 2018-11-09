@@ -12,3 +12,20 @@
     display: inline-block;
   }
 }
+
+md-tooltip .md-content {
+  height: auto !important;
+  max-width: 200px !important;
+}
+
+md-tooltip {
+  height: auto !important;
+  max-width: 200px !important;
+  overflow: visible !important;
+  white-space: normal !important;
+}
+
+md-tooltip ._md-content {
+  height: auto !important;
+  max-width: 200px !important;
+}

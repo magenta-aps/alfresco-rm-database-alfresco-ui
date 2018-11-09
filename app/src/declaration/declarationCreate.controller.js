@@ -9,7 +9,9 @@ function DeclarationCreateController($scope, $state, $translate, DeclarationServ
   var vm = this;
 
   $scope.editPatientData = true;
-  $scope.case = {};
+  $scope.case = {
+    declarationType: 'kendelse'
+  };
   $scope.case.biDiagnoses = [];
   $scope.case.creationDate = new Date();
   $scope.propertyValues = propertyService.getAllPropertyValues();

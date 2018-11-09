@@ -16,8 +16,8 @@
                 <label>Observation påbegyndt</label>
                 <md-datepicker ng-model="case.observationDate" ng-disabled="!editPatientData"></md-datepicker>
             </md-input-container>
-            <span style="float:right" ng-show="vm.isNumber(waitTime.passive)">
-                {{waitTime.passive}}
+            <span style="float:right" ng-show="case.waiting_passive">
+                {{case.waiting_passive}}
                 <md-icon class="icon-small">
                     info_outline
                     <md-tooltip md-direction="top">Passiv ventetid</md-tooltip>
@@ -29,30 +29,32 @@
                 <label>Erklæring afgivet</label>
                 <md-datepicker ng-model="case.declarationDate" ng-disabled="!editPatientData"></md-datepicker>
             </md-input-container>
-            <span style="float:right" ng-show="vm.isNumber(waitTime.total)">
-                {{waitTime.active}}
-                    <md-icon class="icon-small">
-                        info_outline
-                        <md-tooltip md-direction="top">Aktiv ventetid</md-tooltip>
-                    </md-icon>
-                </span>
+            <span style="float:right" ng-show="case.waiting_active">
+                {{case.waiting_active}}
+                <md-icon class="icon-small">
+                    info_outline
+                    <md-tooltip md-direction="top">Aktiv ventetid</md-tooltip>
+                </md-icon>
+            </span>
         </div>
         <div layout="row">
             <span flex></span>
-            <span ng-show="vm.isNumber(waitTime.total)">
-                <strong>{{waitTime.total}}</strong>
-                    <md-icon class="icon-small">
-                        info_outline
-                        <md-tooltip md-direction="top">Samlet ventetid</md-tooltip>
-                    </md-icon>
-                </span>
+            <span ng-show="case.waiting_total">
+                <strong>{{case.waiting_total}}</strong>
+                <md-icon class="icon-small">
+                    info_outline
+                    <md-tooltip md-direction="top">Samlet ventetid</md-tooltip>
+                </md-icon>
+            </span>
         </div>
 
         <div layout="column">
             <span ng-show="case.closed && !case.closedWithoutDeclaration">Afsluttet</span>
             <div ng-show="case.closedWithoutDeclaration">
-                <span style="padding-top:16px" ng-show="case.hasOwnProperty('closedWithoutDeclarationReason')">Afsluttet uden erklæring: {{case.closedWithoutDeclarationReason}}</span><br>
-                <span style="padding:16px 0" ng-show="case.hasOwnProperty('closedWithoutDeclarationSentTo')">Sendt til: {{case.closedWithoutDeclarationSentTo}}</span>
+                <span style="padding-top:16px" ng-show="case.hasOwnProperty('closedWithoutDeclarationReason')">Afsluttet
+                    uden erklæring: {{case.closedWithoutDeclarationReason}}</span><br>
+                <span style="padding:16px 0" ng-show="case.hasOwnProperty('closedWithoutDeclarationSentTo')">Sendt til:
+                    {{case.closedWithoutDeclarationSentTo}}</span>
             </div>
         </div>
     </md-card-content>

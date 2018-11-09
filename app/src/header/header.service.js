@@ -54,12 +54,13 @@ function HeaderService($rootScope, authService) {
     $rootScope.$broadcast('updateHeader');
   }
 
-  function addAction(label, icon, action, primary) {
+  function addAction(label, icon, action, primary, settings) {
     actions.push({
       label: label,
       icon: icon,
       primary: primary,
-      action: action
+      action: action,
+      settings: settings
     })
     $rootScope.$broadcast('updateHeader');
   }
