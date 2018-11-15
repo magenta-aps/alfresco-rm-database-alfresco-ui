@@ -101,8 +101,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 	function lookupCPR() {
 		cprService.getCPRData($scope.case.cprNumber)
-			.then(function (response) {
-				var res = response.data[0];
+			.then(function (res) {
 				var name = res.NAVN.split(',');
 
 				$scope.case.firstName = name[1];
