@@ -79,7 +79,7 @@ gulp.task('scripts', function () {
         .pipe($.wrap('(function(){\n"use strict";\n<%= contents %>\n})();'))
         .pipe($.concat(dist.name + '.js'))
         .pipe(gulp.dest(dist.folder))
-        .pipe($.rename({suffix: '.min'}))
+        .pipe($.rename({ suffix: '.min' }))
         .pipe($.stripDebug())
         .pipe($.ngAnnotate())
         //.pipe($.uglify())
@@ -94,7 +94,7 @@ gulp.task('css', function () {
         .pipe($.concat(dist.name + '.scss'))
         .pipe($.sass())
         .pipe(gulp.dest(dist.folder))
-        .pipe($.rename({suffix: '.min'}))
+        .pipe($.rename({ suffix: '.min' }))
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],
             cascade: false
@@ -106,12 +106,15 @@ gulp.task('css', function () {
 
 // Accessibility check
 gulp.task('acc_check', function () {
-    pa11y({url: 'http://178.62.194.129/'});
+    pa11y({ url: 'http://178.62.194.129/' });
 });
 
 // Security check
 gulp.task('sec_check', function (cb) {
-    gulpNSP({package: __dirname + '/package.json'}, cb);
+    gulpNSP({
+        package: __dirname + '/package.json',
+        stopOnError: false
+    }, cb);
 });
 
 // Set up watchers
