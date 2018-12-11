@@ -17,7 +17,7 @@ function CprService($http, Toast) {
       .then(function (response) {
         return response.data;
       })
-      .error(function () {
+      .catch(function () {
         Toast.show('Ingen person med CPR nummeret ' + $scope.case.cprNumber)
       });
   }
