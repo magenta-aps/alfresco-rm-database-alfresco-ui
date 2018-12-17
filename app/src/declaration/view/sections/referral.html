@@ -15,6 +15,15 @@
             </md-autocomplete>
             <md-tooltip md-direction="top" md-delay="500" ng-if="case.referingAgency != null">{{case.referingAgency}}</md-tooltip>
         </div>
+
+
+        <div>
+            <md-input-container class="md-block">
+                <label>Journalnummer</label>
+                <input ng-model="case.journalNumber"  required>
+            </md-input-container>
+        </div>
+
         <div>
             <md-autocomplete flex md-selected-item="case.mainCharge" md-search-text="mainChargeSearch" md-items="mainCarge in propertyFilter(propertyValues['mainCharge'],mainChargeSearch)"
                 md-item-text="mainCarge" md-min-length="0" md-floating-label="Hovedsigtelse" ng-disabled="!editPatientData"

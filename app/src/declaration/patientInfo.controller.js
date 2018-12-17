@@ -35,7 +35,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 	function canCreateDeclarationDocument(declaration) {
 		var result = true;
-		var props = ['doctor', 'referingAgency', 'observationDate', 'declarationType']
+		var props = ['referingAgency', 'declarationType']
 		var missingProps = []
 
 
