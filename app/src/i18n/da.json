@@ -49,6 +49,7 @@
     "doctor": "Læge",
     "rulingCourt": "Retten i",
     "rulingDate": "Kendelsesdato",
+    "journalNumber": "Journalnummer",
     "referingAgency": "Henvisende instans",
     "observationDate": "Observation Påbegyndt",
     "declarationType": "Kendelse/samtykke"
