@@ -58,7 +58,6 @@ a {
 }
 
 body {
-  //background: $gray-85;
   color: $primary-text-color;
 }
 
@@ -78,6 +77,7 @@ img {
 }
 
 .od-body {
+  padding-bottom: 85px;
   margin: $u * 8 0 auto;
   z-index: 1;
 }
@@ -85,13 +85,6 @@ img {
 .md-icon--large {
   font-size: $u * 6 !important;
   height: $u * 6;
-}
-
-
-// Icons in buttons
-.md-button .material-icons {
-  vertical-align: middle;
-  margin-top: -($u * .25);
 }
 
 .md-text-icon-button {
@@ -162,4 +155,42 @@ md-toolbar {
 
 md-input-container {
   margin: 0;
+}
+
+// Avoid the first label in form will touch toolbar in login
+md-toolbar + md-card-content > form {
+  margin-top: 1rem;
+}
+
+// Main navigation list
+.nav-list {
+  list-style: none;
+  margin: 8px;
+  padding: 0;
+
+  .material-icons {
+    margin-right: 0.5em;
+  }
+
+  &__link {
+    display: block;
+    line-height: 24px;
+    padding: 0.5em;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+
+    &:focus {
+      background-color: rgba(0, 0, 0, 0.05);
+      text-decoration: none;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+      text-decoration: none;
+    }
+
+    &:active {
+      background-color: rgba(0, 0, 0, 0.15);
+    }
+  }
 }

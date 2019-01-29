@@ -1,71 +1,55 @@
 <div layout="row">
-    <div flex-gt-md="10" flex="15">
-        <md-button class="md-text-icon-button" aria-label="Dashboard" ng-click="vm.viewState('dashboard')">
-            <md-icon>dashboard</md-icon> Dashboard
-        </md-button>
-
-        <md-button ng-if="userRoles.indexOf('SiteRoleManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Behandlere" ng-click="vm.viewState('practitioners')">
-            <md-icon>people</md-icon> Brugerrettigheder
-        </md-button>
-
-        <md-button ng-if="userRoles.indexOf('TemplateFolderValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Dokumentskabeloner" ng-click="vm.viewState('document_templates')">
-            <md-icon>content_copy</md-icon> Dokumentskabeloner
-        </md-button>
-        <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Læger" ng-click="vm.viewState('doctors')">
-            <md-icon>healing</md-icon> Læger
-        </md-button>
-        <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Psykologer" ng-click="vm.viewState('psychologists')">
-            <md-icon>healing</md-icon> Psykologer
-        </md-button>
-        <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Socialrådgivere" ng-click="vm.viewState('socialworkers')">
-            <md-icon>healing</md-icon> Socialrådgivere
-        </md-button>
-        <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Sekretærer" ng-click="vm.viewState('secretaries')">
-            <md-icon>healing</md-icon> Sekretærer
-        </md-button>
-        <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Sigtelser" ng-click="vm.viewState('referingAgencies')">
-            <md-icon>store</md-icon> Henvisende instanser
-        </md-button>
-        <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Sigtelser" ng-click="vm.viewState('mainCharge')">
-            <md-icon>pan_tool</md-icon> Sigtelser
-        </md-button>
-        <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Sanktioner" ng-click="vm.viewState('sanctions')">
-            <md-icon>gavel</md-icon> Sanktioner
-        </md-button>
-        <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Placeringer" ng-click="vm.viewState('placement')">
-            <md-icon>play_for_work</md-icon> Placeringer
-        </md-button>
-        <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Diagnoser" ng-click="vm.viewState('diagnosis')">
-            <md-icon>assignment</md-icon> Diagnoser
-        </md-button>
-        <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Etniciteter" ng-click="vm.viewState('ethnicities')">
-            <md-icon>face</md-icon> Etniciteter
-        </md-button>
-        <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Statusser" ng-click="vm.viewState('status')">
-            <md-icon>flag</md-icon> Status
-        </md-button>
-        <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Afsluttet ud erklæring" ng-click="vm.viewState('noDeclaration')">
-            <md-icon>check</md-icon> Afsluttet uden erklæring
-        </md-button>
-        <md-button ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" class="md-text-icon-button"
-            aria-label="Myndigheder" ng-click="vm.viewState('emailAuthorities')">
-            <md-icon>check</md-icon> Myndigheder
-        </md-button>
-
+    <div flex-gt-md="20" flex="25">
+        <ul class="nav-list">
+            <li class="nav-list__item" aria-label="Dashboard">
+                <a ui-sref="administration.dashboard" class="nav-list__link"><md-icon>dashboard</md-icon>Dashboard</a>
+            </li>
+            <li class="nav-list__item md-primary" ng-if="userRoles.indexOf('SiteRoleManager') > -1 || userRoles.indexOf('SiteManager') > -1" aria-label="Behandlere">
+                <a ui-sref="administration.practitioners" ng-click="vm.changePageHeading('practitioners')" class="nav-list__link"><md-icon>people</md-icon>Brugerrettigheder</a>
+            </li>
+            <li class="nav-list__item" ng-if="userRoles.indexOf('TemplateFolderValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" aria-label="Dokumentskabeloner">
+                <a ui-sref="administration.document_templates" ng-click="vm.changePageHeading('document_templates')" class="nav-list__link"><md-icon>content_copy</md-icon>Dokumentskabeloner</a>
+            </li>
+            <li class="nav-list__item" ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" aria-label="Læger">
+                <a ui-sref="administration.doctors" ng-click="vm.changePageHeading('doctors')" class="nav-list__link"><md-icon>healing</md-icon>Læger</a>
+            </li>
+            <li class="nav-list__item" ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" aria-label="Psykologer">
+                <a ui-sref="administration.psychologists" ng-click="vm.changePageHeading('psychologists')" class="nav-list__link"><md-icon>healing</md-icon>Psykologer</a>
+            </li>
+            <li class="nav-list__item" ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" aria-label="Socialrådgivere">
+                <a ui-sref="administration.socialworkers" ng-click="vm.changePageHeading('socialworkers')" class="nav-list__link"><md-icon>healing</md-icon>Socialrådgivere</a>
+            </li>
+            <li class="nav-list__item" ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" aria-label="Sekretærer">
+                <a ui-sref="administration.secretaries" ng-click="vm.changePageHeading('secretaries')" class="nav-list__link"><md-icon>healing</md-icon>Sekretærer</a>
+            </li>
+            <li class="nav-list__item" ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" aria-label="Sigtelser">
+                <a ui-sref="administration.referingAgencies" ng-click="vm.changePageHeading('referingAgencies')" class="nav-list__link"><md-icon>store</md-icon>Henvisende instanser</a>
+            </li>
+            <li class="nav-list__item" ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" aria-label="Sigtelser">
+                <a ui-sref="administration.mainCharge" ng-click="vm.changePageHeading('mainCharge')" class="nav-list__link"><md-icon>pan_tool</md-icon>Sigtelser</a>
+            </li>
+            <li class="nav-list__item" ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" aria-label="Sanktioner">
+                <a ui-sref="administration.sanctions" ng-click="vm.changePageHeading('sanctions')" class="nav-list__link"><md-icon>gavel</md-icon>Sanktioner</a>
+            </li>
+            <li class="nav-list__item" ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" aria-label="Placeringer">
+                <a ui-sref="administration.placement" ng-click="vm.changePageHeading('placement')" class="nav-list__link"><md-icon>play_for_work</md-icon>Placeringer</a>
+            </li>
+            <li class="nav-list__item" ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" aria-label="Diagnoser">
+                <a ui-sref="administration.diagnosis" ng-click="vm.changePageHeading('diagnosis')" class="nav-list__link"><md-icon>assignment</md-icon>Diagnoser</a>
+            </li>
+            <li class="nav-list__item" ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" aria-label="Etniciteter">
+                <a ui-sref="administration.ethnicities" ng-click="vm.changePageHeading('ethnicities')" class="nav-list__link"><md-icon>face</md-icon>Etniciteter</a>
+            </li>
+            <li class="nav-list__item" ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" aria-label="Statusser">
+                <a ui-sref="administration.status" ng-click="vm.changePageHeading('status')" class="nav-list__link"><md-icon>flag</md-icon>Status</a>
+            </li>
+            <li class="nav-list__item" ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" aria-label="Afsluttet ud erklæring">
+                <a ui-sref="administration.noDeclaration" ng-click="vm.changePageHeading('noDeclaration')" class="nav-list__link"><md-icon>check</md-icon> Afsluttet uden erklæring</a>
+            </li>
+            <li class="nav-list__item" ng-if="userRoles.indexOf('SitePropertyValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" aria-label="Myndigheder">
+                <a ui-sref="administration.emailAuthorities" ng-click="vm.changePageHeading('emailAuthorities')" class="nav-list__link"><md-icon>check</md-icon>Myndigheder</a>
+            </li>
+        </ul>
     </div>
 
     <div class="od-info-declarations" flex>
