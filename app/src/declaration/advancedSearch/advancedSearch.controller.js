@@ -22,6 +22,7 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   vm.advancedSearch = advancedSearch;
   vm.nextPage = nextPage;
   vm.clearResults = clearResults;
+
   vm.noDeclaration = noDeclaration;
   vm.psychEval = psychEval;
   vm.givenDeclaration = givenDeclaration;
@@ -31,29 +32,26 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   HeaderService.setTitle($translate.instant('DECLARATION.ADVANCED_SEARCH'))
 
   function noDeclaration() {
-    // $scope.searchParams.closedWithoutDeclarationReason = '';
-    // $scope.searchParams.psychEval = false;
-    // $scope.searchParams.givenDeclaration = false;
-    // $scope.searchParams.socialEval = false;
+    $scope.searchParams.closedWithoutDeclarationReason = '';
+    $scope.searchParams.psychEval = false;
+    $scope.searchParams.givenDeclaration = false;
+    $scope.searchParams.socialEval = false;
   }
 
   function psychEval() {
-    // $scope.searchParams.psychologist = '';
-    // $scope.searchParams.noDeclaration = false;
+    $scope.searchParams.psychologist = '';
+    $scope.searchParams.noDeclaration = false;
   }
 
   function givenDeclaration() {
-    // $scope.searchParams.doctor = '';
-    // $scope.searchParams.noDeclaration = false;
+    $scope.searchParams.doctor = '';
+    $scope.searchParams.noDeclaration = false;
   }
 
   function socialEval() {
-    // $scope.searchParams.socialworker = '';
-    // $scope.searchParams.noDeclaration = false;
+    $scope.searchParams.socialworker = '';
+    $scope.searchParams.noDeclaration = false;
   }
-
-  // searchParams.socialworker = ''
-
 
   function gotoCase(caseNumber) {
     $state.go('declaration.show', { caseid: caseNumber });

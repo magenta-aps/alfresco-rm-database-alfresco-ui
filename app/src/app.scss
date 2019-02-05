@@ -153,8 +153,16 @@ md-toolbar {
   width: 100px !important;
 }
 
-md-input-container {
-  // margin: 0;
+.md-input-container {
+  display: inline-block;
+  margin: 1em 0;
+  padding: 2px;
+  position: relative;
+  vertical-align: middle;
+
+  &.md-block {
+    display: block;
+  }
 }
 
 // Avoid the first label in form will touch toolbar in login

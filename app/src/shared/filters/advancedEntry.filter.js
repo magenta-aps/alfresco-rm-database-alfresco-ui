@@ -14,7 +14,7 @@ function advancedEntryFilter() {
             var filtersMet = [];
             var psychSet = false;
             var socialSet = false;
-            var fromDateSet = false;
+            var createdFromDateSet = false;
             var toDateSet = false;
             var waitTimeSet = false;
             var declarationDateSet = false;
@@ -48,9 +48,9 @@ function advancedEntryFilter() {
                         socialSet = true;
                     }
 
-                    if (fkey == 'fromDate' && new Date(entry.creationDate) >= fval && !fromDateSet) {
+                    if (fkey == 'createdFromDate' && new Date(entry.creationDate) >= fval && !createdFromDateSet) {
                         filtersMet.push(true);
-                        fromDateSet = true;
+                        createdFromDateSet = true;
                     }
 
                     if (fkey == 'toDate' && new Date(entry.creationDate) <= fval && !toDateSet) {
@@ -113,6 +113,7 @@ function advancedEntryFilter() {
             alreadyAdded = false;
         });
         console.log(filteredEntries);
+        alert("pow!");
         return filteredEntries;
     };
 }
