@@ -2,7 +2,7 @@
     <div layout="column" style="height:144px" flex-gt-sm="50" flex>
         <span flex></span>
         <div layout="row">
-            <md-autocomplete md-selected-item="selectedCase" md-search-text="entrySearchQuery" md-items="case in vm.getEntries(entrySearchQuery)" md-min-length="4" placeholder="{{'DECLARATION.SEARCH_NAME_CPR' | translate}}" flex autofocus>
+            <md-autocomplete md-selected-item="selectedCase" md-search-text="entrySearchQuery" md-items="case in vm.getEntries(entrySearchQuery)" md-min-length="4" placeholder="{{'DECLARATION.SEARCH_NAME_CPR' | translate}}" flex autofocus="autofocus">
                 <md-item-template>
                     <span md-highlight-text="entrySearchQuery" md-highlight-flags="gi">
                         {{case.cprNumber}} - {{case.firstName}} {{case.lastName}} ({{case.caseNumber}})
