@@ -13,10 +13,8 @@
             <td md-cell>
               <md-checkbox aria-label="{{content.title}}" ng-model="content.selected"></md-checkbox>
             </td>
-            <td md-cell>
-              <span>
-                <img class="list-edit clickable" ng-click="renameDialog(content)" ng-src="app/assets/images/edit.svg"> {{content.title}}
-              </span>
+            <td md-cell ng-click="renameDialog(content)" class="clickable">
+              <md-icon class="list-edit" style="height: 16px; width: 16px; min-height: 16px; min-width: 16px; font-size: 16px;">edit</md-icon> {{content.title}}
             </td>
           </tr>
         </tbody>
