@@ -23,8 +23,35 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   vm.nextPage = nextPage;
   vm.clearResults = clearResults;
 
+  vm.noDeclaration = noDeclaration;
+  vm.psychEval = psychEval;
+  vm.givenDeclaration = givenDeclaration;
+  vm.socialEval = socialEval;
+
   HeaderService.resetActions();
   HeaderService.setTitle($translate.instant('DECLARATION.ADVANCED_SEARCH'))
+
+  function noDeclaration() {
+    $scope.searchParams.closedWithoutDeclarationReason = '';
+    $scope.searchParams.psychEval = false;
+    $scope.searchParams.givenDeclaration = false;
+    $scope.searchParams.socialEval = false;
+  }
+
+  function psychEval() {
+    $scope.searchParams.psychologist = '';
+    $scope.searchParams.noDeclaration = false;
+  }
+
+  function givenDeclaration() {
+    $scope.searchParams.doctor = '';
+    $scope.searchParams.noDeclaration = false;
+  }
+
+  function socialEval() {
+    $scope.searchParams.socialworker = '';
+    $scope.searchParams.noDeclaration = false;
+  }
 
   function gotoCase(caseNumber) {
     $state.go('declaration.show', { caseid: caseNumber });
