@@ -39,6 +39,10 @@ function DeclarationService($http) {
   }
 
   function getAutoComleteEntries(skip, max, input) {
+
+    if (input.includes("#")) {
+      input = input.replace("#","!");
+    }
     return $http.get("/alfresco/s/database/retspsyk/autocompleteentries" + "?skip=" + skip + "&maxItems=" + max + "&input=" + input)
       .then(function (response) {
         return response.data;
