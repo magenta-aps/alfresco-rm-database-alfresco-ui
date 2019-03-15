@@ -1,12 +1,16 @@
-<div layout="row">
-    <div flex-gt-md="10" flex="15">
-        <md-button class="md-text-icon-button" aria-label="edit" ui-sref="declaration.show.patientdata">
-            <md-icon>assignment</md-icon> Patient data
-        </md-button>
-        <md-button class="md-text-icon-button" aria-label="edit" ui-sref="declaration.show.documents">
-            <md-icon>insert_drive_file</md-icon> Dokumenter
-        </md-button>
-    </div>
+<div layout="row" style="padding-left: 240px;">
+    <md-sidenav class="md-sidenav-left" md-whiteframe="4" md-is-locked-open="true">
+
+        <md-content layout-padding>
+            <md-button class="md-text-icon-button" aria-label="edit" ui-sref="declaration.show.patientdata">
+                <md-icon>assignment</md-icon> Patientdata
+            </md-button>
+            <md-button class="md-text-icon-button" aria-label="edit" ui-sref="declaration.show.documents">
+                <md-icon>insert_drive_file</md-icon> Dokumenter
+            </md-button>
+        </md-content>
+
+    </md-sidenav>
 
     <div flex>
         <div ui-view='declarations'></div>

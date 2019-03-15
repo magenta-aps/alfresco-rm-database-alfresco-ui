@@ -77,7 +77,6 @@ img {
 }
 
 .od-body {
-  padding-bottom: 85px;
   margin: $u * 8 0 auto;
   z-index: 1;
 }
@@ -110,10 +109,11 @@ md-toolbar {
 }
 
 .rm-logo {
-  width: 144px;
-  position: fixed;
   bottom: 0;
   left: 53px;
+  position: fixed;
+  width: 144px;
+  z-index: 1;
 }
 
 .md-autocomplete-suggestions {
@@ -200,5 +200,32 @@ md-toolbar + md-card-content > form {
     &:active {
       background-color: rgba(0, 0, 0, 0.15);
     }
+  }
+}
+
+.md-tooltip,
+.tt-multiline {
+  line-height: 1.3;
+  padding: 1em;
+
+  ol {
+    list-style-position: inside;
+    padding-left: 1em;
+  }
+}
+
+md-sidenav {
+  left: 0;
+  max-width: 240px;
+  min-height: calc(100vh - 128px);
+  position: fixed !important;
+  top: 128px !important;
+  width: 250px;
+
+  .md-button {
+    display: inline-block;
+    margin: 0;
+    text-align: left;
+    width: 100%;
   }
 }
