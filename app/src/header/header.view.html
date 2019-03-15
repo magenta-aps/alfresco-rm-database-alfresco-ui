@@ -1,6 +1,6 @@
 <header class="od-header">
     <md-toolbar class="md-tall">
-        <span class="md-toolbar-tools" ng-if="vm.loggedIn" flex>
+        <div class="md-toolbar-tools" ng-if="vm.loggedIn" flex>
             <h2 ui-sref="declaration" style="cursor:pointer;font-variant:small-caps">
                 <strong>O</strong>bservand
                 <strong>DA</strong>tabase</h2>
@@ -24,8 +24,8 @@
                     </md-button>
                 </div>
             </div>
-        </span>
-        <span class="md-toolbar-tools" layout="row">
+        </div>
+        <div class="md-toolbar-tools" layout="row">
             <a ui-sref="declaration.show({caseid: vm.caseId})" style="color:white">
                 <h2>{{vm.title}}</h2>
             </a>
@@ -34,17 +34,17 @@
                 <md-icon>done</md-icon> {{'DECLARATION.DECLARATION_CLOSED' | translate}}
             </h2>
             <div ng-repeat="action in vm.actions" ng-mouseover="action.showTooltip=true" ng-mouseleave="action.showTooltip=false">
-                <md-button ng-click="action.action()" ng-class="action.primary ? 'md-raised md-primary md-hue-2' : ''"
-                    ng-disabled="(action.icon === 'save' ? $root.declarationForm.$invalid : '') || action.settings.disabled">
+                <md-button ng-click="action.action()" ng-class="action.primary ? 'md-raised md-primary md-hue-2' : ''" ng-disabled="(action.icon === 'save' ? $root.declarationForm.$invalid : '') || action.settings.disabled">
                     <md-icon>{{action.icon}}</md-icon>
                     <span>{{action.label | translate}}</span>
                 </md-button>
-                <md-tooltip class="tt-multiline" ng-if="action.settings.tooltip" md-visible="action.showTooltip"
-                    md-autohide>
-                    Følgende felter mangler at blive udfyldt:<br>
-                    <span ng-repeat="missing in action.settings.tooltip">{{'DECLARATION.'+missing | translate}}<br></span>
+                <md-tooltip class="tt-multiline" ng-if="action.settings.tooltip" md-visible="action.showTooltip" md-autohide>
+                    Følgende felter mangler at blive udfyldt:
+                    <ol>
+                        <li ng-repeat="missing in action.settings.tooltip">{{'DECLARATION.'+missing | translate}}</li>
+                    </ol>
                 </md-tooltip>
             </div>
-        </span>
+        </div>
     </md-toolbar>
 </header>
