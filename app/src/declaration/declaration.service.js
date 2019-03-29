@@ -85,7 +85,16 @@ function DeclarationService($http) {
 
   function makeDeclarationDocument(desclaration) {
 
-    var d = new Date(desclaration.rulingDate);
+    var d;
+    if (desclaration.rulingDate == undefined) {
+      d = new Date();
+
+    }
+    else {
+      d = new Date(desclaration.rulingDate);
+
+    }
+
     var dformattet = d.getDate() + "." + (d.getMonth() + 1) + "." + d.getFullYear();
 
     return $http.post("/alfresco/s/contents/mergedoctemplate", {
