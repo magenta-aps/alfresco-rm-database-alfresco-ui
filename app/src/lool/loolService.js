@@ -9,6 +9,7 @@ function loolService($http, transformRequestAsFormPost, ALFRESCO_URI) {
         getWopiUrl: getWopiUrl,
         getIframeSrc: getIframeSrc,
         getLoolServiceUrl: getLoolServiceUrl
+        markDocumentAsEditing: markDocumentAsEditing
     };
 
     //Just in case this is set. Call the server and see if the service url is set get around proxy issues
