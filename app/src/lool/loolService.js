@@ -37,6 +37,17 @@ function loolService($http, transformRequestAsFormPost, ALFRESCO_URI) {
             })
     }
 
+     function markDocumentAsEditing(nodeRef) {
+        return $http.post("contents/markedforedit", {
+          "nodeRef": nodeRef, "method" : "add"
+        }).then(function (response) {
+            console.log(response)
+    //      var res = formatCase(response.data);
+    //      return res;
+        });
+        }
+
+
     /**
      * Currently not in use. The idea of this was to submit a (form) request to the libreoffice online service and
      * collect the return for use in the iFrame ro render the Loleaflet client.
