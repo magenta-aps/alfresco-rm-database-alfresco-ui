@@ -15,6 +15,7 @@ function LoolController($stateParams, loolService) {
     loolService.getLoolServiceUrl().then(function (response) {
         if (response.charAt(response.length - 1) == '/')
             response = response.substring(0, response.length - 1);
+            console.log("whtas the nodeRef");
             console.log(vm.nodeRef)
             loolService.markDocumentAsEditing(vm.nodeRef)
         renderIframe(response);
