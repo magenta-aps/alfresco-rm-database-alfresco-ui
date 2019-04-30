@@ -39,7 +39,7 @@ function loolService($http, transformRequestAsFormPost, ALFRESCO_URI) {
     }
 
      function markDocumentAsEditing(nodeRef) {
-        return $http.post("/contents/markedforedit", {
+        return $http.post("/alfresco/s/contents/markedforedit", {
           "nodeRef": nodeRef, "method" : "add"
         }).then(function (response) {
             console.log(response)
