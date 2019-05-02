@@ -40,9 +40,9 @@ function DocumentController($scope, documentService, $stateParams, $state,
     console.log(vm.doc.nodeRef);
 
     console.log("$stateParams.doc")
-    console.log($stateParams.doc);
+    console.log(selectedDocumentNode);
 
-    documentService.markDocumentAsNotEditing(vm.doc.nodeRef);
+    documentService.markDocumentAsNotEditing(selectedDocumentNode);
     window.history.go(-2);
 
   }
