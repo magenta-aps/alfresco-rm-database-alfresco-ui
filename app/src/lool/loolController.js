@@ -17,7 +17,17 @@ function LoolController($stateParams, loolService) {
             response = response.substring(0, response.length - 1);
             console.log("whtas the nodeRef");
             console.log(vm.nodeRef)
-            loolService.markDocumentAsEditing(vm.nodeRef)
+
+            // check if state has been updated by another user before marking it as beeing edited
+
+            if (loolService.getState(vm.nodeRef)) {
+                loolService.markDocumentAsEditing(vm.nodeRef)
+            }
+            else {
+                alert("dokumentet er låst og redigeres af en anden bruger")
+            }
+
+
         renderIframe(response);
     });
 
