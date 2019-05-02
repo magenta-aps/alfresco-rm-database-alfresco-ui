@@ -18,6 +18,12 @@ function LoolController($stateParams, loolService) {
             console.log("whtas the nodeRef");
             console.log(vm.nodeRef)
 
+        renderIframe(response);
+    });
+
+    function renderIframe(serviceUrl) {
+
+
             // check if state has been updated by another user before marking it as beeing edited
 
             if (!loolService.getState(vm.nodeRef)) {
@@ -27,11 +33,6 @@ function LoolController($stateParams, loolService) {
                 alert("dokumentet er låst og redigeres af en anden bruger")
             }
 
-
-        renderIframe(response);
-    });
-
-    function renderIframe(serviceUrl) {
         loolService.getWopiUrl(vm.nodeRef).then(function (response) {
             var shortRef = vm.nodeRef.substring(vm.nodeRef.lastIndexOf('/') + 1);
             var wopi_src_url = response.wopi_src_url;
