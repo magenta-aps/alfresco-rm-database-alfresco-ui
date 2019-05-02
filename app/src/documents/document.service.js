@@ -39,7 +39,7 @@ function documentService($http, EDITOR_CONFIG) {
         return $http.post("/alfresco/s/contents/markedforedit", {
           "nodeRef": nodeRef, "method" : "state"
         }).then(function (response) {
-            return response.date.state;
+            return response.data.state;
             console.log(response)
         });
       }
