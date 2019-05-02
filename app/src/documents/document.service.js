@@ -8,7 +8,6 @@ function documentService($http, EDITOR_CONFIG) {
     getDocument: getDocument,
     cleanupThumbnail: cleanupThumbnail,
     isLoolEditable: isLoolEditable,
-    markDocumentAsNotEditing: markDocumentAsNotEditing
   };
 
   return service;
