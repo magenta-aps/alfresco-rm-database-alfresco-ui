@@ -30,9 +30,24 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
   function loadState() {
 
-    var state = documentService.getState("workspace://SpacesStore/" + selectedDocumentNode);
-    console.log("the state");
-    console.log(state.value);
+    var state = documentService.getState("workspace://SpacesStore/" + selectedDocumentNode)
+
+    .then(function (response) {
+            console.log(response)
+
+//            vm.plugin = plugin;
+//            $scope.config = plugin;
+//            $scope.viewerTemplateUrl = documentPreviewService.templatesUrl + plugin.templateUrl;
+//            $scope.download = function () {
+//              alfrescoDownloadService.downloadFile($scope.config.nodeRef, $scope.config.fileName);
+//            };
+//
+//            if (plugin.initScope) {
+//              plugin.initScope($scope);
+//            }
+          });
+
+
 
   }
 
