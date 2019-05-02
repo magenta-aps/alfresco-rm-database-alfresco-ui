@@ -35,6 +35,8 @@ function DocumentController($scope, documentService, $stateParams, $state,
     .then(function (response) {
             console.log(response)
 
+            vm.state = response;
+
 //            vm.plugin = plugin;
 //            $scope.config = plugin;
 //            $scope.viewerTemplateUrl = documentPreviewService.templatesUrl + plugin.templateUrl;
