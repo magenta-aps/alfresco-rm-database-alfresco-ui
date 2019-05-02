@@ -30,7 +30,7 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
   function loadState() {
 
-    var state = documentService.getState(selectedDocumentNode);
+    var state = documentService.getState("workspace://SpacesStore/" + selectedDocumentNode);
     console.log(state);
 
   }
