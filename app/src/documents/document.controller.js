@@ -32,7 +32,7 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
     var state = documentService.getState("workspace://SpacesStore/" + selectedDocumentNode);
     console.log("the state");
-    console.log(state);
+    console.log(state.value);
 
   }
 
