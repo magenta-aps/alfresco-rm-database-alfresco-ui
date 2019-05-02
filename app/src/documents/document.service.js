@@ -40,7 +40,6 @@ function documentService($http, EDITOR_CONFIG) {
           "nodeRef": nodeRef, "method" : "state"
         }).then(function (response) {
             return response.data.state;
-            console.log(response)
         });
       }
 
