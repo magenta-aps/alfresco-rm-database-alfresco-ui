@@ -28,11 +28,20 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
   activate();
 
+  function loadState() {
+
+    var state = documentService.markDocumentAsNotEditing(selectedDocumentNode);
+    console.log(state);
+
+  }
+
+
   function activate() {
     HeaderService.resetActions();
     setPDFViewerHeight();
     loadPreview();
     getDocument();
+    loadState();
   }
 
   function goBack() {

@@ -34,6 +34,13 @@ function documentService($http, EDITOR_CONFIG) {
     return EDITOR_CONFIG.lool.mimeTypes.indexOf(mimeType) !== -1;
   }
 
+ function markDocumentAsNotEditing(nodeRef) {
+        return $http.post("/alfresco/s/contents/markedforedit", {
+          "nodeRef": nodeRef, "method" : "state"
+        }).then(function (response) {
+            console.log(response)
+        });
+      }
 
 
 
