@@ -36,6 +36,12 @@ function DocumentController($scope, documentService, $stateParams, $state,
   }
 
   function goBack() {
+    console.log("hvad er vm.doc.nodeRef")
+    console(vm.doc.nodeRef);
+
+    console.log("$stateParams.doc")
+    console($stateParams.doc);
+
     documentService.markDocumentAsNotEditing(vm.doc.nodeRef);
     window.history.go(-2);
 
