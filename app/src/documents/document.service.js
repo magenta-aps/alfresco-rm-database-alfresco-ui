@@ -36,12 +36,6 @@ function documentService($http, EDITOR_CONFIG) {
   }
 
 
- function markDocumentAsNotEditing(nodeRef) {
-    return $http.post("/alfresco/s/contents/markedforedit", {
-      "nodeRef": nodeRef, "method" : "removes"
-    }).then(function (response) {
-        console.log(response)
-    });
-  }
+
 
 }

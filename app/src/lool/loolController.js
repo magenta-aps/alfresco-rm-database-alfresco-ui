@@ -40,13 +40,7 @@ function LoolController($stateParams, loolService) {
     }
 
      vm.goBack = function goBack() {
-        console.log("vm.nodeRef")
-        console.log(vm.nodeRef);
-
-        console.log("$stateParams.doc")
-        console.log(selectedDocumentNode);
-
-        documentService.markDocumentAsNotEditing(selectedDocumentNode);
+        documentService.markDocumentAsNotEditing(vm.nodeRef);
         window.history.go(-2);
 
       }
