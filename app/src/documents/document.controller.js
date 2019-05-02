@@ -30,7 +30,7 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
   function loadState() {
 
-    var state = documentService.markDocumentAsNotEditing(selectedDocumentNode);
+    var state = documentService.getState(selectedDocumentNode);
     console.log(state);
 
   }
