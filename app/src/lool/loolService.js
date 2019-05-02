@@ -51,7 +51,7 @@ function loolService($http, transformRequestAsFormPost, ALFRESCO_URI) {
 
      function markDocumentAsNotEditing(nodeRef) {
         return $http.post("/alfresco/s/contents/markedforedit", {
-          "nodeRef": nodeRef, "method" : "removes"
+          "nodeRef": nodeRef, "method" : "remove"
         }).then(function (response) {
             console.log(response)
         });
