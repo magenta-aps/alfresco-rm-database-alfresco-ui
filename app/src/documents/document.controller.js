@@ -36,6 +36,8 @@ function DocumentController($scope, documentService, $stateParams, $state,
   }
 
   function goBack() {
+
+    documentService.markDocumentAsNotEditing(vm.doc.nodeRef);
     window.history.go(-2);
 
   }

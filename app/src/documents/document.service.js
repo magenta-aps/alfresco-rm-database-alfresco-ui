@@ -8,6 +8,7 @@ function documentService($http, EDITOR_CONFIG) {
     getDocument: getDocument,
     cleanupThumbnail: cleanupThumbnail,
     isLoolEditable: isLoolEditable
+    markDocumentAsNotEditing: markDocumentAsNotEditing
   };
 
   return service;
@@ -33,4 +34,16 @@ function documentService($http, EDITOR_CONFIG) {
   function isLoolEditable(mimeType) {
     return EDITOR_CONFIG.lool.mimeTypes.indexOf(mimeType) !== -1;
   }
+
+
+ function markDocumentAsNotEditing(nodeRef) {
+    return $http.post("/alfresco/s/contents/markedforedit", {
+      "nodeRef": nodeRef, "method" : "remove"
+    }).then(function (response) {
+        console.log(response)
+//      var res = formatCase(response.data);
+//      return res;
+    });
+    }
+
 }
