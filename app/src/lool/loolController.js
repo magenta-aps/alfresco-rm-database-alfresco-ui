@@ -38,4 +38,17 @@ function LoolController($stateParams, loolService) {
             });
         });
     }
+
+    function goBack() {
+        console.log("vm.nodeRef")
+        console.log(vm.nodeRef);
+
+        console.log("$stateParams.doc")
+        console.log(selectedDocumentNode);
+
+        documentService.markDocumentAsNotEditing(selectedDocumentNode);
+        window.history.go(-2);
+
+      }
+
 }
