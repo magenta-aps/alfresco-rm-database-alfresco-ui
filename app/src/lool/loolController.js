@@ -51,4 +51,6 @@ function LoolController($stateParams, loolService) {
 
       }
 
+      vm.goBack = goBack();
+
 }
