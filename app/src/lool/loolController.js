@@ -20,7 +20,7 @@ function LoolController($stateParams, loolService) {
 
             // check if state has been updated by another user before marking it as beeing edited
 
-            if (loolService.getState(vm.nodeRef)) {
+            if (!loolService.getState(vm.nodeRef)) {
                 loolService.markDocumentAsEditing(vm.nodeRef)
             }
             else {
