@@ -39,7 +39,7 @@ function LoolController($stateParams, loolService) {
         });
     }
 
-    function goBack() {
+     vm.goBack = function goBack() {
         console.log("vm.nodeRef")
         console.log(vm.nodeRef);
 
@@ -51,6 +51,5 @@ function LoolController($stateParams, loolService) {
 
       }
 
-      vm.goBack = goBack();
 
 }
