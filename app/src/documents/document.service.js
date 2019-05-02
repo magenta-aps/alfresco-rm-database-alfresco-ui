@@ -7,7 +7,7 @@ function documentService($http, EDITOR_CONFIG) {
   var service = {
     getDocument: getDocument,
     cleanupThumbnail: cleanupThumbnail,
-    isLoolEditable: isLoolEditable
+    isLoolEditable: isLoolEditable,
     markDocumentAsNotEditing: markDocumentAsNotEditing
   };
 
@@ -41,9 +41,7 @@ function documentService($http, EDITOR_CONFIG) {
       "nodeRef": nodeRef, "method" : "remove"
     }).then(function (response) {
         console.log(response)
-//      var res = formatCase(response.data);
-//      return res;
     });
-    }
+  }
 
 }
