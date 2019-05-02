@@ -9,7 +9,7 @@ function loolService($http, transformRequestAsFormPost, ALFRESCO_URI) {
         getWopiUrl: getWopiUrl,
         getIframeSrc: getIframeSrc,
         getLoolServiceUrl: getLoolServiceUrl,
-        markDocumentAsEditing: markDocumentAsEditing
+        markDocumentAsEditing: markDocumentAsEditing,
         markDocumentAsNotEditing: markDocumentAsNotEditing
     };
 
