@@ -24,7 +24,7 @@ function LoolController($stateParams, loolService) {
 
                 if (response) {
                     alert("dokumentet er låst og redigeres af en anden bruger");
-                    window.history.go(-2);
+                    window.history.go(-1);
                 }
                 else {
                     loolService.markDocumentAsEditing(vm.nodeRef)
