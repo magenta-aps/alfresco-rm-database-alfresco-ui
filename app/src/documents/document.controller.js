@@ -109,13 +109,13 @@ function DocumentController($scope, documentService, $stateParams, $state,
   function goToLOEditPage() {
 
 
-    documentService.getState(vm.nodeRef).then(function (response){
+    documentService.getState("workspace://SpacesStore/" + selectedDocumentNode).then(function (response){
         if (response) {
             alert("dokumentet er låst og redigeres af en anden bruger");
             console.log("did the alert thing");
         }
         else {
-            documentService.markDocumentAsEditing(vm.nodeRef)
+            documentService.markDocumentAsEditing("workspace://SpacesStore/" + selectedDocumentNode)
 
             $state.go('lool', {
                   'nodeRef': vm.doc.nodeRef
