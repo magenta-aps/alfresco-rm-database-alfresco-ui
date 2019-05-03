@@ -107,9 +107,23 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
   //Goes to the libreOffice online edit page
   function goToLOEditPage() {
-    $state.go('lool', {
-      'nodeRef': vm.doc.nodeRef
-    });
+
+
+    documentService.getState(vm.nodeRef).then(function (response){
+        if (response) {
+            alert("dokumentet er låst og redigeres af en anden bruger");
+            console.log("did the alert thing");
+        }
+        else {
+            documentService.markDocumentAsEditing(vm.nodeRef)
+
+            $state.go('lool', {
+                  'nodeRef': vm.doc.nodeRef
+                });
+
+        }
+    })
+
   }
 
   function downloadDocument() {

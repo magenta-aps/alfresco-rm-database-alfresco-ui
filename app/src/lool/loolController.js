@@ -15,24 +15,9 @@ function LoolController($stateParams, loolService) {
     loolService.getLoolServiceUrl().then(function (response) {
         if (response.charAt(response.length - 1) == '/')
             response = response.substring(0, response.length - 1);
-            console.log("whtas the nodeRef");
-            console.log(vm.nodeRef)
 
 
-
-            loolService.getState(vm.nodeRef).then(function (response){
-                if (response) {
-                    alert("dokumentet er låst og redigeres af en anden bruger");
-                    console.log("did the alert thing");
-                    window.history.go(-1);
-                }
-                else {
-                    loolService.markDocumentAsEditing(vm.nodeRef)
-                    renderIframe(response);
-                }
-            })
-
-
+             renderIframe(response);
     });
 
     function renderIframe(serviceUrl) {

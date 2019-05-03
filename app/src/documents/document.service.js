@@ -41,7 +41,18 @@ function documentService($http, EDITOR_CONFIG) {
         }).then(function (response) {
             return response.data.state;
         });
-      }
+  }
+
+
+ function markDocumentAsEditing(nodeRef) {
+    return $http.post("/alfresco/s/contents/markedforedit", {
+      "nodeRef": nodeRef, "method" : "add"
+    }).then(function (response) {
+        console.log(response)
+    //      var res = formatCase(response.data);
+    //      return res;
+    });
+    }
 
 
 
