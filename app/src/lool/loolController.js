@@ -29,14 +29,24 @@ function LoolController($stateParams, loolService) {
             console.log(loolService.getState(vm.nodeRef));
 
 
-            if (!loolService.getState(vm.nodeRef)) {
-            console.log("doing if");
-                loolService.markDocumentAsEditing(vm.nodeRef)
-            }
-            else {
-            console.log("doing else");
-                alert("dokumentet er låst og redigeres af en anden bruger");
-            }
+            loolService.getState(vm.nodeRef).then(function (response){
+
+            console.log("response");
+            console.log(response);
+
+
+//                console.log("doing if");
+//                                loolService.markDocumentAsEditing(vm.nodeRef)
+//                            }
+//                            else {
+//                            console.log("doing else");
+//                                alert("dokumentet er låst og redigeres af en anden bruger");
+//                            }
+
+
+
+            })
+
 
         loolService.getWopiUrl(vm.nodeRef).then(function (response) {
             var shortRef = vm.nodeRef.substring(vm.nodeRef.lastIndexOf('/') + 1);
