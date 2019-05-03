@@ -21,9 +21,9 @@ function LoolController($stateParams, loolService) {
 
 
             loolService.getState(vm.nodeRef).then(function (response){
-
                 if (response) {
                     alert("dokumentet er låst og redigeres af en anden bruger");
+                    console.log("did the alert thing");
                     window.history.go(-1);
                 }
                 else {
@@ -36,14 +36,6 @@ function LoolController($stateParams, loolService) {
     });
 
     function renderIframe(serviceUrl) {
-
-
-            // check if state has been updated by another user before marking it as beeing edited
-            console.log("checking state");
-            console.log(loolService.getState(vm.nodeRef));
-
-
-
 
         loolService.getWopiUrl(vm.nodeRef).then(function (response) {
             var shortRef = vm.nodeRef.substring(vm.nodeRef.lastIndexOf('/') + 1);
