@@ -18,7 +18,22 @@ function LoolController($stateParams, loolService) {
             console.log("whtas the nodeRef");
             console.log(vm.nodeRef)
 
-        renderIframe(response);
+
+
+            loolService.getState(vm.nodeRef).then(function (response){
+
+                if (response) {
+                    alert("dokumentet er låst og redigeres af en anden bruger");
+                }
+                else {
+                    loolService.markDocumentAsEditing(vm.nodeRef)
+                    renderIframe(response);
+
+
+                }
+            })
+
+
     });
 
     function renderIframe(serviceUrl) {
@@ -29,32 +44,23 @@ function LoolController($stateParams, loolService) {
             console.log(loolService.getState(vm.nodeRef));
 
 
-            loolService.getState(vm.nodeRef).then(function (response){
 
-                if (response) {
-                    alert("dokumentet er låst og redigeres af en anden bruger");
-                }
-                else {
-                    loolService.markDocumentAsEditing(vm.nodeRef)
 
-                    loolService.getWopiUrl(vm.nodeRef).then(function (response) {
-                        var shortRef = vm.nodeRef.substring(vm.nodeRef.lastIndexOf('/') + 1);
-                        var wopi_src_url = response.wopi_src_url;
-                        var wopiFileURL = serviceUrl + "/wopi/files/" + shortRef;
-                        var frameSrcURL = wopi_src_url + "WOPISrc=" + encodeURIComponent(wopiFileURL);
-                        var access_token = encodeURIComponent(response.access_token);
-                        //Use JQuery to submit the form and 'target' the iFrame
-                        $(function () {
-                            var form = '<form id="loleafletform" name="loleafletform" target="loleafletframe" action="' + frameSrcURL + '" method="post">' +
-                                '<input name="access_token" value="' + encodeURIComponent(access_token) + '" type="hidden"/></form>';
+        loolService.getWopiUrl(vm.nodeRef).then(function (response) {
+            var shortRef = vm.nodeRef.substring(vm.nodeRef.lastIndexOf('/') + 1);
+            var wopi_src_url = response.wopi_src_url;
+            var wopiFileURL = serviceUrl + "/wopi/files/" + shortRef;
+            var frameSrcURL = wopi_src_url + "WOPISrc=" + encodeURIComponent(wopiFileURL);
+            var access_token = encodeURIComponent(response.access_token);
+            //Use JQuery to submit the form and 'target' the iFrame
+            $(function () {
+                var form = '<form id="loleafletform" name="loleafletform" target="loleafletframe" action="' + frameSrcURL + '" method="post">' +
+                    '<input name="access_token" value="' + encodeURIComponent(access_token) + '" type="hidden"/></form>';
 
-                            $('#libreoffice-online').append(form);
-                            $('#loleafletform').submit();
-                        });
-                    });
-                }
-            })
-
+                $('#libreoffice-online').append(form);
+                $('#loleafletform').submit();
+            });
+        });
     }
 
      vm.goBack = function goBack() {
