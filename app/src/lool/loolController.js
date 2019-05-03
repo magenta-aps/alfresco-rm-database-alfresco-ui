@@ -24,12 +24,11 @@ function LoolController($stateParams, loolService) {
 
                 if (response) {
                     alert("dokumentet er låst og redigeres af en anden bruger");
+                    window.history.go(-2);
                 }
                 else {
                     loolService.markDocumentAsEditing(vm.nodeRef)
                     renderIframe(response);
-
-
                 }
             })
 
