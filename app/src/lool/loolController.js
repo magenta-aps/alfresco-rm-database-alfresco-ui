@@ -29,13 +29,13 @@ function LoolController($stateParams, loolService) {
             console.log(loolService.getState(vm.nodeRef));
 
 
-            if !(loolService.getState(vm.nodeRef)) {
+            if (!loolService.getState(vm.nodeRef)) {
             console.log("doing if");
                 loolService.markDocumentAsEditing(vm.nodeRef)
             }
             else {
             console.log("doing else");
-                alert("dokumentet er låst og redigeres af en anden bruger")
+                alert("dokumentet er låst og redigeres af en anden bruger");
             }
 
         loolService.getWopiUrl(vm.nodeRef).then(function (response) {
