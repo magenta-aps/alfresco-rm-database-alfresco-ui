@@ -107,9 +107,15 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
       headers: {
         'Content-Type': undefined
       }
-    }).then(function (response) {
-      return response;
-    });
+        }).then(function (response) {
+
+            var props = { "nodeRef" : response.data.nodeRef};
+
+              $http.post('/alfresco/s/contents/addpermission', props).then(function (response) {
+                                    console.log(response)
+                                    return response;
+                                  });
+        });
   }
 
   function download(nodeRef, name) {
