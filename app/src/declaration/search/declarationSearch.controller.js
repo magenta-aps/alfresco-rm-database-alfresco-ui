@@ -33,8 +33,7 @@ function DeclarationSearchController($scope, $state, DeclarationService, authSer
   }
 
   function getEntries(query) {
-  console.log("hej");
-    return DeclarationService.getAutoComleteEntries(0, 5, query)
+      return DeclarationService.getAutoComleteEntries(0, 5, query)
       .then(function (response) {
         return response.entries;
       })

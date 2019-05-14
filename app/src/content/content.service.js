@@ -112,7 +112,6 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
             var props = { "nodeRef" : response.data.nodeRef};
 
               $http.post('/alfresco/s/contents/addpermission', props).then(function (response) {
-                                    console.log(response)
                                     return response;
                                   });
         });

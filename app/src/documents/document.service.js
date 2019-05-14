@@ -21,7 +21,6 @@ function documentService($http, EDITOR_CONFIG) {
 
   function cleanupThumbnail(node) {
     var url = '/alfresco/s/previewhelper?version_node=' + node.split("/")[3] + '&method=cleanup';
-    console.log('clean thumb')
 
     return $http.get(url)
       .then(function (response) {
