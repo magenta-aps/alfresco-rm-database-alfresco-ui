@@ -15,12 +15,13 @@ function LoolController($stateParams, loolService) {
     loolService.getLoolServiceUrl().then(function (response) {
         if (response.charAt(response.length - 1) == '/')
             response = response.substring(0, response.length - 1);
-            console.log(vm.nodeRef)
-            loolService.markDocumentAsEditing(vm.nodeRef)
-        renderIframe(response);
+
+
+             renderIframe(response);
     });
 
     function renderIframe(serviceUrl) {
+
         loolService.getWopiUrl(vm.nodeRef).then(function (response) {
             var shortRef = vm.nodeRef.substring(vm.nodeRef.lastIndexOf('/') + 1);
             var wopi_src_url = response.wopi_src_url;
@@ -37,4 +38,12 @@ function LoolController($stateParams, loolService) {
             });
         });
     }
+
+     vm.goBack = function goBack() {
+        loolService.markDocumentAsNotEditing(vm.nodeRef);
+        window.history.go(-2);
+
+      }
+
+
 }

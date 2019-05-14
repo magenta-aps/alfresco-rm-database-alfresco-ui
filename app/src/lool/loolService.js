@@ -8,7 +8,10 @@ function loolService($http, transformRequestAsFormPost, ALFRESCO_URI) {
     return {
         getWopiUrl: getWopiUrl,
         getIframeSrc: getIframeSrc,
-        getLoolServiceUrl: getLoolServiceUrl
+        getLoolServiceUrl: getLoolServiceUrl,
+        markDocumentAsEditing: markDocumentAsEditing,
+        markDocumentAsNotEditing: markDocumentAsNotEditing,
+        getState: getState
     };
 
     //Just in case this is set. Call the server and see if the service url is set get around proxy issues
@@ -38,7 +41,7 @@ function loolService($http, transformRequestAsFormPost, ALFRESCO_URI) {
     }
 
      function markDocumentAsEditing(nodeRef) {
-        return $http.post("contents/markedforedit", {
+        return $http.post("/alfresco/s/contents/markedforedit", {
           "nodeRef": nodeRef, "method" : "add"
         }).then(function (response) {
             console.log(response)
@@ -46,6 +49,14 @@ function loolService($http, transformRequestAsFormPost, ALFRESCO_URI) {
     //      return res;
         });
         }
+
+     function markDocumentAsNotEditing(nodeRef) {
+        return $http.post("/alfresco/s/contents/markedforedit", {
+          "nodeRef": nodeRef, "method" : "remove"
+        }).then(function (response) {
+            console.log(response)
+        });
+      }
 
 
     /**
@@ -76,6 +87,14 @@ function loolService($http, transformRequestAsFormPost, ALFRESCO_URI) {
             }
         );
     }
+
+     function getState(nodeRef) {
+            return $http.post("/alfresco/s/contents/markedforedit", {
+              "nodeRef": nodeRef, "method" : "state"
+            }).then(function (response) {
+                return response.data.state;
+            });
+          }
 
 
 }

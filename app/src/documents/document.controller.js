@@ -28,11 +28,38 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
   activate();
 
+  function loadState() {
+
+    var state = documentService.getState("workspace://SpacesStore/" + selectedDocumentNode)
+
+    .then(function (response) {
+            console.log(response)
+
+            vm.state = response;
+
+//            vm.plugin = plugin;
+//            $scope.config = plugin;
+//            $scope.viewerTemplateUrl = documentPreviewService.templatesUrl + plugin.templateUrl;
+//            $scope.download = function () {
+//              alfrescoDownloadService.downloadFile($scope.config.nodeRef, $scope.config.fileName);
+//            };
+//
+//            if (plugin.initScope) {
+//              plugin.initScope($scope);
+//            }
+          });
+
+
+
+  }
+
+
   function activate() {
     HeaderService.resetActions();
     setPDFViewerHeight();
     loadPreview();
     getDocument();
+    loadState();
   }
 
   function goBack() {
@@ -80,9 +107,23 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
   //Goes to the libreOffice online edit page
   function goToLOEditPage() {
-    $state.go('lool', {
-      'nodeRef': vm.doc.nodeRef
-    });
+
+
+    documentService.getState("workspace://SpacesStore/" + selectedDocumentNode).then(function (response){
+        if (response) {
+            alert("dokumentet er låst og redigeres af en anden bruger");
+            console.log("did the alert thing");
+        }
+        else {
+            documentService.markDocumentAsEditing("workspace://SpacesStore/" + selectedDocumentNode)
+
+            $state.go('lool', {
+                  'nodeRef': vm.doc.nodeRef
+                });
+
+        }
+    })
+
   }
 
   function downloadDocument() {

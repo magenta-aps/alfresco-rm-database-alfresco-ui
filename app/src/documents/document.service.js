@@ -7,7 +7,9 @@ function documentService($http, EDITOR_CONFIG) {
   var service = {
     getDocument: getDocument,
     cleanupThumbnail: cleanupThumbnail,
-    isLoolEditable: isLoolEditable
+    isLoolEditable: isLoolEditable,
+    getState: getState,
+    markDocumentAsEditing: markDocumentAsEditing,
   };
 
   return service;
@@ -32,4 +34,26 @@ function documentService($http, EDITOR_CONFIG) {
   function isLoolEditable(mimeType) {
     return EDITOR_CONFIG.lool.mimeTypes.indexOf(mimeType) !== -1;
   }
+
+ function getState(nodeRef) {
+        return $http.post("/alfresco/s/contents/markedforedit", {
+          "nodeRef": nodeRef, "method" : "state"
+        }).then(function (response) {
+            return response.data.state;
+        });
+  }
+
+
+ function markDocumentAsEditing(nodeRef) {
+    return $http.post("/alfresco/s/contents/markedforedit", {
+      "nodeRef": nodeRef, "method" : "add"
+    }).then(function (response) {
+        console.log(response)
+    //      var res = formatCase(response.data);
+    //      return res;
+    });
+    }
+
+
+
 }
