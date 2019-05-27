@@ -3,7 +3,7 @@
 angular.module('oda.content')
   .factory('ContentService', ContentService);
 
-function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUtilsService, alfrescoDownloadService) {
+function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUtilsService, alfrescoDownloadService, $state) {
 
   var currentFolderNodeRef;
 
@@ -132,18 +132,16 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
           }).then(function (response) {
 
               var props = { "nodeRef" : response.data.nodeRef};
-
-                $http.post('/alfresco/s/contents/addpermission', props).then(function (response) {
-                                      return response;
-                                    });
+              var nodeRef = response.data.nodeRef;
 
 
-                var templProps = {"templateType" : templateType};
+                     var templProps = {"templateType" : templateType, "nodeRef" : nodeRef};
 
-                $http.post('/alfresco/s/contents/validatetemplatename', templProps).then(function (response) {
-                                                      return response;
-                                                    });
-
+                    $http.post('/alfresco/s/contents/validatetemplatename', templProps).then(function (response) {
+                                                            $state.reload()
+                                                          return response;
+                                                        });
+              return response;
           });
     }
 
