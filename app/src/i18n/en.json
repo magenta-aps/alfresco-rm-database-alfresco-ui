@@ -103,7 +103,8 @@
     "CLOSEEDIT": "Close editing",
     "FILETYPE": "File type",
     "LOCAL_DOCUMENT": "Local document",
-    "REPLY": "Reply"
+    "REPLY": "Reply",
+    "UPLOAD_TEMPLATE": "Uplaod new template"
   },
   "DECLARATION": {
     "NEW_DECLARATION": "New Declaration",

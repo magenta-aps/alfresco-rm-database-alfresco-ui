@@ -6,11 +6,19 @@ angular
 
 function FilebrowserController($stateParams, $scope, $rootScope, $state, ContentService, alfrescoNodeUtils) {
 
+  var strPath = $stateParams.path;
+
   $scope.folderUuid = ''; //from directive definition
   $scope.crumbs = [];
   $scope.content = [];
   $scope.selectedContent = [];
   $scope.isLoading = false;
+  $scope.templateBrowser = !strPath.includes("Template")
+  $scope.standardBrowser = (strPath.includes("Template"))
+
+
+
+
 
   $scope.$watch('folderUuid', function (newVal) {
     if (newVal) getContent(newVal);

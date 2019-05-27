@@ -8,7 +8,8 @@ angular
       scope: {
         folderUuid: '=',
         hideActions: '=?',
-        selectedContent: '=?'
+        selectedContent: '=?',
+        templateBrowser: '=?',
       },
       templateUrl: 'app/src/filebrowser/view/filebrowser.html',
       controller: 'FilebrowserController as vm'

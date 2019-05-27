@@ -13,6 +13,7 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
     createFolder: createFolder,
     getNode: getNode,
     uploadFiles: uploadFiles,
+    uploadTemplateFiles: uploadTemplateFiles,
     download: download,
     downloadZippedFiles: downloadZippedFiles,
     delete: deleteFile,
@@ -116,6 +117,35 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
                                   });
         });
   }
+
+   function uploadTemplateFiles(file, destination, templateType) {
+      destination = destination ? destination : currentFolderNodeRef;
+      var formData = new FormData();
+      formData.append("filedata", file);
+      formData.append("destination", destination);
+
+      return $http.post("/api/upload", formData, {
+        transformRequest: angular.identity,
+        headers: {
+          'Content-Type': undefined
+        }
+          }).then(function (response) {
+
+              var props = { "nodeRef" : response.data.nodeRef};
+
+                $http.post('/alfresco/s/contents/addpermission', props).then(function (response) {
+                                      return response;
+                                    });
+
+
+                var templProps = {"templateType" : templateType};
+
+                $http.post('/alfresco/s/contents/validatetemplatename', templProps).then(function (response) {
+                                                      return response;
+                                                    });
+
+          });
+    }
 
   function download(nodeRef, name) {
     alfrescoDownloadService.downloadFile(nodeRef, name);

@@ -5,8 +5,14 @@
     </md-card-content>
 
     <md-card-actions layout="row" layout-align="start center" ng-hide="hideActions">
-        <md-button ng-controller="UploadController as uc" ng-click="uc.openDialog()" class="md-icon-button md-primary" aria-label="{{'COMMON.UPLOAD' | translate}} {{'DOCUMENT.DOCUMENTS' | translate | lowercase}}">
+
+        <md-button ng-hide="standardBrowser" ng-controller="UploadController as uc" ng-click="uc.openDialog()" class="md-icon-button md-primary" aria-label="{{'COMMON.UPLOAD' | translate}} {{'DOCUMENT.DOCUMENTS' | translate | lowercase}}">
             <md-tooltip md-direction="top">{{'COMMON.UPLOAD' | translate}} {{'DOCUMENT.DOCUMENTS' | translate | lowercase}}</md-tooltip>
+            <md-icon>file_upload</md-icon>
+        </md-button>
+
+        <md-button ng-hide="templateBrowser" ng-controller="UploadController as uc" ng-click="uc.openTemplateDialog()" class="md-icon-button md-primary" aria-label="{{'COMMON.UPLOAD_TEMPLATE' | translate}} {{'DOCUMENT.DOCUMENTS' | translate | lowercase}}">
+            <md-tooltip md-direction="top">{{'COMMON.UPLOAD_TEMPLATE' | translate}} {{'DOCUMENT.DOCUMENTS' | translate | lowercase}}</md-tooltip>
             <md-icon>file_upload</md-icon>
         </md-button>
 

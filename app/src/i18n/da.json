@@ -26,7 +26,10 @@
     "NEWVERSION": "Overfør ny version",
     "EDITINLIBRE": "Online redigering",
     "CLOSEEDIT": "Luk redigering",
-    "NEW_FOLDER": "Ny mappe"
+    "NEW_FOLDER": "Ny mappe",
+    "UPLOAD_TEMPLATE": "Overfør nye skabelon",
+    "ERKLAERING": "Erklæring",
+     "SAMTYKKE": "Samtykke"
   },
   "DECLARATION": {
     "NEW_DECLARATION": "Ny sag",
