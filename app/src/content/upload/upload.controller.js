@@ -20,7 +20,7 @@ function UploadController($rootScope, $mdDialog, ContentService, $scope) {
         vm.uploading = true;
 
         angular.forEach(vm.files, function (file) {
-            ContentService.uploadTemplateFiles(file)
+            ContentService.uploadFiles(file)
                 .then(function () {
                     vm.uploading = false;
                     cancelDialog();
