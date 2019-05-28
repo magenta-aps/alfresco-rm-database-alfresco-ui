@@ -9,7 +9,7 @@ function documentService($http, EDITOR_CONFIG) {
     cleanupThumbnail: cleanupThumbnail,
     isLoolEditable: isLoolEditable,
     getState: getState,
-    markDocumentAsEditing: markDocumentAsEditing,
+//    markDocumentAsEditing: markDocumentAsEditing,
   };
 
   return service;

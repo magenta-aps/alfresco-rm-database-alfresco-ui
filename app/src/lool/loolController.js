@@ -40,7 +40,7 @@ function LoolController($stateParams, loolService) {
     }
 
      vm.goBack = function goBack() {
-        loolService.markDocumentAsNotEditing(vm.nodeRef);
+        // loolService.markDocumentAsNotEditing(vm.nodeRef);
         window.history.go(-2);
 
       }
