@@ -34,7 +34,7 @@
                 <md-icon>done</md-icon> {{'DECLARATION.DECLARATION_CLOSED' | translate}}
             </h2>
             <div ng-repeat="action in vm.actions" ng-mouseover="action.showTooltip=true" ng-mouseleave="action.showTooltip=false">
-                <md-button ng-click="action.action()" ng-class="action.primary ? 'md-raised md-primary md-hue-2' : ''"
+                <md-button ng-click="action.action()" ng-class="action.primary ? 'md-raised md-primary md-hue-2' : ''">
                     <md-icon>{{action.icon}}</md-icon>
                     <span>{{action.label | translate}}</span>
                 </md-button>
