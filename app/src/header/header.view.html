@@ -35,7 +35,6 @@
             </h2>
             <div ng-repeat="action in vm.actions" ng-mouseover="action.showTooltip=true" ng-mouseleave="action.showTooltip=false">
                 <md-button ng-click="action.action()" ng-class="action.primary ? 'md-raised md-primary md-hue-2' : ''"
-                    ng-disabled="(action.icon === 'save' ? !$root.declarationForm.$invalid : '') || action.settings.disabled">
                     <md-icon>{{action.icon}}</md-icon>
                     <span>{{action.label | translate}}</span>
                 </md-button>
@@ -48,3 +47,5 @@
         </span>
     </md-toolbar>
 </header>
+
+
