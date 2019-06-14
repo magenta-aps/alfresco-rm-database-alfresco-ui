@@ -30,27 +30,10 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
   function loadState() {
 
-    var state = documentService.getState("workspace://SpacesStore/" + selectedDocumentNode)
-
-    .then(function (response) {
-            console.log(response)
-
-            vm.state = response;
-
-//            vm.plugin = plugin;
-//            $scope.config = plugin;
-//            $scope.viewerTemplateUrl = documentPreviewService.templatesUrl + plugin.templateUrl;
-//            $scope.download = function () {
-//              alfrescoDownloadService.downloadFile($scope.config.nodeRef, $scope.config.fileName);
-//            };
-//
-//            if (plugin.initScope) {
-//              plugin.initScope($scope);
-//            }
+    var state = documentService.getState("workspace://SpacesStore/" + selectedDocumentNode).then(function (response) {
+            vm.state = response.state;
+            vm.editByText = "Dokumentet redigeres af "  + response.firstName + " " + response.lastName;
           });
-
-
-
   }
 
 

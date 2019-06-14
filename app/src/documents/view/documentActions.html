@@ -5,6 +5,13 @@
     </md-card-title>
 
     <md-card-content>
+
+
+        <div ng-show="vm.state">
+            {{ vm.editByText }}
+        </div>
+
+
         <div>
             <md-button ng-show="vm.loolEditable && vm.canEdit && !vm.state" ng-click="vm.goToLOEditPage()" class="md-text-icon-button md-primary">
                 <md-icon md-menu-align-target>edit</md-icon>
