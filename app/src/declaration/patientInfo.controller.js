@@ -93,11 +93,18 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		return filterService.propertyFilter(array, query);
 	}
 
-	function addNewBidiagnosis() {
-		if ($scope.case.biDiagnoses.indexOf('') < 0) {
-			$scope.case.biDiagnoses.push('');
-		}
-	}
+	 function addNewBidiagnosis() {
+
+        if (($scope.case.hasOwnProperty('biDiagnoses'))) {
+            if ($scope.case.biDiagnoses.indexOf(null) < 0) {
+                  $scope.case.biDiagnoses.push(null);
+                }
+        }
+        else {
+            $scope.case.biDiagnoses = new Array();
+            $scope.case.biDiagnoses.push(null);
+        }
+    }
 
 	function lookupCPR() {
 		cprService.getCPRData($scope.case.cprNumber)

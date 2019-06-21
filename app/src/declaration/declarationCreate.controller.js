@@ -36,10 +36,18 @@ function DeclarationCreateController($scope, $state, $translate, DeclarationServ
   }
 
   function addNewBidiagnosis() {
-    if ($scope.case.biDiagnoses.indexOf(null) < 0) {
-      $scope.case.biDiagnoses.push(null);
+
+    if (($scope.case.hasOwnProperty('biDiagnoses'))) {
+        if ($scope.case.biDiagnoses.indexOf(null) < 0) {
+              $scope.case.biDiagnoses.push(null);
+            }
     }
-  }
+    else {
+        $scope.case.biDiagnoses = new Array();
+        $scope.case.biDiagnoses.push(null);
+    }
+}
+
 
   function lookupCPR() {
     cprService.getCPRData($scope.case.cprNumber)
