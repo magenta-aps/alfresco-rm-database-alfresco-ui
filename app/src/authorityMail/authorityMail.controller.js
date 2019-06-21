@@ -4,7 +4,7 @@ angular
   .module('oda.authorityMail')
   .controller('AuthorityMailController', AuthorityMailController);
 
-function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, propertyService, filterService, $stateParams) {
+function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, propertyService, filterService, $stateParams, $state ) {
   var vm = this;
 
   vm.payload = {};
@@ -39,6 +39,8 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
         vm.loading = false;
         vm.cancel();
         Toast.show('Mailen blev sendt');
+        $state.reload()
+
       })
   }
 
