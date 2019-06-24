@@ -12,6 +12,19 @@ function authorityMail($http) {
   return service;
 
   function send(payload) {
+
+    var email = payload.authority.match(/ *\([^)]*\) */g);
+
+    if (email != null) {
+
+        email = email[0];
+        email = email.replace("(","");
+        email = email.replace(")","");
+        email = email.trim();
+
+        payload.authority = email;
+    }
+
     return $http.post("/alfresco/s/contents/mailcontent", payload)
       .then(function (response) {
         return response;

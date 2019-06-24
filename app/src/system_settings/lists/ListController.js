@@ -8,7 +8,9 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
 
   $scope.selectedContent = [];
   $scope.newEntry = '';
+  $scope.newEntry_email = '';
   $scope.renameOriginal = {};
+
 
   $scope.listTitle = $stateParams.listTitle;
   $scope.listContent = propertyService.getPropertyContent($stateParams.listData);
@@ -39,12 +41,29 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
   }, true);
 
   function addNewDialog() {
-    $mdDialog.show({
-      templateUrl: 'app/src/system_settings/lists/view/list-create.html',
-      scope: $scope, // use parent scope in template
-      preserveScope: true, // do not forget this if use parent scope
-      clickOutsideToClose: true
-    });
+
+    // choose special dialog if myndigheder
+
+    if ($scope.listTitle == "Myndighed") {
+
+            $mdDialog.show({
+              templateUrl: 'app/src/system_settings/lists/view/list-create-myndighed.html',
+              scope: $scope, // use parent scope in template
+              preserveScope: true, // do not forget this if use parent scope
+              clickOutsideToClose: true
+            });
+    }
+    else {
+
+          $mdDialog.show({
+              templateUrl: 'app/src/system_settings/lists/view/list-create.html',
+              scope: $scope, // use parent scope in template
+              preserveScope: true, // do not forget this if use parent scope
+              clickOutsideToClose: true
+        });
+    }
+
+
   }
 
   function deleteDialog() {
@@ -69,9 +88,17 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
   };
 
   $scope.addNew = function () {
-    propertyService.addPropertyValue($scope.newEntry);
+
+    if ($scope.listTitle == "Myndighed") {
+        propertyService.addPropertyValue($scope.newEntry + " (" + $scope.newEntry_email +")");
+    }
+    else {
+        propertyService.addPropertyValue($scope.newEntry);
+    }
+
     Toast.show($scope.newEntry + ' blev tilføjet');
     $scope.newEntry = '';
+    $scope.newEntry_email = '';
     $scope.cancel();
   }
 
