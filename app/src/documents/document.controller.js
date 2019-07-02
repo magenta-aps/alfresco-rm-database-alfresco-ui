@@ -113,6 +113,11 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
             }
 
+            else {
+                $state.reload()
+
+            }
+
 
 //
 
