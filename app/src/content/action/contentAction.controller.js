@@ -39,8 +39,10 @@ function ContentActionController($scope, $mdDialog, ContentService) {
       case 'cmis:folder':
         $scope.action.rename = true;
         $scope.action.delete = true;
+        $scope.action.move = true;
         break;
       case 'cmis:document':
+        $scope.action.move = true
         $scope.action.download = true
         $scope.action.rename = true;
         $scope.action.delete = true;
@@ -61,6 +63,15 @@ function ContentActionController($scope, $mdDialog, ContentService) {
     });
   }
 
+  $scope.moveDialog = function () {
+    $mdDialog.show({
+      templateUrl: 'app/src/content/action/move.view.html',
+      scope: $scope, // use parent scope in template
+      preserveScope: true, // do not forget this if use parent scope
+      clickOutsideToClose: true
+    });
+  }
+
   $scope.cancelDialog = function () {
     $mdDialog.cancel();
   }
@@ -73,4 +84,13 @@ function ContentActionController($scope, $mdDialog, ContentService) {
         });
     })
   }
+
+  $scope.move = function () {
+      angular.forEach(vm.contentList, function (content) {
+        ContentService.move(content.nodeRef)
+          .then(function () {
+            $scope.cancelDialog();
+          });
+      })
+    }
 }

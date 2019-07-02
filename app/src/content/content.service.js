@@ -17,6 +17,7 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
     download: download,
     downloadZippedFiles: downloadZippedFiles,
     delete: deleteFile,
+    move: moveFiles,
     getCurrentFolderNodeRef: getCurrentFolderNodeRef,
     setCurrentFolderNodeRef: setCurrentFolderNodeRef,
     getFolderNodeRefFromPath: getFolderNodeRefFromPath
@@ -172,6 +173,30 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
       });
   }
 
+    function moveFiles(files) {
+        var fileNodeRefs = [];
+
+        files.forEach(function (file) {
+          fileNodeRefs.push(file.nodeRef);
+        });
+
+        var payload = { nodeRefs: fileNodeRefs }
+
+        return $http.post('/alfresco/s/contents/movecontent', payload)
+          .then(function (response) {
+            var dl = $interval(function () {
+              getDownloadStatus(response.data.downloadNodeRef)
+                .then(function (status) {
+                  if (status == 'DONE') {
+                    download(response.data.downloadNodeRef, 'download.zip')
+                    $interval.cancel(dl);
+                  }
+                });
+            }, 1000, 20);
+          });
+    }
+
+
   function deleteFile(nodeRef) {
     var url = '/slingshot/doclib/action/file/node/' + alfrescoNodeUtils.processNodeRef(nodeRef).uri;
     return $http.delete(url)
@@ -180,6 +205,8 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
         return result.data;
       });
   }
+
+
 
   /** PRIVATE FUNCTIONS */
 

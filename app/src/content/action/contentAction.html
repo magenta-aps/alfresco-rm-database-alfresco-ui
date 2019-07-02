@@ -24,5 +24,15 @@
                 {{'COMMON.REMOVE' | translate }}
             </md-button>
         </md-menu-item>
+
+        <md-menu-item ng-if="action.move">
+            <md-button ng-click="moveDialog()">
+                <md-icon md-menu-align-target>remove_circle_outline</md-icon>
+                {{'COMMON.MOVE' | translate }}
+            </md-button>
+        </md-menu-item>
+
+
+
     </md-menu-content>
 </md-menu>
