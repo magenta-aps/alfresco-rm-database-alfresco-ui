@@ -86,11 +86,10 @@ function ContentActionController($scope, $mdDialog, ContentService) {
   }
 
   $scope.move = function () {
-      angular.forEach(vm.contentList, function (content) {
-        ContentService.move(content.nodeRef)
+        ContentService.move(vm.contentList, vm.destination)
           .then(function () {
             $scope.cancelDialog();
           });
-      })
-    }
+      };
+
 }
