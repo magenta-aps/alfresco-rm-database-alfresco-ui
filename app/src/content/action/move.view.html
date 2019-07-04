@@ -1,9 +1,9 @@
-<md-dialog aria-label="Slet fil">
+<md-dialog aria-label="Flyt">
     <form name="deleteFileForm" ng-submit="move()">
 
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>{{'COMMON.REMOVE' | translate}}
+                <h2>{{'COMMON.MOVE' | translate}}
                     <span ng-show="contentList[0].contentType == 'cmis:document'">{{'DOCUMENT.DOCUMENT' | translate | lowercase}}</span>
                     <span ng-show="contentList[0].contentType == 'cmis:folder'">{{'COMMON.FOLDER' | translate | lowercase}}</span>
                 </h2>
@@ -17,8 +17,8 @@
         <md-dialog-content class="md-padding">
             <p>{{'COMMON.SURETOREMOVE' | translate}}</p>
             <ul>
-                <li ng-repeat="c in vm.contentList">
-                    <em>{{c.name}}</em>
+                <li ng-repeat="c in vm.folderList">
+                    <em>{{c.nodeRef}}</em>
                 </li>
             </ul>
         </md-dialog-content>

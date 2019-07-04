@@ -52,9 +52,9 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
   }
 
   function getContentList(node) {
-    return $http.get("/alfresco/service/contents?node=" + node)
+      return $http.get("/alfresco/service/contents?node=" + node)
       .then(function (response) {
-        var lists = response.data
+        var lists = response.data;
         angular.forEach(lists, function (list) {
           processContent(list);
         });

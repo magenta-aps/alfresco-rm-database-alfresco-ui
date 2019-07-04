@@ -8,8 +8,13 @@ function ContentActionController($scope, $mdDialog, ContentService) {
 
   var vm = this;
   vm.contentList = [];
+  vm.folderList = [];
 
   $scope.content;
+  $scope.flemming;
+
+    console.log("hvad er $scope.flemming")
+    console.log($scope.flemming);
 
 
   $scope.action = {
@@ -23,8 +28,11 @@ function ContentActionController($scope, $mdDialog, ContentService) {
   activate();
 
   function activate() {
+
+
     if (($scope.content instanceof Array)) {
       vm.contentList = angular.copy($scope.content);
+
     } else {
       vm.contentList = [angular.copy($scope.content)];
     }
@@ -32,6 +40,29 @@ function ContentActionController($scope, $mdDialog, ContentService) {
     if ($scope.selectedContent) {
       vm.contentList = $scope.selectedContent;
     }
+
+//    console.log("size på contentList");
+//    console.log($scope);
+//    console.log("slut");
+
+//    for (var x in vm.contentList) {
+//
+//        if (vm.contentList[x].contentType == "cmis:folder") {
+//            var o = {};
+//            o.name = vm.contentList[x].name;
+//            o.nodeRef = vm.contentList[x].nodeRef;
+//
+//            vm.folderList.push(o);
+//        }
+//    }
+//
+//    console.log("do");
+//    console.log(vm.folderList);
+
+
+//    vm.folderList = $scope.content;
+//    console.log("hvad er:")
+//    console.log(vm.folderList);
 
     if (vm.contentList.length == 0) return;
 
