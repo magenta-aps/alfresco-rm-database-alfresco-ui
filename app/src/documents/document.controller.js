@@ -91,13 +91,41 @@ function DocumentController($scope, documentService, $stateParams, $state,
   //Goes to the libreOffice online edit page
   function goToLOEditPage() {
 
-            documentService.markDocumentAsEditing("workspace://SpacesStore/" + selectedDocumentNode).then(function (response) {
+            documentService.getState("workspace://SpacesStore/" + selectedDocumentNode).then(function (response) {
 
-                $state.go('lool', {
-                                  'nodeRef': vm.doc.nodeRef
-                                });
+
+            console.log(response);
+
+            if (!response.state) {
+
+                    console.log(response);
+
+                  documentService.markDocumentAsEditing("workspace://SpacesStore/" + selectedDocumentNode).then(function (response) {
+
+                    console.log("response to")
+                    console.log(response);
+
+                                                $state.go('lool', {
+                                                                  'nodeRef': vm.doc.nodeRef
+                                                                });
+
+                                            });
+
+            }
+
+            else {
+                $state.reload()
+
+            }
+
+
+//
+
+
 
             });
+
+
   }
 
   function downloadDocument() {
