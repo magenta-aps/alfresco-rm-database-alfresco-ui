@@ -32,7 +32,12 @@
             </md-button>
         </md-menu-item>
 
-
+        <md-menu-item ng-if="action.rename">
+            <md-button ng-click="renameDialog()">
+                <md-icon md-menu-align-target>remove_circle_outline</md-icon>
+                {{'COMMON.RENAME' | translate }}
+            </md-button>
+        </md-menu-item>
 
     </md-menu-content>
 </md-menu>

@@ -8,8 +8,13 @@ function ContentActionController($scope, $mdDialog, ContentService, $state) {
 
   var vm = this;
   vm.contentList = [];
+
   vm.folders = [];
   vm.selected = "";
+  $scope.content;
+  $scope.newName;
+
+
 
   $scope.action = {
     move: false,
@@ -74,8 +79,20 @@ function ContentActionController($scope, $mdDialog, ContentService, $state) {
       scope: $scope, // use parent scope in template
       preserveScope: true, // do not forget this if use parent scope
       clickOutsideToClose: true
+
     });
-  }
+    }
+
+
+  $scope.renameDialog = function () {
+    $mdDialog.show({
+      templateUrl: 'app/src/content/action/rename.view.html',
+      scope: $scope, // use parent scope in template
+      preserveScope: true, // do not forget this if use parent scope
+      clickOutsideToClose: true
+
+    });
+    }
 
   $scope.moveDialog = function () {
     $mdDialog.show({
@@ -106,5 +123,15 @@ function ContentActionController($scope, $mdDialog, ContentService, $state) {
             $state.reload();
           });
       };
+
+
+  $scope.rename = function () {
+      angular.forEach(vm.contentList, function (content) {
+        ContentService.rename(content.nodeRef, $scope.newName)
+          .then(function () {
+            $scope.cancelDialog();
+          });
+      })
+    }
 
 }
