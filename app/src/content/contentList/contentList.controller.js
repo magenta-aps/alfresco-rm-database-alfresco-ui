@@ -5,8 +5,11 @@ angular
   .controller('ContentListController', ContentListController);
 
 function ContentListController($scope) {
+
+
   $scope.contentList;
   $scope.hasContent = false;
+  $scope.folderList = $scope.contentList[1];
 
   $scope.$watch('contentList', function (newVal) {
     var contentLength = 0;

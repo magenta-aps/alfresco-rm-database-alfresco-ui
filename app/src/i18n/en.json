@@ -18,6 +18,8 @@
     "ADD_NEW": "Add new",
     "ADD": "Add",
     "SEND": "Send",
+    "MOVE": "Move",
+    "CHOOSEFOLDER": "Choose folder",
     "NAME": "Name",
     "INFORMATION": "Information",
     "ABOUT": "About",

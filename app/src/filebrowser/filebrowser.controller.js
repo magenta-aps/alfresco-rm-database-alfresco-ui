@@ -18,8 +18,6 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
 
 
 
-
-
   $scope.$watch('folderUuid', function (newVal) {
     if (newVal) getContent(newVal);
   })
@@ -49,6 +47,7 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
       .then(function (response) {
         $scope.isLoading = false;
         $scope.crumbs = $stateParams.breadcrumbPath;
+        $scope.lala = "lala";
         $scope.content = response;
       })
   }

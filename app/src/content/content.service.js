@@ -17,6 +17,7 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
     download: download,
     downloadZippedFiles: downloadZippedFiles,
     delete: deleteFile,
+    move: moveFiles,
     getCurrentFolderNodeRef: getCurrentFolderNodeRef,
     setCurrentFolderNodeRef: setCurrentFolderNodeRef,
     getFolderNodeRefFromPath: getFolderNodeRefFromPath
@@ -51,9 +52,9 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
   }
 
   function getContentList(node) {
-    return $http.get("/alfresco/service/contents?node=" + node)
+      return $http.get("/alfresco/service/contents?node=" + node)
       .then(function (response) {
-        var lists = response.data
+        var lists = response.data;
         angular.forEach(lists, function (list) {
           processContent(list);
         });
@@ -172,6 +173,22 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
       });
   }
 
+    function moveFiles(files, destination) {
+        var fileNodeRefs = [];
+
+        files.forEach(function (file) {
+          fileNodeRefs.push(file.nodeRef);
+        });
+
+        var payload = { nodeRefs: fileNodeRefs, destNode : destination }
+
+        return $http.post('/alfresco/s/contents/movecontent', payload)
+          .then(function (response) {
+            console.log(response);
+          });
+    }
+
+
   function deleteFile(nodeRef) {
     var url = '/slingshot/doclib/action/file/node/' + alfrescoNodeUtils.processNodeRef(nodeRef).uri;
     return $http.delete(url)
@@ -180,6 +197,8 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
         return result.data;
       });
   }
+
+
 
   /** PRIVATE FUNCTIONS */
 

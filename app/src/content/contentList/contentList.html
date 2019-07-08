@@ -1,14 +1,15 @@
-<table ng-if="hasContent">
+<table ng-if="hasContent" >
     <thead>
         <tr>
             <th></th>
-            <th sort-table="name" sort-default="!reverse" title="Sortér kolonne">{{'PROJECT.NAME' | translate }}</th>
+            <th sort-table="name" sort-default="!reverse" title="Sortér kolonne">{{'PROJECT.NAME' | translate }} </th>
             <th sort-table="lastChanged" title="Sortér kolonne">{{'PROJECT.HISTORY' | translate }}</th>
             <th></th>
         </tr>
     </thead>
-    <tbody ng-repeat="content in contentList">
-        <tr content-template ng-repeat="c in content" content="c" ng-click="open(c)"></tr>
+
+    <tbody ng-repeat="content in contentList" >
+        <tr content-template ng-repeat="c in content" content="c" folder-list="folderList" ng-click="open(c)"></tr>
     </tbody>
 </table>
 

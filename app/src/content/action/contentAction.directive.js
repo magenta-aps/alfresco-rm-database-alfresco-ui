@@ -6,7 +6,8 @@ angular
         return {
             restrict: 'E',
             scope: {
-                content: '='
+                content: '=',
+                folderList: '='
             },
             controller: 'ContentActionController as vm',
             templateUrl: 'app/src/content/action/contentAction.html',

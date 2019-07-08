@@ -4,13 +4,12 @@ angular
   .module('oda.content')
   .controller('ContentActionController', ContentActionController);
 
-function ContentActionController($scope, $mdDialog, ContentService) {
+function ContentActionController($scope, $mdDialog, ContentService, $state) {
 
   var vm = this;
   vm.contentList = [];
-
-  $scope.content;
-
+  vm.folders = [];
+  vm.selected = "";
 
   $scope.action = {
     move: false,
@@ -23,8 +22,11 @@ function ContentActionController($scope, $mdDialog, ContentService) {
   activate();
 
   function activate() {
+
+
     if (($scope.content instanceof Array)) {
       vm.contentList = angular.copy($scope.content);
+
     } else {
       vm.contentList = [angular.copy($scope.content)];
     }
@@ -33,14 +35,28 @@ function ContentActionController($scope, $mdDialog, ContentService) {
       vm.contentList = $scope.selectedContent;
     }
 
+    vm.folders.push({nodeRef : "parent" , name: "overliggende mappe"});
+
+    for (var i = 0; i<= $scope.folderList.length-1;i++) {
+
+            var folderName = $scope.folderList[i].name;
+
+                if (folderName !== vm.contentList[0].name) {
+                    vm.folders.push($scope.folderList[i])
+                }
+    }
+
+
     if (vm.contentList.length == 0) return;
 
     switch (vm.contentList[0].contentType) {
       case 'cmis:folder':
         $scope.action.rename = true;
         $scope.action.delete = true;
+        $scope.action.move = true;
         break;
       case 'cmis:document':
+        $scope.action.move = true
         $scope.action.download = true
         $scope.action.rename = true;
         $scope.action.delete = true;
@@ -61,6 +77,15 @@ function ContentActionController($scope, $mdDialog, ContentService) {
     });
   }
 
+  $scope.moveDialog = function () {
+    $mdDialog.show({
+      templateUrl: 'app/src/content/action/move.view.html',
+      scope: $scope, // use parent scope in template
+      preserveScope: true, // do not forget this if use parent scope
+      clickOutsideToClose: true
+    });
+  }
+
   $scope.cancelDialog = function () {
     $mdDialog.cancel();
   }
@@ -73,4 +98,13 @@ function ContentActionController($scope, $mdDialog, ContentService) {
         });
     })
   }
+
+  $scope.move = function (selected) {
+        ContentService.move(vm.contentList, selected)
+          .then(function () {
+            $scope.cancelDialog();
+            $state.reload();
+          });
+      };
+
 }
