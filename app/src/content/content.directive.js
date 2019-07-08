@@ -17,7 +17,8 @@ angular
     return {
       restrict: 'A',
       scope: {
-        content: '='
+        content: '=',
+        folderList: '='
       },
       templateUrl: 'app/src/content/contentList/contentTemplate.html'
     }

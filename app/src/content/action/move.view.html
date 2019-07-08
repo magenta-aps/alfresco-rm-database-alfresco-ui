@@ -1,5 +1,5 @@
 <md-dialog aria-label="Flyt">
-    <form name="deleteFileForm" ng-submit="move()">
+    <form name="deleteFileForm" ng-submit="move(selected)">
 
         <md-toolbar>
             <div class="md-toolbar-tools">
@@ -14,17 +14,26 @@
             </div>
         </md-toolbar>
 
+
         <md-dialog-content class="md-padding">
-            <p>{{'COMMON.SURETOREMOVE' | translate}}</p>
-            <ul>
-                <li ng-repeat="c in vm.folderList">
-                    <em>{{c.nodeRef}}</em>
-                </li>
-            </ul>
+            <p>{{'COMMON.CHOOSEFOLDER' | translate}}</p>
+
+            <md-radio-group ng-model="selected">
+                <md-radio-button ng-repeat="folder in vm.folders" ng-value="folder.nodeRef" aria-label="{{folder.name}}">
+                    {{ folder.name }}
+                </md-radio-button>
+            </md-radio-group>
+
+
         </md-dialog-content>
 
+
+
+
+
+
         <md-dialog-actions>
-            <md-button type="submit" class="md-primary" aria-label="{{'COMMON.REMOVE' | translate}}">{{'COMMON.REMOVE' | translate}}</md-button>
+            <md-button type="submit" class="md-primary" aria-label="{{'COMMON.REMOVE' | translate}}">{{'COMMON.MOVE' | translate}}</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

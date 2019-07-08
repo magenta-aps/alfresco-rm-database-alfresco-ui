@@ -15,8 +15,6 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
   $scope.isLoading = false;
   $scope.templateBrowser = !strPath.includes("Template")
   $scope.standardBrowser = (strPath.includes("Template"))
-  $scope.lala = "";
-
 
 
 
@@ -51,8 +49,6 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
         $scope.crumbs = $stateParams.breadcrumbPath;
         $scope.lala = "lala";
         $scope.content = response;
-
-        console.log("hej1");
       })
   }
 

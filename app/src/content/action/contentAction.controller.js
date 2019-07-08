@@ -4,18 +4,12 @@ angular
   .module('oda.content')
   .controller('ContentActionController', ContentActionController);
 
-function ContentActionController($scope, $mdDialog, ContentService) {
+function ContentActionController($scope, $mdDialog, ContentService, $state) {
 
   var vm = this;
   vm.contentList = [];
-  vm.folderList = [];
-
-  $scope.content;
-  $scope.flemming;
-
-    console.log("hvad er $scope.flemming")
-    console.log($scope.flemming);
-
+  vm.folders = [];
+  vm.selected = "";
 
   $scope.action = {
     move: false,
@@ -41,28 +35,17 @@ function ContentActionController($scope, $mdDialog, ContentService) {
       vm.contentList = $scope.selectedContent;
     }
 
-//    console.log("size på contentList");
-//    console.log($scope);
-//    console.log("slut");
+    vm.folders.push({nodeRef : "parent" , name: "overliggende mappe"});
 
-//    for (var x in vm.contentList) {
-//
-//        if (vm.contentList[x].contentType == "cmis:folder") {
-//            var o = {};
-//            o.name = vm.contentList[x].name;
-//            o.nodeRef = vm.contentList[x].nodeRef;
-//
-//            vm.folderList.push(o);
-//        }
-//    }
-//
-//    console.log("do");
-//    console.log(vm.folderList);
+    for (var i = 0; i<= $scope.folderList.length-1;i++) {
 
+            var folderName = $scope.folderList[i].name;
 
-//    vm.folderList = $scope.content;
-//    console.log("hvad er:")
-//    console.log(vm.folderList);
+                if (folderName !== vm.contentList[0].name) {
+                    vm.folders.push($scope.folderList[i])
+                }
+    }
+
 
     if (vm.contentList.length == 0) return;
 
@@ -116,10 +99,11 @@ function ContentActionController($scope, $mdDialog, ContentService) {
     })
   }
 
-  $scope.move = function () {
-        ContentService.move(vm.contentList, vm.destination)
+  $scope.move = function (selected) {
+        ContentService.move(vm.contentList, selected)
           .then(function () {
             $scope.cancelDialog();
+            $state.reload();
           });
       };
 

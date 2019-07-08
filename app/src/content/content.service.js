@@ -173,26 +173,18 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
       });
   }
 
-    function moveFiles(files) {
+    function moveFiles(files, destination) {
         var fileNodeRefs = [];
 
         files.forEach(function (file) {
           fileNodeRefs.push(file.nodeRef);
         });
 
-        var payload = { nodeRefs: fileNodeRefs }
+        var payload = { nodeRefs: fileNodeRefs, destNode : destination }
 
         return $http.post('/alfresco/s/contents/movecontent', payload)
           .then(function (response) {
-            var dl = $interval(function () {
-              getDownloadStatus(response.data.downloadNodeRef)
-                .then(function (status) {
-                  if (status == 'DONE') {
-                    download(response.data.downloadNodeRef, 'download.zip')
-                    $interval.cancel(dl);
-                  }
-                });
-            }, 1000, 20);
+            console.log(response);
           });
     }
 
