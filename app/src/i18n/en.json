@@ -749,6 +749,7 @@
     "NAME": "Name",
     "TYPE": "Type",
     "ROLE": "Role",
+    "EMAIL": "Email",
     "CHANGE": "Change",
     "ADD_MEMBERS": "Add members",
     "ADD_MEMBER": "Add member",
