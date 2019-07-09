@@ -24,7 +24,7 @@ function DocumentController($scope, $mdDialog, $stateParams, DeclarationService,
     DeclarationService.get($stateParams.caseid)
       .then(function (response) {
         var bua = response.bua ? ' (BUA)' : '';
-        HeaderService.setTitle(response.firstName + ' ' + response.lastName + ' (' + response.caseNumber + ')' + bua);
+        HeaderService.setTitle(response.firstName + ' ' + response.lastName + ' ( ' + response.caseNumber + ' / ' + response.cprNumber + ' )' + bua);
         HeaderService.setClosed(response.closed);
         updateHeaderActions();
         const nodeRef = response['store-protocol'] + '://' + response['store-identifier'] + '/' + response['node-uuid']
