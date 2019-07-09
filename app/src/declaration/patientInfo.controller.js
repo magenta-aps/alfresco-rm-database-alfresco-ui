@@ -72,6 +72,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		HeaderService.setTitle(response.firstName + ' ' + response.lastName + ' ( ' + response.caseNumber + ' / ' + response.cprNumber + ' )' + bua);
 		HeaderService.setCaseId(response.caseNumber);
 		HeaderService.setClosed(response.closed);
+		console.log("hej");
 
 
 		var canCreate = canCreateDeclarationDocument(response)
