@@ -42,14 +42,21 @@ function ContentActionController($scope, $mdDialog, ContentService, $state) {
 
     vm.folders.push({nodeRef : "parent" , name: "overliggende mappe"});
 
-    for (var i = 0; i<= $scope.folderList.length-1;i++) {
 
-            var folderName = $scope.folderList[i].name;
+    if ($scope.folderList != undefined) {
 
-                if (folderName !== vm.contentList[0].name) {
-                    vm.folders.push($scope.folderList[i])
-                }
+        for (var i = 0; i<= $scope.folderList.length-1;i++) {
+
+                var folderName = $scope.folderList[i].name;
+
+                    if (folderName !== vm.contentList[0].name) {
+                        vm.folders.push($scope.folderList[i])
+                    }
+        }
+
     }
+
+
 
 
     if (vm.contentList.length == 0) return;
