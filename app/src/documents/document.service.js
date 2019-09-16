@@ -10,9 +10,19 @@ function documentService($http, EDITOR_CONFIG) {
     isLoolEditable: isLoolEditable,
     getState: getState,
     markDocumentAsEditing: markDocumentAsEditing,
+    revertToVersion: revertToVersion,
+    getThumbnail: getThumbnail,
+    getVersions: getVersions,
   };
 
   return service;
+
+ function getThumbnail (nodeId, versionId) {
+        return $http.get(`/alfresco/s/contents/thumbnail?nodeId=` + nodeId + "&versionId=" + versionId)
+        .then(function (response) {
+          return response
+        })
+}
 
   function getDocument(documentNodeRef) {
     return $http.get('/slingshot/doclib/node/workspace/SpacesStore/' + documentNodeRef)
@@ -53,6 +63,24 @@ function documentService($http, EDITOR_CONFIG) {
     //      return res;
     });
     }
+
+      function getVersions (nodeId) {
+        return $http.get(`/alfresco/service/contents/getversions?node=${nodeId}`)
+          .then(function (response) {
+            return response.data
+          })
+      }
+
+    function revertToVersion (description, majorVersion, nodeRef, version) {
+        return $http.post('/api/revert', {
+          description: description,
+          majorVersion: majorVersion,
+          nodeRef: nodeRef,
+          version: version
+        }).then(function (response) {
+          return response
+        })
+      }
 
 
 

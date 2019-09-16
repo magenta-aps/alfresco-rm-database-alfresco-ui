@@ -74,6 +74,16 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
     $scope.folderUuid = content.nodeUuid;
   }
 
+   function showEditVersionDialog (editor) {
+      $scope.editor = editor
+      $mdDialog.show({
+        template: confirmEditVersionDialogTemplate,
+        scope: $scope,
+        preserveScope: true,
+        clickOutsideToClose: true
+      })
+    }
+
   function addToBreadcrumb(content) {
     $stateParams.breadcrumbPath.push({
       nodeUuid: content.shortRef,

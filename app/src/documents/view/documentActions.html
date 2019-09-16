@@ -1,5 +1,52 @@
+
+<style>
+document-history {
+.entry {
+line-height: 2;
+}
+.selected {
+background-color: #e1e1e1;
+}
+}
+</style>
+
+
+
+
+<md-card class="dropdown-card" >
+    <md-card-title ng-click="vm.updateCollapse()" >
+        <h3 class="md-title od-title-icon"><md-icon>history</md-icon> {{'COMMON.HISTORY' | translate }}</h3>
+        <span flex></span>
+        <md-icon class="rotate-arrow">keyboard_arrow_down</md-icon>
+    </md-card-title>
+
+    <md-card-content  ng-class="vm.collapse ? 'fold-in' : 'fold-out'">
+        <div layout="row">
+            <div flex="50">
+                <span class="od-secondary">{{'COMMON.LAST_MODIFIED' | translate}}</span>
+            </div>
+            <div flex="50">
+                <span class="od-secondary">{{'COMMON.LAST_MODIFIED_BY' | translate}}</span>
+            </div>
+        </div>
+
+        <div class="entry" ng-repeat="h in vm.history" layout="row" ng-class="vm.selectedVersion === h.version ? 'highlight' : ''">
+            <div flex="50">
+                <a ui-sref="document({ doc: h.parent_nodeRef, versionId: h.nodeRef, version: h.version})">{{ h.created | openeDate}}</a>
+            </div>
+
+            <div flex="50">
+                <a ui-sref="document({ doc: h.parent_nodeRef, versionId: h.nodeRef, version: h.version})">{{ h.modifier }}</a>
+            </div>
+        </div>
+
+        <md-button ng-click="vm.showEditVersionDialog()" class="md-primary">gendan</md-button>
+
+    </md-card-content>
+</md-card>
+
 <md-card class="dropdown-card">
-    <md-card-title>
+    <md-card-title >
         <h3 class="md-title od-title-icon">
             <md-icon>tune</md-icon> {{'COMMON.ACTIONS' | translate }}</h3>
     </md-card-title>
@@ -31,4 +78,5 @@
             </md-button>
         </div>
     </md-card-content>
+
 </md-card>
