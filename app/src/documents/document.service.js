@@ -71,10 +71,8 @@ function documentService($http, EDITOR_CONFIG) {
           })
       }
 
-    function revertToVersion (description, majorVersion, nodeRef, version) {
-        return $http.post('/api/revert', {
-          description: description,
-          majorVersion: majorVersion,
+    function revertToVersion (nodeRef, version) {
+        return $http.post('alfresco/s/contents/revert', {
           nodeRef: nodeRef,
           version: version
         }).then(function (response) {

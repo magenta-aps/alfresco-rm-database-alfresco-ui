@@ -6,7 +6,7 @@ angular.module('openDeskApp.documents')
 
 
 function DocumentController($scope, documentService, $stateParams, $state,
-  documentPreviewService, alfrescoDownloadService, $window, HeaderService,$location, $mdDialog) {
+  documentPreviewService, alfrescoDownloadService, $window, HeaderService,$location, $mdDialog, authService) {
 
   var vm = this;
 
@@ -17,6 +17,7 @@ function DocumentController($scope, documentService, $stateParams, $state,
   vm.acceptEditVersionDialog = acceptEditVersionDialog;
   vm.cancelDialog = cancelDialog;
   vm.updateCollapse = updateCollapse;
+  vm.canRevertDocument = canRevertDocument;
 
 
 
@@ -79,10 +80,10 @@ function DocumentController($scope, documentService, $stateParams, $state,
     HeaderService.resetActions();
     setPDFViewerHeight();
     loadPreview();
-    getDocument();
+    getDocument(vm.docHasParent);
     loadState();
 
-    documentService.getVersions(selectedDocumentNode);
+    //documentService.getVersions(selectedDocumentNode);
     console.log()
 
   }
@@ -110,9 +111,12 @@ function DocumentController($scope, documentService, $stateParams, $state,
       })
     }
 
-  function getDocument() {
+  function getDocument(revisioncall) {
     documentService.getDocument(selectedDocumentNode)
+
+
       .then(function (response) {
+
         vm.doc = response.item;
         vm.docMetadata = response.metadata;
         vm.loolEditable = documentService.isLoolEditable(vm.doc.mimetype);
@@ -121,7 +125,14 @@ function DocumentController($scope, documentService, $stateParams, $state,
         documentService.getVersions(selectedDocumentNode).then(function (response) {
 
         vm.history = response;
-        vm.history.latest_version = response[0].version;
+
+        if (revisioncall) {
+            vm.history.latest_version = ""
+        }
+        else {
+            vm.history.latest_version = response[0].version;
+        }
+
         console.log("whts the response")
         console.log(vm.history.latest_version);
 
@@ -218,10 +229,17 @@ function DocumentController($scope, documentService, $stateParams, $state,
     alfrescoDownloadService.downloadFile(versionRef, vm.doc.location.file);
   }
 
+  function canRevertDocument() {
+          console.log("permission");
+          console.log(authService.isAuthorized('SiteEntryLockManager'));
+      return authService.isAuthorized('SiteEntryLockManager');
+  }
+
+
   function acceptEditVersionDialog() {
 
       var selectedVersion = $location.search().version
-            documentService.revertToVersion('no comments', true, "workspace://SpacesStore/" + selectedDocumentNode, selectedVersion).then(
+            documentService.revertToVersion("workspace://SpacesStore/" + selectedDocumentNode, selectedVersion).then(
         function (response) {
 
             console.log(response);
