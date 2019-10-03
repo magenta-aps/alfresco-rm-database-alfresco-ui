@@ -32,7 +32,10 @@
     "NEW_FOLDER": "Ny mappe",
     "UPLOAD_TEMPLATE": "Overfør nye skabelon",
     "KENDELSE": "Kendelse",
-     "SAMTYKKE": "Samtykke"
+     "SAMTYKKE": "Samtykke",
+    "HISTORY": "Historik",
+    "LAST_MODIFIED": "Senest ændret",
+    "LAST_MODIFIED_BY": "Senest ændret af"
   },
   "DECLARATION": {
     "NEW_DECLARATION": "Ny sag",

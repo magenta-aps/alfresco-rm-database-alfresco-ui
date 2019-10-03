@@ -8,8 +8,10 @@ function DocumentPreviewService(alfrescoDocumentService, sessionService, $http, 
 
     var service = {
         templatesUrl: templatesUrl,
+        getPluginByNodeRef: getPluginByNodeRef,
         previewDocumentPlugin: previewDocumentPlugin,
         _getPluginByMimeType: _getPluginByMimeType,
+        getPlugin: getPlugin,
         plugins: getPlugins()
     };
     return service;
@@ -20,6 +22,31 @@ function DocumentPreviewService(alfrescoDocumentService, sessionService, $http, 
             return _this._getPluginByMimeType(item);
         });
     }
+
+    function getPluginByNodeRef (nodeRef) {
+        return alfrescoDocumentService.retrieveSingleDocument(nodeRef)
+          .then(function (response) {
+            var item = response.node
+            item.lastThumbnailModificationData = response.node.properties['cm:lastThumbnailModification']
+            item.name = response.location.file
+            item.thumbnailDefinitions = response.thumbnailDefinitions
+            return getPlugin(item)
+          })
+      }
+
+
+function getPlugin (item) {
+    var plugins = getPlugins()
+    for (var i in plugins) {
+      var plugin = plugins[i]
+      if (plugin.acceptsItem(item)) {
+        plugin.initPlugin(item)
+        if (plugin.extendPlugin)
+          plugin.extendPlugin()
+        return plugin
+      }
+    }
+  }
 
     function getPlugins() {
         var plugins = [
@@ -188,27 +215,36 @@ function DocumentPreviewService(alfrescoDocumentService, sessionService, $http, 
 
     function generalPreviewPlugin() {
         return {
-            acceptsItem: function (item) {
-                return this._acceptsMimeType(item) || this._acceptsThumbnail(item);
-            },
+              acceptsItem: function (item) {
+                return this._acceptsMimeType(item) ||
+                            this._acceptsThumbnail(item) ||
+                            this._acceptsTransformableMimeTypes(item)
+              },
 
-            initPlugin: function (item) {
-                this.nodeRef = item.node.nodeRef;
-                this.fileName = item.location.file;
-                this.itemSize = item.node.size;
-                this.mimeType = item.node.mimetype;
-                this.contentUrl = ALFRESCO_URI.webClientServiceProxy + (this._acceptsMimeType(item) ? this._getContentUrl(item) : this._getThumbnailUrl(item));
-                this.contentUrl = sessionService.makeURL(this.contentUrl);
-                this.thumbnailUrl = ALFRESCO_URI.webClientServiceProxy + this._getThumbnailUrl(item);
-                this.thumbnailUrl = sessionService.makeURL(this.thumbnailUrl);
-            },
+                  initPlugin: function (item) {
+                    this.nodeRef = item.node.nodeRef
+                    this.fileName = item.name
+                    this.itemSize = item.size
+                    this.mimeType = item.mimetype
+                    if (item.thumbnailUrl === undefined)
+                      item.thumbnailUrl = this._getThumbnailUrl()
+                    this.thumbnailUrl = ALFRESCO_URI.webClientServiceProxy + item.thumbnailUrl
+                    this._addThumbnailUrlFlags(item)
+                    this.thumbnailUrl = sessionService.makeURL(this.thumbnailUrl)
+                    if (this._acceptsMimeType(item)) {
+                      this.contentUrl = ALFRESCO_URI.webClientServiceProxy + item.contentURL
+                      this.contentUrl = sessionService.makeURL(this.contentUrl)
+                    } else {
+                      this.contentUrl = this.thumbnailUrl
+                    }
+                  },
 
-            _acceptsMimeType: function (item) {
-                if (this.mimeTypes === null || this.mimeTypes === undefined) {
-                    return false;
-                }
-                return this.mimeTypes.indexOf(item.node.mimetype) !== -1;
-            },
+      _acceptsMimeType: function (item) {
+        if (this.mimeTypes === null || this.mimeTypes === undefined)
+          return false
+
+        return this.mimeTypes.indexOf(item.mimetype) !== -1
+      },
 
             _acceptsThumbnail: function (item) {
                 if (this.thumbnail === null || this.thumbnail === undefined
@@ -224,21 +260,23 @@ function DocumentPreviewService(alfrescoDocumentService, sessionService, $http, 
                 return item.node.contentURL;
             },
 
-            _getThumbnailUrl: function (item, fileSuffix) {
-                var nodeRefAsLink = this.nodeRef.replace(":/", ""),
-                    noCache = "&noCache=" + new Date().getTime(),
-                    force = "c=force";
+                  _acceptsTransformableMimeTypes: function (item) {
+                    if (this.transformableMimeTypes === null || this.transformableMimeTypes === undefined)
+                      return false
 
-                if (nodeRefAsLink.indexOf("versionStore") > -1) {
-                    return "/api/opendesk/case/document/" + nodeRefAsLink + "/thumbnail";
-                }
+                    return this.transformableMimeTypes.indexOf(item.mimetype) !== -1
+                  },
 
-                var lastModified = this._getLastThumbnailModification(item);
-
-                var url = "/api/node/" + nodeRefAsLink + "/content/thumbnails/" + this.thumbnail + (fileSuffix ? "/suffix" + fileSuffix : "")
-                    + "?" + force + lastModified + noCache;
-                return url;
+            _addThumbnailUrlFlags: function (item) {
+            var noCache = new Date().getTime()
+            var lastModified = this._getLastThumbnailModification(item)
+            this.thumbnailUrl += this.thumbnail + '?c=force&noCache=' + noCache + lastModified
             },
+
+            _getThumbnailUrl: function () {
+                    var nodeRefAsLink = this.nodeRef.replace(':/', '')
+                    return '/api/node/' + nodeRefAsLink + '/content/thumbnails/'
+                  },
 
             _getLastThumbnailModification: function (item) {
                 var thumbnailModifications = item.node.properties["cm:lastThumbnailModification"];
