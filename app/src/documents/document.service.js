@@ -65,7 +65,7 @@ function documentService($http, EDITOR_CONFIG) {
     }
 
       function getVersions (nodeId) {
-        return $http.get(`/alfresco/service/contents/getversions?node=${nodeId}`)
+        return $http.get(`/alfresco/service/contents/fetchversions?node=${nodeId}`)
           .then(function (response) {
             return response.data
           })
