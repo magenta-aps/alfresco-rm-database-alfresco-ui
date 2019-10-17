@@ -20,6 +20,17 @@ function DocumentController($scope, documentService, $stateParams, $state,
   vm.canRevertDocument = canRevertDocument;
 
 
+  if ($location.search().latest == undefined) {
+    vm.latest = true;
+  }
+  else {
+    console.log("setting...")
+    console.log($location.search().latest);
+    vm.latest = $location.search().latest == "true";
+  }
+
+
+
 
 
   function updateCollapse() {
@@ -75,7 +86,38 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
   function activate() {
 
+console.log("hvad er vm.docHasParent");
+console.log(vm.docHasParent);
 
+console.log("hvad er vm.latest");
+console.log(vm.latest);
+
+
+console.log("result");
+console.log( vm.docHasParent || vm.latest );
+
+    if ( !vm.docHasParent) {
+
+        if (vm.latest) {
+            vm.showRevertButton = false;
+        }
+        else {
+         vm.showRevertButton = true;
+        }
+
+
+    }
+    else if (vm.latest) {
+    console.log("setting true");
+        vm.showRevertButton = false;
+    }
+    else {
+        vm.showRevertButton = true;
+    }
+
+
+    console.log("hvad er show");
+    console.log(vm.showRevertButton)
 
     HeaderService.resetActions();
     setPDFViewerHeight();
@@ -112,34 +154,33 @@ function DocumentController($scope, documentService, $stateParams, $state,
     }
 
   function getDocument(revisioncall) {
-    documentService.getDocument(selectedDocumentNode)
 
 
-      .then(function (response) {
+        documentService.getDocument(selectedDocumentNode).then(function (response) {
 
-        vm.doc = response.item;
-        vm.docMetadata = response.metadata;
-        vm.loolEditable = documentService.isLoolEditable(vm.doc.mimetype);
-        vm.canEdit = vm.doc.permissions.userAccess.edit;
+            console.log("the response");
+            console.log(response);
 
-        documentService.getVersions(selectedDocumentNode).then(function (response) {
+            vm.doc = response.item;
+            vm.docMetadata = response.metadata;
+            vm.loolEditable = documentService.isLoolEditable(vm.doc.mimetype);
+            console.log(vm.doc.permissions.userAccess);
+            vm.canEdit = vm.doc.permissions.userAccess.edit;
+            console.log(vm.canEdit);
 
-        vm.history = response;
+            documentService.getVersions(selectedDocumentNode).then(function (response) {
 
-        if (revisioncall) {
-            vm.history.latest_version = ""
-        }
-        else {
-            vm.history.latest_version = response[0].version;
-        }
+            vm.history = response;
 
-        console.log("whts the response")
-        console.log(vm.history.latest_version);
-
-});
-
-      });
-  }
+            if (revisioncall) {
+                vm.history.latest_version = ""
+            }
+            else {
+                vm.history.latest_version = response[0].version;
+            }
+    });
+  });
+}
 
   function loadPreview() {
 
@@ -230,8 +271,6 @@ function DocumentController($scope, documentService, $stateParams, $state,
   }
 
   function canRevertDocument() {
-          console.log("permission");
-          console.log(authService.isAuthorized('SiteEntryLockManager'));
       return authService.isAuthorized('SiteEntryLockManager');
   }
 
@@ -252,3 +291,13 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
 
 }
+
+
+
+
+
+
+
+
+
+

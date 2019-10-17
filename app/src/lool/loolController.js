@@ -8,7 +8,7 @@ angular
  * @param $scope
  * @constructor
  */
-function LoolController($stateParams, loolService) {
+function LoolController($stateParams, loolService, alfrescoNodeUtils, $state) {
     var vm = this;
 
     vm.nodeRef = $stateParams.nodeRef;
@@ -41,7 +41,12 @@ function LoolController($stateParams, loolService) {
 
      vm.goBack = function goBack() {
         loolService.markDocumentAsNotEditing(vm.nodeRef);
-        window.history.go(-2);
+        var shortRef = alfrescoNodeUtils.processNodeRef(vm.nodeRef).id;
+
+
+
+        $state.go('document', { doc: shortRef });
+        // window.history.go(-2);
 
       }
 

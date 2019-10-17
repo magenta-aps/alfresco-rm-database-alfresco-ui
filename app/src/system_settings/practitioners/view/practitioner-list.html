@@ -39,12 +39,13 @@
                         <th md-column md-order-by="firstName">Navn</th>
                         <th md-column md-numeric md-order-by="active">Aktiveret</th>
                         <th md-column md-numeric md-order-by="GROUP_site_retspsyk_SiteConsumer">Kun læse</th>
-                        <th md-column md-numeric md-order-by="GROUP_reopen_cases">Genåbne sager</th>
+                        <th md-column md-numeric md-order-by="GROUP_reopen_cases">Genåbne sager og Versionering</th>
                         <th md-column md-numeric md-order-by="GROUP_site_retspsyk_SiteListManager">Redigere lister</th>
                         <th md-column md-numeric md-order-by="GROUP_site_retspsyk_SiteRoleManager">Tildele roller</th>
                         <th md-column md-numeric md-order-by="GROUP_site_retspsyk_TemplateFolderValueManager">Oprette dokumentskabeloner</th>
                     </tr>
                 </thead>
+
                 <tbody md-body>
                     <tr md-row ng-repeat="user in allUsers | orderBy: query.order" ng-if="user.userName!='admin'">
                         <td md-cell>{{user.firstName}} {{user.lastName}}</td>

@@ -129,7 +129,7 @@ function config($stateProvider, USER_ROLES) {
 
   $stateProvider.state('document', {
     parent: 'site',
-      url: '/dokument/:doc?reviewId&versionId&version',
+      url: '/dokument/:doc?reviewId&versionId&version&latest',
     views: {
       'content@': {
         templateUrl: 'app/src/documents/view/document.html',
