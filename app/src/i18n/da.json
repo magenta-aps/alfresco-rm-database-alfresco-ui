@@ -118,5 +118,12 @@
   "PROJECT": {
     "NAME": "Navn",
     "HISTORY": "Historik"
+  },
+  "FLOWCHART": {
+    "CREATED": "Sag oprettet",
+    "CPR": "CPR-nummer",
+    "FORNAVN": "Fornavn",
+    "EFTERNAVN": "Efternavn",
+    "HOVEDSIGTELSE": "Hovedsigtelse"
   }
 }

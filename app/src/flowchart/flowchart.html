@@ -1,96 +1,259 @@
+<style>
 
+.fixed_header{
+    width: 400px;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
 
-<table class="fixed_header" md-table>
-<tr>
-    <th>Sag oprettet</th>
-    <th>CPR Nummer</th>
-    <th>Fornavn</th>
-    <th>Efternavn</th>
-    <th>Hovedsigtelse</th>
-</tr>
+.fixed_header tbody{
+  display:block;
+  width: 100%;
+  overflow: auto;
 
+}
 
-<tr>
+.fixed_header thead tr {
+   display: block;
+}
 
-    <th>
+.fixed_header thead {
+
+}
+
+.fixed_header th, .fixed_header td {
+  padding: 5px;
+  text-align: left;
+  width: 200px;
+}
+
+</style>
 
 <md-card class="dropdown-card"  >
 
-    <md-card-title ng-click="vm.updateCollapse()" >
+
+
+    <md-card-title >
         <h3 class="md-title od-title-icon"><md-icon>history</md-icon> {{'COMMON.HISTORY' | translate }}</h3>
-        <span flex></span>
-        <md-icon class="rotate-arrow">keyboard_arrow_down</md-icon>
     </md-card-title>
 
-    <md-card-content  ng-class="vm.collapse ? 'fold-in' : 'fold-out'">
-        <!--<div layout="row">-->
-        <!--<div flex="50">-->
-        <!--<span class="od-secondary">{{'COMMON.LAST_MODIFIED' | translate}}</span>-->
-        <!--</div>-->
-        <!--<div flex="50">-->
-        <!--<span class="od-secondary">{{'COMMON.LAST_MODIFIED_BY' | translate}}</span>-->
-        <!--</div>-->
-        <!--</div>-->
-
-        <md-table-container >
 
 
-            <table class="fixed_header" md-table >
+    <md-content class="md-padding" layout-wrap >
 
 
-                <thead md-head >
-                <tr md-row>
-                    <th md-column >{{'COMMON.LAST_MODIFIED' | translate}}</th>
-                    <th md-column >{{'COMMON.LAST_MODIFIED' | translate}}</th>
-                    <th md-column >{{'COMMON.LAST_MODIFIED' | translate}}</th>
-                    <th md-column >{{'COMMON.LAST_MODIFIED' | translate}}</th>
-                    <th md-column >{{'COMMON.LAST_MODIFIED_BY' | translate}}</th>
-                </tr>
-                </thead>
+        <!-- headlines -->
+        <md-card class="dropdown-card">
+            <md-content>
 
 
+                <md-table-container >
 
 
-                <tbody md-body>
+                    <table class="fixed_header" md-table >
 
-                <tr md-row ng-repeat="h in vm.history" ng-class="vm.selectedVersion === h.version || h.version === vm.history.latest_version ? 'highlight' : '' ">
-                    <td md-cell><a ui-sref="document({ doc: h.parent_nodeRef, versionId: h.nodeRef, version: h.version, latest: h.latest})">{{ h.created | openeDate}}</a></td>
+                    <thead md-head >
+                    <tr md-row>
+                        <th md-column >{{'FLOWCHART.CREATED' | translate}}</th>
+                        <th md-column >{{'FLOWCHART.CPR' | translate}}</th>
+                        <th md-column >{{'FLOWCHART.FORNAVN' | translate}}</th>
+                        <th md-column >{{'FLOWCHART.EFTERNAVN' | translate}}</th>
+                        <th md-column >{{'FLOWCHART.HOVEDSIGTELSE' | translate}}</th>
+                    </tr>
+                    </thead>
 
-                    <td md-cell>
-                        <a ui-sref="document({ doc: h.parent_nodeRef, versionId: h.nodeRef, version: h.version, latest: h.latest})">{{ h.modifier }}
-                    </td>
+                    </table>
+                    </md-table-container>
 
-                </tr>
+            </md-content>
+        </md-card>
 
-                <tr>
+        <!-- contents -->
+        <div  ng-repeat="i in [1,2,3]" >
 
-                    <td>
-                        <md-button ng-click="vm.showEditVersionDialog()" ng-show="vm.showRevertButton" class="md-primary">gendan</md-button>
-                    </td>
+        <md-card class="dropdown-card">
 
 
-                </tr>
+        <md-card-title ng-click="vm.updateCollapse()" >
 
-                </tbody>
+
+            <md-table-container >
+
+                <table class="fixed_header" md-table >
+
+                    <thead md-head >
+
+
+                    <!--<md-icon class="rotate-arrow">keyboard_arrow_down</md-icon>-->
 
 
 
-                <!--<div class="entry" ng-repeat="h in vm.history" layout="row" ng-class="vm.selectedVersion === h.version || h.version === vm.history.latest_version ? 'highlight' : '' ">-->
-                <!--<div flex="50">-->
-                <!--<a ui-sref="document({ doc: h.parent_nodeRef, versionId: h.nodeRef, version: h.version})">{{ h.created | openeDate}}</a>-->
-                <!--</div>-->
+                    <tr md-row>
+                        <th md-column > 10-08-19</th>
+                        <th md-column > 020373-2558</th>
+                        <th md-column >Jørgen</th>
+                        <th md-column >Jørgensen</th>
+                        <th md-column >Vold i hjemmet</th>
+                    </tr>
 
-                <!--<div flex="50">-->
-                <!--<a ui-sref="document({ doc: h.parent_nodeRef, versionId: h.nodeRef, version: h.version})">{{ h.modifier }}</a>-->
-                <!--</div>-->
-                <!--</div>-->
+                    </thead>
 
-            </table>
-        </md-table-container>
+                </table>
+            </md-table-container>
+        </md-card-title>
 
 
+         <md-content class="md-padding" layout-wrap ng-class="vm.collapse ? 'fold-in' : 'fold-out'">
 
-    </md-card-content>
+             <md-table-container>
+
+
+                 <table md-table>
+
+                     <tbody md-body >
+
+                     <tr md-row class="clickable" ng-click="vm.gotoCase(case.caseNumber)">
+                             <td md-cell>Status</td>
+                             <td md-cell>xxxxxx</td>
+                             <td md-cell>Samtykke til oplysninger</td>
+                             <td md-cell>xxxxx</td>
+                     </tr>
+
+                     <tr md-row class="clickable" ng-click="vm.gotoCase(case.caseNumber)">
+                         <td md-cell>Status</td>
+                         <td md-cell>xxxxxx</td>
+                         <td md-cell>Samtykke til oplysninger</td>
+                         <td md-cell>xxxxx</td>
+                     </tr>
+
+                     <tr md-row class="clickable" ng-click="vm.gotoCase(case.caseNumber)">
+                         <td md-cell>Status</td>
+                         <td md-cell>xxxxxx</td>
+                         <td md-cell>Samtykke til oplysninger</td>
+                         <td md-cell>xxxxx</td>
+                     </tr>
+
+                     <tr md-row class="clickable" ng-click="vm.gotoCase(case.caseNumber)">
+                         <td md-cell>Status</td>
+                         <td md-cell>xxxxxx</td>
+                         <td md-cell>Samtykke til oplysninger</td>
+                         <td md-cell>xxxxx</td>
+                     </tr>
+
+
+
+
+
+
+                     </tbody>
+                 </table>
+
+
+                     <!--<table class="fixed_header" md-table >-->
+
+                         <!--<thead md-head >-->
+
+                         <!--<tr md-row>-->
+                             <!--<th md-column >TEST</th>-->
+                             <!--<th md-column >{{'COMMON.LAST_MODIFIED' | translate}}</th>-->
+                             <!--<th md-column >{{'COMMON.LAST_MODIFIED' | translate}}</th>-->
+                             <!--<th md-column >{{'COMMON.LAST_MODIFIED' | translate}}</th>-->
+                             <!--<th md-column >{{'COMMON.LAST_MODIFIED_BY' | translate}}</th>-->
+                         <!--</tr>-->
+                         <!--</thead>-->
+                         <!--<td>-->
+                             <!--<md-button ng-click="vm.showEditVersionDialog()"  class="md-primary">gendan</md-button>-->
+                         <!--</td>-->
+
+
+                         <!--<tr>-->
+                             <!--sdafsadf-->
+                         <!--</tr>-->
+
+                         <!--<tr>-->
+                             <!--sdafsadf-->
+                         <!--</tr>-->
+
+
+
+                     <!--</table>-->
+
+
+
+             </md-table-container>
+            </md-content>
+
+
+
+        </md-card>
+
+
+        </div>
+
+    </md-content>
+
+
+    <!--<md-card-content  ng-class="vm.collapse ? 'fold-in' : 'fold-out'">-->
+        <!--&lt;!&ndash;<div layout="row">&ndash;&gt;-->
+        <!--&lt;!&ndash;<div flex="50">&ndash;&gt;-->
+        <!--&lt;!&ndash;<span class="od-secondary">{{'COMMON.LAST_MODIFIED' | translate}}</span>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div flex="50">&ndash;&gt;-->
+        <!--&lt;!&ndash;<span class="od-secondary">{{'COMMON.LAST_MODIFIED_BY' | translate}}</span>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+        <!--<md-table-container >-->
+
+
+            <!--<table class="fixed_header" md-table >-->
+
+
+
+
+
+
+
+                <!--<tbody md-body>-->
+
+                <!--<tr md-row ng-repeat="h in vm.history" ng-class="vm.selectedVersion === h.version || h.version === vm.history.latest_version ? 'highlight' : '' ">-->
+                    <!--<td md-cell><a ui-sref="document({ doc: h.parent_nodeRef, versionId: h.nodeRef, version: h.version, latest: h.latest})">{{ h.created | openeDate}}</a></td>-->
+
+                    <!--<td md-cell>-->
+                        <!--<a ui-sref="document({ doc: h.parent_nodeRef, versionId: h.nodeRef, version: h.version, latest: h.latest})">{{ h.modifier }}-->
+                    <!--</td>-->
+
+                <!--</tr>-->
+
+                <!--<tr>-->
+
+                    <!--<td>-->
+                        <!--<md-button ng-click="vm.showEditVersionDialog()" ng-show="vm.showRevertButton" class="md-primary">gendan</md-button>-->
+                    <!--</td>-->
+
+
+                <!--</tr>-->
+
+                <!--</tbody>-->
+
+
+
+                <!--&lt;!&ndash;<div class="entry" ng-repeat="h in vm.history" layout="row" ng-class="vm.selectedVersion === h.version || h.version === vm.history.latest_version ? 'highlight' : '' ">&ndash;&gt;-->
+                <!--&lt;!&ndash;<div flex="50">&ndash;&gt;-->
+                <!--&lt;!&ndash;<a ui-sref="document({ doc: h.parent_nodeRef, versionId: h.nodeRef, version: h.version})">{{ h.created | openeDate}}</a>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<div flex="50">&ndash;&gt;-->
+                <!--&lt;!&ndash;<a ui-sref="document({ doc: h.parent_nodeRef, versionId: h.nodeRef, version: h.version})">{{ h.modifier }}</a>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+            <!--</table>-->
+        <!--</md-table-container>-->
+
+
+
+    <!--</md-card-content>-->
 </md-card>
     </th>
 </tr>
