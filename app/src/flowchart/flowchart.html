@@ -29,21 +29,23 @@
 
 </style>
 
-<md-card class="dropdown-card"  >
-
-
-
-    <md-card-title >
-        <h3 class="md-title od-title-icon"><md-icon>history</md-icon> {{'COMMON.HISTORY' | translate }}</h3>
-    </md-card-title>
-
-
+<md-card   >
 
     <md-content class="md-padding" layout-wrap >
 
+        <md-content class="md-padding" layout="row" >
+            <div flex="33" ng-repeat="i in [1,2,3,4,6]">
+                <md-card>
+                    <md-card-title >
+                        <h3 class="md-title od-title-icon"><md-icon>history</md-icon> {{'COMMON.HISTORY' | translate }}</h3>
+                    </md-card-title>
+                </md-card>
+            </div>
+        </md-content>
+
 
         <!-- headlines -->
-        <md-card class="dropdown-card">
+        <md-card >
             <md-content>
 
 
@@ -74,7 +76,7 @@
         <md-card class="dropdown-card">
 
 
-        <md-card-title ng-click="vm.updateCollapse()" >
+        <md-card-title  >
 
 
             <md-table-container >
@@ -102,11 +104,9 @@
             </md-table-container>
         </md-card-title>
 
-
-         <md-content class="md-padding" layout-wrap ng-class="vm.collapse ? 'fold-in' : 'fold-out'">
+         <md-content class="md-padding" layout-wrap ng-if="collapsed">
 
              <md-table-container>
-
 
                  <table md-table>
 
@@ -183,7 +183,18 @@
              </md-table-container>
             </md-content>
 
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button class="md-icon-button" aria-label="icon">
+                    <md-icon md-svg-icon="icon"></md-icon>
+                </md-button>
+                <md-button ng-click="collapsed=true" >open</md-button>
+                <md-button ng-click="collapsed=false">close</md-button>
+            </md-card-actions>
 
+            <!--<md-card-actions>-->
+                <!--<button button (click)="alert('hej')">Collapse text</button>-->
+                <!--<button button (click)="collapsed=false">Uncollapse text</button>-->
+            <!--</md-card-actions>-->
 
         </md-card>
 
