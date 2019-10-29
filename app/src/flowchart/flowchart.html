@@ -31,16 +31,63 @@
 
 <md-card   >
 
+
+
     <md-content class="md-padding" layout-wrap >
 
+
+
         <md-content class="md-padding" layout="row" >
-            <div flex="33" ng-repeat="i in [1,2,3,4,6]">
+            <div flex="33" >
                 <md-card>
                     <md-card-title >
-                        <h3 class="md-title od-title-icon"><md-icon>history</md-icon> {{'COMMON.HISTORY' | translate }}</h3>
+                        <h3 class="md-title od-title-icon"><md-icon>history</md-icon> {{'COMMON.ALLE' | translate }}</h3>
                     </md-card-title>
                 </md-card>
             </div>
+
+            <div flex="33" >
+                <md-card>
+                    <md-card-title >
+                        <h3 class="md-title od-title-icon"><md-icon>history</md-icon> {{'COMMON.ARRESTANTER' | translate }}</h3>
+                    </md-card-title>
+                </md-card>
+            </div>
+
+            <div flex="33" >
+                <md-card>
+                    <md-card-title >
+                        <h3 class="md-title od-title-icon"><md-icon>history</md-icon> {{'COMMON.IGANGVÆRENDE' | translate }} {{ vm.ongoing.total }}</h3>
+                    </md-card-title>
+                </md-card>
+            </div>
+
+            <div flex="33" >
+                <md-card>
+                    <md-card-title >
+                        <h3 class="md-title od-title-icon"><md-icon>history</md-icon> {{'COMMON.VENTELISTE' | translate }}</h3>
+                    </md-card-title>
+                </md-card>
+            </div>
+
+            <div flex="33" >
+                <md-card>
+                    <md-card-title >
+                        <h3 class="md-title od-title-icon"><md-icon>history</md-icon> {{'COMMON.INDLAGTE' | translate }}</h3>
+                    </md-card-title>
+                </md-card>
+            </div>
+
+            <div flex="33" >
+                <md-card>
+                    <md-card-title >
+                        <h3 class="md-title od-title-icon"><md-icon>history</md-icon> {{'COMMON.VENTEDEGR' | translate }}</h3>
+                    </md-card-title>
+                </md-card>
+            </div>
+
+
+
         </md-content>
 
 
@@ -71,7 +118,7 @@
         </md-card>
 
         <!-- contents -->
-        <div  ng-repeat="i in [1,2,3]" >
+        <div  ng-repeat="i in vm.ongoing" >
 
         <md-card class="dropdown-card">
 
@@ -91,11 +138,11 @@
 
 
                     <tr md-row>
-                        <th md-column > 10-08-19</th>
-                        <th md-column > 020373-2558</th>
-                        <th md-column >Jørgen</th>
-                        <th md-column >Jørgensen</th>
-                        <th md-column >Vold i hjemmet</th>
+                        <th md-column > {{i.creationDate}} </th>
+                        <th md-column > {{i.cprNumber}}</th>
+                        <th md-column >{{i.firstName}}</th>
+                        <th md-column >{{i.lastName}}</th>
+                        <th md-column >{{i.mainCharge}}</th>
                     </tr>
 
                     </thead>
@@ -112,30 +159,61 @@
 
                      <tbody md-body >
 
+
+
+
+
                      <tr md-row class="clickable" ng-click="vm.gotoCase(case.caseNumber)">
                              <td md-cell>Status</td>
-                             <td md-cell>xxxxxx</td>
+                             <td md-cell>{{i.status}}</td>
                              <td md-cell>Samtykke til oplysninger</td>
                              <td md-cell>xxxxx</td>
                      </tr>
 
-                     <tr md-row class="clickable" ng-click="vm.gotoCase(case.caseNumber)">
-                         <td md-cell>Status</td>
-                         <td md-cell>xxxxxx</td>
+
+                     <tr md-row class="clickable" ng-if="!edit"ng-click="vm.gotoCase(case.caseNumber)">
+                         <td md-cell>Læge</td>
+                         <td md-cell>{{ i.doctor}}</td>
+                         <td md-cell>Samtykke til oplysninger</td>
+                         <td md-cell>xxxxx</td>
+                     </tr>
+
+
+
+                     <tr md-row class="clickable" ng-if="edit" ng-click="vm.gotoCase(case.caseNumber)">
+
+                         <td md-cell>Læge</td>
+
+                         <td md-autocomplete
+                                      md-selected-item="i.doctor"
+                                      md-search-text="doctorSearch"
+                                      md-items="doctor in vm.propertyFilter(vm.propertyValues['doctor'],doctorSearch)"
+                                      md-item-text="doctor"
+                                      md-clear-button="editPatientData"
+                                      md-require-match="true">
+                         <md-item-template>
+                             <span md-highlight-text="doctorSearch" md-highlight-flags="gi">{{doctor}}</span>
+                         </md-item-template>
+                     </md-autocomplete>
+
+
+
+
+                         </td>
                          <td md-cell>Samtykke til oplysninger</td>
                          <td md-cell>xxxxx</td>
                      </tr>
 
                      <tr md-row class="clickable" ng-click="vm.gotoCase(case.caseNumber)">
-                         <td md-cell>Status</td>
-                         <td md-cell>xxxxxx</td>
+                         <td md-cell>Psykolog</td>
+                         <td md-cell>{{ i.psychologist}}</td>
                          <td md-cell>Samtykke til oplysninger</td>
                          <td md-cell>xxxxx</td>
                      </tr>
 
                      <tr md-row class="clickable" ng-click="vm.gotoCase(case.caseNumber)">
-                         <td md-cell>Status</td>
-                         <td md-cell>xxxxxx</td>
+                         <td md-cell>Socialrådgiver</td>
+                         <td md-cell>{{ i.socialworker}}</td>
                          <td md-cell>Samtykke til oplysninger</td>
                          <td md-cell>xxxxx</td>
                      </tr>
@@ -183,12 +261,16 @@
              </md-table-container>
             </md-content>
 
-            <md-card-actions layout="row" layout-align="end center">
+            <md-card-actions tst="hej" layout="row" layout-align="end center" >
                 <md-button class="md-icon-button" aria-label="icon">
                     <md-icon md-svg-icon="icon"></md-icon>
                 </md-button>
+                <md-button ng-disabled="save" ng-click="collapsed=true;edit=true;save=true">edit</md-button>
+                <md-button ng-click="save=false;edit=false;vm.test(i.node_uuid, i.doctor)" ng-show="save ">save</md-button>
                 <md-button ng-click="collapsed=true" >open</md-button>
                 <md-button ng-click="collapsed=false">close</md-button>
+
+
             </md-card-actions>
 
             <!--<md-card-actions>-->

@@ -166,6 +166,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		$scope.case.locked4edit = false;
 		$scope.case.locked4editBy = {};
 
+        console.log("hvad er scope.case");
+                console.log($scope.case);
+
 		DeclarationService.update($scope.case)
 			.then(function () {
 				$scope.editPatientData = false;
@@ -187,7 +190,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		$scope.case.closedWithoutDeclarationSentTo = $scope.closeCaseParams.sentTo;
 
 		DeclarationService.update($scope.case)
-			.then(function () {
+				.then(function () {
 				HeaderService.resetActions();
 				HeaderService.setClosed(true);
 				activated();

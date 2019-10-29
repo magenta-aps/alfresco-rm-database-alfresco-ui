@@ -61,7 +61,7 @@ angular.module('openDeskApp.declaration')
 
                 for (var x in propertyValues.psychologist) {
                     var psychologist = propertyValues.psychologist[x];
-                    var username = secretary.match(/ *\([^)]*\) */g);
+                    var username = psychologist.match(/ *\([^)]*\) */g);
                     propertyValues.psychologist[x] = propertyValues.psychologist[x].replace(username, "");
                 }
 
@@ -70,10 +70,6 @@ angular.module('openDeskApp.declaration')
                     var username = doctor.match(/ *\([^)]*\) */g);
                     propertyValues.doctor[x] = propertyValues.doctor[x].replace(username, "");
                 }
-
-
-
-
 
 				return propertyValues;
 			},
