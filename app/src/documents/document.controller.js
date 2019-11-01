@@ -17,15 +17,13 @@ function DocumentController($scope, documentService, $stateParams, $state,
   vm.acceptEditVersionDialog = acceptEditVersionDialog;
   vm.cancelDialog = cancelDialog;
   vm.updateCollapse = updateCollapse;
-  vm.canRevertDocument = canRevertDocument;
+  vm.canRevertDocument = authService.isAuthorized('SiteEntryLockManager');
 
 
   if ($location.search().latest == undefined) {
     vm.latest = true;
   }
   else {
-    console.log("setting...")
-    console.log($location.search().latest);
     vm.latest = $location.search().latest == "true";
   }
 
@@ -35,7 +33,6 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
   function updateCollapse() {
     vm.collapse = !vm.collapse;
-    console.log("clicked");
   }
 
 
@@ -86,16 +83,6 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
   function activate() {
 
-console.log("hvad er vm.docHasParent");
-console.log(vm.docHasParent);
-
-console.log("hvad er vm.latest");
-console.log(vm.latest);
-
-
-console.log("result");
-console.log( vm.docHasParent || vm.latest );
-
     if ( !vm.docHasParent) {
 
         if (vm.latest) {
@@ -108,16 +95,12 @@ console.log( vm.docHasParent || vm.latest );
 
     }
     else if (vm.latest) {
-    console.log("setting true");
+
         vm.showRevertButton = false;
     }
     else {
         vm.showRevertButton = true;
     }
-
-
-    console.log("hvad er show");
-    console.log(vm.showRevertButton)
 
     HeaderService.resetActions();
     setPDFViewerHeight();
@@ -126,7 +109,6 @@ console.log( vm.docHasParent || vm.latest );
     loadState();
 
     //documentService.getVersions(selectedDocumentNode);
-    console.log()
 
   }
 
@@ -158,15 +140,12 @@ console.log( vm.docHasParent || vm.latest );
 
         documentService.getDocument(selectedDocumentNode).then(function (response) {
 
-            console.log("the response");
-            console.log(response);
-
             vm.doc = response.item;
             vm.docMetadata = response.metadata;
             vm.loolEditable = documentService.isLoolEditable(vm.doc.mimetype);
-            console.log(vm.doc.permissions.userAccess);
+
             vm.canEdit = vm.doc.permissions.userAccess.edit;
-            console.log(vm.canEdit);
+
 
             documentService.getVersions(selectedDocumentNode).then(function (response) {
 
@@ -231,16 +210,15 @@ console.log( vm.docHasParent || vm.latest );
             documentService.getState("workspace://SpacesStore/" + selectedDocumentNode).then(function (response) {
 
 
-            console.log(response);
+
 
             if (!response.state) {
 
-                    console.log(response);
+
 
                   documentService.markDocumentAsEditing("workspace://SpacesStore/" + selectedDocumentNode).then(function (response) {
 
-                    console.log("response to")
-                    console.log(response);
+
 
                                                 $state.go('lool', {
                                                                   'nodeRef': vm.doc.nodeRef
@@ -270,10 +248,6 @@ console.log( vm.docHasParent || vm.latest );
     alfrescoDownloadService.downloadFile(versionRef, vm.doc.location.file);
   }
 
-  function canRevertDocument() {
-      return authService.isAuthorized('SiteEntryLockManager');
-  }
-
 
   function acceptEditVersionDialog() {
 
@@ -281,7 +255,7 @@ console.log( vm.docHasParent || vm.latest );
             documentService.revertToVersion("workspace://SpacesStore/" + selectedDocumentNode, selectedVersion).then(
         function (response) {
 
-            console.log(response);
+
           cancelDialog();
           $window.location.href = '#!/dokument/' + selectedDocumentNode;
         })
