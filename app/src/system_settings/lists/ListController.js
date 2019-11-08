@@ -76,15 +76,53 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
   }
 
   $scope.renameDialog = function (value) {
-    $scope.renameOriginal = angular.copy(value);
-    $scope.newEntry = value.title;
 
-    $mdDialog.show({
-      templateUrl: 'app/src/system_settings/lists/view/list-rename.html',
-      scope: $scope, // use parent scope in template
-      preserveScope: true, // do not forget this if use parent scope
-      clickOutsideToClose: true
-    });
+    if ($scope.listTitle == "Myndighed") {
+
+
+    var email = value.title.match(/ *\([^)]*\) */g);
+
+    if (email != null) {
+
+        email = email[0];
+        email = email.replace("(","");
+        email = email.replace(")","");
+        email = email.trim();
+    }
+
+    var title = value.title.replace(email, ",");
+
+    title = title.replace("(","");
+    title = title.replace(")","");
+    title = title.replace(",","");
+    title = title.trim();
+
+
+        $scope.renameOriginal = angular.copy(value);
+        $scope.newEntry = title;
+        $scope.newEntry_email = email;
+
+        $mdDialog.show({
+          templateUrl: 'app/src/system_settings/lists/view/list-rename-myndighed.html',
+          scope: $scope, // use parent scope in template
+          preserveScope: true, // do not forget this if use parent scope
+          clickOutsideToClose: true
+        });
+    }
+    else {
+
+        $scope.renameOriginal = angular.copy(value);
+            $scope.newEntry = value.title;
+
+            $mdDialog.show({
+              templateUrl: 'app/src/system_settings/lists/view/list-rename.html',
+              scope: $scope, // use parent scope in template
+              preserveScope: true, // do not forget this if use parent scope
+              clickOutsideToClose: true
+            });
+
+    }
+
   };
 
   $scope.addNew = function () {
@@ -112,9 +150,17 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
   }
 
   $scope.rename = function () {
-    propertyService.renamePropertyValue($scope.renameOriginal, { title: $scope.newEntry });
-    Toast.show($scope.renameOriginal.title + ' blev omdøbt til ' + $scope.newEntry);
+
+    if ($scope.listTitle == "Myndighed") {
+        propertyService.renamePropertyValue($scope.renameOriginal, { title: $scope.newEntry + " (" + $scope.newEntry_email +")" });
+  } else {
+        propertyService.renamePropertyValue($scope.renameOriginal, { title: $scope.newEntry });
+  }
+
+
+//    Toast.show($scope.renameOriginal.title + ' blev omdøbt til ' + $scope.newEntry);
     $scope.newEntry = '';
+    $scope.newEntry_email = '';
     $scope.renameOriginal = {};
     $scope.cancel();
   }

@@ -70,6 +70,10 @@ img {
  * Molecule level styles
  */
 
+.selected {
+  color: $black ;
+}
+
 .od-app {
   display: flex;
   flex-flow: column nowrap;
@@ -122,7 +126,7 @@ md-toolbar {
   }
 }
 .highlight {
-  color: $black !important;
+  color: $black ;
   font-weight: 900;
 }
 
@@ -135,6 +139,44 @@ md-toolbar {
     border: none;
     outline: none;
 }
+
+.fold-in {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0;
+  transition: max-height .15s ease-out, padding .1s ease-out .15s;
+}
+
+.fold-out {
+  max-height: 500px;
+  overflow-y: auto;
+  transition: max-height .25s ease-in;
+}
+
+//control arrow for open and closing
+.rotate-arrow {
+  margin: 0;
+  transition: transform .25s ease;
+}
+
+.open,
+.closed {
+  cursor: pointer;
+}
+
+.open {
+  .rotate-arrow {
+    transform: rotate(180deg);
+  }
+}
+
+.closed {
+  .rotate-arrow {
+    transform: rotate(0deg);
+  }
+}
+
+
 
 .clickable {
   cursor: pointer;

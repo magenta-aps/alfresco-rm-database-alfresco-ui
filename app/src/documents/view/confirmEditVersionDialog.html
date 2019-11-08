@@ -1,0 +1,18 @@
+<md-dialog aria-label="Edit older version" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Vil du gøre det valgte preview til den nyeste version af dokumentet?</h2>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content class="md-padding">
+            <i class="material-icons">info_outline</i>
+            <p>Du er på vej til at gøre en tidligere version af dokumentet til den nyeste version.</p>
+            <p>Hvis du trykker OK nu, bliver dette dokument ophøjet til den gældende version.</p>
+        </md-dialog-content>
+
+        <md-dialog-actions>
+            <md-button ng-click="vm.cancelDialog()" class="md-primary">Fortryd</md-button>
+            <md-button ng-click="vm.acceptEditVersionDialog()" class="md-primary">OK</md-button>
+        </md-dialog-actions>
+</md-dialog>
