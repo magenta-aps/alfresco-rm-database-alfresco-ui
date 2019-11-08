@@ -1,18 +1,51 @@
+<style>
+
+.fixed_header{
+    width: 400px;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.fixed_header tbody{
+  display:block;
+  width: 100%;
+  overflow: auto;
+  height: 550px;
+}
+
+.fixed_header thead tr {
+   display: block;
+}
+
+.fixed_header thead {
+
+}
+
+.fixed_header th, .fixed_header td {
+  padding: 5px;
+  text-align: left;
+  width: 200px;
+}
+
+</style>
+
+
 <md-card>
     <md-card-content>
-        <md-table-container>
-            <table md-table>
-                <thead md-head md-order="query.order">
+        <md-table-container >
+            <table class="fixed_header" md-table >
+                <thead md-head md-order="query.order" >
                     <tr md-row>
                         <th md-column md-order-by="firstName">Navn</th>
                         <th md-column md-numeric md-order-by="active">Aktiveret</th>
                         <th md-column md-numeric md-order-by="GROUP_site_retspsyk_SiteConsumer">Kun læse</th>
-                        <th md-column md-numeric md-order-by="GROUP_reopen_cases">Genåbne sager</th>
+                        <th md-column md-numeric md-order-by="GROUP_reopen_cases">Genåbne sager og Versionering</th>
                         <th md-column md-numeric md-order-by="GROUP_site_retspsyk_SiteListManager">Redigere lister</th>
                         <th md-column md-numeric md-order-by="GROUP_site_retspsyk_SiteRoleManager">Tildele roller</th>
                         <th md-column md-numeric md-order-by="GROUP_site_retspsyk_TemplateFolderValueManager">Oprette dokumentskabeloner</th>
                     </tr>
                 </thead>
+
                 <tbody md-body>
                     <tr md-row ng-repeat="user in allUsers | orderBy: query.order" ng-if="user.userName!='admin'">
                         <td md-cell>{{user.firstName}} {{user.lastName}}</td>
