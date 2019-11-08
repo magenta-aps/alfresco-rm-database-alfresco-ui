@@ -36,7 +36,14 @@
     "HISTORY": "Historik",
     "LAST_MODIFIED": "Senest ændret",
     "LAST_MODIFIED_BY": "Senest ændret af",
-    "FLOWCHART": "Flowchart"
+    "FLOWCHART": "Flowchart",
+    "IGANGVÆRENDE" : "Igangværende",
+    "ARRESTANTER" : "Arrestanter",
+    "ALLE" : "Alle",
+    "VENTELISTE" : "Venteliste",
+    "INDLAGTE" : "Indlagte",
+    "VENTEDEGR" : "Ventende GR",
+    "MINESAGER" : "Mine sager"
   },
   "DECLARATION": {
     "NEW_DECLARATION": "Ny sag",

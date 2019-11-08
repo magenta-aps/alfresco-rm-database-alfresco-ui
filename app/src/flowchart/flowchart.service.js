@@ -36,7 +36,7 @@ function FlowChartService($http) {
     function getEntries(entry) {
         return $http.post("/alfresco/s/database/retspsyk/flowchart", {
 
-          "properties": {"method" : "ongoing"},
+          "properties": {"method" : entry},
 
         }).then(function (response) {
           console.log(response.data)
