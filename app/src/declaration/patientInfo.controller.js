@@ -26,10 +26,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		}
 	});
 
-    console.log("duff");
-
     if (Object.keys($stateParams.searchquery).length) {
-        vm.backtosearch = true;
+        vm.backtosearch = false;
+        HeaderService.updateBacktosearch($stateParams.searchquery);
     }
 
     console.log($stateParams.searchquery);
@@ -85,6 +84,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	}
 
 	function setEverything(response) {
+
+
+
 		$scope.case = response;
 		var bua = response.bua ? ' (BUA)' : '';
 		HeaderService.resetActions();

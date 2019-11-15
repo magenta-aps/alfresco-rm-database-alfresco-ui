@@ -29,6 +29,12 @@
             <a ui-sref="declaration.show({caseid: vm.caseId})" style="color:white">
                 <h2>{{vm.title}}</h2>
             </a>
+
+            <md-button ng-if="vm.backtosearch"  title="tilbage til søgning" ui-sref="administration" ng-click="vm.gobacktosearch()">
+                        <span>tilbage til søgning</span>
+            </md-button>
+
+
             <span flex></span>
             <h2 ng-if="vm.isClosed">
                 <md-icon>done</md-icon> {{'DECLARATION.DECLARATION_CLOSED' | translate}}
