@@ -20,8 +20,8 @@
                             </div>
 
                             <md-autocomplete 
-                                md-selected-item="searchParams.mainCharge" 
-                                md-search-text="mainChargeSearch" 
+                                md-selected-item="searchParams.mainCharge"
+                                md-search-text="mainChargeSearch"
                                 md-items="mainCarge in propertyFilter(propertyValues['mainCharge'],mainChargeSearch)"
                                 md-item-text="mainCarge" 
                                 md-min-length="0" 
@@ -33,12 +33,27 @@
                                 </md-item-template>
                             </md-autocomplete>
                             <md-tooltip md-direction="top" md-delay="500" ng-if="searchParams.mainCharge != null">{{searchParams.mainCharge}}</md-tooltip>
+
+                            <md-autocomplete
+                                    md-selected-item="searchParams.mainDiagnosis"
+                                    md-search-text="diagnosisSearch"
+                                    md-items="diagnosis in propertyFilter(propertyValues['diagnosis'],diagnosisSearch)"
+                                    md-item-text="mainDiagnosis"
+                                    md-min-length="0"
+                                    md-floating-label="Hoveddiagnose"
+                                    md-require-match="true"
+                                    md-clear-button="true">
+                                <md-item-template>
+                                    <span md-highlight-text="mainDiagnosisSearch" md-highlight-flags="gi">{{diagnosis}}</span>
+                                </md-item-template>
+                            </md-autocomplete>
+                            <md-tooltip md-direction="top" md-delay="500" ng-if="searchParams.mainDiagnosis != null">{{searchParams.mainDiagnosis}}</md-tooltip>
     
                             <md-input-container class="md-block">
                                 <label>Sagsstatus</label>
                                 <md-select ng-model="searchParams.closed">
-                                    <md-option ng-value="'CLOSED'" selected>Afsluttet</md-option>
-                                    <md-option ng-value="'OPEN'">Ikke afsluttet</md-option>
+                                    <md-option ng-value="'CLOSED'" >Afsluttet</md-option>
+                                    <md-option ng-value="'OPEN'" >Ikke afsluttet</md-option>
                                     <md-option ng-value="undefined">Alle</md-option>
                                 </md-select>
                             </md-input-container>
@@ -120,8 +135,8 @@
                             <md-input-container class="md-block">
                                 <label>Type</label>
                                 <md-select ng-model="searchParams.bua">
-                                    <md-option ng-value="'PS'" selected>PS</md-option>
-                                    <md-option ng-value="'BUA'">BUA</md-option>
+                                    <md-option ng-value="'PS'" >PS</md-option>
+                                    <md-option ng-value="'BUA'" >BUA</md-option>
                                     <md-option ng-value="undefined">Alle</md-option>
                                 </md-select>
                             </md-input-container>
@@ -133,61 +148,111 @@
                     <md-card flex>
                         <md-card-content>
 
-                            <h4 style="margin-top: 0;">Erklæring:</h4>
+                            <!--<h4 style="margin-top: 0;">Erklæring:</h4>-->
+
+
 
                             <div class="md-input-container md-block">
-                                <md-checkbox ng-model="searchParams.psychEval" ng-change="vm.psychEval()">Psykologisk undersøgelse</md-checkbox>
-                                <md-autocomplete flex 
-                                    ng-show="searchParams.psychEval"
-                                    md-selected-item="searchParams.psychologist" 
-                                    md-search-text="psychSearch"
-                                    md-items="psychologist in propertyFilter(propertyValues['psychologist'],psychSearch)" 
-                                    md-item-text="psychologist" 
-                                    md-min-length="0" 
-                                    md-floating-label="Psykolog"
-                                    md-require-match="true"
-                                    md-clear-button="true">
+                                <md-checkbox ng-model="searchParams.evalAll" ng-change="vm.evalAll()">Erklæring</md-checkbox>
+
+                                <md-autocomplete flex
+                                                 ng-show="searchParams.evalAll"
+                                                 md-selected-item="searchParams.psychologist"
+                                                 md-search-text="psychSearch"
+                                                 md-items="psychologist in propertyFilter(propertyValues['psychologist'],psychSearch)"
+                                                 md-item-text="psychologist"
+                                                 md-min-length="0"
+                                                 md-floating-label="Psykolog"
+                                                 md-require-match="true"
+                                                 md-clear-button="true">
                                     <md-item-template>
                                         <span md-highlight-text="psychSearch" md-highlight-flags="gi">{{psychologist}}</span>
                                     </md-item-template>
                                 </md-autocomplete>
-                            </div>
-    
-                            <div class="md-input-container md-block">
-                                <md-checkbox ng-model="searchParams.givenDeclaration" ng-change="vm.givenDeclaration()">Erklæring afgivet</md-checkbox>
-                                <md-autocomplete flex 
-                                    ng-show="searchParams.givenDeclaration"
-                                    md-selected-item="searchParams.doctor" 
-                                    md-search-text="doctorSearch"
-                                    md-items="doctor in propertyFilter(propertyValues['doctor'],doctorSearch)" 
-                                    md-item-text="doctor" 
-                                    md-min-length="0" 
-                                    md-floating-label="Læge"
-                                    md-require-match="true"
-                                    md-clear-button="true">
+
+                                <md-autocomplete flex
+                                                 ng-show="searchParams.evalAll"
+                                                 md-selected-item="searchParams.doctor"
+                                                 md-search-text="doctorSearch"
+                                                 md-items="doctor in propertyFilter(propertyValues['doctor'],doctorSearch)"
+                                                 md-item-text="doctor"
+                                                 md-min-length="0"
+                                                 md-floating-label="Læge"
+                                                 md-require-match="true"
+                                                 md-clear-button="true">
                                     <md-item-template>
                                         <span md-highlight-text="doctorSearch" md-highlight-flags="gi">{{doctor}}</span>
                                     </md-item-template>
                                 </md-autocomplete>
-                            </div>
-    
-                            <div class="md-input-container md-block">
-                                <md-checkbox ng-model="searchParams.socialEval" ng-change="vm.socialEval()">Levnedsbeskrivelse</md-checkbox>
-                                <md-autocomplete flex 
-                                    ng-show="searchParams.socialEval"
-                                    md-selected-item="searchParams.socialworker" 
-                                    md-search-text="socialworkerSearch"
-                                    md-items="socialworker in propertyFilter(propertyValues['socialworker'],socialworkerSearch)" 
-                                    md-item-text="socialworker" 
-                                    md-min-length="0" 
-                                    md-floating-label="Socialrådgiver"
-                                    md-require-match="true"
-                                    md-clear-button="true">
+
+                                <md-autocomplete flex
+                                                 ng-show="searchParams.evalAll"
+                                                 md-selected-item="searchParams.socialworker"
+                                                 md-search-text="socialworkerSearch"
+                                                 md-items="socialworker in propertyFilter(propertyValues['socialworker'],socialworkerSearch)"
+                                                 md-item-text="socialworker"
+                                                 md-min-length="0"
+                                                 md-floating-label="Socialrådgiver"
+                                                 md-require-match="true"
+                                                 md-clear-button="true">
                                     <md-item-template>
                                         <span md-highlight-text="socialworkerSearch" md-highlight-flags="gi">{{socialworker}}</span>
                                     </md-item-template>
                                 </md-autocomplete>
+
+                                <div layout-gt-sm="row" class="layout-gt-sm-row" ng-show="searchParams.evalAll">
+                                    <md-input-container>
+                                        <label>Fra</label>
+                                        <md-datepicker ng-model="searchParams.declarationFromDate"></md-datepicker>
+                                    </md-input-container>
+                                    <md-input-container>
+                                        <label>Til</label>
+                                        <md-datepicker ng-model="searchParams.declarationToDate"></md-datepicker>
+                                    </md-input-container>
+                                </div>
+
                             </div>
+
+
+
+
+
+    <!---->
+                            <!--<div class="md-input-container md-block">-->
+                                <!--<md-checkbox ng-model="searchParams.givenDeclaration" ng-change="vm.givenDeclaration()">Erklæring afgivet</md-checkbox>-->
+                                <!--<md-autocomplete flex -->
+                                    <!--ng-show="searchParams.givenDeclaration"-->
+                                    <!--md-selected-item="searchParams.doctor" -->
+                                    <!--md-search-text="doctorSearch"-->
+                                    <!--md-items="doctor in propertyFilter(propertyValues['doctor'],doctorSearch)" -->
+                                    <!--md-item-text="doctor" -->
+                                    <!--md-min-length="0" -->
+                                    <!--md-floating-label="Læge"-->
+                                    <!--md-require-match="true"-->
+                                    <!--md-clear-button="true">-->
+                                    <!--<md-item-template>-->
+                                        <!--<span md-highlight-text="doctorSearch" md-highlight-flags="gi">{{doctor}}</span>-->
+                                    <!--</md-item-template>-->
+                                <!--</md-autocomplete>-->
+                            <!--</div>-->
+    <!---->
+                            <!--<div class="md-input-container md-block">-->
+                                <!--<md-checkbox ng-model="searchParams.socialEval" ng-change="vm.socialEval()">Levnedsbeskrivelse</md-checkbox>-->
+                                <!--<md-autocomplete flex -->
+                                    <!--ng-show="searchParams.socialEval"-->
+                                    <!--md-selected-item="searchParams.socialworker" -->
+                                    <!--md-search-text="socialworkerSearch"-->
+                                    <!--md-items="socialworker in propertyFilter(propertyValues['socialworker'],socialworkerSearch)" -->
+                                    <!--md-item-text="socialworker" -->
+                                    <!--md-min-length="0" -->
+                                    <!--md-floating-label="Socialrådgiver"-->
+                                    <!--md-require-match="true"-->
+                                    <!--md-clear-button="true">-->
+                                    <!--<md-item-template>-->
+                                        <!--<span md-highlight-text="socialworkerSearch" md-highlight-flags="gi">{{socialworker}}</span>-->
+                                    <!--</md-item-template>-->
+                                <!--</md-autocomplete>-->
+                            <!--</div>-->
 
                             <div class="md-input-container md-block">
                                 <md-checkbox ng-model="searchParams.noDeclaration" ng-change="vm.noDeclaration()">Afsluttet uden erklæring</md-checkbox>
@@ -210,16 +275,16 @@
 
                             <md-divider ng-show="searchParams.psychEval || searchParams.givenDeclaration || searchParams.socialEval"></md-divider>
 
-                            <div layout-gt-sm="row" class="layout-gt-sm-row" ng-show="searchParams.psychEval || searchParams.givenDeclaration || searchParams.socialEval">
-                                <md-input-container>
-                                    <label>Fra</label>
-                                    <md-datepicker ng-model="searchParams.declarationFromDate"></md-datepicker>
-                                </md-input-container>
-                                <md-input-container>
-                                    <label>Til</label>
-                                    <md-datepicker ng-model="searchParams.declarationToDate"></md-datepicker>
-                                </md-input-container>
-                            </div>
+                            <!--<div layout-gt-sm="row" class="layout-gt-sm-row" ng-show="searchParams.psychEval || searchParams.givenDeclaration || searchParams.socialEval">-->
+                                <!--<md-input-container>-->
+                                    <!--<label>Fra</label>-->
+                                    <!--<md-datepicker ng-model="searchParams.declarationFromDate"></md-datepicker>-->
+                                <!--</md-input-container>-->
+                                <!--<md-input-container>-->
+                                    <!--<label>Til</label>-->
+                                    <!--<md-datepicker ng-model="searchParams.declarationToDate"></md-datepicker>-->
+                                <!--</md-input-container>-->
+                            <!--</div>-->
 
                             </md-card-content>
                     </md-card>
