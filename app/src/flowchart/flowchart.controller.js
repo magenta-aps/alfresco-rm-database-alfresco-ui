@@ -4,11 +4,10 @@ angular
   .module('oda.flowchart')
   .controller('FlowChartController', FlowChartController);
 
-function FlowChartController($scope, $stateParams, $translate, HeaderService, FlowChartService, propertyService, filterService, DeclarationService, Toast ) {
+function FlowChartController($scope, $stateParams, $translate, HeaderService, FlowChartService, propertyService, filterService, DeclarationService, Toast, authService, $anchorScroll, $location ) {
   var vm = this;
 
   $scope.flow = {};
-
 
   $scope.folderUuid = [];
 
@@ -19,8 +18,11 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
   vm.propertyValues = propertyService.getAllPropertyValues();
   vm.propertyFilter = propertyFilter;
 
-  console.log("vm.propertyValues");
-  console.log(vm.propertyValues);
+
+  vm.showing = "";
+  vm.startedit = false;
+  vm.saveShow = false;
+
 
 
 function propertyFilter(array, query) {
@@ -38,68 +40,200 @@ function propertyFilter(array, query) {
     FlowChartService.getEntries("total").then(function (response) {
 
     vm.total = {};
-                             vm.total.ongoing = response.igangværende;
+                             vm.total.ongoing = response.ongoing;
                              vm.total.arrestanter = response.arrestanter;
                              vm.total.observation = response.observation;
                              vm.total.user = response.user;
                              vm.total.ventendegr = response.ventendegr;
                              vm.total.waitinglist = response.waitinglist;
-
                        });
+
+
 
   }
 
   function loaddata(value) {
 
+      vm.showing = value;
+
       FlowChartService.getEntries(value).then(function (response) {
                                vm.ongoing = response.entries;
+
                          });
 
   }
 
   vm.loaddata = loaddata;
 
-  function test(nodeuuid, doctor, socialworker, psychologist, status) {
+  function save(nodeuuid, doctor, socialworker, psychologist, status) {
+
+//    $scope.flow["status"] = status;
 
 
-    $scope.flow["node-uuid"] = nodeuuid;
-    $scope.flow["psychologist"] = psychologist;
-    $scope.flow["doctor"] = doctor;
-    $scope.flow["socialworker"] = socialworker;
-    $scope.flow["status"] = status;
 
-//
+
     DeclarationService.update($scope.flow)
     			.then(function () {
     				Toast.show('Ændringerne er gemt');
+    				lockedForEdit(false);
+    				vm.editperid = "";
+    				vm.startedit = false;
+    				vm.saveShow = false;
+
+
+                    // update current display
+    				var val = angular.element(document.getElementById("samtykkeDisplay_"+ nodeuuid));
+                    val[0].innerText = $scope.flow.samtykkeopl;
+
+
+                    var val = angular.element(document.getElementById("psychologistDisplay_"+ nodeuuid));
+                    val[0].innerText = $scope.flow.psychologist;
+
+
+                    $location.hash(nodeuuid);
+                    $anchorScroll();
+
     			});
 
   }
 
-  vm.test = test;
+  vm.save = save;
 
-    function setCase(i) {
-        console.log("setcase")
-        console.log(i);
 
-        $scope.flow["kommentar"] = i.kommentar;
-        $scope.flow["samtykkeopl"] = i.samtykkeopl;
-        $scope.flow["arrest"] = i.arrest;
-        $scope.flow["tolksprog"] = i.tolksprog;
-        $scope.flow["psykologfokus"] = i.psykologfokus;
-        $scope.flow["fritidved"] = i.fritidved;
-        $scope.flow["kvalitetskontrol"] = i.kvalitetskontrol;
+
+    function updateCard(i) {
+
+
+         DeclarationService.get(i.caseNumber).then(function (response) {
+
+                console.log(response);
+
+                var val = angular.element(document.getElementById("statusDisplay_"+ i.node_uuid));
+                val[0].innerText = response.status;
+
+                var val = angular.element(document.getElementById("samtykkeDisplay_"+ i.node_uuid));
+                val[0].innerText = response.samtykkeopl;
+
+                var val = angular.element(document.getElementById("psychologistDisplay_"+ i.node_uuid));
+                val[0].innerText = response.psychologist;
+
+
+
+//                mainCharge: "Bedrageri mv., forsøg §§ 278-280, jf. § 21"
+//                node_uuid: "cd424f7d-16b0-4c72-a95c-d76b47dfd2e4"
+//                samtykkeopl: "skald"
+//                show: "false"
+//                socialworker: "Hansen, Anne Marie"
+//                status: "Afsoner"
+
+
+                // fetch the id of the field, as it might has been updated since last reload of the list
+
+//                var va = angular.element(document.getElementById("samtykkeDisplay_"+ i.node_uuid));
+
+
+                });
+
+
+//
+//        console.log("i");
+//        console.log(i)
+//        var va = angular.element(document.getElementById("samtykkeDisplay_"+ i.node_uuid));
+//        console.log(va);
+//        $scope.flow["samtykkeopl"] = va[0].innerText;
+    }
+
+    vm.updateCard = updateCard;
+
+
+    function editCase(i) {
+
+    var currentUser = authService.getUserInfo().user.userName
+
+
+
+
+
+    // Calling the jQuery function using the angular.element.
+
+
+
+
+          return (DeclarationService.get(i.caseNumber).then(function (response) {
+
+            console.log("response");
+            console.log(response);
+
+            // init locked4edit
+
+            if (i.locked4edit == null) {
+                response.locked4edit = false;
+            }
+
+
+            if (i.locked4edit) {
+                if (i.locked4editBy != currentUser) {
+                    alert("sagen er låst for redigering af " + i.locked4editBy);
+
+                    return false;
+                }
+            }
+
+            // fetch the id of the field, as it has might been updated since last reload of the list
+
+            $scope.flow["samtykkeopl"] = response.samtykkeopl;
+            $scope.flow["kommentar"] = response.kommentar;
+            $scope.flow["arrest"] = response.arrest;
+            $scope.flow["tolksprog"] = response.tolksprog;
+            $scope.flow["psykologfokus"] = response.psykologfokus;
+            $scope.flow["fritidved"] = response.fritidved;
+            $scope.flow["kvalitetskontrol"] = response.kvalitetskontrol;
+            $scope.flow["node-uuid"] = response["node-uuid"];
+            $scope.flow["psychologist"] = response.psychologist;
+
+
+            vm.editperid = i.node_uuid;
+            vm.startedit = true;
+            vm.saveShow = true;
+
+            lockedForEdit(true);
+
+            return true;
+
+        }));
+
 
     }
 
 
+  function checkif() {
+//  ng-if="vm.checkif(collapsed)"
+    debugger;
+  }
 
-    vm.setCase = setCase;
+  vm.checkif = checkif;
+
+
+    function cancel() {
+        lockedForEdit(false);
+        vm.editperid = "";
+        vm.startedit = false;
+        vm.saveShow = false;
+
+    }
+
+    vm.cancel = cancel;
+
+
+    vm.editCase = editCase;
 
   	function lockedForEdit(lock) {
-  		var currentUser = authService.getUserInfo().user;
+
+
+
+  		var currentUser = authService.getUserInfo().user.userName
   		var locked = {
-  			'node-uuid': $scope.case['node-uuid'],
+  			'node-uuid': $scope.flow['node-uuid'],
   			locked4edit: lock,
   			locked4editBy: lock ? currentUser : {}
   		};

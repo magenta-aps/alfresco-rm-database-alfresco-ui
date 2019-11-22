@@ -28,9 +28,6 @@ function DocumentController($scope, documentService, $stateParams, $state,
   }
 
 
-
-
-
   function updateCollapse() {
     vm.collapse = !vm.collapse;
   }

@@ -1,3 +1,6 @@
+
+
+
 <style>
 
 .fixed_header{
@@ -27,7 +30,42 @@
   width: 200px;
 }
 
+ .modal-overlay {
+  position:absolute;
+  z-index:9999;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color:#000;
+  opacity: 0.8;
+}
+.modal-background {
+  z-index:10000;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+
+}
+.modal-content {
+  padding:10px;
+  text-align: center;
+}
+.modal-close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 5px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+
 </style>
+
+
 
 <md-card   >
 
@@ -128,7 +166,7 @@
         <!-- contents -->
         <div  ng-repeat="i in vm.ongoing" >
 
-        <md-card class="dropdown-card">
+        <md-card class="dropdown-card" id="{{ i.node_uuid }}" ng-hide="!(vm.editperid == i.node_uuid) && vm.startedit">
 
 
         <md-card-title  >
@@ -140,15 +178,14 @@
 
                     <thead md-head >
 
-
                     <!--<md-icon class="rotate-arrow">keyboard_arrow_down</md-icon>-->
 
                     <tr md-row>
-                        <th md-column > {{i.creationDate}} </th>
+                        <th md-column > {{i.creationDate | customFlowChartDate }} </th>
                         <th md-column > {{i.cprNumber}}</th>
                         <th md-column >{{i.firstName}}</th>
-                        <th md-column >{{i.lastName}}</th>
-                        <th md-column >{{i.mainCharge}}</th>
+                        <th md-column >{{i.lastName}}  </th>
+                        <th md-column >{{i.mainCharge}} </th>
                     </tr>
 
                     </thead>
@@ -157,7 +194,9 @@
             </md-table-container>
         </md-card-title>
 
-         <md-content class="md-padding" layout-wrap ng-if="collapsed">
+
+         <md-content class="md-padding" layout-wrap ng-if="collapsed" >
+         <!--<md-content class="md-padding" layout-wrap ng-if="false" >-->
 
              <md-table-container>
 
@@ -167,18 +206,19 @@
 
 <!--display status + samtykke -->
 
-                     <tr md-row class="clickable" ng-if="!edit" ng-click="vm.gotoCase(case.caseNumber)">
+                     <tr md-row class="clickable" ng-hide="vm.editperid == i.node_uuid" ng-click="vm.gotoCase(case.caseNumber)">
                              <td md-cell>Status</td>
-                             <td md-cell>{{i.status}}</td>
+                             <td md-cell id="statusDisplay_{{ i.node_uuid }}">{{i.status}}</td>
 
-                             <td md-cell>Samtykke til oplysninger</td>
-                             <td md-cell>{{i.samtykkeopl}}</td>
+                             <td md-cell>Samtykke til oplysninger </td>
+                             <td md-cell id="samtykkeDisplay_{{ i.node_uuid }}">{{i.samtykkeopl}}</td>
                      </tr>
 
 <!--edit-->
 
 
-                    <tr md-row class="clickable" ng-if="edit" ng-click="vm.gotoCase(case.caseNumber)">
+
+                    <tr md-row class="clickable" ng-show="vm.editperid == i.node_uuid" ng-click="vm.gotoCase(case.caseNumber)">
 
                         <td md-cell>Status</td>
 
@@ -219,6 +259,11 @@
                         <td md-cell>{{i.tolksprog}}</td>
                     </tr>
 <!--edit-->
+
+
+
+
+
 
                     <tr md-row class="clickable" ng-if="edit" ng-click="vm.gotoCase(case.caseNumber)">
                         <td md-cell>Arrest</td>
@@ -332,7 +377,7 @@
                      <tr md-row class="clickable" ng-if="!edit" ng-click="vm.gotoCase(case.caseNumber)">
 
                          <td md-cell>Psykolog</td>
-                         <td md-cell>{{ i.psychologist}}</td>
+                         <td id="psychologistDisplay_{{ i.node_uuid }}" md-cell>{{ i.psychologist}}</td>
 
                          <td md-cell>Kvalitetskontrol</td>
                          <td md-cell>{{i.kvalitetskontrol}}</td>
@@ -341,13 +386,13 @@
 
 <!--edit -->
 
-                    <tr md-row class="clickable" ng-if="edit" ng-click="vm.gotoCase(case.caseNumber)">
+                    <tr md-row class="clickable" ng-show="vm.editperid == i.node_uuid" ng-click="vm.gotoCase(case.caseNumber)">
 
                         <td md-cell>Psykolog</td>
 
-                        <div>
+                        <div >
                             <td md-autocomplete
-                                md-selected-item="i.psychologist"
+                                md-selected-item="flow.psychologist"
                                 md-search-text="psychologistSearch"
                                 md-items="psychologist in vm.propertyFilter(vm.propertyValues['psychologist'],psychologistSearch)"
                                 md-item-text="psychologist"
@@ -401,37 +446,6 @@
                  </table>
 
 
-                     <!--<table class="fixed_header" md-table >-->
-
-                         <!--<thead md-head >-->
-
-                         <!--<tr md-row>-->
-                             <!--<th md-column >TEST</th>-->
-                             <!--<th md-column >{{'COMMON.LAST_MODIFIED' | translate}}</th>-->
-                             <!--<th md-column >{{'COMMON.LAST_MODIFIED' | translate}}</th>-->
-                             <!--<th md-column >{{'COMMON.LAST_MODIFIED' | translate}}</th>-->
-                             <!--<th md-column >{{'COMMON.LAST_MODIFIED_BY' | translate}}</th>-->
-                         <!--</tr>-->
-                         <!--</thead>-->
-                         <!--<td>-->
-                             <!--<md-button ng-click="vm.showEditVersionDialog()"  class="md-primary">gendan</md-button>-->
-                         <!--</td>-->
-
-
-                         <!--<tr>-->
-                             <!--sdafsadf-->
-                         <!--</tr>-->
-
-                         <!--<tr>-->
-                             <!--sdafsadf-->
-                         <!--</tr>-->
-
-
-
-                     <!--</table>-->
-
-
-
              </md-table-container>
             </md-content>
 
@@ -439,18 +453,17 @@
                 <md-button class="md-icon-button" aria-label="icon">
                     <md-icon md-svg-icon="icon"></md-icon>
                 </md-button>
-                <md-button ng-disabled="save" ng-click="collapsed=true;edit=true;save=true;vm.setCase(i)">edit</md-button>
-                <md-button ng-click="save=false;edit=false;vm.test(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status)" ng-show="save ">save</md-button>
-                <md-button ng-click="collapsed=true" >open</md-button>
-                <md-button ng-click="collapsed=false">close</md-button>
+                <!--<md-button ng-disabled="save" ng-click="collapsed=vm.editCase(i);edit=collapsed;save=collapsed;">ret  </md-button>-->
+                <md-button ng-disabled="vm.saveShow" ng-click="collapsed=vm.editCase(i);save=collapsed; ">ret  </md-button>
+                <md-button ng-click="save=false;edit=false;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">gem</md-button>
+                <md-button ng-click="save=false;edit=false;vm.cancel(i.node_uuid)" ng-show="vm.saveShow">annuller</md-button>
+                <md-button ng-show="!collapsed" ng-click="collapsed=!collapsed;vm.updateCard(i)" > <md-icon>keyboard_arrow_down</md-icon> </md-button>
+                <md-button ng-show="collapsed" ng-click="collapsed=!collapsed"> <md-icon>keyboard_arrow_up</md-icon> </md-button>
 
 
             </md-card-actions>
 
-            <!--<md-card-actions>-->
-                <!--<button button (click)="alert('hej')">Collapse text</button>-->
-                <!--<button button (click)="collapsed=false">Uncollapse text</button>-->
-            <!--</md-card-actions>-->
+
 
         </md-card>
 
@@ -460,68 +473,12 @@
     </md-content>
 
 
-    <!--<md-card-content  ng-class="vm.collapse ? 'fold-in' : 'fold-out'">-->
-        <!--&lt;!&ndash;<div layout="row">&ndash;&gt;-->
-        <!--&lt;!&ndash;<div flex="50">&ndash;&gt;-->
-        <!--&lt;!&ndash;<span class="od-secondary">{{'COMMON.LAST_MODIFIED' | translate}}</span>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div flex="50">&ndash;&gt;-->
-        <!--&lt;!&ndash;<span class="od-secondary">{{'COMMON.LAST_MODIFIED_BY' | translate}}</span>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-        <!--<md-table-container >-->
-
-
-            <!--<table class="fixed_header" md-table >-->
 
 
 
 
-
-
-
-                <!--<tbody md-body>-->
-
-                <!--<tr md-row ng-repeat="h in vm.history" ng-class="vm.selectedVersion === h.version || h.version === vm.history.latest_version ? 'highlight' : '' ">-->
-                    <!--<td md-cell><a ui-sref="document({ doc: h.parent_nodeRef, versionId: h.nodeRef, version: h.version, latest: h.latest})">{{ h.created | openeDate}}</a></td>-->
-
-                    <!--<td md-cell>-->
-                        <!--<a ui-sref="document({ doc: h.parent_nodeRef, versionId: h.nodeRef, version: h.version, latest: h.latest})">{{ h.modifier }}-->
-                    <!--</td>-->
-
-                <!--</tr>-->
-
-                <!--<tr>-->
-
-                    <!--<td>-->
-                        <!--<md-button ng-click="vm.showEditVersionDialog()" ng-show="vm.showRevertButton" class="md-primary">gendan</md-button>-->
-                    <!--</td>-->
-
-
-                <!--</tr>-->
-
-                <!--</tbody>-->
-
-
-
-                <!--&lt;!&ndash;<div class="entry" ng-repeat="h in vm.history" layout="row" ng-class="vm.selectedVersion === h.version || h.version === vm.history.latest_version ? 'highlight' : '' ">&ndash;&gt;-->
-                <!--&lt;!&ndash;<div flex="50">&ndash;&gt;-->
-                <!--&lt;!&ndash;<a ui-sref="document({ doc: h.parent_nodeRef, versionId: h.nodeRef, version: h.version})">{{ h.created | openeDate}}</a>&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-                <!--&lt;!&ndash;<div flex="50">&ndash;&gt;-->
-                <!--&lt;!&ndash;<a ui-sref="document({ doc: h.parent_nodeRef, versionId: h.nodeRef, version: h.version})">{{ h.modifier }}</a>&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-            <!--</table>-->
-        <!--</md-table-container>-->
-
-
-
-    <!--</md-card-content>-->
 </md-card>
     </th>
 </tr>
 </table>
+
