@@ -33,10 +33,10 @@ function FlowChartService($http) {
   }
 
 
-    function getEntries(entry) {
+    function getEntries(entry, sort, desc) {
         return $http.post("/alfresco/s/database/retspsyk/flowchart", {
 
-          "properties": {"method" : entry},
+          "properties": {"method" : entry, "sort" : sort, "desc" : desc},
 
         }).then(function (response) {
           console.log(response.data)

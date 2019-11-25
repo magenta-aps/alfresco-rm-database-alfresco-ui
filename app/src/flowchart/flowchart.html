@@ -60,7 +60,7 @@
 
             <div flex="33" >
                 <md-card>
-                    <md-card-title ng-click="vm.loaddata('arrestanter')">
+                    <md-card-title ng-click="vm.loaddata('arrestanter', '@rm:creationDate', 'true')">
                         <h1 class="md-title od-title-icon"> {{'COMMON.ARRESTANTER' | translate }} {{ vm.total.arrestanter }}</h1>
                     </md-card-title>
                 </md-card>
@@ -121,13 +121,15 @@
 
                     <table class="fixed_header" md-table >
 
+
+
                     <thead md-head >
                     <tr md-row>
-                        <th md-column >{{'FLOWCHART.CREATED' | translate}}</th>
-                        <th md-column >{{'FLOWCHART.CPR' | translate}}</th>
-                        <th md-column >{{'FLOWCHART.FORNAVN' | translate}}</th>
-                        <th md-column >{{'FLOWCHART.EFTERNAVN' | translate}}</th>
-                        <th md-column >{{'FLOWCHART.HOVEDSIGTELSE' | translate}}</th>
+                        <th md-column ng-click="vm.loaddata(vm.showing, '@rm:creationDate', vm.clickcreationDate);vm.clickcreationDate=!vm.clickcreationDate" >{{'FLOWCHART.CREATED' | translate}} <md-icon ng-show="vm.clickcreationDate">keyboard_arrow_up</md-icon><md-icon ng-show="!vm.clickcreationDate">keyboard_arrow_down</md-icon></th>
+                        <th md-column ng-click="vm.loaddata(vm.showing, '@rm:cprNumber', click);click=!click" >{{'FLOWCHART.CPR' | translate}}<md-icon ng-show="click">keyboard_arrow_up</md-icon><md-icon ng-show="!click">keyboard_arrow_down</md-icon></th>
+                        <th md-column ng-click="vm.loaddata(vm.showing, '@rm:firstName', click);click=!click">{{'FLOWCHART.FORNAVN' | translate}}<md-icon ng-show="click">keyboard_arrow_up</md-icon><md-icon ng-show="!click">keyboard_arrow_down</md-icon></th>
+                        <th md-column ng-click="vm.loaddata(vm.showing, '@rm:lastName', click);click=!click">{{'FLOWCHART.EFTERNAVN' | translate}}<md-icon ng-show="click">keyboard_arrow_up</md-icon><md-icon ng-show="!click">keyboard_arrow_down</md-icon></th>
+                        <th md-column ng-click="vm.loaddata(vm.showing, '@rm:mainCharge', clickmainCharge);clickmainCharge=!clickmainCharge" >{{'FLOWCHART.HOVEDSIGTELSE' | translate}}<md-icon ng-show="clickmainCharge">keyboard_arrow_up</md-icon><md-icon ng-show="!clickmainCharge">keyboard_arrow_down</md-icon></th>
                     </tr>
                     </thead>
 

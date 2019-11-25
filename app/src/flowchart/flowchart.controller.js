@@ -23,6 +23,8 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
   vm.startedit = false;
   vm.saveShow = false;
 
+  vm.clickcreationDate = false;
+
 
 
 function propertyFilter(array, query) {
@@ -52,11 +54,11 @@ function propertyFilter(array, query) {
 
   }
 
-  function loaddata(value) {
+  function loaddata(value, sort, desc) {
 
       vm.showing = value;
 
-      FlowChartService.getEntries(value).then(function (response) {
+      FlowChartService.getEntries(value, sort, desc).then(function (response) {
                                vm.ongoing = response.entries;
 
                          });
