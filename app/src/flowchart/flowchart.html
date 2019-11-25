@@ -3,6 +3,11 @@
 
 <style>
 
+.md-title {
+    font-size: 15px;
+     font-weight: bold;
+}
+
 .fixed_header{
     width: 400px;
     table-layout: fixed;
@@ -30,37 +35,6 @@
   width: 200px;
 }
 
- .modal-overlay {
-  position:absolute;
-  z-index:9999;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background-color:#000;
-  opacity: 0.8;
-}
-.modal-background {
-  z-index:10000;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-
-}
-.modal-content {
-  padding:10px;
-  text-align: center;
-}
-.modal-close {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  padding: 5px;
-  cursor: pointer;
-  display: inline-block;
-}
 
 
 </style>
@@ -79,15 +53,15 @@
             <div flex="33" >
                 <md-card>
                     <md-card-title >
-                        <h3 class="md-title od-title-icon"><md-icon>history</md-icon> {{'COMMON.ALLE' | translate }}</h3>
+                        <h1 class="md-title od-title-icon"> {{'COMMON.ALLE' | translate }}</h1>
                     </md-card-title>
                 </md-card>
             </div>
 
             <div flex="33" >
                 <md-card>
-                    <md-card-title >
-                        <h3 class="md-title od-title-icon"><md-icon>history</md-icon> {{'COMMON.ARRESTANTER' | translate }} {{ vm.total.arrestanter }}</h3>
+                    <md-card-title ng-click="vm.loaddata('arrestanter')">
+                        <h1 class="md-title od-title-icon"> {{'COMMON.ARRESTANTER' | translate }} {{ vm.total.arrestanter }}</h1>
                     </md-card-title>
                 </md-card>
             </div>
@@ -95,15 +69,15 @@
             <div flex="33" >
                 <md-card>
                     <md-card-title ng-click="vm.loaddata('ongoing')">
-                        <h3 class="md-title od-title-icon"><md-icon>history</md-icon> {{'COMMON.IGANGVÆRENDE' | translate }} {{ vm.total.ongoing }}</h3>
+                        <h1 class="md-title od-title-icon">{{'COMMON.IGANGVÆRENDE' | translate }} {{ vm.total.ongoing }}</h1>
                     </md-card-title>
                 </md-card>
             </div>
 
             <div flex="33" >
                 <md-card>
-                    <md-card-title >
-                        <h3 class="md-title od-title-icon"><md-icon>history</md-icon> {{'COMMON.VENTELISTE' | translate }} {{ vm.total.waitinglist }}</h3>
+                    <md-card-title ng-click="vm.loaddata('waitinglist')">
+                        <h1 class="md-title od-title-icon"> {{'COMMON.VENTELISTE' | translate }} {{ vm.total.waitinglist }}</h1>
                     </md-card-title>
                 </md-card>
             </div>
@@ -111,15 +85,15 @@
             <div flex="33" >
                 <md-card>
                     <md-card-title ng-click="vm.loaddata('observation')">
-                        <h3 class="md-title od-title-icon"><md-icon>history</md-icon> {{'COMMON.INDLAGTE' | translate }} {{ vm.total.observation }}</h3>
+                        <h1 class="md-title od-title-icon"> {{'COMMON.INDLAGTE' | translate }} {{ vm.total.observation }}</h1>
                     </md-card-title>
                 </md-card>
             </div>
 
             <div flex="33" >
                 <md-card>
-                    <md-card-title >
-                        <h3 class="md-title od-title-icon"><md-icon>history</md-icon> {{'COMMON.VENTEDEGR' | translate }} </h3>
+                    <md-card-title ng-click="vm.loaddata('ventendegr')">
+                        <h1 class="md-title od-title-icon"> {{'COMMON.VENTEDEGR' | translate }} </h1>
                     </md-card-title>
                 </md-card>
             </div>
@@ -127,7 +101,7 @@
             <div flex="33" >
                 <md-card>
                     <md-card-title ng-click="vm.loaddata('user')">
-                        <h3 class="md-title od-title-icon"><md-icon>history</md-icon> {{'COMMON.MINESAGER' | translate }} {{ vm.total.user }}</h3>
+                        <h1 class="md-title od-title-icon"> {{'COMMON.MINESAGER' | translate }} {{ vm.total.user }}</h1>
                     </md-card-title>
                 </md-card>
             </div>
