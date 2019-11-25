@@ -4,7 +4,7 @@
 <style>
 
 .md-title {
-    font-size: 15px;
+    font-size: 14px;
      font-weight: bold;
 }
 
@@ -93,7 +93,7 @@
             <div flex="33" >
                 <md-card>
                     <md-card-title ng-click="vm.loaddata('ventendegr')">
-                        <h1 class="md-title od-title-icon"> {{'COMMON.VENTEDEGR' | translate }} </h1>
+                        <h1 class="md-title od-title-icon"> {{'COMMON.VENTEDEGR' | translate }} {{ vm.total.ventendegr }} </h1>
                     </md-card-title>
                 </md-card>
             </div>
@@ -198,7 +198,7 @@
 
                         <div>
                             <td md-autocomplete
-                                md-selected-item="i.status"
+                                md-selected-item="flow.status"
                                 md-search-text="statusSearch"
                                 md-items="status in vm.propertyFilter(vm.propertyValues['status'],statusSearch)"
                                 md-item-text="status"
@@ -225,12 +225,12 @@
 
 <!--display arrest + tolk -->
 
-                    <tr md-row class="clickable" ng-if="!edit" ng-click="vm.gotoCase(case.caseNumber)">
+                    <tr md-row class="clickable" ng-hide="vm.editperid == i.node_uuid" ng-click="vm.gotoCase(case.caseNumber)">
                         <td md-cell>Arrest</td>
-                        <td md-cell>{{i.arrest}}</td>
+                        <td md-cell id="arrestDisplay_{{ i.node_uuid }}">{{i.arrest}}</td>
 
                         <td md-cell>Tolk sprog</td>
-                        <td md-cell>{{i.tolksprog}}</td>
+                        <td md-cell id="tolksprogDisplay_{{ i.node_uuid }}">{{i.tolksprog}}</td>
                     </tr>
 <!--edit-->
 
@@ -239,7 +239,7 @@
 
 
 
-                    <tr md-row class="clickable" ng-if="edit" ng-click="vm.gotoCase(case.caseNumber)">
+                    <tr md-row class="clickable" ng-show="vm.editperid == i.node_uuid" ng-click="vm.gotoCase(case.caseNumber)">
                         <td md-cell>Arrest</td>
                         <td md-input-container class="md-block">
 
@@ -256,23 +256,23 @@
 
 <!--display socialrådgiver + fritid -->
 
-                    <tr md-row class="clickable" ng-if="!edit" ng-click="vm.gotoCase(case.caseNumber)">
+                    <tr md-row class="clickable" ng-hide="vm.editperid == i.node_uuid" ng-click="vm.gotoCase(case.caseNumber)">
                         <td md-cell>Socialrådgiver</td>
-                        <td md-cell>{{i.socialworker}}</td>
+                        <td md-cell id="socialworkerDisplay_{{ i.node_uuid }}">{{i.socialworker}}</td>
 
                         <td md-cell>Fritid ved (navne)</td>
-                        <td md-cell>{{i.fritidved}}</td>
+                        <td md-cell id="fritidvedDisplay_{{ i.node_uuid }}">{{i.fritidved}}</td>
                     </tr>
 
 <!--edit -->
 
-                    <tr md-row class="clickable" ng-if="edit" ng-click="vm.gotoCase(case.caseNumber)">
+                    <tr md-row class="clickable" ng-show="vm.editperid == i.node_uuid" ng-click="vm.gotoCase(case.caseNumber)">
 
                         <td md-cell>Socialrådgiver</td>
 
                         <div>
                             <td md-autocomplete
-                                md-selected-item="i.socialworker"
+                                md-selected-item="flow.socialworker"
                                 md-search-text="socialworkerSearch"
                                 md-items="socialworker in vm.propertyFilter(vm.propertyValues['socialworker'],socialworkerSearch)"
                                 md-item-text="socialworker"
@@ -301,25 +301,25 @@
 
 <!--display læge + kommentar -->
 
-                     <tr md-row class="clickable" ng-if="!edit" ng-click="vm.gotoCase(case.caseNumber)">
+                     <tr md-row class="clickable" ng-hide="vm.editperid == i.node_uuid" ng-click="vm.gotoCase(case.caseNumber)">
 
                          <td md-cell>Læge</td>
-                         <td md-cell>{{ i.doctor}}</td>
+                         <td md-cell id="doctorDisplay_{{ i.node_uuid }}">{{ i.doctor}}</td>
 
                          <td md-cell>Kommentar</td>
-                         <td md-cell>{{i.kommentar }}</td>
+                         <td md-cell id="kommentarDisplay_{{ i.node_uuid }}">{{i.kommentar }}</td>
                      </tr>
 
 
 <!--edit -->
 
-                     <tr md-row class="clickable" ng-if="edit" ng-click="vm.gotoCase(case.caseNumber)">
+                     <tr md-row class="clickable" ng-show="vm.editperid == i.node_uuid" ng-click="vm.gotoCase(case.caseNumber)">
 
                          <td md-cell>Læge</td>
 
                          <div>
                          <td md-autocomplete
-                                      md-selected-item="i.doctor"
+                                      md-selected-item="flow.doctor"
                                       md-search-text="doctorSearch"
                                       md-items="doctor in vm.propertyFilter(vm.propertyValues['doctor'],doctorSearch)"
                                       md-item-text="doctor"
@@ -348,13 +348,13 @@
 
 <!--display psykolog + kvalitetskontrol -->
 
-                     <tr md-row class="clickable" ng-if="!edit" ng-click="vm.gotoCase(case.caseNumber)">
+                     <tr md-row class="clickable" ng-hide="vm.editperid == i.node_uuid" ng-click="vm.gotoCase(case.caseNumber)">
 
                          <td md-cell>Psykolog</td>
                          <td id="psychologistDisplay_{{ i.node_uuid }}" md-cell>{{ i.psychologist}}</td>
 
                          <td md-cell>Kvalitetskontrol</td>
-                         <td md-cell>{{i.kvalitetskontrol}}</td>
+                         <td md-cell id="kvalitetskontrolDisplay_{{ i.node_uuid }}">{{i.kvalitetskontrol}}</td>
                      </tr>
 
 
@@ -396,16 +396,16 @@
 
 <!--display psykolog fokus  + kommentar -->
 
-                     <tr md-row class="clickable" ng-if="!edit" ng-click="vm.gotoCase(case.caseNumber)">
+                     <tr md-row class="clickable" ng-hide="vm.editperid == i.node_uuid" ng-click="vm.gotoCase(case.caseNumber)">
                          <td md-cell>Psykolog fokus</td>
-                         <td md-cell>{{ i.psykologfokus}}</td>
+                         <td md-cell id="psykologfokusDisplay_{{ i.node_uuid }}">{{ i.psykologfokus}}</td>
 
                      </tr>
 
 
 <!--edit -->
 
-                    <tr md-row class="clickable" ng-if="edit" ng-click="vm.gotoCase(case.caseNumber)">
+                    <tr md-row class="clickable" ng-show="vm.editperid == i.node_uuid" ng-click="vm.gotoCase(case.caseNumber)">
                         <td md-cell>Psykolog fokus</td>
 
                         <td md-input-container class="md-block">

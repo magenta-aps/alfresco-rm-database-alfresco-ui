@@ -73,7 +73,7 @@ function propertyFilter(array, query) {
 
 
     DeclarationService.update($scope.flow)
-    			.then(function () {
+    			.then(function (response) {
     				Toast.show('Ændringerne er gemt');
     				lockedForEdit(false);
     				vm.editperid = "";
@@ -82,12 +82,15 @@ function propertyFilter(array, query) {
 
 
                     // update current display
-    				var val = angular.element(document.getElementById("samtykkeDisplay_"+ nodeuuid));
-                    val[0].innerText = $scope.flow.samtykkeopl;
 
+//    				var val = angular.element(document.getElementById("samtykkeDisplay_"+ nodeuuid));
+//                    val[0].innerText = $scope.flow.samtykkeopl;
+//
+//
+//                    var val = angular.element(document.getElementById("psychologistDisplay_"+ nodeuuid));
+//                    val[0].innerText = $scope.flow.psychologist;
 
-                    var val = angular.element(document.getElementById("psychologistDisplay_"+ nodeuuid));
-                    val[0].innerText = $scope.flow.psychologist;
+                    vm.updateCard(response);
 
 
                     $location.hash(nodeuuid);
@@ -102,45 +105,45 @@ function propertyFilter(array, query) {
 
 
     function updateCard(i) {
-
-
          DeclarationService.get(i.caseNumber).then(function (response) {
 
+                console.log("hvad er response");
                 console.log(response);
 
-                var val = angular.element(document.getElementById("statusDisplay_"+ i.node_uuid));
+                var val = angular.element(document.getElementById("statusDisplay_"+ response["node-uuid"]));
                 val[0].innerText = response.status;
-
-                var val = angular.element(document.getElementById("samtykkeDisplay_"+ i.node_uuid));
+                var val = angular.element(document.getElementById("samtykkeDisplay_"+ response["node-uuid"]));
                 val[0].innerText = response.samtykkeopl;
 
-                var val = angular.element(document.getElementById("psychologistDisplay_"+ i.node_uuid));
+
+                var val = angular.element(document.getElementById("arrestDisplay_"+ response["node-uuid"]));
+                val[0].innerText = response.arrest;
+                var val = angular.element(document.getElementById("tolksprogDisplay_"+ response["node-uuid"]));
+                val[0].innerText = response.tolksprog;
+
+
+                var val = angular.element(document.getElementById("socialworkerDisplay_"+ response["node-uuid"]));
+                val[0].innerText = response.socialworker;
+                var val = angular.element(document.getElementById("fritidvedDisplay_"+ response["node-uuid"]));
+                val[0].innerText = response.fritidved;
+
+
+                var val = angular.element(document.getElementById("doctorDisplay_"+ response["node-uuid"]));
+                val[0].innerText = response.doctor;
+                var val = angular.element(document.getElementById("kommentarDisplay_"+ response["node-uuid"]));
+                val[0].innerText = response.kommentar;
+
+
+                var val = angular.element(document.getElementById("psychologistDisplay_"+ response["node-uuid"]));
                 val[0].innerText = response.psychologist;
+                var val = angular.element(document.getElementById("kvalitetskontrolDisplay_"+ response["node-uuid"]));
+                val[0].innerText = response.kvalitetskontrol;
 
 
-
-//                mainCharge: "Bedrageri mv., forsøg §§ 278-280, jf. § 21"
-//                node_uuid: "cd424f7d-16b0-4c72-a95c-d76b47dfd2e4"
-//                samtykkeopl: "skald"
-//                show: "false"
-//                socialworker: "Hansen, Anne Marie"
-//                status: "Afsoner"
-
-
-                // fetch the id of the field, as it might has been updated since last reload of the list
-
-//                var va = angular.element(document.getElementById("samtykkeDisplay_"+ i.node_uuid));
-
+                var val = angular.element(document.getElementById("psykologfokusDisplay_"+ response["node-uuid"]));
+                val[0].innerText = response.psykologfokus;
 
                 });
-
-
-//
-//        console.log("i");
-//        console.log(i)
-//        var va = angular.element(document.getElementById("samtykkeDisplay_"+ i.node_uuid));
-//        console.log(va);
-//        $scope.flow["samtykkeopl"] = va[0].innerText;
     }
 
     vm.updateCard = updateCard;
@@ -190,6 +193,7 @@ function propertyFilter(array, query) {
             $scope.flow["kvalitetskontrol"] = response.kvalitetskontrol;
             $scope.flow["node-uuid"] = response["node-uuid"];
             $scope.flow["psychologist"] = response.psychologist;
+            $scope.flow["status"] = response.status;
 
 
             vm.editperid = i.node_uuid;

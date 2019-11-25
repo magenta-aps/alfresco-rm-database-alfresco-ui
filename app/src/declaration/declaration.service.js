@@ -64,6 +64,10 @@ function DeclarationService($http) {
   }
 
   function updateEntry(properties) {
+
+  console.log("hvad er properties");
+  console.log(properties);
+
     return $http.put("/alfresco/s/entry/" + properties['node-uuid'], {
       "properties": properties
     }).then(function (response) {
