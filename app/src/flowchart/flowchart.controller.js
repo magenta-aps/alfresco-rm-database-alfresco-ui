@@ -22,6 +22,7 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
   vm.showing = "";
   vm.startedit = false;
   vm.saveShow = false;
+  vm.alle = false;
 
   vm.clickcreationDate = false;
 
@@ -36,6 +37,15 @@ function propertyFilter(array, query) {
      vm.collapse = !vm.collapse;
    }
 
+function scroll(id) {
+
+    $location.hash(id);
+    $anchorScroll();
+
+}
+
+vm.scroll = scroll;
+
   function activate() {
     $scope.isLoading = true;
 
@@ -46,6 +56,9 @@ function propertyFilter(array, query) {
                              vm.total.arrestanter = response.arrestanter;
                              vm.total.observation = response.observation;
                              vm.total.user = response.user;
+
+                             vm.showUser = (vm.total.user != " -bruger ikke fundet-");
+
                              vm.total.ventendegr = response.ventendegr;
                              vm.total.waitinglist = response.waitinglist;
                        });
@@ -58,8 +71,13 @@ function propertyFilter(array, query) {
 
       vm.showing = value;
 
+
+
       FlowChartService.getEntries(value, sort, desc).then(function (response) {
                                vm.ongoing = response.entries;
+
+                               console.log("vm.ongoing");
+                               console.log(vm.ongoing);
 
                          });
 
