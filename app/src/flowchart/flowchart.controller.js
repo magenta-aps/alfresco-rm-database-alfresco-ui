@@ -4,7 +4,7 @@ angular
   .module('oda.flowchart')
   .controller('FlowChartController', FlowChartController);
 
-function FlowChartController($scope, $stateParams, $translate, HeaderService, FlowChartService, propertyService, filterService, DeclarationService, Toast, authService, $anchorScroll, $location ) {
+function FlowChartController($scope, $stateParams, $translate, HeaderService, FlowChartService, propertyService, filterService, DeclarationService, Toast, authService, $anchorScroll, $location, $timeout ) {
   var vm = this;
 
   $scope.flow = {};
@@ -23,8 +23,14 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
   vm.startedit = false;
   vm.saveShow = false;
   vm.alle = false;
+  vm.minesager= false;
+  vm.editing = false;
 
   vm.clickcreationDate = false;
+  vm.clickcpr = false;
+  vm.clickmainCharge = false;
+  vm.clickefternavn = false;
+  vm.clickfornavn = false;
 
 
 
@@ -37,14 +43,6 @@ function propertyFilter(array, query) {
      vm.collapse = !vm.collapse;
    }
 
-function scroll(id) {
-
-    $location.hash(id);
-    $anchorScroll();
-
-}
-
-vm.scroll = scroll;
 
   function activate() {
     $scope.isLoading = true;
@@ -64,6 +62,22 @@ vm.scroll = scroll;
                        });
 
 
+//    loaddata('ongoing', '@rm:creationDate', 'true');
+
+
+
+    $timeout(function() {
+
+            var val = angular.element(document.getElementById("ongoing_title"));
+
+//            angular.element(document.querySelector('#ongoing_title')).click();
+
+        }, 0);
+
+//    var val = angular.element(document.getElementById("#ongoing_title"));
+//    console.log("hvad er val");
+//    console.log(val);
+
 
   }
 
@@ -71,26 +85,21 @@ vm.scroll = scroll;
 
       vm.showing = value;
 
-
-
       FlowChartService.getEntries(value, sort, desc).then(function (response) {
                                vm.ongoing = response.entries;
 
-                               console.log("vm.ongoing");
-                               console.log(vm.ongoing);
+      });
+ }
 
-                         });
 
-  }
 
   vm.loaddata = loaddata;
 
+
+
+
+
   function save(nodeuuid, doctor, socialworker, psychologist, status) {
-
-//    $scope.flow["status"] = status;
-
-
-
 
     DeclarationService.update($scope.flow)
     			.then(function (response) {
@@ -100,22 +109,17 @@ vm.scroll = scroll;
     				vm.startedit = false;
     				vm.saveShow = false;
 
-
-                    // update current display
-
-//    				var val = angular.element(document.getElementById("samtykkeDisplay_"+ nodeuuid));
-//                    val[0].innerText = $scope.flow.samtykkeopl;
-//
-//
-//                    var val = angular.element(document.getElementById("psychologistDisplay_"+ nodeuuid));
-//                    val[0].innerText = $scope.flow.psychologist;
-
                     vm.updateCard(response);
 
+                    var val = angular.element(document.getElementById("top_" + response["node-uuid"]));
 
-                    $location.hash(nodeuuid);
-                    $anchorScroll();
 
+                    $timeout(function () {
+
+                        $location.hash("top_" + response["node-uuid"]);
+                        $anchorScroll();
+
+                    })
     			});
 
   }
@@ -127,8 +131,6 @@ vm.scroll = scroll;
     function updateCard(i) {
          DeclarationService.get(i.caseNumber).then(function (response) {
 
-                console.log("hvad er response");
-                console.log(response);
 
                 var val = angular.element(document.getElementById("statusDisplay_"+ response["node-uuid"]));
                 val[0].innerText = response.status;
@@ -173,36 +175,23 @@ vm.scroll = scroll;
 
     var currentUser = authService.getUserInfo().user.userName
 
-
-
-
-
-    // Calling the jQuery function using the angular.element.
-
-
-
-
           return (DeclarationService.get(i.caseNumber).then(function (response) {
-
-            console.log("response");
-            console.log(response);
 
             // init locked4edit
 
-            if (i.locked4edit == null) {
+            if (response.locked4edit == null) {
                 response.locked4edit = false;
             }
 
 
-            if (i.locked4edit) {
-                if (i.locked4editBy != currentUser) {
+            if (response.locked4edit) {
+                if (response.locked4editBy != currentUser) {
                     alert("sagen er låst for redigering af " + i.locked4editBy);
 
                     return false;
                 }
             }
 
-            // fetch the id of the field, as it has might been updated since last reload of the list
 
             $scope.flow["samtykkeopl"] = response.samtykkeopl;
             $scope.flow["kommentar"] = response.kommentar;
@@ -213,10 +202,11 @@ vm.scroll = scroll;
             $scope.flow["kvalitetskontrol"] = response.kvalitetskontrol;
             $scope.flow["node-uuid"] = response["node-uuid"];
             $scope.flow["psychologist"] = response.psychologist;
+            $scope.flow["socialworker"] = response.socialworker;
             $scope.flow["status"] = response.status;
 
 
-            vm.editperid = i.node_uuid;
+            vm.editperid = response["node-uuid"]
             vm.startedit = true;
             vm.saveShow = true;
 

@@ -3,6 +3,8 @@
 
 <style>
 
+a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
+
 .md-title {
     font-size: 14px;
      font-weight: bold;
@@ -48,17 +50,17 @@
     <md-content class="md-padding" layout-wrap >
 
         <md-content class="md-padding" layout="row" >
-            <div flex="33" >
-                <md-card>
-                    <md-card-title ng-click="vm.alle=true;vm.loaddata('alle', '@rm:creationDate', 'true')">
-                        <h1 class="md-title od-title-icon"> {{'COMMON.ALLE' | translate }}</h1>
-                    </md-card-title>
-                </md-card>
-            </div>
+            <!--<div flex="33" >-->
+                <!--<md-card>-->
+                    <!--<md-card-title ng-click="vm.alle=true;vm.loaddata('alle', '@rm:creationDate', 'true')">-->
+                        <!--<h1 class="md-title od-title-icon"> {{'COMMON.ALLE' | translate }}</h1>-->
+                    <!--</md-card-title>-->
+                <!--</md-card>-->
+            <!--</div>-->
 
             <div flex="33" >
                 <md-card>
-                    <md-card-title ng-click="vm.alle=false;vm.loaddata('arrestanter', '@rm:creationDate', 'true')">
+                    <md-card-title ng-click="vm.minesager=false;vm.loaddata('arrestanter', '@rm:creationDate', 'true')">
                         <h1 class="md-title od-title-icon"> {{'COMMON.ARRESTANTER' | translate }} {{ vm.total.arrestanter }}</h1>
                     </md-card-title>
                 </md-card>
@@ -66,7 +68,7 @@
 
             <div flex="33" >
                 <md-card>
-                    <md-card-title ng-click="vm.loaddata('ongoing', '@rm:creationDate', 'true')">
+                    <md-card-title id="ongoing_title" ng-click="vm.minesager=false;vm.loaddata('ongoing', '@rm:creationDate', 'true')">
                         <h1 class="md-title od-title-icon">{{'COMMON.IGANGVÆRENDE' | translate }} {{ vm.total.ongoing }}</h1>
                     </md-card-title>
                 </md-card>
@@ -74,7 +76,7 @@
 
             <div flex="33" >
                 <md-card>
-                    <md-card-title ng-click="vm.loaddata('waitinglist', '@rm:creationDate', 'true')">
+                    <md-card-title ng-click="vm.minesager=false;vm.loaddata('waitinglist', '@rm:creationDate', 'true')">
                         <h1 class="md-title od-title-icon"> {{'COMMON.VENTELISTE' | translate }} {{ vm.total.waitinglist }}</h1>
                     </md-card-title>
                 </md-card>
@@ -82,7 +84,7 @@
 
             <div flex="33" >
                 <md-card>
-                    <md-card-title ng-click="vm.loaddata('observation', '@rm:creationDate', 'true')">
+                    <md-card-title ng-click="vm.minesager=false;vm.loaddata('observation', '@rm:creationDate', 'true')">
                         <h1 class="md-title od-title-icon"> {{'COMMON.INDLAGTE' | translate }} {{ vm.total.observation }}</h1>
                     </md-card-title>
                 </md-card>
@@ -90,7 +92,7 @@
 
             <div flex="33" >
                 <md-card>
-                    <md-card-title ng-click="vm.loaddata('ventendegr', '@rm:creationDate', 'true')">
+                    <md-card-title ng-click="vm.minesager=false;vm.loaddata('ventendegr', '@rm:creationDate', 'true')">
                         <h1 class="md-title od-title-icon"> {{'COMMON.VENTEDEGR' | translate }} {{ vm.total.ventendegr }} </h1>
                     </md-card-title>
                 </md-card>
@@ -98,7 +100,7 @@
 
             <div flex="33" ng-show="vm.showUser" >
                 <md-card>
-                    <md-card-title ng-click="vm.loaddata('user', '@rm:creationDate', 'true')">
+                    <md-card-title ng-click="vm.minesager=true;vm.loaddata('user', '@rm:creationDate', 'true')">
                         <h1 class="md-title od-title-icon"> {{'COMMON.MINESAGER' | translate }} {{ vm.total.user }}</h1>
                     </md-card-title>
                 </md-card>
@@ -123,11 +125,11 @@
 
                     <thead md-head >
                     <tr md-row>
-                        <th md-column ng-click="vm.alle=false;vm.loaddata(vm.showing, '@rm:creationDate', vm.clickcreationDate);vm.clickcreationDate=!vm.clickcreationDate" >{{'FLOWCHART.CREATED' | translate}} <md-icon ng-show="vm.clickcreationDate">keyboard_arrow_up</md-icon><md-icon ng-show="!vm.clickcreationDate">keyboard_arrow_down</md-icon></th>
-                        <th md-column ng-click="vm.loaddata(vm.showing, '@rm:cprNumber', click);click=!click" >{{'FLOWCHART.CPR' | translate}}<md-icon ng-show="click">keyboard_arrow_up</md-icon><md-icon ng-show="!click">keyboard_arrow_down</md-icon></th>
-                        <th md-column ng-click="vm.loaddata(vm.showing, '@rm:firstName', click);click=!click">{{'FLOWCHART.FORNAVN' | translate}}<md-icon ng-show="click">keyboard_arrow_up</md-icon><md-icon ng-show="!click">keyboard_arrow_down</md-icon></th>
-                        <th md-column ng-click="vm.loaddata(vm.showing, '@rm:lastName', click);click=!click">{{'FLOWCHART.EFTERNAVN' | translate}}<md-icon ng-show="click">keyboard_arrow_up</md-icon><md-icon ng-show="!click">keyboard_arrow_down</md-icon></th>
-                        <th md-column ng-click="vm.loaddata(vm.showing, '@rm:mainCharge', clickmainCharge);clickmainCharge=!clickmainCharge" >{{'FLOWCHART.HOVEDSIGTELSE' | translate}}<md-icon ng-show="clickmainCharge">keyboard_arrow_up</md-icon><md-icon ng-show="!clickmainCharge">keyboard_arrow_down</md-icon></th>
+                        <th md-column ng-click="vm.loaddata(vm.showing, '@rm:creationDate', vm.clickcreationDate);vm.clickcreationDate=!vm.clickcreationDate" >{{'FLOWCHART.CREATED' | translate}} <md-icon ng-show="vm.clickcreationDate">keyboard_arrow_up</md-icon><md-icon ng-show="!vm.clickcreationDate">keyboard_arrow_down</md-icon></th>
+                        <th md-column ng-click="vm.loaddata(vm.showing, '@rm:cprNumber', vm.clickcpr);vm.clickcpr=!vm.clickcpr" >{{'FLOWCHART.CPR' | translate}}<md-icon ng-show="vm.clickcpr">keyboard_arrow_up</md-icon><md-icon ng-show="!vm.clickcpr">keyboard_arrow_down</md-icon></th>
+                        <th md-column ng-click="vm.loaddata(vm.showing, '@rm:firstName', vm.clickfornavn);vm.clickfornavn=!vm.clickfornavn">{{'FLOWCHART.FORNAVN' | translate}}<md-icon ng-show="vm.clickfornavn">keyboard_arrow_up</md-icon><md-icon ng-show="!vm.clickfornavn">keyboard_arrow_down</md-icon></th>
+                        <th md-column ng-click="vm.loaddata(vm.showing, '@rm:lastName', vm.clickefternavn);vm.clickefternavn=!vm.clickefternavn">{{'FLOWCHART.EFTERNAVN' | translate}}<md-icon ng-show="vm.clickefternavn">keyboard_arrow_up</md-icon><md-icon ng-show="!vm.clickefternavn">keyboard_arrow_down</md-icon></th>
+                        <th md-column ng-click="vm.loaddata(vm.showing, '@rm:mainCharge', vm.clickmainCharge);vm.clickmainCharge=!vm.clickmainCharge" >{{'FLOWCHART.HOVEDSIGTELSE' | translate}}<md-icon ng-show="vm.clickmainCharge">keyboard_arrow_up</md-icon><md-icon ng-show="!vm.clickmainCharge">keyboard_arrow_down</md-icon></th>
                     </tr>
                     </thead>
 
@@ -141,19 +143,20 @@
 
 
 
-        <div flex ng-if="vm.alle">
-
-        <ng-include src="'app/src/flowchart/flowchart_alle.html'"></ng-include>
-
-
+        <div flex ng-if="vm.minesager">
+            <ng-include src="'app/src/flowchart/flowchart_minesager.html'"></ng-include>
         </div>
 
 
-
         <!-- contents -->
-        <div  ng-if="!vm.alle" ng-repeat="i in vm.ongoing" >
+        <div  ng-if="!vm.minesager" ng-repeat="i in vm.ongoing" >
+
+
 
         <md-card class="dropdown-card" id="{{ i.node_uuid }}" ng-hide="!(vm.editperid == i.node_uuid) && vm.startedit">
+
+            <a class="anchor" id="top_{{ i.node_uuid }}"></a>
+
 
 
         <md-card-title  >
@@ -441,11 +444,11 @@
                     <md-icon md-svg-icon="icon"></md-icon>
                 </md-button>
                 <!--<md-button ng-disabled="save" ng-click="collapsed=vm.editCase(i);edit=collapsed;save=collapsed;">ret  </md-button>-->
-                <md-button ng-disabled="vm.saveShow" ng-click="collapsed=vm.editCase(i);save=collapsed; ">ret  </md-button>
-                <md-button ng-click="save=false;edit=false;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">gem</md-button>
-                <md-button ng-click="save=false;edit=false;vm.cancel(i.node_uuid)" ng-show="vm.saveShow">annuller</md-button>
-                <md-button ng-show="!collapsed" ng-click="collapsed=!collapsed;vm.updateCard(i)" > <md-icon>keyboard_arrow_down</md-icon> </md-button>
-                <md-button ng-show="collapsed" ng-click="collapsed=!collapsed"> <md-icon>keyboard_arrow_up</md-icon> </md-button>
+                <md-button ng-disabled="vm.saveShow" ng-click="vm.editing=true;collapsed=vm.editCase(i);save=collapsed; ">ret  </md-button>
+                <md-button ng-click="save=false;vm.editing=false;;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">gem</md-button>
+                <md-button ng-click="save=false;vm.editing=false;;vm.cancel(i.node_uuid)" ng-show="vm.saveShow">annuller</md-button>
+                <md-button ng-show="!collapsed && !vm.editing" ng-click="collapsed=!collapsed;vm.updateCard(i)" > <md-icon>keyboard_arrow_down</md-icon> </md-button>
+                <md-button ng-show="collapsed && !vm.editing" ng-click="collapsed=!collapsed"> <md-icon>keyboard_arrow_up</md-icon> </md-button>
 
 
             </md-card-actions>
