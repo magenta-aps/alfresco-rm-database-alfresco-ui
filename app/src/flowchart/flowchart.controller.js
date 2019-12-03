@@ -172,9 +172,6 @@ function propertyFilter(array, query) {
     function updateCard(i) {
          DeclarationService.get(i.caseNumber).then(function (response) {
 
-                console.log("hvad er response");
-                console.log(response);
-
                 var val = angular.element(document.getElementById("statusDisplay_"+ response["node-uuid"]));
                 val[0].innerText = formatEmpty(response.status);
                 var val = angular.element(document.getElementById("samtykkeDisplay_"+ response["node-uuid"]));
