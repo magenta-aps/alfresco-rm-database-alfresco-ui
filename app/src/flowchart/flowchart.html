@@ -59,15 +59,15 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
             <!--</div>-->
 
             <div flex="33" >
-                <md-card>
-                    <md-card-title ng-click="vm.minesager=false;vm.loaddata('arrestanter', '@rm:creationDate', 'true')">
+                <md-card  style="background:{{vm.currentCard == 'arrestanter' ?'red':'default'}}" >
+                    <md-card-title ng-click="vm.minesager=false;vm.loaddata('arrestanter', '@rm:creationDate', 'true')" >
                         <h1 class="md-title od-title-icon"> {{'COMMON.ARRESTANTER' | translate }} {{ vm.total.arrestanter }}</h1>
                     </md-card-title>
                 </md-card>
             </div>
 
             <div flex="33" >
-                <md-card>
+                <md-card  style="background:{{vm.currentCard == 'ongoing' ?'red':'default'}}" >
                     <md-card-title id="ongoing_title" ng-click="vm.minesager=false;vm.loaddata('ongoing', '@rm:creationDate', 'true')">
                         <h1 class="md-title od-title-icon">{{'COMMON.IGANGVÆRENDE' | translate }} {{ vm.total.ongoing }}</h1>
                     </md-card-title>
@@ -75,7 +75,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
             </div>
 
             <div flex="33" >
-                <md-card>
+                <md-card  style="background:{{vm.currentCard == 'waitinglist' ?'red':'default'}}" >
                     <md-card-title ng-click="vm.minesager=false;vm.loaddata('waitinglist', '@rm:creationDate', 'true')">
                         <h1 class="md-title od-title-icon"> {{'COMMON.VENTELISTE' | translate }} {{ vm.total.waitinglist }}</h1>
                     </md-card-title>
@@ -83,7 +83,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
             </div>
 
             <div flex="33" >
-                <md-card>
+                <md-card  style="background:{{vm.currentCard == 'observation' ?'red':'default'}}" >
                     <md-card-title ng-click="vm.minesager=false;vm.loaddata('observation', '@rm:creationDate', 'true')">
                         <h1 class="md-title od-title-icon"> {{'COMMON.INDLAGTE' | translate }} {{ vm.total.observation }}</h1>
                     </md-card-title>
@@ -91,7 +91,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
             </div>
 
             <div flex="33" >
-                <md-card>
+                <md-card  style="background:{{vm.currentCard == 'ventendegr' ?'red':'default'}}" >
                     <md-card-title ng-click="vm.minesager=false;vm.loaddata('ventendegr', '@rm:creationDate', 'true')">
                         <h1 class="md-title od-title-icon"> {{'COMMON.VENTEDEGR' | translate }} {{ vm.total.ventendegr }} </h1>
                     </md-card-title>
@@ -99,7 +99,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
             </div>
 
             <div flex="33" ng-show="vm.showUser" >
-                <md-card>
+                <md-card  style="background:{{vm.currentCard == 'user' ?'red':'default'}}" >
                     <md-card-title ng-click="vm.minesager=true;vm.loaddata('user', '@rm:creationDate', 'true')">
                         <h1 class="md-title od-title-icon"> {{'COMMON.MINESAGER' | translate }} {{ vm.total.user }}</h1>
                     </md-card-title>
@@ -114,25 +114,17 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
         <!-- headlines -->
         <md-card >
             <md-content>
-
-
                 <md-table-container >
-
-
                     <table class="fixed_header" md-table >
-
-
-
                     <thead md-head >
                     <tr md-row>
-                        <th md-column ng-click="vm.loaddata(vm.showing, '@rm:creationDate', vm.clickcreationDate);vm.clickcreationDate=!vm.clickcreationDate" >{{'FLOWCHART.CREATED' | translate}} <md-icon ng-show="vm.clickcreationDate">keyboard_arrow_up</md-icon><md-icon ng-show="!vm.clickcreationDate">keyboard_arrow_down</md-icon></th>
-                        <th md-column ng-click="vm.loaddata(vm.showing, '@rm:cprNumber', vm.clickcpr);vm.clickcpr=!vm.clickcpr" >{{'FLOWCHART.CPR' | translate}}<md-icon ng-show="vm.clickcpr">keyboard_arrow_up</md-icon><md-icon ng-show="!vm.clickcpr">keyboard_arrow_down</md-icon></th>
-                        <th md-column ng-click="vm.loaddata(vm.showing, '@rm:firstName', vm.clickfornavn);vm.clickfornavn=!vm.clickfornavn">{{'FLOWCHART.FORNAVN' | translate}}<md-icon ng-show="vm.clickfornavn">keyboard_arrow_up</md-icon><md-icon ng-show="!vm.clickfornavn">keyboard_arrow_down</md-icon></th>
-                        <th md-column ng-click="vm.loaddata(vm.showing, '@rm:lastName', vm.clickefternavn);vm.clickefternavn=!vm.clickefternavn">{{'FLOWCHART.EFTERNAVN' | translate}}<md-icon ng-show="vm.clickefternavn">keyboard_arrow_up</md-icon><md-icon ng-show="!vm.clickefternavn">keyboard_arrow_down</md-icon></th>
+                        <th md-column ng-click="vm.clickcreationDate=!vm.clickcreationDate;vm.loaddata(vm.showing, '@rm:creationDate', vm.clickcreationDate)" >{{'FLOWCHART.CREATED' | translate}} <md-icon ng-show="vm.clickcreationDate">keyboard_arrow_up</md-icon><md-icon ng-show="!vm.clickcreationDate">keyboard_arrow_down</md-icon></th>
+                        <th md-column ng-click="vm.clickcpr=!vm.clickcpr;vm.loaddata(vm.showing, '@rm:cprNumber', vm.clickcpr)" >{{'FLOWCHART.CPR' | translate}}<md-icon ng-show="vm.clickcpr">keyboard_arrow_up</md-icon><md-icon ng-show="!vm.clickcpr">keyboard_arrow_down</md-icon></th>
+                        <th md-column ng-click="vm.clickfornavn=!vm.clickfornavn;vm.loaddata(vm.showing, '@rm:firstName', vm.clickfornavn)">{{'FLOWCHART.FORNAVN' | translate}}<md-icon ng-show="vm.clickfornavn">keyboard_arrow_up</md-icon><md-icon ng-show="!vm.clickfornavn">keyboard_arrow_down</md-icon></th>
+                        <th md-column ng-click="vm.clickefternavn=!vm.clickefternavn;vm.loaddata(vm.showing, '@rm:lastName', vm.clickefternavn)">{{'FLOWCHART.EFTERNAVN' | translate}}<md-icon ng-show="vm.clickefternavn">keyboard_arrow_up</md-icon><md-icon ng-show="!vm.clickefternavn">keyboard_arrow_down</md-icon></th>
                         <th md-column ng-click="vm.loaddata(vm.showing, '@rm:mainCharge', vm.clickmainCharge);vm.clickmainCharge=!vm.clickmainCharge" >{{'FLOWCHART.HOVEDSIGTELSE' | translate}}<md-icon ng-show="vm.clickmainCharge">keyboard_arrow_up</md-icon><md-icon ng-show="!vm.clickmainCharge">keyboard_arrow_down</md-icon></th>
                     </tr>
                     </thead>
-
                     </table>
                     </md-table-container>
 
@@ -293,7 +285,8 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                                 md-items="socialworker in vm.propertyFilter(vm.propertyValues['socialworker'],socialworkerSearch)"
                                 md-item-text="socialworker"
                                 md-clear-button="true"
-                                md-require-match="true">
+                                md-require-match="true"
+                                md-min-length="0">
                                 <md-item-template>
                                     <span md-highlight-text="socialworkerSearch" md-highlight-flags="gi">{{socialworker}}</span>
                                 </md-item-template>
@@ -334,13 +327,14 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                          <td md-cell>Læge</td>
 
                          <div>
-                         <td md-autocomplete
+                         <td md-autocomplete flex
                                       md-selected-item="flow.doctor"
                                       md-search-text="doctorSearch"
                                       md-items="doctor in vm.propertyFilter(vm.propertyValues['doctor'],doctorSearch)"
                                       md-item-text="doctor"
                                       md-clear-button="true"
-                                          md-require-match="true">
+                                      md-require-match="true"
+                                      md-min-length="0">
                              <md-item-template>
                                  <span md-highlight-text="doctorSearch" md-highlight-flags="gi">{{doctor}}</span>
                              </md-item-template>
@@ -387,7 +381,8 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                                 md-items="psychologist in vm.propertyFilter(vm.propertyValues['psychologist'],psychologistSearch)"
                                 md-item-text="psychologist"
                                 md-clear-button="true"
-                                md-require-match="true">
+                                md-require-match="true"
+                                md-min-length="0">
                                 <md-item-template>
                                     <span md-highlight-text="psychologistSearch" md-highlight-flags="gi">{{psychologist}}</span>
                                 </md-item-template>
@@ -414,7 +409,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 
                      <tr md-row class="clickable" ng-hide="vm.editperid == i.node_uuid" ng-click="vm.gotoCase(case.caseNumber)">
                          <td md-cell>Psykolog fokus</td>
-                         <td md-cell id="psykologfokusDisplay_{{ i.node_uuid }}">{{ i.psykologfokus}}</td>
+                         <td md-cell id="psykologfokusDisplay_{{ i.node_uuid }}">{{ i.psykologfokus }}</td>
 
                      </tr>
 

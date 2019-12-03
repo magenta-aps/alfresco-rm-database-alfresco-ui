@@ -2,7 +2,33 @@
 
 angular
   .module('oda.flowchart')
-  .controller('FlowChartController', FlowChartController);
+  .controller('FlowChartController', FlowChartController)
+  .filter("notEmpty",
+      function () {
+          return function (object) {
+          console.log("hejhejhej object");
+              var filteredObj = {};
+              angular.forEach(object, function (val, key) {
+                  if (val != null) {
+                      if (typeof(val) === "object") {
+                          if (Object.keys(val).length > 0) {
+                              filteredObj[key] = val;
+                          }
+                      } else if (typeof(val) === "string") {
+                          if (val.trim() !== "") {
+                              filteredObj[key] = val;
+                          }
+                      } else {
+                          filteredObj[key] = val;
+                      }
+                  }
+              });
+              console.log("return");
+              console.log(filteredObj);
+              return "filteredObj";
+          };
+      });
+
 
 function FlowChartController($scope, $stateParams, $translate, HeaderService, FlowChartService, propertyService, filterService, DeclarationService, Toast, authService, $anchorScroll, $location, $timeout ) {
   var vm = this;
@@ -26,11 +52,20 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
   vm.minesager= false;
   vm.editing = false;
 
-  vm.clickcreationDate = false;
-  vm.clickcpr = false;
+  vm.clickcreationDate = true;
+  vm.clickcpr = true;
   vm.clickmainCharge = false;
   vm.clickefternavn = false;
   vm.clickfornavn = false;
+
+
+    $scope.emptyOrNull = function(item) {
+  alert("hej");
+    return !(item.Message === null || item.Message.trim().length === 0)
+  }
+
+
+
 
 
 
@@ -62,16 +97,13 @@ function propertyFilter(array, query) {
                        });
 
 
-//    loaddata('ongoing', '@rm:creationDate', 'true');
+
 
 
 
     $timeout(function() {
-
-            var val = angular.element(document.getElementById("ongoing_title"));
-
-//            angular.element(document.querySelector('#ongoing_title')).click();
-
+        loaddata('ongoing', '@rm:creationDate', 'true');
+        vm.currentCard = "ongoing";
         }, 0);
 
 //    var val = angular.element(document.getElementById("#ongoing_title"));
@@ -82,8 +114,8 @@ function propertyFilter(array, query) {
   }
 
   function loaddata(value, sort, desc) {
-
       vm.showing = value;
+      vm.currentCard = value;
 
       FlowChartService.getEntries(value, sort, desc).then(function (response) {
                                vm.ongoing = response.entries;
@@ -111,8 +143,6 @@ function propertyFilter(array, query) {
 
                     vm.updateCard(response);
 
-                    var val = angular.element(document.getElementById("top_" + response["node-uuid"]));
-
 
                     $timeout(function () {
 
@@ -126,44 +156,57 @@ function propertyFilter(array, query) {
 
   vm.save = save;
 
+  function formatEmpty(value) {
+      if (value == undefined) {
+          return "";
+    }
+    else {
+        return value;
+    }
+  }
+
+  vm.formatEmpty = formatEmpty;
+
 
 
     function updateCard(i) {
          DeclarationService.get(i.caseNumber).then(function (response) {
 
+                console.log("hvad er response");
+                console.log(response);
 
                 var val = angular.element(document.getElementById("statusDisplay_"+ response["node-uuid"]));
-                val[0].innerText = response.status;
+                val[0].innerText = formatEmpty(response.status);
                 var val = angular.element(document.getElementById("samtykkeDisplay_"+ response["node-uuid"]));
-                val[0].innerText = response.samtykkeopl;
+                val[0].innerText = formatEmpty(response.samtykkeopl);
 
 
                 var val = angular.element(document.getElementById("arrestDisplay_"+ response["node-uuid"]));
-                val[0].innerText = response.arrest;
+                val[0].innerText = formatEmpty(response.arrest);
                 var val = angular.element(document.getElementById("tolksprogDisplay_"+ response["node-uuid"]));
-                val[0].innerText = response.tolksprog;
+                val[0].innerText = formatEmpty(response.tolksprog);
 
 
                 var val = angular.element(document.getElementById("socialworkerDisplay_"+ response["node-uuid"]));
-                val[0].innerText = response.socialworker;
+                val[0].innerText = formatEmpty(response.socialworker);
                 var val = angular.element(document.getElementById("fritidvedDisplay_"+ response["node-uuid"]));
-                val[0].innerText = response.fritidved;
+                val[0].innerText = formatEmpty(response.fritidved);
 
 
                 var val = angular.element(document.getElementById("doctorDisplay_"+ response["node-uuid"]));
-                val[0].innerText = response.doctor;
+                val[0].innerText = formatEmpty(response.doctor);
                 var val = angular.element(document.getElementById("kommentarDisplay_"+ response["node-uuid"]));
-                val[0].innerText = response.kommentar;
+                val[0].innerText = formatEmpty(response.kommentar);
 
 
                 var val = angular.element(document.getElementById("psychologistDisplay_"+ response["node-uuid"]));
-                val[0].innerText = response.psychologist;
+                val[0].innerText = formatEmpty(response.psychologist);
                 var val = angular.element(document.getElementById("kvalitetskontrolDisplay_"+ response["node-uuid"]));
-                val[0].innerText = response.kvalitetskontrol;
+                val[0].innerText = formatEmpty(response.kvalitetskontrol);
 
 
                 var val = angular.element(document.getElementById("psykologfokusDisplay_"+ response["node-uuid"]));
-                val[0].innerText = response.psykologfokus;
+                val[0].innerText = formatEmpty(response.psykologfokus);
 
                 });
     }
@@ -203,6 +246,7 @@ function propertyFilter(array, query) {
             $scope.flow["node-uuid"] = response["node-uuid"];
             $scope.flow["psychologist"] = response.psychologist;
             $scope.flow["socialworker"] = response.socialworker;
+            $scope.flow["doctor"] = response.doctor;
             $scope.flow["status"] = response.status;
 
 
@@ -228,11 +272,17 @@ function propertyFilter(array, query) {
   vm.checkif = checkif;
 
 
-    function cancel() {
+    function cancel(i) {
         lockedForEdit(false);
         vm.editperid = "";
         vm.startedit = false;
         vm.saveShow = false;
+
+        $timeout(function () {
+            $location.hash("top_" + i);
+            $anchorScroll();
+        })
+
 
     }
 
@@ -257,3 +307,6 @@ function propertyFilter(array, query) {
 
 
 }
+
+
+

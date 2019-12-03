@@ -26,3 +26,4 @@ function config($stateProvider) {
 
     });
 }
+
