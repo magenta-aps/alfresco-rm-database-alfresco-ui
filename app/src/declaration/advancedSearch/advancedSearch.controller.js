@@ -4,7 +4,7 @@ angular
   .module('openDeskApp.declaration')
   .controller('AdvancedSearchController', AdvancedSearchController);
 
-function AdvancedSearchController($scope, $state, $translate, DeclarationService, filterService, propertyService, HeaderService) {
+function AdvancedSearchController($scope, $state, $translate, DeclarationService, filterService, propertyService, HeaderService, $filter, $stateParams) {
 
   var vm = this;
 
@@ -18,15 +18,29 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   vm.gotoCase = gotoCase;
   $scope.propertyValues = propertyService.getAllPropertyValues();
   $scope.propertyFilter = propertyFilter;
+
   vm.toggleResults = toggleResults;
   vm.advancedSearch = advancedSearch;
   vm.nextPage = nextPage;
   vm.clearResults = clearResults;
+  vm.evalAll = evalAll;
+
+
+  $scope.searchParams.bua = "PS";
+  $scope.searchParams.closed = "CLOSED";
+
+  if (Object.keys($stateParams.searchquery).length) {
+
+        $scope.searchParams = $stateParams.searchquery;
+  }
 
   vm.noDeclaration = noDeclaration;
   vm.psychEval = psychEval;
+
   vm.givenDeclaration = givenDeclaration;
+
   vm.socialEval = socialEval;
+
 
   HeaderService.resetActions();
   HeaderService.setTitle($translate.instant('DECLARATION.ADVANCED_SEARCH'))
@@ -41,7 +55,27 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   function psychEval() {
     $scope.searchParams.psychologist = '';
     $scope.searchParams.noDeclaration = false;
+
   }
+
+    function evalAll() {
+
+          $scope.searchParams.psychologist = '';
+          $scope.searchParams.noDeclaration = false;
+
+          $scope.searchParams.doctor = '';
+
+          $scope.searchParams.socialworker = '';
+
+          $scope.searchParams.declarationFromDate = null;
+          $scope.searchParams.declarationToDate = null;
+
+          $scope.$broadcast('md-calendar-change', $scope.searchParams.declarationToDate);
+          $scope.$broadcast('md-calendar-change', $scope.searchParams.declarationFromDate);
+
+    }
+
+
 
   function givenDeclaration() {
     $scope.searchParams.doctor = '';
@@ -54,7 +88,8 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   }
 
   function gotoCase(caseNumber) {
-    $state.go('declaration.show', { caseid: caseNumber });
+
+    $state.go('declaration.show', { caseid: caseNumber, searchquery : $scope.searchParams });
   }
 
   function propertyFilter(array, query) {
@@ -73,6 +108,13 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   function advancedSearch(skip, max, query) {
     clean(query);
     vm.isLoading = true;
+
+    query.createdFromDate= $filter('date')(query.createdFromDate,'yyyy-MM-dd');
+    query.createdToDate= $filter('date')(query.createdToDate,'yyyy-MM-dd');
+
+    query.declarationFromDate= $filter('date')(query.declarationFromDate,'yyyy-MM-dd');
+    query.declarationToDate= $filter('date')(query.declarationToDate,'yyyy-MM-dd');
+
     DeclarationService.advancedSearch(skip, max, query)
       .then(response => {
         vm.isLoading = false;

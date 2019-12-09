@@ -2,12 +2,15 @@
 
 angular.module('openDeskApp.header').factory('HeaderService', HeaderService);
 
-function HeaderService($rootScope, authService) {
+function HeaderService($rootScope, authService ) {
 
   var headerTitle = '';
   var caseId;
   var actions = [];
   var closed = false;
+  var backtosearchquery;
+  var backtosearchStatus = false;
+
 
   var service = {
     setTitle: setTitle,
@@ -21,8 +24,13 @@ function HeaderService($rootScope, authService) {
     isClosed: isClosed,
     canAccessSettings: canAccessSettings,
     getUserName: getUserName,
-    canUnlockCases: canUnlockCases
-  };
+    canUnlockCases: canUnlockCases,
+    updateBacktosearch : updateBacktosearch,
+    getBackToSearchStatus : getBackToSearchStatus,
+    getBackToSearchQuery : getBackToSearchQuery,
+    setBacktosearchStatus : setBacktosearchStatus
+
+      };
 
   return service;
 
@@ -34,6 +42,29 @@ function HeaderService($rootScope, authService) {
     headerTitle = newTitle;
     $rootScope.$broadcast('updateHeader');
   }
+
+  function updateBacktosearch(query) {
+        console.log("update backtosearch")
+        backtosearchquery = query;
+        backtosearchStatus = true;
+  }
+
+ function setBacktosearchStatus(st) {
+        backtosearchStatus = st;
+        $rootScope.$broadcast('updateHeader');
+ }
+
+
+
+    function getBackToSearchQuery() {
+
+        return backtosearchquery;
+     }
+
+ function getBackToSearchStatus() {
+
+    return backtosearchStatus;
+ }
 
   function getCaseId() {
     return caseId;

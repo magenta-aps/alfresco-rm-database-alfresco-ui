@@ -18,6 +18,9 @@ function config($stateProvider) {
   })
     .state('declaration.advancedSearch', {
       url: '/advanceret-soegning',
+      params: {
+                searchquery: {}
+              },
       views: {
         'content@': {
           templateUrl: 'app/src/declaration/advancedSearch/advancedSearch.view.html',
@@ -58,6 +61,9 @@ function config($stateProvider) {
     })
     .state('declaration.show', {
       url: '/sag/:caseid',
+      params: {
+              searchquery: {}
+            },
       views: {
         'content@': {
           templateUrl: 'app/src/declaration/view/declaration.html',
