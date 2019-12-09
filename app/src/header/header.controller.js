@@ -4,7 +4,7 @@ angular
     .module('openDeskApp')
     .controller('HeaderController', HeaderController);
 
-function HeaderController($scope, HeaderService, authService) {
+function HeaderController($scope, HeaderService, authService, $state, $timeout) {
 
     var vm = this;
 
@@ -13,6 +13,8 @@ function HeaderController($scope, HeaderService, authService) {
     vm.actions = [];
     vm.isClosed = false;
     vm.loggedIn = false;
+    vm.backtosearch = false;
+    vm.backtosearchquery = "";
 
     vm.canAccessSettings = canAccessSettings;
     vm.getUserName = getUserName;
@@ -24,7 +26,22 @@ function HeaderController($scope, HeaderService, authService) {
         updateHeaderActions();
         updateIsClosed();
         isLoggedIn();
+        vm.backtosearch = HeaderService.getBackToSearchStatus();
+        vm.backtosearchquery = HeaderService.getBackToSearchQuery();
+        console.log("hvad er vm.backtosearch");
+        console.log(vm.backtosearch);
+
     });
+
+    function gobacktosearch() {
+        HeaderService.setBacktosearchStatus(false);
+    $timeout(function() {
+       $state.go('declaration.advancedSearch', { searchquery: vm.backtosearchquery });
+    });
+
+
+	}
+	vm.gobacktosearch = gobacktosearch;
 
     function isLoggedIn() {
         vm.loggedIn = authService.loggedin();

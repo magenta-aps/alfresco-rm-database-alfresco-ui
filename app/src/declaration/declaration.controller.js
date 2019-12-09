@@ -7,4 +7,6 @@ angular
 function DeclarationController($scope, propertyService) {
   $scope.case = {};
   $scope.propertyValues = propertyService.getAllPropertyValues();
+
+
 }

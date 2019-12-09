@@ -11,18 +11,31 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	$scope.editPatientData = false;
 	$scope.case;
 	$scope.isLoading = false;
+	vm.backtosearch = false;
 
 	$scope.propertyFilter = propertyFilter;
 	$scope.addNewBidiagnosis = addNewBidiagnosis;
 	vm.lookupCPR = lookupCPR;
 	vm.isNumber = isNumber;
 	vm.makeDeclarationDocument = makeDeclarationDocument;
+	vm.gobacktosearch = gobacktosearch;
 
 	$scope.$on('$destroy', function () {
 		if ($scope.case.locked4edit) {
 			lockedForEdit(false);
 		}
 	});
+
+    if (Object.keys($stateParams.searchquery).length) {
+        vm.backtosearch = false;
+        HeaderService.updateBacktosearch($stateParams.searchquery);
+    }
+
+    console.log($stateParams.searchquery);
+    console.log("vm.backtosearch");
+    console.log(vm.backtosearch);
+
+
 
 	activated();
 
@@ -31,6 +44,11 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 			.then(function (response) {
 				$state.go('document', { doc: response.id });
 			});
+	}
+
+
+	function gobacktosearch() {
+        $state.go('declaration.advancedSearch', { searchquery: $stateParams.searchquery });
 	}
 
 	function canCreateDeclarationDocument(declaration) {
@@ -66,6 +84,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	}
 
 	function setEverything(response) {
+
+
+
 		$scope.case = response;
 		var bua = response.bua ? ' (BUA)' : '';
 		HeaderService.resetActions();
@@ -79,7 +100,17 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 			disabled: !canCreate[0],
 			tooltip: canCreate[1].length > 0 ? canCreate[1] : undefined
 		}
+
+
+		if (vm.backtosearch) {
+            HeaderService.addAction('Tilbage til søgning', 'description', gobacktosearch, false)
+        }
+
 		HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings)
+
+
+
+
 
 		if (!response.closed) {
 			HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
