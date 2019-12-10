@@ -18,6 +18,8 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 <div  ng-repeat="i in vm.ongoing.arrestanter" >
     <md-card class="dropdown-card" id="{{ i.node_uuid }}" ng-hide="!(vm.editperid == i.node_uuid) && vm.startedit">
 
+        <a class="anchor" id="top_{{ i.node_uuid }}"></a>
+
 
         <md-card-title  >
 
@@ -327,9 +329,13 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 <br>
 <div class="md-title">Andre </div>
 
+
+
+
 <div ng-repeat="i in vm.ongoing.andre" >
     <md-card class="dropdown-card" id="{{ i.node_uuid }}" ng-hide="!(vm.editperid == i.node_uuid) && vm.startedit">
 
+        <a class="anchor" id="top_{{ i.node_uuid }}"></a>
 
         <md-card-title  >
 

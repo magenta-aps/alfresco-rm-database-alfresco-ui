@@ -148,7 +148,6 @@ function propertyFilter(array, query) {
 
                         $location.hash("top_" + response["node-uuid"]);
                         $anchorScroll();
-
                     })
     			});
 
