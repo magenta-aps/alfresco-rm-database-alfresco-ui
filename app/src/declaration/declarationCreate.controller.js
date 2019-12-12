@@ -63,6 +63,7 @@ function DeclarationCreateController($scope, $state, $translate, DeclarationServ
     var newCase = {
       bua: $state.current.name === 'declaration.create-bua' ? true : false,
       properties: $scope.case
+      //test
     }
 
     newCase.properties.fullName = newCase.properties.firstName + ' ' + newCase.properties.lastName;
