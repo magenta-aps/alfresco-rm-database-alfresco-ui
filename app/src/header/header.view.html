@@ -9,17 +9,17 @@
                 <div>
                     <h2 class="od-user-name">{{ vm.getUserName() }}</h2>
 
-                    <md-button class="md-icon-button" title="FlowChart" ui-sref="flowchart">
+                    <md-button class="md-icon-button" ui-sref="flowchart">
                         <md-icon>bar_chart</md-icon>
                         <md-tooltip md-delay="500" md-direction="bottom">FlowChart</md-tooltip>
                     </md-button>
 
-                    <md-button class="md-icon-button" title="Dokumenter" ui-sref="shared-documents">
+                    <md-button class="md-icon-button" ui-sref="shared-documents">
                         <md-icon>insert_drive_file</md-icon>
                         <md-tooltip md-delay="500" md-direction="bottom">Dokumenter</md-tooltip>
                     </md-button>
 
-                    <md-button ng-if="vm.canAccessSettings()" class="md-icon-button" title="Indstillinger" ui-sref="administration">
+                    <md-button ng-if="vm.canAccessSettings()" class="md-icon-button" ui-sref="administration">
                         <md-icon>settings</md-icon>
                         <md-tooltip md-delay="500" md-direction="bottom">Indstillinger</md-tooltip>
                     </md-button>
