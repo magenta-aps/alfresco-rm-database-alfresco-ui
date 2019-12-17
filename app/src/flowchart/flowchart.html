@@ -59,23 +59,8 @@
 
     .card-content__actions {
         min-width: 320px;
+        min-width: 170px;
         text-align: right;
-    }
-
-    .column--creation-date {
-        min-width: 120px;
-    }
-
-    .column--cpr {
-        min-width: 130px;
-    }
-
-    .column--first-name {
-        min-width: 150px;
-    }
-
-    .column--last-name {
-        min-width: 150px;
     }
 
     table.md-table td.md-cell.key,
@@ -160,31 +145,31 @@
             <div class="card-content">
                 <div layout="row" class="flowchart-headers">
 
-                    <div class="column--creation-date" flex="10" ng-click="vm.clickcreationDate=!vm.clickcreationDate;vm.loaddata(vm.showing, '@rm:creationDate', vm.clickcreationDate)">
+                    <div flex="15" ng-click="vm.clickcreationDate=!vm.clickcreationDate;vm.loaddata(vm.showing, '@rm:creationDate', vm.clickcreationDate)">
                         {{'FLOWCHART.CREATED' | translate}} 
                         <md-icon ng-show="vm.clickcreationDate">keyboard_arrow_up</md-icon>
                         <md-icon ng-show="!vm.clickcreationDate">keyboard_arrow_down</md-icon>
                     </div>
 
-                    <div class="column--cpr" flex="10" ng-click="vm.clickcpr=!vm.clickcpr;vm.loaddata(vm.showing, '@rm:cprNumber', vm.clickcpr)">
+                    <div flex="15" ng-click="vm.clickcpr=!vm.clickcpr;vm.loaddata(vm.showing, '@rm:cprNumber', vm.clickcpr)">
                         {{'FLOWCHART.CPR' | translate}}
                         <md-icon ng-show="vm.clickcpr">keyboard_arrow_up</md-icon>
                         <md-icon ng-show="!vm.clickcpr">keyboard_arrow_down</md-icon>
                     </div>
 
-                    <div class="column--first-name" flex="15" ng-click="vm.clickfornavn=!vm.clickfornavn;vm.loaddata(vm.showing, '@rm:firstName', vm.clickfornavn)">
+                    <div flex="15" ng-click="vm.clickfornavn=!vm.clickfornavn;vm.loaddata(vm.showing, '@rm:firstName', vm.clickfornavn)">
                         {{'FLOWCHART.FORNAVN' | translate}}
                         <md-icon ng-show="vm.clickfornavn">keyboard_arrow_up</md-icon>
                         <md-icon ng-show="!vm.clickfornavn">keyboard_arrow_down</md-icon>
                     </div>
 
-                    <div class="column--last-name" flex="20" ng-click="vm.clickefternavn=!vm.clickefternavn;vm.loaddata(vm.showing, '@rm:lastName', vm.clickefternavn)">
+                    <div flex="15" ng-click="vm.clickefternavn=!vm.clickefternavn;vm.loaddata(vm.showing, '@rm:lastName', vm.clickefternavn)">
                         {{'FLOWCHART.EFTERNAVN' | translate}}
                         <md-icon ng-show="vm.clickefternavn">keyboard_arrow_up</md-icon>
                         <md-icon ng-show="!vm.clickefternavn">keyboard_arrow_down</md-icon>
                     </div>
 
-                    <div class="column--charge" flex="50" ng-click="vm.loaddata(vm.showing, '@rm:mainCharge', vm.clickmainCharge);vm.clickmainCharge=!vm.clickmainCharge">
+                    <div flex="40" ng-click="vm.loaddata(vm.showing, '@rm:mainCharge', vm.clickmainCharge);vm.clickmainCharge=!vm.clickmainCharge">
                         {{'FLOWCHART.HOVEDSIGTELSE' | translate}}
                         <md-icon ng-show="vm.clickmainCharge">keyboard_arrow_up</md-icon>
                         <md-icon ng-show="!vm.clickmainCharge">keyboard_arrow_down</md-icon>
@@ -209,11 +194,11 @@
         <md-card class="dropdown-card" id="{{ i.node_uuid }}" ng-hide="!(vm.editperid == i.node_uuid) && vm.startedit" ng-if="!vm.minesager" ng-repeat="i in vm.ongoing">
             <div class="card-content">
                 <div layout="row">
-                    <div class="column--creation-date" flex="10">{{i.creationDate | customFlowChartDate }}</div>
-                    <div class="column--cpr" flex="10">{{i.cprNumber}}</div>
-                    <div class="column--first-name" flex="15">{{i.firstName}}</div>
-                    <div class="column--last-name" flex="20">{{i.lastName}}</div>
-                    <div class="column--charge" flex="50">{{i.mainCharge}}</div>
+                    <div flex="15">{{i.creationDate | customFlowChartDate }}</div>
+                    <div flex="15">{{i.cprNumber}}</div>
+                    <div flex="15">{{i.firstName}}</div>
+                    <div flex="15">{{i.lastName}}</div>
+                    <div flex="40">{{i.mainCharge}}</div>
 
                     <div class="card-content__actions">
                         <md-button class="md-raised" ng-disabled="vm.saveShow" ng-click="vm.editing=true;collapsed=vm.editCase(i);save=collapsed;">Ret</md-button>
