@@ -48,6 +48,10 @@
         z-index: 1;
     }
 
+    .flowchart-navigation {
+        margin: 1em 0;
+    }
+
     .flowchart-headers .card-content,
     .flowchart-content .card-content {
         padding: 8px;
@@ -156,7 +160,7 @@
             <div class="card-content">
                 <div layout="row" class="flowchart-headers">
 
-                    <div class="column--creation-date" class="" flex="10" ng-click="vm.clickcreationDate=!vm.clickcreationDate;vm.loaddata(vm.showing, '@rm:creationDate', vm.clickcreationDate)">
+                    <div class="column--creation-date" flex="10" ng-click="vm.clickcreationDate=!vm.clickcreationDate;vm.loaddata(vm.showing, '@rm:creationDate', vm.clickcreationDate)">
                         {{'FLOWCHART.CREATED' | translate}} 
                         <md-icon ng-show="vm.clickcreationDate">keyboard_arrow_up</md-icon>
                         <md-icon ng-show="!vm.clickcreationDate">keyboard_arrow_down</md-icon>
