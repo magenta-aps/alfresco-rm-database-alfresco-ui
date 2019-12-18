@@ -53,13 +53,21 @@
         z-index: 1;
     }
 
+    .flowchart-headers div[role="button"] .material-icons {
+        opacity: 0;
+    }
+
+    .flowchart-headers div[role="button"]:hover .material-icons {
+        opacity: 1;
+    }
+
     .flowchart-navigation {
         margin: 1em 0;
     }
 
     .flowchart-headers .card-content,
     .flowchart-content .card-content {
-        padding: 8px;
+        padding: 8px 16px;
     }
 
     .card-content__actions {
@@ -78,6 +86,7 @@
     table.md-table td.md-cell.value {
         padding-top: 1em !important;
         padding-bottom: 1em !important;
+        padding-left: 0 !important;
         vertical-align: top;
     }
 
@@ -155,36 +164,36 @@
     <div class="flowchart-headers">
         <md-card>
             <div class="card-content">
-                <div layout="row" class="flowchart-headers">
+                <div layout="row">
 
                     <div flex="15" ng-click="vm.clickcreationDate=!vm.clickcreationDate;vm.loaddata(vm.showing, '@rm:creationDate', vm.clickcreationDate)">
                         {{'FLOWCHART.CREATED' | translate}} 
-                        <md-icon ng-show="vm.clickcreationDate">keyboard_arrow_up</md-icon>
-                        <md-icon ng-show="!vm.clickcreationDate">keyboard_arrow_down</md-icon>
+                        <md-icon ng-show="vm.clickcreationDate">arrow_upward</md-icon>
+                        <md-icon ng-show="!vm.clickcreationDate">arrow_downward</md-icon>
                     </div>
 
                     <div flex="15" ng-click="vm.clickcpr=!vm.clickcpr;vm.loaddata(vm.showing, '@rm:cprNumber', vm.clickcpr)">
                         {{'FLOWCHART.CPR' | translate}}
-                        <md-icon ng-show="vm.clickcpr">keyboard_arrow_up</md-icon>
-                        <md-icon ng-show="!vm.clickcpr">keyboard_arrow_down</md-icon>
+                        <md-icon ng-show="vm.clickcpr">arrow_upward</md-icon>
+                        <md-icon ng-show="!vm.clickcpr">arrow_downward</md-icon>
                     </div>
 
                     <div flex="15" ng-click="vm.clickfornavn=!vm.clickfornavn;vm.loaddata(vm.showing, '@rm:firstName', vm.clickfornavn)">
                         {{'FLOWCHART.FORNAVN' | translate}}
-                        <md-icon ng-show="vm.clickfornavn">keyboard_arrow_up</md-icon>
-                        <md-icon ng-show="!vm.clickfornavn">keyboard_arrow_down</md-icon>
+                        <md-icon ng-show="vm.clickfornavn">arrow_upward</md-icon>
+                        <md-icon ng-show="!vm.clickfornavn">arrow_downward</md-icon>
                     </div>
 
                     <div flex="15" ng-click="vm.clickefternavn=!vm.clickefternavn;vm.loaddata(vm.showing, '@rm:lastName', vm.clickefternavn)">
                         {{'FLOWCHART.EFTERNAVN' | translate}}
-                        <md-icon ng-show="vm.clickefternavn">keyboard_arrow_up</md-icon>
-                        <md-icon ng-show="!vm.clickefternavn">keyboard_arrow_down</md-icon>
+                        <md-icon ng-show="vm.clickefternavn">arrow_upward</md-icon>
+                        <md-icon ng-show="!vm.clickefternavn">arrow_downward</md-icon>
                     </div>
 
                     <div flex="40" ng-click="vm.loaddata(vm.showing, '@rm:mainCharge', vm.clickmainCharge);vm.clickmainCharge=!vm.clickmainCharge">
                         {{'FLOWCHART.HOVEDSIGTELSE' | translate}}
-                        <md-icon ng-show="vm.clickmainCharge">keyboard_arrow_up</md-icon>
-                        <md-icon ng-show="!vm.clickmainCharge">keyboard_arrow_down</md-icon>
+                        <md-icon ng-show="vm.clickmainCharge">arrow_upward</md-icon>
+                        <md-icon ng-show="!vm.clickmainCharge">arrow_downward</md-icon>
                     </div>
 
                     <div class="card-content__actions"></div>
@@ -228,7 +237,7 @@
                 </div>
             </div>
 
-            <md-content class="md-padding" layout-wrap ng-if="collapsed">
+            <md-content layout-wrap ng-if="collapsed" style="padding: 8px 16px;">
                 <md-table-container>
                     <div layout="row">
 
