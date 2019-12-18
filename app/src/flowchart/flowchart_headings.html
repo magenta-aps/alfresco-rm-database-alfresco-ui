@@ -1,0 +1,41 @@
+<div class="flowchart-headers">
+    <md-card>
+        <div class="card-content">
+            <div layout="row">
+
+                <div flex="15" ng-click="vm.clickcreationDate=!vm.clickcreationDate;vm.loaddata(vm.showing, '@rm:creationDate', vm.clickcreationDate)">
+                    {{'FLOWCHART.CREATED' | translate}} 
+                    <md-icon ng-show="vm.clickcreationDate">arrow_upward</md-icon>
+                    <md-icon ng-show="!vm.clickcreationDate">arrow_downward</md-icon>
+                </div>
+
+                <div flex="15" ng-click="vm.clickcpr=!vm.clickcpr;vm.loaddata(vm.showing, '@rm:cprNumber', vm.clickcpr)">
+                    {{'FLOWCHART.CPR' | translate}}
+                    <md-icon ng-show="vm.clickcpr">arrow_upward</md-icon>
+                    <md-icon ng-show="!vm.clickcpr">arrow_downward</md-icon>
+                </div>
+
+                <div flex="15" ng-click="vm.clickfornavn=!vm.clickfornavn;vm.loaddata(vm.showing, '@rm:firstName', vm.clickfornavn)">
+                    {{'FLOWCHART.FORNAVN' | translate}}
+                    <md-icon ng-show="vm.clickfornavn">arrow_upward</md-icon>
+                    <md-icon ng-show="!vm.clickfornavn">arrow_downward</md-icon>
+                </div>
+
+                <div flex="15" ng-click="vm.clickefternavn=!vm.clickefternavn;vm.loaddata(vm.showing, '@rm:lastName', vm.clickefternavn)">
+                    {{'FLOWCHART.EFTERNAVN' | translate}}
+                    <md-icon ng-show="vm.clickefternavn">arrow_upward</md-icon>
+                    <md-icon ng-show="!vm.clickefternavn">arrow_downward</md-icon>
+                </div>
+
+                <div flex="40" ng-click="vm.loaddata(vm.showing, '@rm:mainCharge', vm.clickmainCharge);vm.clickmainCharge=!vm.clickmainCharge">
+                    {{'FLOWCHART.HOVEDSIGTELSE' | translate}}
+                    <md-icon ng-show="vm.clickmainCharge">arrow_upward</md-icon>
+                    <md-icon ng-show="!vm.clickmainCharge">arrow_downward</md-icon>
+                </div>
+
+                <div class="card-content__actions"></div>
+
+            </div>
+        </div>
+    </md-card>
+</div>
