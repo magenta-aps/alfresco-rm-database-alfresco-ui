@@ -154,7 +154,7 @@
     </div>
 
     <div class="flowchart-content">
-        <div ng-repeat="i in vm.ongoing" ng-hide="!(vm.editperid == i.node_uuid) && vm.startedit" ng-if="!vm.minesager">
+        <div ng-repeat="i in vm.ongoing" ng-if="!vm.minesager">
             <ng-include src="'app/src/flowchart/data-row.html'"></ng-include>
         </div>
     </div>

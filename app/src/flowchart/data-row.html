@@ -1,4 +1,4 @@
-<md-card id="{{ i.node_uuid }}">
+<md-card id="{{ i.node_uuid }}" ng-hide="!(vm.editperid == i.node_uuid) && vm.startedit">
     <div class="card-content">
         <div layout="row">
             <div flex="15">{{i.creationDate | customFlowChartDate }}</div>
