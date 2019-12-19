@@ -17,12 +17,74 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
   $scope.standardBrowser = (strPath.includes("Template"))
 
 
+  console.log("hvad er crumbs");
+  console.log($scope.crumbs);
+
+  console.log("£scope");
+  console.log("£scope");
+  console.log("£scope");
+  console.log("£scope");
+
+
+
+  console.log($scope);
+
+
+
+
+
+
+  if ($stateParams.tmpNodeRef != null) {
+     console.log("doing the thing:");
+     console.log($stateParams.tmpNodeRef);
+     console.log("$scope.folderUuid");
+     console.log($scope.folderUuid);
+
+      $scope.folderUuid = $stateParams.tmpNodeRef;
+
+      console.log("###################$scope.folderUuid");
+      console.log($scope.folderUuid);
+
+
+      console.log($scope);
+
+  }
+
+
+    console.log("£scope efter ");
+    console.log("£scope efter ");
+    console.log("£scope efter ");
+    console.log("£scope efter ");
+
+
+
+
+    console.log($scope);
+
+
 
   $scope.$watch('folderUuid', function (newVal) {
-    if (newVal) getContent(newVal);
+    console.log("watch folderUuid");
+    console.log("hvad er newVal");
+    console.log(newVal);
+
+
+      if ($stateParams.tmpNodeRef != null) {
+          console.log("duffff");
+          $stateParams.tmpNodeRef = null;
+
+      }
+      else {
+          console.log("den er hiel gal");
+          console.log(newVal);
+          if (newVal) getContent(newVal);
+      }
   })
 
   $scope.$watch('content', function (contentList) {
+      console.log("watch content");
+      console.log("hvad er contentList");
+      console.log(contentList);
     var selectedContent = [];
     angular.forEach(contentList, function (content) {
       angular.forEach(content, function (c) {
@@ -35,6 +97,7 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
   }, true);
 
   $rootScope.$on('updateFilebrowser', function () {
+    console.log("updateFilebrowser");
     getContent($scope.folderUuid);
   })
 
@@ -45,6 +108,9 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
     }
     ContentService.getContentList(folderUuid)
       .then(function (response) {
+          console.log("hvad er folderuuuid");
+          console.log(folderUuid);
+
         $scope.isLoading = false;
         $scope.crumbs = $stateParams.breadcrumbPath;
         $scope.lala = "lala";
@@ -61,7 +127,7 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
         break;
       case 'cmis:document':
         var shortRef = alfrescoNodeUtils.processNodeRef(content.nodeRef).id;
-        $state.go('document', { doc: shortRef });
+        $state.go('document', { doc: shortRef, tmpcrumb: $scope.crumbs, tmpNodeRef: $scope.folderUuid });
         break;
       default:
         console.log(content.nodeType + ' is not supported')

@@ -28,9 +28,6 @@ function HeaderController($scope, HeaderService, authService, $state, $timeout) 
         isLoggedIn();
         vm.backtosearch = HeaderService.getBackToSearchStatus();
         vm.backtosearchquery = HeaderService.getBackToSearchQuery();
-        console.log("hvad er vm.backtosearch");
-        console.log(vm.backtosearch);
-
     });
 
     function gobacktosearch() {
