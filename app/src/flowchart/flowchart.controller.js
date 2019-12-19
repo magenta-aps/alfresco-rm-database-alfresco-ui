@@ -30,7 +30,7 @@ angular
       });
 
 
-function FlowChartController($scope, $stateParams, $translate, HeaderService, FlowChartService, propertyService, filterService, DeclarationService, Toast, authService, $anchorScroll, $location, $timeout ) {
+function FlowChartController($scope, $stateParams, $translate, HeaderService, FlowChartService, propertyService, filterService, DeclarationService, Toast, authService, $anchorScroll, $location, $timeout, $state ) {
   var vm = this;
 
   $scope.flow = {};
@@ -72,6 +72,14 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
 function propertyFilter(array, query) {
 		return filterService.propertyFilter(array, query);
 	}
+
+
+
+    function gotoCase(caseNumber) {
+        $state.go('declaration.show', { caseid: caseNumber });
+    }
+
+    vm.gotoCase = gotoCase;
 
 
  function updateCollapse() {
