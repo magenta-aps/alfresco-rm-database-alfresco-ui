@@ -114,10 +114,17 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 		if (!response.closed) {
 			HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
-			HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+            HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+
 		} else {
 			if (HeaderService.canUnlockCases()) HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unlockCase);
 		}
+
+		console.log("$scope.case.locked4edit");
+		console.log($scope.case.locked4edit);
+
+
+
 	}
 
 	function propertyFilter(array, query) {
@@ -174,15 +181,53 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	}
 
 	function editCase() {
-		$scope.editPatientData = true;
-		lockedForEdit(true);
-		HeaderService.resetActions();
-		HeaderService.addAction('DECLARATION.SAVE_AND_LOCK', 'save', lockCaseDialog)
-		HeaderService.addAction('COMMON.SAVE', 'save', saveCase)
+
+		var currentUser = authService.getUserInfo().user.userName;
+
+		// reload case, as it might have been locked by another user
+
+
+        DeclarationService.get($stateParams.caseid)
+                        .then(function (response) {
+
+
+
+                        if (response.locked4edit) {
+
+                        if (currentUser != $scope.case.locked4editBy) {
+                		        alert("sagen er låst for redigering af " + response.locked4editBy);
+                		        return false;
+                		    }
+                		}
+
+                        console.log
+
+                		$scope.editPatientData = true;
+                		lockedForEdit(true);
+                		HeaderService.resetActions();
+                		HeaderService.addAction('DECLARATION.SAVE_AND_LOCK', 'save', lockCaseDialog)
+                		HeaderService.addAction('COMMON.SAVE', 'save', saveCase)
+
+
+
+
+
+                        })
+
+
+
+
+
+
+
+
+
+
+
 	}
 
 	function lockedForEdit(lock) {
-		var currentUser = authService.getUserInfo().user;
+		var currentUser = authService.getUserInfo().user.userName;
 		var locked = {
 			'node-uuid': $scope.case['node-uuid'],
 			locked4edit: lock,
@@ -196,6 +241,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		$scope.case.fullName = $scope.case.firstName + ' ' + $scope.case.lastName;
 		$scope.case.locked4edit = false;
 		$scope.case.locked4editBy = {};
+
+        console.log("hvad er scope.case");
+                console.log($scope.case);
 
 		DeclarationService.update($scope.case)
 			.then(function () {
@@ -218,7 +266,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		$scope.case.closedWithoutDeclarationSentTo = $scope.closeCaseParams.sentTo;
 
 		DeclarationService.update($scope.case)
-			.then(function () {
+				.then(function () {
 				HeaderService.resetActions();
 				HeaderService.setClosed(true);
 				activated();
