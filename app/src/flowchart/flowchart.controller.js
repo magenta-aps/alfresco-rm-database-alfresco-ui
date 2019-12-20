@@ -233,7 +233,7 @@ function propertyFilter(array, query) {
 
             if (response.locked4edit) {
                 if (response.locked4editBy != currentUser) {
-                    alert("sagen er låst for redigering af " + i.locked4editBy);
+                    alert("sagen er låst for redigering af " + response.locked4editBy);
 
                     return false;
                 }
