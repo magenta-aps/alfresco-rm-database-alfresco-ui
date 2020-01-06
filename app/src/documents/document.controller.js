@@ -28,31 +28,13 @@ function DocumentController($scope, documentService, $stateParams, $state,
   }
 
 
-
-
-    console.log("superrup");
-    console.log("$stateParams.tmpNodeRef");
-    console.log($stateParams.tmpNodeRef);
-
-
   function back() {
-      console.log("duffff");
+
 
 
       if (Object.keys($stateParams.tmpcrumb).length) {
 
-          console.log("se her du gamle");
-          console.log($stateParams.tmpcrumb);
-          console.log("$stateParams.tmpNodeRef");
-          console.log($stateParams.tmpNodeRef);
-
-
           $state.go('declaration.show.documents', { caseid: "1225", breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef });
-
-
-
-
-          // $scope.searchParams = $stateParams.searchquery;
       }
 
   }

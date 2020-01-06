@@ -17,74 +17,33 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
   $scope.standardBrowser = (strPath.includes("Template"))
 
 
-  console.log("hvad er crumbs");
-  console.log($scope.crumbs);
-
-  console.log("£scope");
-  console.log("£scope");
-  console.log("£scope");
-  console.log("£scope");
 
 
-
-  console.log($scope);
-
+  $scope.$watch('folderUuid', function (newVal, oldVal) {
 
 
-
-
-
-  if ($stateParams.tmpNodeRef != null) {
-     console.log("doing the thing:");
-     console.log($stateParams.tmpNodeRef);
-     console.log("$scope.folderUuid");
-     console.log($scope.folderUuid);
-
-      $scope.folderUuid = $stateParams.tmpNodeRef;
-
-      console.log("###################$scope.folderUuid");
-      console.log($scope.folderUuid);
-
-
-      console.log($scope);
-
-  }
-
-
-    console.log("£scope efter ");
-    console.log("£scope efter ");
-    console.log("£scope efter ");
-    console.log("£scope efter ");
-
-
-
-
-    console.log($scope);
-
-
-
-  $scope.$watch('folderUuid', function (newVal) {
-    console.log("watch folderUuid");
-    console.log("hvad er newVal");
-    console.log(newVal);
-
+      // fixed #31810 - otherwise it would fail, as a watch is always triggered twice. https://stackoverflow.com/questions/33105362/angular-scope-watch-newval-oldval
+      if (newVal === oldVal) {
+          return;
+      }
 
       if ($stateParams.tmpNodeRef != null) {
-          console.log("duffff");
-          $stateParams.tmpNodeRef = null;
 
+          var tmp = $stateParams.tmpNodeRef;
+
+          $stateParams.tmpNodeRef = null;
+          $scope.folderUuid = tmp;
+          getContent(tmp);
       }
+
       else {
-          console.log("den er hiel gal");
-          console.log(newVal);
-          if (newVal) getContent(newVal);
+
+          getContent(newVal);
       }
+
   })
 
   $scope.$watch('content', function (contentList) {
-      console.log("watch content");
-      console.log("hvad er contentList");
-      console.log(contentList);
     var selectedContent = [];
     angular.forEach(contentList, function (content) {
       angular.forEach(content, function (c) {
@@ -97,7 +56,6 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
   }, true);
 
   $rootScope.$on('updateFilebrowser', function () {
-    console.log("updateFilebrowser");
     getContent($scope.folderUuid);
   })
 
@@ -108,9 +66,6 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
     }
     ContentService.getContentList(folderUuid)
       .then(function (response) {
-          console.log("hvad er folderuuuid");
-          console.log(folderUuid);
-
         $scope.isLoading = false;
         $scope.crumbs = $stateParams.breadcrumbPath;
         $scope.lala = "lala";
