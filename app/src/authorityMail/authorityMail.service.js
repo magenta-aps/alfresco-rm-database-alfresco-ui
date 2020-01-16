@@ -6,7 +6,8 @@ angular.module('oda.authorityMail')
 function authorityMail($http) {
 
   var service = {
-    send: send
+    send: send,
+    getDefaultMailBody : getDefaultMailBody
   };
 
   return service;
@@ -30,4 +31,13 @@ function authorityMail($http) {
         return response;
       });
   }
+
+
+    function getDefaultMailBody() {
+        return $http.get('/alfresco/s/settings')
+            .then(function (response) {
+
+                return response.data;
+            });
+    }
 }
