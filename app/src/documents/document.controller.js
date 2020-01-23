@@ -30,13 +30,12 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
   function back() {
 
-
-
       if (Object.keys($stateParams.tmpcrumb).length) {
+          var splittedpath = vm.doc.location.path.split('/');
+          var id = splittedpath[4];
 
-          $state.go('declaration.show.documents', { caseid: "1225", breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef });
+          $state.go('declaration.show.documents', { caseid: id, breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef });
       }
-
   }
 
   vm.back = back;
