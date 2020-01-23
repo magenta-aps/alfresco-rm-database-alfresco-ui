@@ -18,8 +18,29 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
 
 
 
-  $scope.$watch('folderUuid', function (newVal) {
-    if (newVal) getContent(newVal);
+
+  $scope.$watch('folderUuid', function (newVal, oldVal) {
+
+
+      // fixed #31810 - otherwise it would fail, as a watch is always triggered twice. https://stackoverflow.com/questions/33105362/angular-scope-watch-newval-oldval
+      if (newVal === oldVal) {
+          return;
+      }
+
+      if ($stateParams.tmpNodeRef != null) {
+
+          var tmp = $stateParams.tmpNodeRef;
+
+          $stateParams.tmpNodeRef = null;
+          $scope.folderUuid = tmp;
+          getContent(tmp);
+      }
+
+      else {
+
+          getContent(newVal);
+      }
+
   })
 
   $scope.$watch('content', function (contentList) {
@@ -61,7 +82,7 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
         break;
       case 'cmis:document':
         var shortRef = alfrescoNodeUtils.processNodeRef(content.nodeRef).id;
-        $state.go('document', { doc: shortRef });
+        $state.go('document', { doc: shortRef, tmpcrumb: $scope.crumbs, tmpNodeRef: $scope.folderUuid });
         break;
       default:
         console.log(content.nodeType + ' is not supported')

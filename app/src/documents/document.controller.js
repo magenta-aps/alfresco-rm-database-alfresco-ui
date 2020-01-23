@@ -28,7 +28,18 @@ function DocumentController($scope, documentService, $stateParams, $state,
   }
 
 
+  function back() {
 
+
+
+      if (Object.keys($stateParams.tmpcrumb).length) {
+
+          $state.go('declaration.show.documents', { caseid: "1225", breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef });
+      }
+
+  }
+
+  vm.back = back;
 
 
   function updateCollapse() {

@@ -77,7 +77,9 @@ function config($stateProvider) {
       url: '/dokumenter',
       params: {
         path: "/Sites/retspsyk/documentLibary",
-        breadcrumbPath: []
+        breadcrumbPath: [],
+          tmpNodeRef: null
+
       },
       views: {
         'declarations': {
