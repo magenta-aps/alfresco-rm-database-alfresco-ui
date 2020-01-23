@@ -1,5 +1,6 @@
 ﻿{
   "COMMON": {
+    "DEFAULTMAILBODY" : "Anvend standardtekst",
     "EMAIL": "Email",
     "OK": "OK",
     "CANCEL": "Annullér",

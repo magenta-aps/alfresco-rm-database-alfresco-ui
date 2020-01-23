@@ -9,8 +9,11 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
 
   vm.payload = {};
   vm.payload.nodeRefs = [];
+  vm.payload.defaultbody = false;
 
   vm.selectedFiles = $scope.selectedContent;
+
+
   vm.properties = propertyService.getAllPropertyValues();
 
   vm.propertyFilter = propertyFilter;
@@ -23,6 +26,8 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
   activated()
 
   function activated() {
+
+
     vm.selectedFiles.forEach(file => {
       vm.payload.nodeRefs.push(file.nodeRef);
     });
@@ -31,6 +36,28 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
   function propertyFilter(array, query) {
     return filterService.propertyFilter(array, query);
   }
+
+
+
+  function getDefaultMailBody(decl) {
+      authorityMail.getDefaultMailBody(decl).then( function(response) {
+          vm.payload.body = response.text;
+      });
+  }
+
+    $scope.$watch('vm.payload.defaultbody', function (newVal) {
+        console.log("hvad er vm.payload");
+        console.log(vm.payload.caseid);
+        console.log(newVal);
+        if (newVal) {
+            getDefaultMailBody(vm.payload.caseid);
+        }
+        else {
+            vm.payload.body = "";
+        }
+    })
+
+    vm.payload.defaultbody
 
   function send() {
     vm.loading = true;
