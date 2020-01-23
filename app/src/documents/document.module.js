@@ -56,6 +56,7 @@ angular
         "application/x-dif-document",
         "text/spreadsheet",
         "text/csv",
+        "text/plain",
         "application/x-dbase",
         "application/vnd.lotus-1-2-3",
         "image/cgm",
