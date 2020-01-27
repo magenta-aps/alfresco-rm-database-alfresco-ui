@@ -1,0 +1,30 @@
+<md-dialog aria-label="genåben sagen">
+    <form name="lockDeclarationForm" ng-submit="unlockCase()">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{'DECLARATION.UNLOCK_DECLARATION' | translate}}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <i class="material-icons" aria-label="Luk dialogboks">close</i>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content class="md-padding">
+
+            <md-radio-group ng-model="unlockCaseParams" required>
+                <md-radio-button value="skipflow"> {{'DECLARATION.SKIPFLOW' | translate}}</md-radio-button>
+                <md-radio-button value="keepflow"> {{'DECLARATION.KEEPFLOW' | translate}}</md-radio-button>
+            </md-radio-group>
+
+
+        </md-dialog-content>
+
+        <md-dialog-actions>
+            <md-button ng-disabled="lockDeclarationForm.$invalid" type="submit" class="md-primary md-text-icon-button">
+                <md-icon>lock_open</md-icon> Genåbn
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

@@ -86,14 +86,8 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
             HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
 
 		} else {
-			if (HeaderService.canUnlockCases()) HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unlockCase);
+			if (HeaderService.canUnlockCases()) HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unLockCaseDialog);
 		}
-
-		console.log("$scope.case.locked4edit");
-		console.log($scope.case.locked4edit);
-
-
-
 	}
 
 	function propertyFilter(array, query) {
@@ -140,12 +134,23 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		});
 	}
 
-	function unlockCase() {
-		DeclarationService.unlock($scope.case)
+    function unLockCaseDialog() {
+        $mdDialog.show({
+            templateUrl: 'app/src/declaration/view/unLock-dialog.html',
+            scope: $scope, // use parent scope in template
+            preserveScope: true, // do not forget this if use parent scope
+            clickOutsideToClose: true
+        });
+    }
+
+    $scope.unlockCase = function () {
+
+		DeclarationService.unlock($scope.case, $scope.unlockCaseParams)
 			.then(function () {
 				HeaderService.resetActions();
 				activated();
 				Toast.show('Sagen er låst op')
+                $mdDialog.cancel();
 			});
 	}
 
@@ -154,7 +159,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		var currentUser = authService.getUserInfo().user.userName;
 
 		// reload case, as it might have been locked by another user
-
 
         DeclarationService.get($stateParams.caseid)
                         .then(function (response) {
@@ -168,8 +172,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
                 		        return false;
                 		    }
                 		}
-
-                        console.log
 
                 		$scope.editPatientData = true;
                 		lockedForEdit(true);
@@ -210,9 +212,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		$scope.case.fullName = $scope.case.firstName + ' ' + $scope.case.lastName;
 		$scope.case.locked4edit = false;
 		$scope.case.locked4editBy = {};
-
-        console.log("hvad er scope.case");
-                console.log($scope.case);
 
 		DeclarationService.update($scope.case)
 			.then(function () {

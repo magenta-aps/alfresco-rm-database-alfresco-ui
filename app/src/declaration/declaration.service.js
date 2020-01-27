@@ -64,10 +64,6 @@ function DeclarationService($http) {
   }
 
   function updateEntry(properties) {
-
-  console.log("hvad er properties");
-  console.log(properties);
-
     return $http.put("/alfresco/s/entry/" + properties['node-uuid'], {
       "properties": properties
     }).then(function (response) {
@@ -112,8 +108,8 @@ function DeclarationService($http) {
     });
   }
 
-  function unlockEntry(properties) {
-    return $http.put("/alfresco/s/entry/" + properties['node-uuid'] + '/unlock')
+  function unlockEntry(properties, mode) {
+    return $http.put("/alfresco/s/entry/" + properties['node-uuid'] + '/unlock' + "?mode=" + mode)
       .then(function (response) {
         return response.data;
       });
