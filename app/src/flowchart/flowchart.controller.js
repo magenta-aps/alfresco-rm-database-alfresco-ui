@@ -201,7 +201,8 @@ function propertyFilter(array, query) {
                 val[0].innerText = formatEmpty(response.doctor);
                 var val = angular.element(document.getElementById("kommentarDisplay_"+ response["node-uuid"]));
                 val[0].innerText = formatEmpty(response.kommentar);
-
+                var val = angular.element(document.getElementById("oplysningerEksterntDisplay_"+ response["node-uuid"]));
+                val[0].innerText = formatEmpty(response.oplysningerEksternt);
 
                 var val = angular.element(document.getElementById("psychologistDisplay_"+ response["node-uuid"]));
                 val[0].innerText = formatEmpty(response.psychologist);
@@ -242,6 +243,7 @@ function propertyFilter(array, query) {
 
             $scope.flow["samtykkeopl"] = response.samtykkeopl;
             $scope.flow["kommentar"] = response.kommentar;
+            $scope.flow["oplysningerEksternt"] = response.oplysningerEksternt;
             $scope.flow["arrest"] = response.arrest;
             $scope.flow["tolksprog"] = response.tolksprog;
             $scope.flow["psykologfokus"] = response.psykologfokus;
