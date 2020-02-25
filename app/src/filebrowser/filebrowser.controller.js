@@ -21,13 +21,16 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
 
   $scope.$watch('folderUuid', function (newVal, oldVal) {
 
+      console.log("doing folderUuid");
 
       // fixed #31810 - otherwise it would fail, as a watch is always triggered twice. https://stackoverflow.com/questions/33105362/angular-scope-watch-newval-oldval
       if (newVal === oldVal) {
+          console.log("do nothing");
           return;
       }
 
       if ($stateParams.tmpNodeRef != null) {
+          console.log("do something");
 
           var tmp = $stateParams.tmpNodeRef;
 
@@ -37,7 +40,7 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
       }
 
       else {
-
+          console.log("got to the else");
           getContent(newVal);
       }
 
@@ -90,9 +93,16 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
   }
 
   $scope.openBreadcrumb = function (content) {
+      console.log("duff");
+      console.log(content);
     var index = $stateParams.breadcrumbPath.indexOf(content) + 1;
-    $stateParams.breadcrumbPath = $stateParams.breadcrumbPath.splice(0, index);
-    $scope.folderUuid = content.nodeUuid;
+
+    if (index < $stateParams.breadcrumbPath.length) {
+        $stateParams.breadcrumbPath = $stateParams.breadcrumbPath.splice(0, index);
+        $scope.folderUuid = content.nodeUuid;
+    }
+
+
   }
 
    function showEditVersionDialog (editor) {
