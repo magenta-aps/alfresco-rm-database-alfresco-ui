@@ -29,6 +29,7 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
   function back() {
 
+
       if (Object.keys($stateParams.tmpcrumb).length) {
           var splittedpath = vm.doc.location.path.split('/');
           var id = splittedpath[4];
@@ -38,6 +39,8 @@ function DocumentController($scope, documentService, $stateParams, $state,
   }
 
   vm.back = back;
+
+
 
   function updateCollapse() {
     vm.collapse = !vm.collapse;
