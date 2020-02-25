@@ -1,15 +1,16 @@
 'use strict';
 
 angular
-  .module('openDeskApp.declaration')
-  .factory('DeclarationService', DeclarationService);
+  .module('oda.flowchart')
+  .factory('FlowChartService', FlowChartService);
 
-function DeclarationService($http) {
+function FlowChartService($http) {
 
   var currentCase = {};
 
   var service = {
     get: getEntry,
+    getEntries: getEntries,
     create: createEntry,
     unlock: unlockEntry,
     update: updateEntry,
@@ -30,6 +31,25 @@ function DeclarationService($http) {
 
     return res;
   }
+
+
+    function getEntries(entry, sort, desc) {
+        return $http.post("/alfresco/s/database/retspsyk/flowchart", {
+
+          "properties": {"method" : entry, "sort" : sort, "desc" : desc},
+
+        }).then(function (response) {
+          console.log(response.data)
+          return response.data;
+
+        });
+    }
+
+
+
+
+
+
 
   function getEntry(caseNumber) {
     return $http.get("/alfresco/s/database/retspsyk/entry/" + caseNumber)
@@ -108,8 +128,8 @@ function DeclarationService($http) {
     });
   }
 
-  function unlockEntry(properties, mode) {
-    return $http.put("/alfresco/s/entry/" + properties['node-uuid'] + '/unlock' + "?mode=" + mode)
+  function unlockEntry(properties) {
+    return $http.put("/alfresco/s/entry/" + properties['node-uuid'] + '/unlock')
       .then(function (response) {
         return response.data;
       });

@@ -1,0 +1,227 @@
+<a class="anchor" id="top_{{ i.node_uuid }}"></a>
+
+<md-card id="{{ i.node_uuid }}" ng-hide="!(vm.editperid == i.node_uuid) && vm.startedit">
+    <div class="card-content">
+        <div layout="row">
+            <div flex="15">{{i.creationDate | customFlowChartDate }}</div>
+            <div flex="15"><span class="go-to-case-link" ng-click="vm.gotoCase(i.caseNumber)">{{i.cprNumber}}</span></div>
+            <div flex="15">{{i.firstName}}</div>
+            <div flex="15">{{i.lastName}}</div>
+            <div flex="40">{{i.mainCharge}}</div>
+
+            <div class="card-content__actions">
+                <md-button class="md-raised" ng-disabled="vm.saveShow" ng-click="vm.editing=true;collapsed=vm.editCase(i);save=collapsed;" ng-hide="vm.saveShow">Ret</md-button>
+                <md-button class="md-raised md-primary" ng-click="save=false;vm.editing=false;;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">Gem</md-button>
+                <md-button class="md-raised" ng-click="save=false;vm.editing=false;;vm.cancel(i.node_uuid)" ng-show="vm.saveShow">Annuller</md-button>
+
+                <md-button class="md-icon-button md-raised" ng-show="!collapsed && !vm.editing" ng-click="collapsed=!collapsed;vm.updateCard(i)">
+                    <md-tooltip>Vis detaljer</md-tooltip>
+                    <md-icon>keyboard_arrow_down</md-icon>
+                </md-button>
+                <md-button class="md-icon-button md-raised" ng-show="collapsed && !vm.editing" ng-click="collapsed=!collapsed">
+                    <md-tooltip>Skjul detaljer</md-tooltip>
+                    <md-icon>keyboard_arrow_up</md-icon>
+                </md-button>
+            </div>
+        </div>
+    </div>
+
+    <md-content layout-wrap ng-if="collapsed" style="padding: 8px 16px;">
+        <md-table-container>
+            <div layout="row">
+
+                <div flex="50" style="margin-right: 10px;">
+                    <table md-table>
+                        <tbody md-body>
+                            <!-- status, start -->
+                            <tr md-row>
+                                <td md-cell class="key">Status:</td>
+                                <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="statusDisplay_{{ i.node_uuid }}">{{i.status}}</td>
+                                <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
+                                    <md-autocomplete 
+                                        md-selected-item="flow.status" 
+                                        md-search-text="statusSearch"
+                                        md-items="status in vm.propertyFilter(vm.propertyValues['status'],statusSearch)"
+                                        md-item-text="status" 
+                                        md-clear-button="true" 
+                                        md-require-match="true">
+                                        <md-item-template>
+                                            <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
+                                        </md-item-template>
+                                    </md-autocomplete>
+                                </td>
+                            </tr>
+                            <!-- status, stop -->
+
+                            <!-- arrest, start -->
+                            <tr md-row>
+                                <td md-cell class="key">Arrest:</td>
+                                <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="arrestDisplay_{{ i.node_uuid }}">{{i.arrest}}</td>
+                                <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
+                                    <md-input-container>
+                                        <input ng-model="flow.arrest">
+                                    </md-input-container>
+                                </td>
+                            </tr>
+                            <!-- arrest, stop -->
+
+                            <!-- socialworker, start -->
+                            <tr md-row>
+                                <td md-cell class="key">Socialrådgiver:</td>
+                                <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="socialworkerDisplay_{{ i.node_uuid }}">{{i.socialworker}}</td>
+                                <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
+                                    <md-autocomplete 
+                                        flex md-selected-item="flow.socialworker"
+                                        md-search-text="socialworkerSearch"
+                                        md-items="socialworker in vm.propertyFilter(vm.propertyValues['socialworker'],socialworkerSearch)"
+                                        md-item-text="socialworker"
+                                        md-clear-button="true"
+                                        md-require-match="true"
+                                        md-min-length="0">
+                                        <md-item-template>
+                                            <span md-highlight-text="socialworkerSearch" md-highlight-flags="gi">{{socialworker}}</span>
+                                        </md-item-template>
+                                    </md-autocomplete>
+                                </td>
+                            </tr>
+                            <!-- socialworker, stop -->
+
+                            <!-- doctor, start -->
+                            <tr md-row>
+                                <td md-cell class="key">Læge:</td>
+                                <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="doctorDisplay_{{ i.node_uuid }}">{{ i.doctor}}</td>
+                                <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
+                                    <md-autocomplete 
+                                        flex md-selected-item="flow.doctor"
+                                        md-search-text="doctorSearch"
+                                        md-items="doctor in vm.propertyFilter(vm.propertyValues['doctor'],doctorSearch)"
+                                        md-item-text="doctor" 
+                                        md-clear-button="true" 
+                                        md-require-match="true"
+                                        md-min-length="0">
+                                        <md-item-template>
+                                            <span md-highlight-text="doctorSearch" md-highlight-flags="gi">{{doctor}}</span>
+                                        </md-item-template>
+                                    </md-autocomplete>
+                                </td>
+                            </tr>
+                            <!-- doctor, stop -->
+
+                            <!-- psychologist, start -->
+                            <tr md-row>
+                                <td md-cell class="key">Psykolog:</td>
+                                <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="psychologistDisplay_{{ i.node_uuid }}">{{ i.psychologist}}</td>
+                                <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
+                                    <md-autocomplete 
+                                        md-selected-item="flow.psychologist"
+                                        md-search-text="psychologistSearch"
+                                        md-items="psychologist in vm.propertyFilter(vm.propertyValues['psychologist'],psychologistSearch)"
+                                        md-item-text="psychologist" 
+                                        md-clear-button="true" 
+                                        md-require-match="true"
+                                        md-min-length="0">
+                                        <md-item-template>
+                                            <span md-highlight-text="psychologistSearch" md-highlight-flags="gi">{{psychologist}}</span>
+                                        </md-item-template>
+                                    </md-autocomplete>
+                                </td>
+                            </tr>
+                            <!-- psychologist, stop -->
+
+                            <!-- psykologfokus, start -->
+                            <tr md-row>
+                                <td md-cell class="key">Psykolog fokus:</td>
+                                <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="psykologfokusDisplay_{{ i.node_uuid }}">{{ i.psykologfokus}}</td>
+                                <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
+                                    <md-input-container>
+                                        <textarea ng-model="flow.psykologfokus" rows="3"></textarea>
+                                    </md-input-container>
+                                </td>
+                            </tr>
+                            <!-- psykologfokus, stop -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div flex="50" style="margin-left: 10px;">
+                    <table md-table>
+                        <tbody md-body>
+                            <!-- samtykke, start -->
+                            <tr md-row>
+                                <td md-cell class="key">Samtykke til oplysninger:</td>
+                                <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="samtykkeDisplay_{{ i.node_uuid }}">{{i.samtykkeopl}}</td>
+                                <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
+                                    <md-input-container>
+                                        <input ng-model="flow.samtykkeopl">
+                                    </md-input-container>
+                                </td>
+                            </tr>
+                            <!-- samtykke, stop -->
+
+                            <!-- tolksprog, start -->
+                            <tr md-row>
+                                <td md-cell class="key">Tolk sprog:</td>
+                                <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="tolksprogDisplay_{{ i.node_uuid }}">{{i.tolksprog}}</td>
+                                <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
+                                    <md-input-container>
+                                        <input ng-model="flow.tolksprog">
+                                    </md-input-container>
+                                </td>
+                            </tr>
+                            <!-- tolksprog, stop -->
+
+                            <!-- fritidved, start -->
+                            <tr md-row>
+                                <td md-cell class="key">Fritid ved (navne):</td>
+                                <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="fritidvedDisplay_{{ i.node_uuid }}">{{ i.fritidved}}</td>
+                                <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
+                                    <md-input-container>
+                                        <input ng-model="flow.fritidved">
+                                    </md-input-container>
+                                </td>
+                            </tr>
+                            <!-- fritidved, stop -->
+
+                            <!-- kommentar, start -->
+                            <tr md-row>
+                                <td md-cell class="key">Kommentar:</td>
+                                <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="kommentarDisplay_{{ i.node_uuid }}">{{ i.kommentar}}</td>
+                                <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
+                                    <md-input-container>
+                                        <textarea ng-model="flow.kommentar" rows="3"></textarea>
+                                    </md-input-container>
+                                </td>
+                            </tr>
+                            <!-- kommentar, stop -->
+
+                            <!-- kommentar, start -->
+                            <tr md-row>
+                                <td md-cell class="key">Oplysninger (eksternt journalmateriale):</td>
+                                <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="oplysningerEksterntDisplay_{{ i.node_uuid }}">{{ i.oplysningerEksternt}}</td>
+                                <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
+                                    <md-input-container>
+                                        <textarea ng-model="flow.oplysningerEksternt" rows="3"></textarea>
+                                    </md-input-container>
+                                </td>
+                            </tr>
+                            <!-- kommentar, stop -->
+
+                            <!-- Kvalitetskontrol, start -->
+                            <tr md-row>
+                                <td md-cell class="key">Kvalitetskontrol:</td>
+                                <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="kvalitetskontrolDisplay_{{ i.node_uuid }}">{{ i.kvalitetskontrol}}</td>
+                                <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
+                                    <md-input-container>
+                                        <textarea ng-model="flow.kvalitetskontrol" ></textarea>
+                                    </md-input-container>
+                                </td>
+                            </tr>
+                            <!-- Kvalitetskontrol, stop -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </md-table-container>
+    </md-content>
+</md-card>

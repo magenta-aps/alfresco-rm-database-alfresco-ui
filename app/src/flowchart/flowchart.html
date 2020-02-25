@@ -1,0 +1,161 @@
+<style>
+    .anchor {
+        display: block;
+        position: relative;
+        top: -250px;
+        visibility: hidden;
+    }
+
+    .md-title {
+        background-color: #eee;
+        border-radius: 2px;
+        font-size: 14px;
+        font-weight: bold;
+        margin: 2em 8px 1em;
+        padding: 8px;
+    }
+
+    .md-title h3 {
+        margin: 0;
+    }
+
+    .fixed_header {
+        width: 400px;
+        table-layout: fixed;
+        border-collapse: collapse;
+    }
+
+    .fixed_header tbody {
+        display: block;
+        width: 100%;
+        overflow: auto;
+
+    }
+
+    .fixed_header thead tr {
+        display: block;
+    }
+
+    .fixed_header thead {}
+
+    .fixed_header th,
+    .fixed_header td {
+        padding: 5px;
+        text-align: left;
+        width: 200px;
+    }
+
+    .flowchart-count {
+        font-size: 12px;
+    }
+
+    .go-to-case-link {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    ng-include[src*="flowchart_headings.html"] {
+        font-weight: bold;
+        position: sticky;
+        top: 130px;
+        z-index: 1;
+    }
+
+    .flowchart-headers div[role="button"] {
+        cursor: pointer;
+    }
+
+    .flowchart-headers div[role="button"] .material-icons {
+        opacity: 0;
+    }
+
+    .flowchart-headers div[role="button"]:hover .material-icons {
+        opacity: 1;
+    }
+
+    .flowchart-navigation {
+        margin: 1em 0;
+    }
+
+    .flowchart-headers .card-content,
+    .flowchart-content .card-content {
+        padding: 8px 16px;
+    }
+
+    .card-content__actions {
+        min-width: 320px;
+        min-width: 170px;
+        min-width: 220px;
+        text-align: right;
+    }
+
+    table tbody tr:hover {
+        background-color: initial;
+        cursor: initial;
+    }
+
+    table.md-table td.md-cell.key,
+    table.md-table td.md-cell.value {
+        padding-top: 1em !important;
+        padding-bottom: 1em !important;
+        padding-left: 0 !important;
+        vertical-align: top;
+    }
+
+    table.md-table td.md-cell.key {
+        font-weight: bold;
+        width: 40%;
+    }
+
+    table.md-table td.md-cell.value {
+        width: 60%;
+    }
+
+    table.md-table td.md-cell md-input-container {
+        margin: 0;
+        width: 100%;
+
+        background-color: rgb(255,255,255);
+        border-radius: 2px;
+        box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+        display: block;
+        min-height: 40px;
+        padding: 0;
+        position: relative;
+        overflow: visible;
+        min-width: 190px;
+    }
+
+    table.md-table td.md-cell md-input-container .md-input {
+        border-bottom-width: 0;
+        line-height: 40px;
+        min-height: 40px;
+        padding: 0 15px;
+    }
+
+    table.md-table td.md-cell md-input-container textarea.md-input {
+        line-height: 26px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    table.md-table td.md-cell md-input-container .md-errors-spacer {
+        min-height: 0;
+    }
+</style>
+
+<md-card>
+
+    <ng-include src="'app/src/flowchart/flowchart_navigation.html'"></ng-include>
+    <ng-include src="'app/src/flowchart/flowchart_headings.html'"></ng-include>
+
+    <div ng-if="vm.minesager">
+        <ng-include src="'app/src/flowchart/flowchart_minesager.html'"></ng-include>
+    </div>
+
+    <div class="flowchart-content">
+        <div ng-repeat="i in vm.ongoing" ng-if="!vm.minesager">
+            <ng-include src="'app/src/flowchart/data-row.html'"></ng-include>
+        </div>
+    </div>
+</md-card>

@@ -114,9 +114,10 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 		if (!response.closed) {
 			HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
-			HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+            HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+
 		} else {
-			if (HeaderService.canUnlockCases()) HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unlockCase);
+			if (HeaderService.canUnlockCases()) HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unLockCaseDialog);
 		}
 	}
 
@@ -164,25 +165,71 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		});
 	}
 
-	function unlockCase() {
-		DeclarationService.unlock($scope.case)
+    function unLockCaseDialog() {
+        $mdDialog.show({
+            templateUrl: 'app/src/declaration/view/unLock-dialog.html',
+            scope: $scope, // use parent scope in template
+            preserveScope: true, // do not forget this if use parent scope
+            clickOutsideToClose: true
+        });
+    }
+
+    $scope.unlockCase = function () {
+
+		DeclarationService.unlock($scope.case, $scope.unlockCaseParams)
 			.then(function () {
 				HeaderService.resetActions();
 				activated();
 				Toast.show('Sagen er låst op')
+                $mdDialog.cancel();
 			});
 	}
 
 	function editCase() {
-		$scope.editPatientData = true;
-		lockedForEdit(true);
-		HeaderService.resetActions();
-		HeaderService.addAction('DECLARATION.SAVE_AND_LOCK', 'save', lockCaseDialog)
-		HeaderService.addAction('COMMON.SAVE', 'save', saveCase)
+
+		var currentUser = authService.getUserInfo().user.userName;
+
+		// reload case, as it might have been locked by another user
+
+        DeclarationService.get($stateParams.caseid)
+                        .then(function (response) {
+
+
+
+                        if (response.locked4edit) {
+
+                        if (currentUser != $scope.case.locked4editBy) {
+                		        alert("sagen er låst for redigering af " + response.locked4editBy);
+                		        return false;
+                		    }
+                		}
+
+                		$scope.editPatientData = true;
+                		lockedForEdit(true);
+                		HeaderService.resetActions();
+                		HeaderService.addAction('DECLARATION.SAVE_AND_LOCK', 'save', lockCaseDialog)
+                		HeaderService.addAction('COMMON.SAVE', 'save', saveCase)
+
+
+
+
+
+                        })
+
+
+
+
+
+
+
+
+
+
+
 	}
 
 	function lockedForEdit(lock) {
-		var currentUser = authService.getUserInfo().user;
+		var currentUser = authService.getUserInfo().user.userName;
 		var locked = {
 			'node-uuid': $scope.case['node-uuid'],
 			locked4edit: lock,
@@ -218,7 +265,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		$scope.case.closedWithoutDeclarationSentTo = $scope.closeCaseParams.sentTo;
 
 		DeclarationService.update($scope.case)
-			.then(function () {
+				.then(function () {
 				HeaderService.resetActions();
 				HeaderService.setClosed(true);
 				activated();
