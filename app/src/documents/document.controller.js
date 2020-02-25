@@ -27,7 +27,6 @@ function DocumentController($scope, documentService, $stateParams, $state,
     vm.latest = $location.search().latest == "true";
   }
 
-
   function back() {
 
       if (Object.keys($stateParams.tmpcrumb).length) {
@@ -39,7 +38,6 @@ function DocumentController($scope, documentService, $stateParams, $state,
   }
 
   vm.back = back;
-
 
   function updateCollapse() {
     vm.collapse = !vm.collapse;

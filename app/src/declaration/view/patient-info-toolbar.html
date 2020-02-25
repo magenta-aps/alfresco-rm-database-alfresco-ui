@@ -1,5 +1,6 @@
 <span ng-if="vm.canEdit">
-    <span ng-hide="canCurrentlyEdit">
+
+    <span ng-hide="vm.canCurrentlyEdit">
         <md-icon>warning</md-icon>
         <md-tooltip>Sagen redigeres i øjeblikket af {{editor.displayName}}</md-tooltip>
     </span>

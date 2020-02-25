@@ -41,6 +41,36 @@ angular.module('openDeskApp.declaration')
 			},
 
 			getAllPropertyValues: function () {
+
+			    // cleanup values for doctors, socialworkers, psycologists and secretaries - remove the userid
+
+
+                console.log(propertyValues);
+
+                for (var x in propertyValues.secretary) {
+                    var secretary = propertyValues.secretary[x];
+                    var username = secretary.match(/ *\([^)]*\) */g);
+                    propertyValues.secretary[x] = propertyValues.secretary[x].replace(username, "");
+                }
+
+                for (var x in propertyValues.socialworker) {
+                    var socialworker = propertyValues.socialworker[x];
+                    var username = socialworker.match(/ *\([^)]*\) */g);
+                    propertyValues.socialworker[x] = propertyValues.socialworker[x].replace(username, "");
+                }
+
+                for (var x in propertyValues.psychologist) {
+                    var psychologist = propertyValues.psychologist[x];
+                    var username = psychologist.match(/ *\([^)]*\) */g);
+                    propertyValues.psychologist[x] = propertyValues.psychologist[x].replace(username, "");
+                }
+
+                for (var x in propertyValues.doctor) {
+                    var doctor = propertyValues.doctor[x];
+                    var username = doctor.match(/ *\([^)]*\) */g);
+                    propertyValues.doctor[x] = propertyValues.doctor[x].replace(username, "");
+                }
+
 				return propertyValues;
 			},
 
