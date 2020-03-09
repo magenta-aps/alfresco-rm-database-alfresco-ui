@@ -1,5 +1,6 @@
 ﻿{
   "COMMON": {
+    "DEFAULTMAILBODY" : "Anvend standardtekst",
     "EMAIL": "Email",
     "OK": "OK",
     "CANCEL": "Annullér",
@@ -35,7 +36,16 @@
      "SAMTYKKE": "Samtykke",
     "HISTORY": "Historik",
     "LAST_MODIFIED": "Senest ændret",
-    "LAST_MODIFIED_BY": "Senest ændret af"
+    "LAST_MODIFIED_BY": "Senest ændret af",
+    "BACK": "Afslut visning",
+    "FLOWCHART": "Flowchart",
+    "IGANGVÆRENDE" : "Igangværende",
+    "ARRESTANTER" : "Arrestanter",
+    "ALLE" : "Alle",
+    "VENTELISTE" : "Venteliste",
+    "INDLAGTE" : "Indlagte",
+    "VENTEDEGR" : "Ventende Grønlandske",
+    "MINESAGER" : "Mine sager"
   },
   "DECLARATION": {
     "NEW_DECLARATION": "Ny sag",
@@ -45,6 +55,9 @@
     "SAVE_AND_LOCK": "Gem og afslut",
     "LOCK": "Afslut",
     "LOCK_DECLARATION": "Afslut",
+    "UNLOCK_DECLARATION": "Genåbn",
+    "SKIPFLOW": "Genåbn uden flowchart",
+    "KEEPFLOW": "Genåbn med flowchart",
     "UNLOCK": "Genåben",
     "REOPEN": "Genåben",
     "DECLARATION_CLOSED": "Sagen er afsluttet",
@@ -117,5 +130,12 @@
   "PROJECT": {
     "NAME": "Navn",
     "HISTORY": "Historik"
+  },
+  "FLOWCHART": {
+    "CREATED": "Sag oprettet",
+    "CPR": "CPR-nummer",
+    "FORNAVN": "Fornavn",
+    "EFTERNAVN": "Efternavn",
+    "HOVEDSIGTELSE": "Hovedsigtelse"
   }
 }

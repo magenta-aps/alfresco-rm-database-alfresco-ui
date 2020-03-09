@@ -20,6 +20,9 @@ function DocumentController($scope, $mdDialog, $stateParams, DeclarationService,
 
   activate();
 
+
+  console.log("her har du mig tilbage...");
+
   function activate() {
     DeclarationService.get($stateParams.caseid)
       .then(function (response) {

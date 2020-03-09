@@ -27,7 +27,18 @@ function DocumentController($scope, documentService, $stateParams, $state,
     vm.latest = $location.search().latest == "true";
   }
 
+  function back() {
 
+
+      if (Object.keys($stateParams.tmpcrumb).length) {
+          var splittedpath = vm.doc.location.path.split('/');
+          var id = splittedpath[4];
+
+          $state.go('declaration.show.documents', { caseid: id, breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef });
+      }
+  }
+
+  vm.back = back;
 
 
 
