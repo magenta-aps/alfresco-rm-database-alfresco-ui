@@ -22,6 +22,7 @@ angular
         'openDeskApp.systemsettings',
         'oda.waitinglist',
         'oda.sharedDocuments',
+        'oda.flowchart',
         'm43nu.auto-height',
         'dcbImgFallback',
         'openDeskApp.declaration',

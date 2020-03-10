@@ -24,8 +24,6 @@ function DeclarationCreateController($scope, $state, $translate, DeclarationServ
 
   activated();
 
-
-
   function activated() {
     var title = $state.current.name === 'declaration.create-bua' ? 'DECLARATION.NEW_BUA_DECLARATION' : 'DECLARATION.NEW_DECLARATION';
     HeaderService.setTitle($translate.instant(title));
@@ -65,6 +63,7 @@ function DeclarationCreateController($scope, $state, $translate, DeclarationServ
     var newCase = {
       bua: $state.current.name === 'declaration.create-bua' ? true : false,
       properties: $scope.case
+      //test
     }
 
     newCase.properties.fullName = newCase.properties.firstName + ' ' + newCase.properties.lastName;
