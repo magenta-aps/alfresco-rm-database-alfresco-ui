@@ -38,7 +38,9 @@ function config($stateProvider, USER_ROLES) {
         }
       },
       params: {
-        authorizedRoles: [USER_ROLES.roleManager]
+        authorizedRoles: [USER_ROLES.roleManager],
+        searchquery : '',
+        onlyActive : ''
       }
     })
     .state('administration.document_templates', {

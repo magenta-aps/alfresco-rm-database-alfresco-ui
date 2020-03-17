@@ -1,5 +1,6 @@
 ﻿{
   "COMMON": {
+    "USERTYPE": "Brugertype",
     "EMAIL": "Email",
     "OK": "OK",
     "CANCEL": "Annullér",
