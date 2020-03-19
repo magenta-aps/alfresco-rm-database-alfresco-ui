@@ -21,7 +21,8 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
     rename: updateName,
     getCurrentFolderNodeRef: getCurrentFolderNodeRef,
     setCurrentFolderNodeRef: setCurrentFolderNodeRef,
-    getFolderNodeRefFromPath: getFolderNodeRefFromPath
+    getFolderNodeRefFromPath: getFolderNodeRefFromPath,
+    getSharedFolderForBua: getSharedFolderForBua
   };
 
   return service;
@@ -36,6 +37,14 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
           });
       });
   }
+
+    function getSharedFolderForBua() {
+        return $http.get("/alfresco/service/contents/sharedfolderbua")
+            .then(function (response) {
+                currentFolderNodeRef = response.data.nodeRef;
+                return alfrescoNodeUtils.processNodeRef(response.data.nodeRef).id;
+            });
+    }
 
 
     function processNodeRef (nodeRefInput) {
