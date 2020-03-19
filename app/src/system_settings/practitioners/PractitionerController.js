@@ -10,6 +10,8 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
   $scope.bua = false;
 
+
+
   $scope.query = {
     order: 'firstName'
   };
@@ -34,26 +36,43 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
   $scope.$watch('only_active', function (newVal, oldVal) {
 
-    if (newVal.length == 0 || oldVal.length == 0) return;
+    //  otherwise it would fail, as a watch is always triggered twice. https://stackoverflow.com/questions/33105362/angular-scope-watch-newval-oldval
+    if (newVal === oldVal) {
+      return;
+    }
 
     reloadWithNewValue($scope.searchParams_bua);
   }, true);
 
 
-  if (Object.keys($stateParams.searchquery).length) {
-    console.log("reloading");
-    $scope.searchParams_bua = $stateParams.searchquery;
-    $scope.only_active = $stateParams.onlyActive;
-    console.log("$stateParams.only_active");
-    console.log($stateParams.onlyActive);
-    activated($stateParams.searchquery, $stateParams.onlyActive);
-  }
-  else {
-    console.log("first run");
-    $scope.searchParams_bua = undefined;
+  // init - check if any values set in $stateParams
+
+  console.log("init for stateparams");
+  console.log($stateParams.onlyActive);
+  console.log($stateParams.searchquery);
+
+  if ( ($stateParams.searchquery === undefined) && ($stateParams.onlyActive === undefined) ) {
+
+    console.log("doing init")
+    $scope.searchParams_bua = "Alle";
     $scope.only_active = true;
+
     activated("Alle", true);
   }
+  else {
+    console.log("else");
+    console.log($stateParams.onlyActive);
+    console.log($stateParams.searchquery);
+
+    $scope.searchParams_bua = $stateParams.searchquery;
+    $scope.only_active = $stateParams.onlyActive;
+
+    activated($stateParams.searchquery, $stateParams.onlyActive);
+  }
+
+
+
+
 
 
 
@@ -90,6 +109,7 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
   $scope.updateBUA = updateBUA;
 
   function activated(val, only_active) {
+
     practitionerService.getUserPermissions(val, only_active)
       .then(function (response) {
         $scope.allUsers = response.data;
@@ -131,7 +151,7 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
     try {
       $state.go('administration.practitioners', {
         authorizedRoles: [USER_ROLES.roleManager],
-        searchquery: value,
+        searchquery: $scope.searchParams_bua,
         onlyActive: $scope.only_active
       }, {reload: true});
     }
