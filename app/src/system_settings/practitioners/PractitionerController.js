@@ -47,32 +47,18 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
   // init - check if any values set in $stateParams
 
-  console.log("init for stateparams");
-  console.log($stateParams.onlyActive);
-  console.log($stateParams.searchquery);
-
   if ( ($stateParams.searchquery === undefined) && ($stateParams.onlyActive === undefined) ) {
 
-    console.log("doing init")
     $scope.searchParams_bua = "Alle";
     $scope.only_active = true;
 
     activated("Alle", true);
   }
   else {
-    console.log("else");
-    console.log($stateParams.onlyActive);
-    console.log($stateParams.searchquery);
-
     $scope.searchParams_bua = $stateParams.searchquery;
     $scope.only_active = $stateParams.onlyActive;
-
     activated($stateParams.searchquery, $stateParams.onlyActive);
   }
-
-
-
-
 
 
 
@@ -142,11 +128,6 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
   $scope.updateUser = updateUser;
 
   function reloadWithNewValue(value) {
-    console.log("reloading with value");
-    console.log(value);
-
-    console.log("hvad er only_active");
-    console.log($scope.only_active);
 
     try {
       $state.go('administration.practitioners', {
@@ -159,8 +140,6 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
       console.log("err");
       console.log(err);
     }
-
-    // $state.go('administration.practitioners', { searchquery: value });
   }
 
   $scope.reloadWithNewValue = reloadWithNewValue;
