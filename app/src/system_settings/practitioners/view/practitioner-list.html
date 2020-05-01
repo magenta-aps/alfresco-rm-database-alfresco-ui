@@ -34,10 +34,9 @@ table.md-table:not(.md-row-select) th.md-column:nth-child(n+2):nth-last-child(n+
 
 </style>
 
-
 <md-card>
     <md-card-content>
-        <md-table-container >
+        <md-table-container>
             <table class="fixed_header" md-table >
                 <thead md-head md-order="query.order" >
                     <tr md-row>
@@ -52,8 +51,8 @@ table.md-table:not(.md-row-select) th.md-column:nth-child(n+2):nth-last-child(n+
                 </thead>
 
                 <tbody md-body>
-                    <tr md-row ng-repeat="user in allUsers | orderBy: query.order" ng-if="user.userName!='admin'">
-                        <td md-cell>{{user.firstName}} {{user.lastName}}</td>
+                    <tr md-row ng-repeat="user in allUsers | orderBy: query.order" ng-if="user.userName!='admin'" >
+                        <td md-cell ng-click="updateBUA(user.userName, user.firstName, user.lastName, user.oprettet)" class="clickable" >{{user.firstName}} {{user.lastName}}  {{user.bua}} </td>
                         <td md-cell>
                             <md-checkbox aria-label="aktiveret" ng-model="user.active"></md-checkbox>
                         </td>
@@ -77,4 +76,25 @@ table.md-table:not(.md-row-select) th.md-column:nth-child(n+2):nth-last-child(n+
             </table>
         </md-table-container>
     </md-card-content>
+
+
+
+
+
+    <label>Kun aktive: <input type="checkbox" ng-model="only_active" ></label>
+
+    <md-input-container >
+        <md-select ng-model="searchParams_bua" ng-change="reloadWithNewValue(searchParams_bua)">
+            <md-option ng-value="'PS'" >PS</md-option>
+            <md-option ng-value="'BUA'" >BUA</md-option>
+            <md-option ng-value="'Alle'">Alle</md-option>
+        </md-select>
+    </md-input-container>
+    </md-card-content>
+
+
+
 </md-card>
+
+
+

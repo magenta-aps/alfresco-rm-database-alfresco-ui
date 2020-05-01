@@ -1,6 +1,7 @@
 ﻿{
   "COMMON": {
     "DEFAULTMAILBODY" : "Anvend standardtekst",
+    "USERTYPE": "Brugertype",
     "EMAIL": "Email",
     "OK": "OK",
     "CANCEL": "Annullér",

@@ -7,17 +7,33 @@ angular.module('openDeskApp.declaration').factory('practitionerService', functio
 
   var service = {
     getUserPermissions: getUserPermissions,
-    updateUserRoles: updateUserRoles
+    updateUserRoles: updateUserRoles,
+    updateUser: updateUser,
+    getUserType: getUserType
   };
 
   return service;
 
 
-  function getUserPermissions() {
-    return $http.get('/alfresco/s/userpermissions')
+  function getUserPermissions(user, only_active) {
+    return $http.get('/alfresco/s/userpermissions?user=' + user + "&onlyActivate=" + only_active)
       .then(function (response) {
         return response
       })
+  }
+
+  function updateUser(val, username) {
+    return $http.get('/alfresco/s/updateUser?bua=' + val + "&userName=" +username + "&method=update")
+        .then(function (response) {
+          return response
+        })
+  }
+
+  function getUserType(username) {
+    return $http.get('/alfresco/s/updateUser?userName=' +username + "&method=getUserType")
+        .then(function (response) {
+          return response
+        })
   }
 
   function updateUserRoles(userName, addGroups, removeGroups) {
