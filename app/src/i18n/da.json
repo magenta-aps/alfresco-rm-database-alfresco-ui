@@ -1,5 +1,7 @@
 ﻿{
   "COMMON": {
+    "DEFAULTMAILBODY" : "Anvend standardtekst",
+    "USERTYPE": "Brugertype",
     "EMAIL": "Email",
     "OK": "OK",
     "CANCEL": "Annullér",
@@ -36,6 +38,7 @@
     "HISTORY": "Historik",
     "LAST_MODIFIED": "Senest ændret",
     "LAST_MODIFIED_BY": "Senest ændret af",
+    "BACK": "Afslut visning",
     "FLOWCHART": "Flowchart",
     "IGANGVÆRENDE" : "Igangværende",
     "ARRESTANTER" : "Arrestanter",

@@ -1,3 +1,10 @@
+<style>
+    .md-virtual-repeat-container.md-autocomplete-suggestions-container {
+        width:700px !important;
+    }
+</style>
+
+
 <md-card>
     <md-card-title>
         <md-card-title-text>
@@ -6,7 +13,7 @@
     </md-card-title>
     <md-card-content>
         <div>
-        <md-autocomplete flex 
+        <md-autocomplete flex
             md-selected-item="case.placement" 
             md-search-text="placementSearch"
             md-items="placement in propertyFilter(propertyValues['placement'],placementSearch)" 
@@ -22,23 +29,39 @@
         </md-autocomplete>
         <md-tooltip md-direction="top" md-delay="500" ng-if="case.placement != null">{{case.placement}}</md-tooltip>
         </div>
-        <div>
-        <md-autocomplete flex 
-            md-selected-item="case.sanctionProposal" 
-            md-search-text="sanctionProposalSearch"
-            md-items="sanctionProposal in propertyFilter(propertyValues['sanctionProposal'],sanctionProposalSearch)" 
-            md-item-text="sanctionProposal" 
-            md-min-length="0" 
-            md-floating-label="Sanktionsforslag"
-            ng-disabled="!editPatientData"
-            md-clear-button="editPatientData"
-            md-require-match="true">
-            <md-item-template>
-                <span md-highlight-text="sanctionProposalSearch" md-highlight-flags="gi">{{sanctionProposal}}</span>
-            </md-item-template>
-        </md-autocomplete>
-        <md-tooltip md-direction="top" md-delay="500" ng-if="case.sanctionProposal != null">{{case.sanctionProposal}}</md-tooltip>
+
+
+
+        <div ng-show="editPatientData">
+
+            <md-autocomplete flex
+                             md-selected-item="case.sanctionProposal"
+                             md-search-text="sanctionProposalSearch"
+                             md-items="sanctionProposal in propertyFilter(propertyValues['sanctionProposal'],sanctionProposalSearch)"
+                             md-item-text="sanctionProposal"
+                             md-min-length="0"
+                             md-floating-label="Sanktionsforslag"
+                             ng-disabled="!editPatientData"
+                             md-clear-button="editPatientData"
+                             md-require-match="true">
+                <md-item-template>
+                    <span md-highlight-text="sanctionProposalSearch" md-highlight-flags="gi">{{sanctionProposal}}</span>
+                </md-item-template>
+            </md-autocomplete>
+            <md-tooltip md-direction="top" md-delay="500" ng-if="case.sanctionProposal != null">{{case.sanctionProposal}}</md-tooltip>
         </div>
+
+
+
+        <div ng-show="!editPatientData">
+            <md-input-container class="md-block">
+                <label>Sanktionsforslag</label>
+                <textarea  ng-model="case.sanctionProposal" ng-disabled="!editPatientData" ></textarea>
+            </md-input-container>
+        </div>
+
+
+
 
         <p class="md-subhead">Afgivet af<br></p>
         <md-autocomplete flex 

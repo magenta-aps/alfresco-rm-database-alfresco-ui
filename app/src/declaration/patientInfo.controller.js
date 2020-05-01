@@ -249,6 +249,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 				$scope.editPatientData = false;
 				activated();
 				Toast.show('Ændringerne er gemt');
+				$state.reload();
 			});
 	}
 
