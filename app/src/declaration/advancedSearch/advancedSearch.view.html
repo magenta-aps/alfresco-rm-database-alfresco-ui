@@ -273,6 +273,18 @@
                                 </md-autocomplete>
                             </div>
 
+
+                            <div layout-gt-sm="row" class="layout-gt-sm-row" ng-show="searchParams.closedWithoutDeclarationReason == 'Tilbagesendt'">
+                                <md-input-container>
+                                    <label>Fra</label>
+                                    <md-datepicker ng-model="searchParams.returnOfDeclarationFromDate"></md-datepicker>
+                                </md-input-container>
+                                <md-input-container>
+                                    <label>Til</label>
+                                    <md-datepicker ng-model="searchParams.returnOfDeclarationToDate"></md-datepicker>
+                                </md-input-container>
+                            </div>
+
                             <md-divider ng-show="searchParams.psychEval || searchParams.givenDeclaration || searchParams.socialEval"></md-divider>
 
                             <!--<div layout-gt-sm="row" class="layout-gt-sm-row" ng-show="searchParams.psychEval || searchParams.givenDeclaration || searchParams.socialEval">-->

@@ -101,6 +101,12 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 			tooltip: canCreate[1].length > 0 ? canCreate[1] : undefined
 		}
 
+		if ($scope.case.hasOwnProperty('returnOfDeclarationDate')) {
+			$scope.case.returnOfDeclarationDate = new Date($scope.case.returnOfDeclarationDate);
+		}
+
+
+
 
 		if (vm.backtosearch) {
             HeaderService.addAction('Tilbage til søgning', 'description', gobacktosearch, false)
@@ -264,6 +270,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 		$scope.case.closedWithoutDeclarationReason = $scope.closeCaseParams.reason;
 		$scope.case.closedWithoutDeclarationSentTo = $scope.closeCaseParams.sentTo;
+		$scope.case.returnOfDeclarationDate = $scope.closeCaseParams.returnOfDeclarationDate;
 
 		DeclarationService.update($scope.case)
 				.then(function () {
