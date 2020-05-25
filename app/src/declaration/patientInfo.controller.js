@@ -31,12 +31,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
         HeaderService.updateBacktosearch($stateParams.searchquery);
     }
 
-    console.log($stateParams.searchquery);
-    console.log("vm.backtosearch");
-    console.log(vm.backtosearch);
-
-
-
 	activated();
 
 	function makeDeclarationDocument() {
@@ -250,6 +244,11 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		$scope.case.locked4edit = false;
 		$scope.case.locked4editBy = {};
 
+		if (!$scope.case.hasOwnProperty("closedWithoutDeclaration")) {
+				$scope.case.closedWithoutDeclaration = false;
+		}
+
+
 		DeclarationService.update($scope.case)
 			.then(function () {
 				$scope.editPatientData = false;
@@ -266,6 +265,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 		if ($scope.closeCaseParams.closed == 'no-declaration') {
 			$scope.case.closedWithoutDeclaration = true;
+		}
+		else {
+			$scope.case.closedWithoutDeclaration = false;
 		}
 
 		$scope.case.closedWithoutDeclarationReason = $scope.closeCaseParams.reason;
