@@ -53,6 +53,10 @@
             <div ng-show="case.closedWithoutDeclaration">
                 <span style="padding-top:16px" ng-show="case.hasOwnProperty('closedWithoutDeclarationReason')">Afsluttet
                     uden erklæring: {{case.closedWithoutDeclarationReason}}</span><br>
+
+                <span style="padding-top:16px" ng-show="case.hasOwnProperty('returnOfDeclarationDate')">Dato: {{case.returnOfDeclarationDate | customDate }}</span><br>
+
+
                 <span style="padding:16px 0" ng-show="case.hasOwnProperty('closedWithoutDeclarationSentTo')">Sendt til:
                     {{case.closedWithoutDeclarationSentTo}}</span>
             </div>

@@ -13,6 +13,7 @@ function documentService($http, EDITOR_CONFIG) {
     revertToVersion: revertToVersion,
     getThumbnail: getThumbnail,
     getVersions: getVersions,
+    forceUnlock: forceUnlock,
   };
 
   return service;
@@ -64,12 +65,23 @@ function documentService($http, EDITOR_CONFIG) {
     });
     }
 
-      function getVersions (nodeId) {
-        return $http.get(`/alfresco/service/contents/fetchversions?node=${nodeId}`)
-          .then(function (response) {
-            return response.data
-          })
-      }
+
+    function forceUnlock(nodeRef) {
+        return $http.post("/alfresco/s/contents/markedforedit", {
+            "nodeRef": nodeRef, "method" : "forceUnlock"
+        }).then(function (response) {
+            console.log(response)
+            //      var res = formatCase(response.data);
+            //      return res;
+        });
+    }
+
+    function getVersions (nodeId) {
+    return $http.get(`/alfresco/service/contents/fetchversions?node=${nodeId}`)
+      .then(function (response) {
+        return response.data
+      })
+    }
 
     function revertToVersion (nodeRef, version) {
         return $http.post('alfresco/s/contents/revert', {
