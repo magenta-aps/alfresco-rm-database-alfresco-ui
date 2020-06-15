@@ -130,6 +130,15 @@ background-color: #e1e1e1;
 
         <div ng-show="vm.state">
             {{ vm.editByText }}
+
+            <div ng-show="vm.showAdminForceUnlock">
+
+                <md-button ng-click="vm.forceUnlockDocument()" class="md-text-icon-button md-primary">
+                    <md-icon md-menu-align-target>edit</md-icon>
+                    {{'DOCUMENT.FORCE.UNLOCK' | translate }}
+                </md-button>
+            </div>
+
         </div>
 
 

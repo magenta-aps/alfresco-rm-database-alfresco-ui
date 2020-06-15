@@ -95,6 +95,7 @@ function authService($q, $http, $window, $state, sessionService) {
 
   function isAuthorized(authorizedRoles) {
     var userInfo = sessionService.getUserInfo();
+
     if (typeof userInfo === 'undefined') {
       return $q.resolve(false);
     }

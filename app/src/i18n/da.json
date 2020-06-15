@@ -85,7 +85,8 @@
     "DOWNLOAD_DOCUMENT": "Download dokument",
     "PREVIEW_DOCUMENT": "Preview dokument",
     "EDIT_DOCUMENT_SHAREPOINT": "Redigér dokument i MS Office",
-    "IMAGE_MAX_SIZE_EXCEEDED": "Billedet \"{{image}}\" er for stort til at blive vist."
+    "IMAGE_MAX_SIZE_EXCEEDED": "Billedet \"{{image}}\" er for stort til at blive vist.",
+    "FORCE.UNLOCK": "Lås dokument op"
   },
   "ADMIN": {
     "ADMINISTRATION_PAGES": "Administrationssider",
@@ -134,6 +135,7 @@
   },
   "FLOWCHART": {
     "CREATED": "Sag oprettet",
+    "DOKTOR": "Læge",
     "CPR": "CPR-nummer",
     "FORNAVN": "Fornavn",
     "EFTERNAVN": "Efternavn",

@@ -18,21 +18,30 @@
             </md-radio-group>
 
             <span ng-show="closeCaseParams.closed == 'no-declaration'">
+
                 <md-autocomplete flex md-selected-item="closeCaseParams.reason" md-search-text="reasonSearch" md-items="reason in propertyFilter(propertyValues['noDeclarationReason'],reasonSearch)"
                     md-item-text="reason" md-min-length="0" md-floating-label="Årsag">
                     <md-item-template>
                         <span md-highlight-text="reasonSearch" md-highlight-flags="gi">{{reason}}</span>
                     </md-item-template>
                 </md-autocomplete>
+
+                <md-input-container class="md-block" ng-show="closeCaseParams.reason == 'Tilbagesendt'">
+                    <label>Returdato</label>
+                    <md-datepicker ng-model="closeCaseParams.returnOfDeclarationDate"></md-datepicker>
+<!--                    <md-datepicker name="sentTo" ng-model="closeCaseParams.returnDate"><data-->
+                </md-input-container>
+
                 <md-input-container class="md-block">
                     <label>Sendt til</label>
                     <input type="text" name="sentTo" ng-model="closeCaseParams.sentTo">
                 </md-input-container>
+
             </span>
         </md-dialog-content>
 
         <md-dialog-actions>
-            <md-button ng-disabled="lockDeclarationForm.$invalid" type="submit" class="md-primary md-text-icon-button">
+            <md-button type="submit" class="md-primary md-text-icon-button">
                 <md-icon>lock</md-icon> Afslut
             </md-button>
         </md-dialog-actions>

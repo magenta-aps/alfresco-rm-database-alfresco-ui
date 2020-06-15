@@ -4,6 +4,7 @@
     <div class="card-content">
         <div layout="row">
             <div flex="15">{{i.creationDate | customFlowChartDate }}</div>
+            <div flex="15">{{i.doctor  }}</div>
             <div flex="15"><span class="go-to-case-link" ng-click="vm.gotoCase(i.caseNumber)">{{i.cprNumber}}</span></div>
             <div flex="15">{{i.firstName}}</div>
             <div flex="15">{{i.lastName}}</div>

@@ -9,6 +9,12 @@
                     <md-icon ng-show="!vm.clickcreationDate">arrow_downward</md-icon>
                 </div>
 
+                <div flex="15" ng-click="vm.clickdoktor=!vm.clickdoktor;vm.loaddata(vm.showing, '@rm:doctor', vm.clickdoktor)">
+                    {{'FLOWCHART.DOKTOR' | translate}}
+                    <md-icon ng-show="vm.clickdoktor">arrow_upward</md-icon>
+                    <md-icon ng-show="!vm.clickdoktor">arrow_downward</md-icon>
+                </div>
+
                 <div flex="15" ng-click="vm.clickcpr=!vm.clickcpr;vm.loaddata(vm.showing, '@rm:cprNumber', vm.clickcpr)">
                     {{'FLOWCHART.CPR' | translate}}
                     <md-icon ng-show="vm.clickcpr">arrow_upward</md-icon>

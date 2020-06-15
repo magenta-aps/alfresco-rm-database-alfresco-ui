@@ -27,6 +27,27 @@ function DocumentController($scope, documentService, $stateParams, $state,
     vm.latest = $location.search().latest == "true";
   }
 
+  function showAdminCancelEdit() {
+      if (authService.isAuthorized('ALFRESCO_ADMINISTRATORS') != undefined) {
+          authService.isAuthorized('ALFRESCO_ADMINISTRATORS').then(function (response) {
+              vm.showAdminForceUnlock = true;
+          })
+      }
+  }
+
+
+
+  function forceUnlockDocument() {
+      documentService.forceUnlock("workspace://SpacesStore/" + selectedDocumentNode);
+          $state.reload();
+
+
+
+  }
+
+  vm.forceUnlockDocument = forceUnlockDocument;
+
+
   function back() {
 
 
@@ -118,6 +139,7 @@ function DocumentController($scope, documentService, $stateParams, $state,
     loadPreview();
     getDocument(vm.docHasParent);
     loadState();
+    showAdminCancelEdit()
 
     //documentService.getVersions(selectedDocumentNode);
 
