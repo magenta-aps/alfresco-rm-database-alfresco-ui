@@ -15,15 +15,20 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
   vm.chartBval = "";
 
   function chartA() {
-
-      console.log("chartA");
-      console.log(vm.chartAval);
-
        $http.post("/alfresco/s/database/retspsyk/weeklystat", {
         "method": "spreadsheetA",
         "year": vm.chartAval
       }).then(function (response) {
-           ContentService.download("workspace://SpacesStore/" + response.data.NodeRef, "uge.ods");
+          console.log(response);
+
+           if (response.data.NodeRef == "") {
+               alert("der er ikke data til at kunne lave en graf for det indtastede år")
+           }
+           else {
+               ContentService.download("workspace://SpacesStore/" + response.data.NodeRef, "uge.ods");
+           }
+
+
       });
   }
   vm.chartA = chartA;
@@ -33,12 +38,20 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
           "method": "spreadsheetB",
           "year": vm.chartBval
       }).then(function (response) {
-          ContentService.download("workspace://SpacesStore/" + response.data.NodeRef, "aar.ods");
+
+          if (response.data.NodeRef == "") {
+              alert("der er ikke data til at kunne lave en graf for det indtastede år")
+          }
+          else {
+              ContentService.download("workspace://SpacesStore/" + response.data.NodeRef, "aar.ods");
+          }
+
+
       });
   }
   vm.chartB = chartB;
 
-  console.log("hey2");
+
 
 }
 
