@@ -4,12 +4,13 @@ angular
   .module('openDeskApp.declaration')
   .factory('DeclarationService', DeclarationService);
 
-function DeclarationService($http) {
+function DeclarationService($http, $filter) {
 
   var currentCase = {};
 
   var service = {
     get: getEntry,
+    updateStat: updateStat,
     create: createEntry,
     unlock: unlockEntry,
     update: updateEntry,
@@ -78,6 +79,12 @@ function DeclarationService($http) {
       "properties": entry.properties,
       "bua": entry.bua
     }).then(function (response) {
+
+      var nw = new Date();
+      var nwformat = $filter('date')(nw,'yyyy');
+
+      service.updateStat(nwformat);
+
       return formatCase(response.data);
 
     });
@@ -114,4 +121,18 @@ function DeclarationService($http) {
         return response.data;
       });
   }
+
+  function updateStat(year) {
+
+    console.log("updating stat for year" + year);
+
+    $http.post("/alfresco/s/database/retspsyk/weeklystat", {
+      "method": "initYear",
+      "year": year
+    }).then(function (response) {
+      console.log(response);
+    });
+
+  }
+
 }
