@@ -7,6 +7,9 @@
             <li class="nav-list__item md-primary" ng-if="userRoles.indexOf('SiteRoleManager') > -1 || userRoles.indexOf('SiteManager') > -1" aria-label="Behandlere">
                 <a ui-sref="administration.practitioners" ng-click="vm.changePageHeading('practitioners')" class="nav-list__link"><md-icon>people</md-icon>Brugerrettigheder</a>
             </li>
+            <li class="nav-list__item" ng-if="userRoles.indexOf('TemplateFolderValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" aria-label="Rapporter">
+                <a ui-sref="administration.reports" ng-click="vm.changePageHeading('reports')" class="nav-list__link"><md-icon>content_copy</md-icon>Rapporter</a>
+            </li>
             <li class="nav-list__item" ng-if="userRoles.indexOf('TemplateFolderValueManager') > -1 || userRoles.indexOf('SiteManager') > -1" aria-label="Dokumentskabeloner">
                 <a ui-sref="administration.document_templates" ng-click="vm.changePageHeading('document_templates')" class="nav-list__link"><md-icon>content_copy</md-icon>Dokumentskabeloner</a>
             </li>

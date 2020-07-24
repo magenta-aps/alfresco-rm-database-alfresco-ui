@@ -43,20 +43,34 @@ function config($stateProvider, USER_ROLES) {
         onlyActive : undefined
       }
     })
-    .state('administration.document_templates', {
-      url: '/dokumentskabeloner',
-      params: {
-        authorizedRoles: [USER_ROLES.templateFolderValueManager],
-        path: "/Sites/retspsyk/documentTemplates",
-        breadcrumbPath: []
-      },
-      views: {
-        'systemsetting-view': {
-          templateUrl: 'app/src/system_settings/documentTemplate/documentTemplate.html',
-          controller: 'DocumentTemplateController as vm'
+      .state('administration.document_templates', {
+        url: '/dokumentskabeloner',
+        params: {
+          authorizedRoles: [USER_ROLES.templateFolderValueManager],
+          path: "/Sites/retspsyk/documentTemplates",
+          breadcrumbPath: []
+        },
+        views: {
+          'systemsetting-view': {
+            templateUrl: 'app/src/system_settings/documentTemplate/documentTemplate.html',
+            controller: 'DocumentTemplateController as vm'
+          }
         }
-      }
-    })
+      })
+      .state('administration.reports', {
+        url: '/dokumentskabeloner',
+        params: {
+          authorizedRoles: [USER_ROLES.templateFolderValueManager],
+          path: "/Sites/retspsyk/reports",
+          breadcrumbPath: []
+        },
+        views: {
+          'systemsetting-view': {
+            templateUrl: 'app/src/system_settings/reports/reports.html',
+            controller: 'ReportsController as vm'
+          }
+        }
+      })
     .state('administration.ethnicities', {
       url: '/etniciteter',
       params: {

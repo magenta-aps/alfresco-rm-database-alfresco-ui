@@ -4,7 +4,7 @@ angular
 	.module('openDeskApp.declaration')
 	.controller('PatientInfoController', PatientInfoController);
 
-function PatientInfoController($scope, $state, $stateParams, $mdDialog, DeclarationService, filterService, cprService, authService, Toast, HeaderService) {
+function PatientInfoController($scope, $state, $stateParams, $mdDialog, DeclarationService, filterService, cprService, authService, Toast, HeaderService, $filter) {
 
 	var vm = this;
 	$scope.DeclarationService = DeclarationService;
@@ -19,6 +19,10 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	vm.isNumber = isNumber;
 	vm.makeDeclarationDocument = makeDeclarationDocument;
 	vm.gobacktosearch = gobacktosearch;
+
+	vm.createdDateBeforeEdit;
+	vm.declaratiotionDateBeforeEdit;
+
 
 	$scope.$on('$destroy', function () {
 		if ($scope.case.locked4edit) {
@@ -193,8 +197,12 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
         DeclarationService.get($stateParams.caseid)
                         .then(function (response) {
-
-
+						vm.createdDateBeforeEdit = response.creationDate;
+						vm.declaratiotionDateBeforeEdit = response.declarationDate;
+						console.log("creationdate");
+						console.log(vm.createdDateBeforeEdit);
+							console.log("decdate");
+						console.log(vm.declaratiotionDateBeforeEdit);
 
                         if (response.locked4edit) {
 
@@ -254,6 +262,52 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 				$scope.editPatientData = false;
 				activated();
 				Toast.show('Ændringerne er gemt');
+
+
+				// creationdate
+				var before_formatted = $filter('date')(vm.createdDateBeforeEdit,'yyyy-MM-dd');
+				var after_formatted = $filter('date')($scope.case.creationDate,'yyyy-MM-dd');
+
+				var year_before = $filter('date')(vm.createdDateBeforeEdit,'yyyy');
+				var year_after = $filter('date')($scope.case.creationDate,'yyyy');
+
+				var updateCalculatedStat = (before_formatted != after_formatted);
+				console.log("hvad er updatecal" + updateCalculatedStat);
+
+
+				var dec_before_formatted = $filter('date')(vm.declaratiotionDateBeforeEdit,'yyyy-MM-dd');
+				var dec_after_formatted = $filter('date')($scope.case.declarationDate,'yyyy-MM-dd');
+
+				var dec_year_before = $filter('date')(vm.declaratiotionDateBeforeEdit,'yyyy');
+				var dec_year_after = $filter('date')($scope.case.declarationDate,'yyyy');
+
+				var dec_updateCalculatedStat = (dec_before_formatted != dec_after_formatted);
+
+				console.log("hvad er dec_updateCalculatedStat");
+				console.log(dec_updateCalculatedStat);
+
+				if (updateCalculatedStat) {
+					if (year_before == year_after) {
+						DeclarationService.updateStat(year_after);
+					}
+					else {
+						console.log("both years need an update")
+						DeclarationService.updateStat(year_before);
+						DeclarationService.updateStat(year_after);
+					}
+				}
+
+				if (dec_updateCalculatedStat) {
+					if (dec_year_before == dec_year_after) {
+						DeclarationService.updateStat(dec_year_after);
+					}
+					else {
+						console.log("both years need an update in declaration")
+						DeclarationService.updateStat(dec_year_before);
+						DeclarationService.updateStat(dec_year_after);
+					}
+				}
+
 				$state.reload();
 			});
 	}
