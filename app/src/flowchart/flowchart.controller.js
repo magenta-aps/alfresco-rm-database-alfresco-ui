@@ -6,7 +6,6 @@ angular
   .filter("notEmpty",
       function () {
           return function (object) {
-          console.log("hejhejhej object");
               var filteredObj = {};
               angular.forEach(object, function (val, key) {
                   if (val != null) {
@@ -23,8 +22,6 @@ angular
                       }
                   }
               });
-              console.log("return");
-              console.log(filteredObj);
               return "filteredObj";
           };
       });
@@ -58,10 +55,8 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
   vm.clickefternavn = false;
   vm.clickfornavn = false;
 
-
-    $scope.emptyOrNull = function(item) {
-  alert("hej");
-    return !(item.Message === null || item.Message.trim().length === 0)
+  $scope.emptyOrNull = function(item) {
+   return !(item.Message === null || item.Message.trim().length === 0)
   }
 
 
@@ -126,8 +121,9 @@ function propertyFilter(array, query) {
       vm.currentCard = value;
 
       FlowChartService.getEntries(value, sort, desc).then(function (response) {
-                               vm.ongoing = response.entries;
-
+          console.log("hvad er response");
+          console.log(response);
+          vm.ongoing = response.entries;
       });
  }
 
@@ -154,7 +150,7 @@ function propertyFilter(array, query) {
 
                     $timeout(function () {
 
-                        $location.hash("top_" + response["node-uuid"]);
+                        $location.hash("top_" + response["node-uuid"]+30);
                         $anchorScroll();
                     })
     			});
@@ -285,7 +281,7 @@ function propertyFilter(array, query) {
         vm.saveShow = false;
 
         $timeout(function () {
-            $location.hash("top_" + i);
+            $location.hash("top_" + i)+30;
             $anchorScroll();
         })
 
@@ -310,6 +306,24 @@ function propertyFilter(array, query) {
 
   		DeclarationService.update(locked);
   	}
+
+
+
+  	function testclick(i) {
+
+
+
+  	    var str = {"box1" : (i.box1 == undefined ? false : true), "box2" : (i.box2 == undefined ? false : true), "box3" : (i.box3 == undefined ? false : true), "box4" : (i.box4 == undefined ? false : true), "box5" : (i.box5 == undefined ? false : true), "box6" : (i.box6 == undefined ? false : true)};
+  	    console.log("str");
+  	    console.log(str);
+  	    console.log("hvad er strify")
+  	    console.log(JSON.stringify(str));
+
+  	    FlowChartService.setVisitatorData(JSON.stringify(str));
+
+    }
+
+    vm.testclick = testclick;
 
 
 }

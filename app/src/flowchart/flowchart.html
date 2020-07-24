@@ -89,6 +89,22 @@
         text-align: right;
     }
 
+    md-checkbox.green .md-icon {
+        background-color: rgba(0, 255, 0, 0.87);
+        border-width: 0px;
+    }
+
+    label {
+        color: #f00;
+    }
+    input {
+        display: none;
+    }
+    input[type=checkbox]:checked + label {
+        color: #0f0;
+    }
+
+
     table tbody tr:hover {
         background-color: initial;
         cursor: initial;

@@ -9,6 +9,7 @@ function FlowChartService($http) {
   var currentCase = {};
 
   var service = {
+    setVisitatorData: setVisitatorData,
     get: getEntry,
     getEntries: getEntries,
     create: createEntry,
@@ -45,11 +46,17 @@ function FlowChartService($http) {
         });
     }
 
+  function setVisitatorData(data) {
+    return $http.post("/alfresco/s/database/retspsyk/flowchart", {
 
+      "properties": {"method" : "visitator", "visitatorData" : data},
 
+    }).then(function (response) {
+      console.log(response.data)
+      return response.data;
 
-
-
+    });
+  }
 
   function getEntry(caseNumber) {
     return $http.get("/alfresco/s/database/retspsyk/entry/" + caseNumber)
@@ -91,6 +98,8 @@ function FlowChartService($http) {
       return res;
     });
   }
+
+
 
   function createEntry(entry) {
     return $http.post("/alfresco/s/database/retspsyk/entry", {
