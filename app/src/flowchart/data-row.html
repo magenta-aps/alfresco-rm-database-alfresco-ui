@@ -1,24 +1,29 @@
 <a class="anchor" id="top_{{ i.node_uuid }}"></a>
 
 <md-card id="{{ i.node_uuid }}" ng-hide="!(vm.editperid == i.node_uuid) && vm.startedit">
-    <div class="card-content">
+<!--    <div class="card-content" style="background:red">-->
+    <div class="card-content" >
+
+
+
         <div layout="row">
-            <div flex="15">{{i.creationDate | customFlowChartDate }}</div>
+            <div flex="15">{{i.creationDate | customFlowChartDate }} </div>
             <div flex="15">{{i.doctor  }}</div>
-            <div flex="15"><span class="go-to-case-link" ng-click="vm.gotoCase(i.caseNumber)">{{i.cprNumber}}</span></div>
+            <div flex="15"><span class="go-to-case-link" ng-click="vm.gotoCase(i.caseNumber)">{{i.cprNumber}}</span> <img ng-show="i.redflag" src="app/assets/images/priority_high-24px.svg" class="priority"></div>
+<!--            <div flex="15"><span class="go-to-case-link" ng-click="vm.gotoCase(i.caseNumber)">{{i.cprNumber}}</span><img ng-show="i.redflag" src="app/assets/images/priority_high-24px.svg" alt="prioritet" class="priority"></div>-->
             <div flex="15">{{i.firstName}}</div>
             <div flex="15">{{i.lastName}}</div>
             <div flex="40">{{i.mainCharge}}</div>
 
             <div class="card-content__actions">
 
-                ​<input id="{{ i.node_uuid }}_1" type="checkbox" ng-model="i.box1" ng-click="vm.testclick(i)" /><label for="{{ i.node_uuid }}_1">TO</label>&nbsp;​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
-                ​<input id="{{ i.node_uuid }}_2" type="checkbox" id="2" ng-model="i.box2" ng-click="vm.testclick(i)" /><label for="2">F</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
-                ​<input id="{{ i.node_uuid }}_3" type="checkbox" id="3" ng-model="i.box3" /><label for="3">KP</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
+                ​<input id="{{ i.node_uuid }}_1" type="checkbox" ng-model="i.box1" ng-click="vm.testclick(i, $event)" /><label for="{{ i.node_uuid }}_1">TO</label>&nbsp;​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                ​<input id="{{ i.node_uuid }}_2" type="checkbox" id="2" ng-model="i.box2" ng-click="vm.testclick(i, $event)" /><label for="{{ i.node_uuid }}_2">F</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
+                ​<input id="{{ i.node_uuid }}_3" type="checkbox" id="3" ng-model="i.box3" ng-click="vm.testclick(i, $event)" /><label for="{{ i.node_uuid }}_3">KP</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
 <br><br>
-                ​<input type="checkbox" id="4" ng-model="i.box4" /><label for="4">LEV</label>&nbsp;​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
-                ​<input type="checkbox" id="5" ng-model="i.box5" /><label for="5">FU</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
-                ​<input type="checkbox" id="6" ng-model="i.box6" /><label for="6">AKT</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
+                ​<input type="checkbox" id="{{ i.node_uuid }}_4" ng-model="i.box4" ng-click="vm.testclick(i, $event)"/><label for="{{ i.node_uuid }}_4">LEV</label>&nbsp;​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                ​<input type="checkbox" id="{{ i.node_uuid }}_5" ng-model="i.box5" ng-click="vm.testclick(i, $event)" /><label for="{{ i.node_uuid }}_5">FU</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
+                ​<input type="checkbox" id="{{ i.node_uuid }}_6" ng-model="i.box6" ng-click="vm.testclick(i, $event)" /><label for="{{ i.node_uuid }}_6">AKT</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
                 <br><br>
 <!--                <md-checkbox  ng-model="i.visitator.to" class="green" >TO</md-checkbox>-->
 <!--                <md-checkbox aria-label="TO" ng-model="i.visitator.f">F</md-checkbox>-->
@@ -32,7 +37,9 @@
 
 
                 <md-button class="md-raised" ng-disabled="vm.saveShow" ng-click="vm.editing=true;collapsed=vm.editCase(i);save=collapsed;" ng-hide="!collapsed">Ret</md-button>
+
                 <md-button class="md-raised md-primary" ng-click="save=false;vm.editing=false;;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">Gem</md-button>
+
                 <md-button class="md-raised" ng-click="save=false;vm.editing=false;;vm.cancel(i.node_uuid)" ng-show="vm.saveShow">Annuller</md-button>
 
                 <md-button class="md-icon-button md-raised" ng-show="!collapsed && !vm.editing" ng-click="collapsed=!collapsed;vm.updateCard(i)">
@@ -47,7 +54,7 @@
         </div>
     </div>
 
-    <md-content layout-wrap ng-if="collapsed" style="padding: 8px 16px;">
+    <md-content layout-wrap ng-if="collapsed" style="padding: 8px 16px;" >
         <md-table-container>
             <div layout="row">
 
@@ -55,21 +62,38 @@
                     <table md-table>
                         <tbody md-body>
                             <!-- status, start -->
+
+
+
                             <tr md-row>
+
+
+
                                 <td md-cell class="key">Status:</td>
                                 <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="statusDisplay_{{ i.node_uuid }}">{{i.status}}</td>
+
+<!--                                <td md-cell class="key">hvad er denne værdi: {{i.status}}</td>-->
+
                                 <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
-                                    <md-autocomplete 
-                                        md-selected-item="flow.status" 
-                                        md-search-text="statusSearch"
-                                        md-items="status in vm.propertyFilter(vm.propertyValues['status'],statusSearch)"
-                                        md-item-text="status" 
-                                        md-clear-button="true" 
-                                        md-require-match="true">
+
+                                    <md-autocomplete flex
+                                                     md-selected-item="flow.status"
+                                                     md-search-text="statusSearch"
+                                                     md-items="status in vm.propertyFilter(vm.propertyValues['status'],statusSearch)"
+                                                     md-item-text="status"
+                                                     md-min-length="0"
+                                                     md-clear-button="true"
+                                                     md-floating-label=" "
+                                                     md-require-match="true">
                                         <md-item-template>
                                             <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
                                         </md-item-template>
                                     </md-autocomplete>
+
+
+
+
+
                                 </td>
                             </tr>
                             <!-- status, stop -->
@@ -98,7 +122,9 @@
                                         md-item-text="socialworker"
                                         md-clear-button="true"
                                         md-require-match="true"
-                                        md-min-length="0">
+                                        md-min-length="0"
+                                        md-floating-label=" ">
+
                                         <md-item-template>
                                             <span md-highlight-text="socialworkerSearch" md-highlight-flags="gi">{{socialworker}}</span>
                                         </md-item-template>
@@ -119,6 +145,7 @@
                                         md-item-text="doctor" 
                                         md-clear-button="true" 
                                         md-require-match="true"
+                                        md-floating-label=" "
                                         md-min-length="0">
                                         <md-item-template>
                                             <span md-highlight-text="doctorSearch" md-highlight-flags="gi">{{doctor}}</span>
@@ -140,6 +167,7 @@
                                         md-item-text="psychologist" 
                                         md-clear-button="true" 
                                         md-require-match="true"
+                                        md-floating-label=" "
                                         md-min-length="0">
                                         <md-item-template>
                                             <span md-highlight-text="psychologistSearch" md-highlight-flags="gi">{{psychologist}}</span>

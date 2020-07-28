@@ -40,19 +40,31 @@ function FlowChartService($http) {
           "properties": {"method" : entry, "sort" : sort, "desc" : desc},
 
         }).then(function (response) {
-          console.log(response.data)
+
           return response.data;
 
         });
     }
 
-  function setVisitatorData(data) {
+  function setVisitatorData(data, n) {
     return $http.post("/alfresco/s/database/retspsyk/flowchart", {
 
-      "properties": {"method" : "visitator", "visitatorData" : data},
+      "properties": {"method" : "visitator", "visitatorData" : data, "nodeRef" : n},
 
     }).then(function (response) {
-      console.log(response.data)
+
+      return response.data;
+
+    });
+  }
+
+  function setFlag(flag, n) {
+    return $http.post("/alfresco/s/database/retspsyk/flowchart", {
+
+      "properties": {"method" : "redflag", "nodeRef" : n},
+
+    }).then(function (response) {
+
       return response.data;
 
     });

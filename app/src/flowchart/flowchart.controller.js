@@ -108,12 +108,6 @@ function propertyFilter(array, query) {
         loaddata('ongoing', '@rm:creationDate', 'true');
         vm.currentCard = "ongoing";
         }, 0);
-
-//    var val = angular.element(document.getElementById("#ongoing_title"));
-//    console.log("hvad er val");
-//    console.log(val);
-
-
   }
 
   function loaddata(value, sort, desc) {
@@ -121,8 +115,6 @@ function propertyFilter(array, query) {
       vm.currentCard = value;
 
       FlowChartService.getEntries(value, sort, desc).then(function (response) {
-          console.log("hvad er response");
-          console.log(response);
           vm.ongoing = response.entries;
       });
  }
@@ -217,6 +209,10 @@ function propertyFilter(array, query) {
 
     function editCase(i) {
 
+    console.log("editcase")
+        console.log("vm.propertyvalues");
+        console.log(vm.propertyValues);
+
     var currentUser = authService.getUserInfo().user.userName
 
           return (DeclarationService.get(i.caseNumber).then(function (response) {
@@ -231,11 +227,24 @@ function propertyFilter(array, query) {
             if (response.locked4edit) {
                 if (response.locked4editBy != currentUser) {
                     alert("sagen er låst for redigering af " + response.locked4editBy);
+                    vm.startedit = false;
+                    vm.saveShow = false;
+                    vm.editing=false
+
+                    console.log("vm.startedit")
+                    console.log(vm.startedit)
+
+                    console.log("vm.saveShow");
+                    console.log(vm.saveShow);
+
+
 
                     return false;
                 }
             }
 
+              console.log("continue")
+              console.log(response);
 
             $scope.flow["samtykkeopl"] = response.samtykkeopl;
             $scope.flow["kommentar"] = response.kommentar;
@@ -253,10 +262,17 @@ function propertyFilter(array, query) {
 
 
             vm.editperid = response["node-uuid"]
+              console.log("vm.editperid");
+              console.log(vm.editperid);
+
+              console.log("flow[status]");
+              console.log($scope.flow["status"]);
+
             vm.startedit = true;
             vm.saveShow = true;
 
             lockedForEdit(true);
+            console.log("slut");
 
             return true;
 
@@ -295,8 +311,6 @@ function propertyFilter(array, query) {
 
   	function lockedForEdit(lock) {
 
-
-
   		var currentUser = authService.getUserInfo().user.userName
   		var locked = {
   			'node-uuid': $scope.flow['node-uuid'],
@@ -309,23 +323,55 @@ function propertyFilter(array, query) {
 
 
 
-  	function testclick(i) {
+  	function testclick(i, event) {
+
+        var currentUser = authService.getUserInfo().user.userName;
+
+        DeclarationService.get(i.caseNumber).then(function (response) {
+
+            // init locked4edit
+
+            if (response.locked4edit == null) {
+                response.locked4edit = false;
+            }
 
 
+            if (response.locked4edit) {
+                if (response.locked4editBy != currentUser) {
+                    alert("sagen er låst for redigering af " + response.locked4editBy);
+                    vm.startedit = false;
+                    vm.saveShow = false;
+                    vm.editing = false
 
-  	    var str = {"box1" : (i.box1 == undefined ? false : true), "box2" : (i.box2 == undefined ? false : true), "box3" : (i.box3 == undefined ? false : true), "box4" : (i.box4 == undefined ? false : true), "box5" : (i.box5 == undefined ? false : true), "box6" : (i.box6 == undefined ? false : true)};
-  	    console.log("str");
-  	    console.log(str);
-  	    console.log("hvad er strify")
-  	    console.log(JSON.stringify(str));
+                    console.log("vm.startedit")
+                    console.log(vm.startedit)
 
-  	    FlowChartService.setVisitatorData(JSON.stringify(str));
+                    console.log("vm.saveShow");
+                    console.log(vm.saveShow);
 
+                    // revert click
+                    var checkbox = event.target;
+                    checkbox.checked = !(checkbox.checked);
+
+
+                    return false;
+                }
+            }
+            else {
+                var str = {"box1" : i.box1, "box2" : i.box2, "box3" : i.box3, "box4" : i.box4, "box5" : i.box5, "box6" : i.box6};
+                FlowChartService.setVisitatorData(JSON.stringify(str), i.node_uuid);
+            }
+        });
     }
 
+
+
+
+
+
+
+
     vm.testclick = testclick;
-
-
 }
 
 

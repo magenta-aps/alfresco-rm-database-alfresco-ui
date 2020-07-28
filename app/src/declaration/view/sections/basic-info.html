@@ -14,6 +14,11 @@
                 <md-icon>cached</md-icon>
             </md-button>
         </div>
+
+        <md-checkbox id="flowhighlight"  class="checkbox style-2 pull-right" ng-disabled="!editPatientData"  ng-model="case.flowflag">Marker i flowchart</md-checkbox>
+
+
+
         <md-input-container class="md-block">
             <label>Fornavne</label>
             <input ng-model="case.firstName" ng-disabled="!editPatientData" required>
