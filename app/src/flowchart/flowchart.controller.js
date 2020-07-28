@@ -209,10 +209,6 @@ function propertyFilter(array, query) {
 
     function editCase(i) {
 
-    console.log("editcase")
-        console.log("vm.propertyvalues");
-        console.log(vm.propertyValues);
-
     var currentUser = authService.getUserInfo().user.userName
 
           return (DeclarationService.get(i.caseNumber).then(function (response) {
@@ -230,21 +226,9 @@ function propertyFilter(array, query) {
                     vm.startedit = false;
                     vm.saveShow = false;
                     vm.editing=false
-
-                    console.log("vm.startedit")
-                    console.log(vm.startedit)
-
-                    console.log("vm.saveShow");
-                    console.log(vm.saveShow);
-
-
-
                     return false;
                 }
             }
-
-              console.log("continue")
-              console.log(response);
 
             $scope.flow["samtykkeopl"] = response.samtykkeopl;
             $scope.flow["kommentar"] = response.kommentar;
@@ -262,17 +246,10 @@ function propertyFilter(array, query) {
 
 
             vm.editperid = response["node-uuid"]
-              console.log("vm.editperid");
-              console.log(vm.editperid);
-
-              console.log("flow[status]");
-              console.log($scope.flow["status"]);
-
             vm.startedit = true;
             vm.saveShow = true;
 
             lockedForEdit(true);
-            console.log("slut");
 
             return true;
 
@@ -323,7 +300,7 @@ function propertyFilter(array, query) {
 
 
 
-  	function testclick(i, event) {
+  	function visitate(i, event) {
 
         var currentUser = authService.getUserInfo().user.userName;
 
@@ -343,16 +320,9 @@ function propertyFilter(array, query) {
                     vm.saveShow = false;
                     vm.editing = false
 
-                    console.log("vm.startedit")
-                    console.log(vm.startedit)
-
-                    console.log("vm.saveShow");
-                    console.log(vm.saveShow);
-
                     // revert click
                     var checkbox = event.target;
                     checkbox.checked = !(checkbox.checked);
-
 
                     return false;
                 }
@@ -364,14 +334,7 @@ function propertyFilter(array, query) {
         });
     }
 
-
-
-
-
-
-
-
-    vm.testclick = testclick;
+    vm.visitate = visitate;
 }
 
 

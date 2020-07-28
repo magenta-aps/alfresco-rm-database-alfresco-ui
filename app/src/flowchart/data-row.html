@@ -10,31 +10,20 @@
             <div flex="15">{{i.creationDate | customFlowChartDate }} </div>
             <div flex="15">{{i.doctor  }}</div>
             <div flex="15"><span class="go-to-case-link" ng-click="vm.gotoCase(i.caseNumber)">{{i.cprNumber}}</span> <img ng-show="i.redflag" src="app/assets/images/priority_high-24px.svg" class="priority"></div>
-<!--            <div flex="15"><span class="go-to-case-link" ng-click="vm.gotoCase(i.caseNumber)">{{i.cprNumber}}</span><img ng-show="i.redflag" src="app/assets/images/priority_high-24px.svg" alt="prioritet" class="priority"></div>-->
             <div flex="15">{{i.firstName}}</div>
             <div flex="15">{{i.lastName}}</div>
             <div flex="40">{{i.mainCharge}}</div>
 
             <div class="card-content__actions">
 
-                ​<input id="{{ i.node_uuid }}_1" type="checkbox" ng-model="i.box1" ng-click="vm.testclick(i, $event)" /><label for="{{ i.node_uuid }}_1">TO</label>&nbsp;​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
-                ​<input id="{{ i.node_uuid }}_2" type="checkbox" id="2" ng-model="i.box2" ng-click="vm.testclick(i, $event)" /><label for="{{ i.node_uuid }}_2">F</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
-                ​<input id="{{ i.node_uuid }}_3" type="checkbox" id="3" ng-model="i.box3" ng-click="vm.testclick(i, $event)" /><label for="{{ i.node_uuid }}_3">KP</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
+                ​<input id="{{ i.node_uuid }}_1" type="checkbox" ng-model="i.box1" ng-click="vm.visitate(i, $event)" /><label for="{{ i.node_uuid }}_1">TO</label>&nbsp;​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                ​<input id="{{ i.node_uuid }}_2" type="checkbox" id="2" ng-model="i.box2" ng-click="vm.visitate(i, $event)" /><label for="{{ i.node_uuid }}_2">F</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
+                ​<input id="{{ i.node_uuid }}_3" type="checkbox" id="3" ng-model="i.box3" ng-click="vm.visitate(i, $event)" /><label for="{{ i.node_uuid }}_3">KP</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
 <br><br>
-                ​<input type="checkbox" id="{{ i.node_uuid }}_4" ng-model="i.box4" ng-click="vm.testclick(i, $event)"/><label for="{{ i.node_uuid }}_4">LEV</label>&nbsp;​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
-                ​<input type="checkbox" id="{{ i.node_uuid }}_5" ng-model="i.box5" ng-click="vm.testclick(i, $event)" /><label for="{{ i.node_uuid }}_5">FU</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
-                ​<input type="checkbox" id="{{ i.node_uuid }}_6" ng-model="i.box6" ng-click="vm.testclick(i, $event)" /><label for="{{ i.node_uuid }}_6">AKT</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
+                ​<input type="checkbox" id="{{ i.node_uuid }}_4" ng-model="i.box4" ng-click="vm.visitate(i, $event)"/><label for="{{ i.node_uuid }}_4">LEV</label>&nbsp;​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                ​<input type="checkbox" id="{{ i.node_uuid }}_5" ng-model="i.box5" ng-click="vm.visitate(i, $event)" /><label for="{{ i.node_uuid }}_5">FU</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
+                ​<input type="checkbox" id="{{ i.node_uuid }}_6" ng-model="i.box6" ng-click="vm.visitate(i, $event)" /><label for="{{ i.node_uuid }}_6">AKT</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
                 <br><br>
-<!--                <md-checkbox  ng-model="i.visitator.to" class="green" >TO</md-checkbox>-->
-<!--                <md-checkbox aria-label="TO" ng-model="i.visitator.f">F</md-checkbox>-->
-<!--                <md-checkbox aria-label="TO" ng-model="i.visitator.kp">KP</md-checkbox>-->
-
-
-
-<!--                <md-checkbox aria-label="TO" ng-model="content.selected">LEV</md-checkbox>-->
-<!--                <md-checkbox aria-label="TO" ng-model="content.selected">FU</md-checkbox>-->
-<!--                <md-checkbox aria-label="TO" ng-model="content.selected">AKT</md-checkbox>-->
-
 
                 <md-button class="md-raised" ng-disabled="vm.saveShow" ng-click="vm.editing=true;collapsed=vm.editCase(i);save=collapsed;" ng-hide="!collapsed">Ret</md-button>
 
