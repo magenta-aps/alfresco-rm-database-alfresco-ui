@@ -153,6 +153,7 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
     destination = destination ? destination : currentFolderNodeRef;
     var formData = new FormData();
     formData.append("filedata", file);
+    formData.append("overwrite", "false");
     formData.append("destination", destination);
 
     return $http.post("/api/upload", formData, {
@@ -161,9 +162,7 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
         'Content-Type': undefined
       }
         }).then(function (response) {
-
             var props = { "nodeRef" : response.data.nodeRef};
-
               $http.post('/alfresco/s/contents/addpermission', props).then(function (response) {
                                     return response;
                                   });
