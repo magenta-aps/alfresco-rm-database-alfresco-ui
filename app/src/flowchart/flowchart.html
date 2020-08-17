@@ -15,6 +15,14 @@
         padding: 8px;
     }
 
+    .priority {
+        width: 25px;
+        left: 23px;
+        background-color: red;
+    }
+
+
+
     .md-title h3 {
         margin: 0;
     }
@@ -89,6 +97,22 @@
         text-align: right;
     }
 
+    md-checkbox.green .md-icon {
+        background-color: rgba(0, 255, 0, 0.87);
+        border-width: 0px;
+    }
+
+    label {
+        color: #f00;
+    }
+    input {
+        display: none;
+    }
+    input[type=checkbox]:checked + label {
+        color: #0f0;
+    }
+
+
     table tbody tr:hover {
         background-color: initial;
         cursor: initial;
@@ -145,6 +169,8 @@
 </style>
 
 <md-card>
+
+
 
     <ng-include src="'app/src/flowchart/flowchart_navigation.html'"></ng-include>
     <ng-include src="'app/src/flowchart/flowchart_headings.html'"></ng-include>

@@ -6,7 +6,6 @@ angular
   .filter("notEmpty",
       function () {
           return function (object) {
-          console.log("hejhejhej object");
               var filteredObj = {};
               angular.forEach(object, function (val, key) {
                   if (val != null) {
@@ -23,8 +22,6 @@ angular
                       }
                   }
               });
-              console.log("return");
-              console.log(filteredObj);
               return "filteredObj";
           };
       });
@@ -58,10 +55,8 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
   vm.clickefternavn = false;
   vm.clickfornavn = false;
 
-
-    $scope.emptyOrNull = function(item) {
-  alert("hej");
-    return !(item.Message === null || item.Message.trim().length === 0)
+  $scope.emptyOrNull = function(item) {
+   return !(item.Message === null || item.Message.trim().length === 0)
   }
 
 
@@ -113,12 +108,6 @@ function propertyFilter(array, query) {
         loaddata('ongoing', '@rm:creationDate', 'true');
         vm.currentCard = "ongoing";
         }, 0);
-
-//    var val = angular.element(document.getElementById("#ongoing_title"));
-//    console.log("hvad er val");
-//    console.log(val);
-
-
   }
 
   function loaddata(value, sort, desc) {
@@ -126,8 +115,7 @@ function propertyFilter(array, query) {
       vm.currentCard = value;
 
       FlowChartService.getEntries(value, sort, desc).then(function (response) {
-                               vm.ongoing = response.entries;
-
+          vm.ongoing = response.entries;
       });
  }
 
@@ -154,7 +142,7 @@ function propertyFilter(array, query) {
 
                     $timeout(function () {
 
-                        $location.hash("top_" + response["node-uuid"]);
+                        $location.hash("top_" + response["node-uuid"]+30);
                         $anchorScroll();
                     })
     			});
@@ -235,11 +223,12 @@ function propertyFilter(array, query) {
             if (response.locked4edit) {
                 if (response.locked4editBy != currentUser) {
                     alert("sagen er låst for redigering af " + response.locked4editBy);
-
+                    vm.startedit = false;
+                    vm.saveShow = false;
+                    vm.editing=false
                     return false;
                 }
             }
-
 
             $scope.flow["samtykkeopl"] = response.samtykkeopl;
             $scope.flow["kommentar"] = response.kommentar;
@@ -285,7 +274,7 @@ function propertyFilter(array, query) {
         vm.saveShow = false;
 
         $timeout(function () {
-            $location.hash("top_" + i);
+            $location.hash("top_" + i)+30;
             $anchorScroll();
         })
 
@@ -299,8 +288,6 @@ function propertyFilter(array, query) {
 
   	function lockedForEdit(lock) {
 
-
-
   		var currentUser = authService.getUserInfo().user.userName
   		var locked = {
   			'node-uuid': $scope.flow['node-uuid'],
@@ -312,6 +299,42 @@ function propertyFilter(array, query) {
   	}
 
 
+
+  	function visitate(i, event) {
+
+        var currentUser = authService.getUserInfo().user.userName;
+
+        DeclarationService.get(i.caseNumber).then(function (response) {
+
+            // init locked4edit
+
+            if (response.locked4edit == null) {
+                response.locked4edit = false;
+            }
+
+
+            if (response.locked4edit) {
+                if (response.locked4editBy != currentUser) {
+                    alert("sagen er låst for redigering af " + response.locked4editBy);
+                    vm.startedit = false;
+                    vm.saveShow = false;
+                    vm.editing = false
+
+                    // revert click
+                    var checkbox = event.target;
+                    checkbox.checked = !(checkbox.checked);
+
+                    return false;
+                }
+            }
+            else {
+                var str = {"box1" : i.box1, "box2" : i.box2, "box3" : i.box3, "box4" : i.box4, "box5" : i.box5, "box6" : i.box6};
+                FlowChartService.setVisitatorData(JSON.stringify(str), i.node_uuid);
+            }
+        });
+    }
+
+    vm.visitate = visitate;
 }
 
 
