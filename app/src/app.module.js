@@ -106,7 +106,7 @@ function config(USER_ROLES, $stateProvider, $mdDateLocaleProvider, $mdThemingPro
                 templateUrl: 'app/src/header/header.view.html'
             },
             'footer@': {
-                template: '<img src="app/assets/images/rm-weblogo.jpg" class="rm-logo">'
+                template: '<img src="app/assets/images/>rm-weblogo.jpg" class="rm-logo">'
             }
         },
         params: {
