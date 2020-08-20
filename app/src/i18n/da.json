@@ -140,6 +140,7 @@
     "CPR": "CPR-nummer",
     "FORNAVN": "Fornavn",
     "EFTERNAVN": "Efternavn",
-    "HOVEDSIGTELSE": "Hovedsigtelse"
+    "HOVEDSIGTELSE": "Hovedsigtelse",
+    "VISITATION": "Visitation"
   }
 }
