@@ -87,5 +87,10 @@
             </md-item-template>
         </md-autocomplete>
 
+        <md-input-container class="md-block">
+            <label>Arrest</label>
+            <input ng-model="case.arrest" ng-disabled="!editPatientData" required>
+        </md-input-container>
+
     </md-card-content>
 </md-card>
