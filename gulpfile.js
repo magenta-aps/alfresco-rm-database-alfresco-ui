@@ -7,7 +7,6 @@ var gulp = require('gulp'),
     fs = require('fs'),
     proxy = require('http-proxy-middleware'),
     autoprefixer = require('gulp-autoprefixer'),
-    gulpNSP = require('gulp-nsp'),
     pa11y = require('gulp-pa11y');
 
 // Config vars
@@ -109,14 +108,6 @@ gulp.task('acc_check', function () {
     pa11y({ url: 'http://178.62.194.129/' });
 });
 
-// Security check
-gulp.task('sec_check', function (cb) {
-    gulpNSP({
-        package: __dirname + '/package.json',
-        stopOnError: false
-    }, cb);
-});
-
 // Set up watchers
 gulp.task('watch', function () {
     gulp.watch(paths.scripts, ['scripts']);
@@ -130,7 +121,7 @@ gulp.task('watch', function () {
 
 // This task is used to just build the scripts and CSS.
 // Useful if you want to deploy to production (e.g. with Apache).
-gulp.task('build', ['scripts', 'css', 'sec_check', 'acc_check']);
+gulp.task('build', ['scripts', 'css', 'acc_check']);
 
 gulp.task('demo', ['build', 'watch'], function () {
     createWebserver(environment.demo);
@@ -150,4 +141,3 @@ gulp.task('ui-test', ['e2e-tests']);
 // Running 'gulp' is equal to running 'gulp build watch'
 // In other words, the default task is the 'build' and 'watch' task
 gulp.task('default', ['build', 'watch']);
-
