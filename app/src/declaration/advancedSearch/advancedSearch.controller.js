@@ -64,6 +64,7 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
           $scope.searchParams.noDeclaration = false;
 
           $scope.searchParams.doctor = '';
+          $scope.searchParams.supervisingDoctor = '';
 
           $scope.searchParams.socialworker = '';
 
@@ -79,6 +80,7 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
 
   function givenDeclaration() {
     $scope.searchParams.doctor = '';
+    $scope.searchParams.supervisingDoctor = '';
     $scope.searchParams.noDeclaration = false;
   }
 

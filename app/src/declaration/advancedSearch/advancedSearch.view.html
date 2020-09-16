@@ -1,7 +1,7 @@
 <div layout="row" layout-align="center center" ng-show="!showResults">
         <div layout="column" flex="75" style="margin-top: 50px;">
             <h1 class="md-title">Vis alle sager med:</h1>
-    
+
             <div layout="row">
                 <div flex>
                     <md-card flex>
@@ -19,13 +19,13 @@
                                 </md-input-container>
                             </div>
 
-                            <md-autocomplete 
+                            <md-autocomplete
                                 md-selected-item="searchParams.mainCharge"
                                 md-search-text="mainChargeSearch"
                                 md-items="mainCarge in propertyFilter(propertyValues['mainCharge'],mainChargeSearch)"
-                                md-item-text="mainCarge" 
-                                md-min-length="0" 
-                                md-floating-label="Hovedsigtelse" 
+                                md-item-text="mainCarge"
+                                md-min-length="0"
+                                md-floating-label="Hovedsigtelse"
                                 md-require-match="true"
                                 md-clear-button="true">
                                 <md-item-template>
@@ -48,7 +48,7 @@
                                 </md-item-template>
                             </md-autocomplete>
                             <md-tooltip md-direction="top" md-delay="500" ng-if="searchParams.mainDiagnosis != null">{{searchParams.mainDiagnosis}}</md-tooltip>
-    
+
                             <md-input-container class="md-block">
                                 <label>Sagsstatus</label>
                                 <md-select ng-model="searchParams.closed">
@@ -57,13 +57,13 @@
                                     <md-option ng-value="undefined">Alle</md-option>
                                 </md-select>
                             </md-input-container>
-    
-                            <md-autocomplete 
-                                md-selected-item="searchParams.placement" 
-                                md-search-text="placementSearch" 
+
+                            <md-autocomplete
+                                md-selected-item="searchParams.placement"
+                                md-search-text="placementSearch"
                                 md-items="placement in propertyFilter(propertyValues['placement'],placementSearch)"
-                                md-item-text="placement" 
-                                md-min-length="0" 
+                                md-item-text="placement"
+                                md-min-length="0"
                                 md-floating-label="Placering"
                                 md-require-match="true"
                                 md-clear-button="true">
@@ -72,13 +72,13 @@
                             </md-item-template>
                             </md-autocomplete>
                             <md-tooltip md-direction="top" md-delay="500" ng-if="searchParams.placement != null">{{searchParams.placement}}</md-tooltip>
-    
-                            <md-autocomplete 
-                                md-selected-item="searchParams.sanctionProposal" 
-                                md-search-text="sanctionProposalSearch" 
+
+                            <md-autocomplete
+                                md-selected-item="searchParams.sanctionProposal"
+                                md-search-text="sanctionProposalSearch"
                                 md-items="sanctionProposal in propertyFilter(propertyValues['sanctionProposal'],sanctionProposalSearch)"
-                                md-item-text="sanctionProposal" 
-                                md-min-length="0" 
+                                md-item-text="sanctionProposal"
+                                md-min-length="0"
                                 md-floating-label="Sanktionsforslag"
                                 md-require-match="true"
                                 md-clear-button="true">
@@ -87,7 +87,7 @@
                                 </md-item-template>
                             </md-autocomplete>
                             <md-tooltip md-direction="top" md-delay="500" ng-if="searchParams.sanctionProposal != null">{{searchParams.sanctionProposal}}</md-tooltip>
-    
+
                             <div layout-gt-sm="row" class="layout-gt-sm-row">
                                 <md-input-container>
                                     <label>Ventetid</label>
@@ -98,7 +98,7 @@
                                         <md-option value=""></md-option>
                                     </md-select>
                                 </md-input-container>
-    
+
                                 <md-input-container>
                                     <md-select ng-model="searchParams.waitingTime.modifier" aria-label="modifier">
                                         <md-option value="over">Over</md-option>
@@ -107,23 +107,23 @@
                                         <md-option value=""></md-option>
                                     </md-select>
                                 </md-input-container>
-    
+
                                 <md-input-container>
                                     <input ng-model="searchParams.waitingTime.days" size="4" aria-label="antal dage">
                                 </md-input-container>
-    
+
                                 <md-input-container>
                                     <label for="x" class="md-no-float md-container-ignore">Dage</label>
                                 </md-input-container>
-        
+
                             </div>
-    
-                            <md-autocomplete 
-                                md-selected-item="searchParams.status" 
-                                md-search-text="statusSearch" 
+
+                            <md-autocomplete
+                                md-selected-item="searchParams.status"
+                                md-search-text="statusSearch"
                                 md-items="status in propertyFilter(propertyValues['status'],statusSearch)"
-                                md-item-text="status" 
-                                md-min-length="0" 
+                                md-item-text="status"
+                                md-min-length="0"
                                 md-floating-label="Retslig status"
                                 md-require-match="true"
                                 md-clear-button="true">
@@ -131,7 +131,7 @@
                                     <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
                                 </md-item-template>
                             </md-autocomplete>
-    
+
                             <md-input-container class="md-block">
                                 <label>Type</label>
                                 <md-select ng-model="searchParams.bua">
@@ -141,7 +141,7 @@
                                 </md-select>
                             </md-input-container>
                         </md-card-content>
-    
+
                     </md-card>
                 </div>
                 <div flex>
@@ -182,6 +182,21 @@
                                                  md-clear-button="true">
                                     <md-item-template>
                                         <span md-highlight-text="doctorSearch" md-highlight-flags="gi">{{doctor}}</span>
+                                    </md-item-template>
+                                </md-autocomplete>
+
+                                <md-autocomplete flex
+                                                 ng-show="searchParams.evalAll"
+                                                 md-selected-item="searchParams.supervisingDoctor"
+                                                 md-search-text="supervisingDoctorSearch"
+                                                 md-items="doctor in propertyFilter(propertyValues['doctor'],supervisingDoctorSearch)"
+                                                 md-item-text="doctor"
+                                                 md-min-length="0"
+                                                 md-floating-label="Tiltrædes af læge"
+                                                 md-require-match="true"
+                                                 md-clear-button="true">
+                                    <md-item-template>
+                                        <span md-highlight-text="supervisingDoctorSearch" md-highlight-flags="gi">{{doctor}}</span>
                                     </md-item-template>
                                 </md-autocomplete>
 
@@ -257,13 +272,13 @@
                             <div class="md-input-container md-block">
                                 <md-checkbox ng-model="searchParams.noDeclaration" ng-change="vm.noDeclaration()">Afsluttet uden erklæring</md-checkbox>
 
-                                <md-autocomplete flex 
+                                <md-autocomplete flex
                                     ng-show="searchParams.noDeclaration"
-                                    md-selected-item="searchParams.closedWithoutDeclarationReason" 
+                                    md-selected-item="searchParams.closedWithoutDeclarationReason"
                                     md-search-text="reasonSearch"
-                                    md-items="reason in propertyFilter(propertyValues['noDeclarationReason'],reasonSearch)" 
-                                    md-item-text="reason" 
-                                    md-min-length="0" 
+                                    md-items="reason in propertyFilter(propertyValues['noDeclarationReason'],reasonSearch)"
+                                    md-item-text="reason"
+                                    md-min-length="0"
                                     md-floating-label="Årsag"
                                     md-require-match="true"
                                     md-clear-button="true">
@@ -302,11 +317,11 @@
                     </md-card>
                 </div>
             </div>
-    
+
             <md-button ng-click="vm.advancedSearch(0, 25, searchParams); vm.toggleResults()" class="md-raised md-primary">Søg</md-button>
         </div>
     </div>
-    
+
     <md-card ng-show="showResults">
         <md-card-title>
             <md-button class="md-raised" ng-click="vm.toggleResults(); vm.clearResults()">Ret søgning</md-button>
@@ -326,6 +341,7 @@
                             <th md-column md-order-by="fullName">Navn</th>
                             <th md-column md-numeric md-order-by="cprNumber">CPR</th>
                             <th md-column md-order-by="doctor">Læge</th>
+                            <th md-column md-order-by="supervisingDoctor">Tiltrædes af læge</th>
                             <th md-column md-order-by="closed">Erklæring afgivet</th>
                             <th md-column md-order-by="psychologist">Psykologisk undersøgelse</th>
                         </tr>
@@ -340,6 +356,7 @@
                             <td md-cell>{{case.fullName}}</td>
                             <td md-cell>{{case.cprNumber}}</td>
                             <td md-cell>{{case.doctor}}</td>
+                            <td md-cell>{{case.supervisingDoctor}}</td>
                             <td md-cell>
                                 <span ng-if="!case.closed && case.declarationDate">Afgivet, mangler afslutning</span>
                                 <span ng-if="case.closed && !case.closedWithoutDeclaration">Afsluttet</span>
