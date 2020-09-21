@@ -102,7 +102,11 @@ function DeclarationService($http, $filter) {
 
     }
 
-    var dformattet = d.getDate() + "." + (d.getMonth() + 1) + "." + d.getFullYear();
+    var formatted_date = (d.getDate() <= 9) ? "0" + d.getDate() : d.getDate();
+    var formatted_month = ( (d.getMonth()+1) <= 9) ? "0" + (d.getMonth()+1) : d.getMonth()+1;
+
+
+    var dformattet = formatted_date + "." + formatted_month + "." + d.getFullYear();
 
     return $http.post("/alfresco/s/contents/mergedoctemplate", {
       "id": desclaration['node-uuid'],
