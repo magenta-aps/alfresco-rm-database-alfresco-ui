@@ -70,8 +70,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 
                         <td md-cell>Status</td>
 
-                        <div>
-                            <td md-autocomplete
+                        <td md-cell><md-autocomplete
                                 md-selected-item="flow.status"
                                 md-search-text="statusSearch"
                                 md-items="status in vm.propertyFilter(vm.propertyValues['status'],statusSearch)"
@@ -82,8 +81,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                                     <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
                                 </md-item-template>
                                 </md-autocomplete>
-                        </div>
-
 
 
                         <td md-cell>Samtykke til oplysninger</td>
@@ -144,8 +141,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 
                         <td md-cell>Socialrådgiver</td>
 
-                        <div>
-                            <td md-autocomplete
+                        <td md-cell><md-autocomplete
                                 md-selected-item="flow.socialworker"
                                 md-search-text="socialworkerSearch"
                                 md-items="socialworker in vm.propertyFilter(vm.propertyValues['socialworker'],socialworkerSearch)"
@@ -156,8 +152,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                                     <span md-highlight-text="socialworkerSearch" md-highlight-flags="gi">{{socialworker}}</span>
                                 </md-item-template>
                                 </md-autocomplete>
-                        </div>
-
                         </td>
 
                         <td md-cell>Fritid ved (navne)</td>
@@ -165,8 +159,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                         <td md-input-container class="md-block">
 
                             <input ng-model="flow.fritidved" >
-                        </td >
-
                         </td>
 
 
@@ -180,6 +172,9 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                         <td md-cell>Læge</td>
                         <td md-cell id="doctorDisplay_{{ i.node_uuid }}">{{ i.doctor}}</td>
 
+                        <td md-cell>Tiltrædes af læge</td>
+                        <td md-cell id="supervisingDoctorDisplay_{{ i.node_uuid }}">{{ i.supervisingDoctor}}</td>
+
                         <td md-cell>Kommentar</td>
                         <td md-cell id="kommentarDisplay_{{ i.node_uuid }}">{{i.kommentar }}</td>
                     </tr>
@@ -191,8 +186,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 
                         <td md-cell>Læge</td>
 
-                        <div>
-                            <td md-autocomplete
+                        <td md-cell><md-autocomplete
                                 md-selected-item="flow.doctor"
                                 md-search-text="doctorSearch"
                                 md-items="doctor in vm.propertyFilter(vm.propertyValues['doctor'],doctorSearch)"
@@ -203,8 +197,22 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                                     <span md-highlight-text="doctorSearch" md-highlight-flags="gi">{{doctor}}</span>
                                 </md-item-template>
                                 </md-autocomplete>
-                        </div>
+                        </td>
 
+                        <td md-cell>Tiltrædes af læge</td>
+                        <pre>{{ vm.propertyValues['doctor'] | json }}</pre>
+                        <pre>{{ supervisingDoctorSearch | json }}</pre>
+                        <td md-cell><md-autocomplete
+                                md-selected-item="flow.supervisingDoctor"
+                                md-search-text="supervisingDoctorSearch"
+                                md-items="supervisingDoctor in vm.propertyFilter(vm.propertyValues['doctor'],supervisingDoctorSearch)"
+                                md-item-text="supervisingDoctor"
+                                md-clear-button="true"
+                                md-require-match="true">
+                                <md-item-template>
+                                    <span md-highlight-text="supervisingDoctorSearch" md-highlight-flags="gi">{{supervisingDoctor}}</span>
+                                </md-item-template>
+                                </md-autocomplete>
                         </td>
 
 
@@ -213,8 +221,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                         <td md-input-container class="md-block">
 
                             <input ng-model="flow.kommentar" >
-                        </td >
-
                         </td>
 
 
@@ -238,8 +244,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 
                         <td md-cell>Psykolog</td>
 
-                        <div >
-                            <td md-autocomplete
+                        <td md-cell><md-autocomplete
                                 md-selected-item="flow.psychologist"
                                 md-search-text="psychologistSearch"
                                 md-items="psychologist in vm.propertyFilter(vm.propertyValues['psychologist'],psychologistSearch)"
@@ -250,8 +255,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                                     <span md-highlight-text="psychologistSearch" md-highlight-flags="gi">{{psychologist}}</span>
                                 </md-item-template>
                                 </md-autocomplete>
-                        </div>
-
                         </td>
 
 
@@ -260,8 +263,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                         <td md-input-container class="md-block">
 
                             <input ng-model="flow.kvalitetskontrol" >
-                        </td >
-
                         </td>
 
 
@@ -303,7 +304,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
             </md-button>
             <!--<md-button ng-disabled="save" ng-click="collapsed=vm.editCase(i);edit=collapsed;save=collapsed;">ret  </md-button>-->
             <md-button ng-disabled="vm.saveShow" ng-click="collapsed=vm.editCase(i);save=collapsed; ">ret  </md-button>
-            <md-button ng-click="save=false;edit=false;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">gem</md-button>
+            <md-button ng-click="save=false;edit=false;vm.save(i.node_uuid, i.doctor, i.supervisingDoctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">gem</md-button>
             <md-button ng-click="save=false;edit=false;vm.cancel(i.node_uuid)" ng-show="vm.saveShow">annuller</md-button>
             <md-button ng-show="!collapsed" ng-click="collapsed=!collapsed;vm.updateCard(i)" > <md-icon>keyboard_arrow_down</md-icon> </md-button>
             <md-button ng-show="collapsed" ng-click="collapsed=!collapsed"> <md-icon>keyboard_arrow_up</md-icon> </md-button>
@@ -379,8 +380,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 
                         <td md-cell>Status</td>
 
-                        <div>
-                            <td md-autocomplete
+                        <td md-cell><md-autocomplete
                                 md-selected-item="flow.status"
                                 md-search-text="statusSearch"
                                 md-items="status in vm.propertyFilter(vm.propertyValues['status'],statusSearch)"
@@ -391,8 +391,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                                     <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
                                 </md-item-template>
                                 </md-autocomplete>
-                        </div>
-
 
 
                         <td md-cell>Samtykke til oplysninger</td>
@@ -453,8 +451,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 
                         <td md-cell>Socialrådgiver</td>
 
-                        <div>
-                            <td md-autocomplete
+                        <td md-cell><md-autocomplete
                                 md-selected-item="flow.socialworker"
                                 md-search-text="socialworkerSearch"
                                 md-items="socialworker in vm.propertyFilter(vm.propertyValues['socialworker'],socialworkerSearch)"
@@ -465,8 +462,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                                     <span md-highlight-text="socialworkerSearch" md-highlight-flags="gi">{{socialworker}}</span>
                                 </md-item-template>
                                 </md-autocomplete>
-                        </div>
-
                         </td>
 
                         <td md-cell>Fritid ved (navne)</td>
@@ -474,8 +469,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                         <td md-input-container class="md-block">
 
                             <input ng-model="flow.fritidved" >
-                        </td >
-
                         </td>
 
 
@@ -489,6 +482,9 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                         <td md-cell>Læge</td>
                         <td md-cell id="doctorDisplay_{{ i.node_uuid }}">{{ i.doctor}}</td>
 
+                        <td md-cell>Tiltrædes af læge</td>
+                        <td md-cell id="supervisingDoctorDisplay_{{ i.node_uuid }}">{{ i.supervisingDoctor}}</td>
+
                         <td md-cell>Kommentar</td>
                         <td md-cell id="kommentarDisplay_{{ i.node_uuid }}">{{i.kommentar }}</td>
                     </tr>
@@ -500,8 +496,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 
                         <td md-cell>Læge</td>
 
-                        <div>
-                            <td md-autocomplete
+                        <td md-cell><md-autocomplete
                                 md-selected-item="flow.doctor"
                                 md-search-text="doctorSearch"
                                 md-items="doctor in vm.propertyFilter(vm.propertyValues['doctor'],doctorSearch)"
@@ -512,8 +507,21 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                                     <span md-highlight-text="doctorSearch" md-highlight-flags="gi">{{doctor}}</span>
                                 </md-item-template>
                                 </md-autocomplete>
-                        </div>
+                        </td>
 
+                        <td md-cell>Tiltrædes af læge</td>
+
+                        <td md-cell><md-autocomplete
+                                md-selected-item="flow.supervisingDoctor"
+                                md-search-text="supervisingDoctorSearch"
+                                md-items="supervisingDoctor in vm.propertyFilter(vm.propertyValues['doctor'],supervisingDoctorSearch)"
+                                md-item-text="supervisingDoctor"
+                                md-clear-button="true"
+                                md-require-match="true">
+                                <md-item-template>
+                                    <span md-highlight-text="supervisingDoctorSearch" md-highlight-flags="gi">{{supervisingDoctor}}</span>
+                                </md-item-template>
+                                </md-autocomplete>
                         </td>
 
 
@@ -522,8 +530,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                         <td md-input-container class="md-block">
 
                             <input ng-model="flow.kommentar" >
-                        </td >
-
                         </td>
 
 
@@ -547,8 +553,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 
                         <td md-cell>Psykolog</td>
 
-                        <div >
-                            <td md-autocomplete
+                        <td md-cell><md-autocomplete
                                 md-selected-item="flow.psychologist"
                                 md-search-text="psychologistSearch"
                                 md-items="psychologist in vm.propertyFilter(vm.propertyValues['psychologist'],psychologistSearch)"
@@ -559,8 +564,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                                     <span md-highlight-text="psychologistSearch" md-highlight-flags="gi">{{psychologist}}</span>
                                 </md-item-template>
                                 </md-autocomplete>
-                        </div>
-
                         </td>
 
 
@@ -569,8 +572,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                         <td md-input-container class="md-block">
 
                             <input ng-model="flow.kvalitetskontrol" >
-                        </td >
-
                         </td>
 
 
@@ -612,7 +613,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
             </md-button>
             <!--<md-button ng-disabled="save" ng-click="collapsed=vm.editCase(i);edit=collapsed;save=collapsed;">ret  </md-button>-->
             <md-button ng-disabled="vm.saveShow" ng-click="collapsed=vm.editCase(i);save=collapsed; ">ret  </md-button>
-            <md-button ng-click="save=false;edit=false;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">gem</md-button>
+            <md-button ng-click="save=false;edit=false;vm.save(i.node_uuid, i.doctor, i.supervisingDoctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">gem</md-button>
             <md-button ng-click="save=false;edit=false;vm.cancel(i.node_uuid)" ng-show="vm.saveShow">annuller</md-button>
             <md-button ng-show="!collapsed" ng-click="collapsed=!collapsed;vm.updateCard(i)" > <md-icon>keyboard_arrow_down</md-icon> </md-button>
             <md-button ng-show="collapsed" ng-click="collapsed=!collapsed"> <md-icon>keyboard_arrow_up</md-icon> </md-button>
@@ -689,8 +690,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 
                         <td md-cell>Status</td>
 
-                        <div>
-                            <td md-autocomplete
+                        <td md-cell><md-autocomplete
                                 md-selected-item="flow.status"
                                 md-search-text="statusSearch"
                                 md-items="status in vm.propertyFilter(vm.propertyValues['status'],statusSearch)"
@@ -701,8 +701,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                                     <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
                                 </md-item-template>
                                 </md-autocomplete>
-                        </div>
-
 
 
                         <td md-cell>Samtykke til oplysninger</td>
@@ -763,8 +761,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 
                         <td md-cell>Socialrådgiver</td>
 
-                        <div>
-                            <td md-autocomplete
+                        <td md-cell><md-autocomplete
                                 md-selected-item="flow.socialworker"
                                 md-search-text="socialworkerSearch"
                                 md-items="socialworker in vm.propertyFilter(vm.propertyValues['socialworker'],socialworkerSearch)"
@@ -775,8 +772,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                                     <span md-highlight-text="socialworkerSearch" md-highlight-flags="gi">{{socialworker}}</span>
                                 </md-item-template>
                                 </md-autocomplete>
-                        </div>
-
                         </td>
 
                         <td md-cell>Fritid ved (navne)</td>
@@ -784,8 +779,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                         <td md-input-container class="md-block">
 
                             <input ng-model="flow.fritidved" >
-                        </td >
-
                         </td>
 
 
@@ -799,6 +792,9 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                         <td md-cell>Læge</td>
                         <td md-cell id="doctorDisplay_{{ i.node_uuid }}">{{ i.doctor}}</td>
 
+                        <td md-cell>Tiltrædes af læge</td>
+                        <td md-cell id="supervisingDoctorDisplay_{{ i.node_uuid }}">{{ i.supervisingDoctor}}</td>
+
                         <td md-cell>Kommentar</td>
                         <td md-cell id="kommentarDisplay_{{ i.node_uuid }}">{{i.kommentar }}</td>
                     </tr>
@@ -810,8 +806,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 
                         <td md-cell>Læge</td>
 
-                        <div>
-                            <td md-autocomplete
+                        <td md-cell><md-autocomplete
                                 md-selected-item="flow.doctor"
                                 md-search-text="doctorSearch"
                                 md-items="doctor in vm.propertyFilter(vm.propertyValues['doctor'],doctorSearch)"
@@ -822,8 +817,21 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                                     <span md-highlight-text="doctorSearch" md-highlight-flags="gi">{{doctor}}</span>
                                 </md-item-template>
                                 </md-autocomplete>
-                        </div>
+                        </td>
 
+                        <td md-cell>Tiltrædes af læge</td>
+
+                        <td md-cell><md-autocomplete
+                                md-selected-item="flow.supervisingDoctor"
+                                md-search-text="supervisingDoctorSearch"
+                                md-items="supervisingDoctor in vm.propertyFilter(vm.propertyValues['doctor'],supervisingDoctorSearch)"
+                                md-item-text="supervisingDoctor"
+                                md-clear-button="true"
+                                md-require-match="true">
+                                <md-item-template>
+                                    <span md-highlight-text="supervisingDoctorSearch" md-highlight-flags="gi">{{supervisingDoctor}}</span>
+                                </md-item-template>
+                                </md-autocomplete>
                         </td>
 
 
@@ -832,8 +840,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                         <td md-input-container class="md-block">
 
                             <input ng-model="flow.kommentar" >
-                        </td >
-
                         </td>
 
 
@@ -857,8 +863,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 
                         <td md-cell>Psykolog</td>
 
-                        <div >
-                            <td md-autocomplete
+                        <td md-cell><md-autocomplete
                                 md-selected-item="flow.psychologist"
                                 md-search-text="psychologistSearch"
                                 md-items="psychologist in vm.propertyFilter(vm.propertyValues['psychologist'],psychologistSearch)"
@@ -869,8 +874,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                                     <span md-highlight-text="psychologistSearch" md-highlight-flags="gi">{{psychologist}}</span>
                                 </md-item-template>
                                 </md-autocomplete>
-                        </div>
-
                         </td>
 
 
@@ -879,8 +882,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                         <td md-input-container class="md-block">
 
                             <input ng-model="flow.kvalitetskontrol" >
-                        </td >
-
                         </td>
 
 
@@ -922,7 +923,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
             </md-button>
             <!--<md-button ng-disabled="save" ng-click="collapsed=vm.editCase(i);edit=collapsed;save=collapsed;">ret  </md-button>-->
             <md-button ng-disabled="vm.saveShow" ng-click="collapsed=vm.editCase(i);save=collapsed; ">ret  </md-button>
-            <md-button ng-click="save=false;edit=false;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">gem</md-button>
+            <md-button ng-click="save=false;edit=false;vm.save(i.node_uuid, i.doctor, i.supervisingDoctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">gem</md-button>
             <md-button ng-click="save=false;edit=false;vm.cancel(i.node_uuid)" ng-show="vm.saveShow">annuller</md-button>
             <md-button ng-show="!collapsed" ng-click="collapsed=!collapsed;vm.updateCard(i)" > <md-icon>keyboard_arrow_down</md-icon> </md-button>
             <md-button ng-show="collapsed" ng-click="collapsed=!collapsed"> <md-icon>keyboard_arrow_up</md-icon> </md-button>
@@ -998,8 +999,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 
                         <td md-cell>Status</td>
 
-                        <div>
-                            <td md-autocomplete
+                        <td md-cell><md-autocomplete
                                 md-selected-item="flow.status"
                                 md-search-text="statusSearch"
                                 md-items="status in vm.propertyFilter(vm.propertyValues['status'],statusSearch)"
@@ -1010,8 +1010,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                                     <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
                                 </md-item-template>
                                 </md-autocomplete>
-                        </div>
-
 
 
                         <td md-cell>Samtykke til oplysninger</td>
@@ -1072,8 +1070,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 
                         <td md-cell>Socialrådgiver</td>
 
-                        <div>
-                            <td md-autocomplete
+                        <td md-cell><md-autocomplete
                                 md-selected-item="flow.socialworker"
                                 md-search-text="socialworkerSearch"
                                 md-items="socialworker in vm.propertyFilter(vm.propertyValues['socialworker'],socialworkerSearch)"
@@ -1084,8 +1081,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                                     <span md-highlight-text="socialworkerSearch" md-highlight-flags="gi">{{socialworker}}</span>
                                 </md-item-template>
                                 </md-autocomplete>
-                        </div>
-
                         </td>
 
                         <td md-cell>Fritid ved (navne)</td>
@@ -1093,8 +1088,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                         <td md-input-container class="md-block">
 
                             <input ng-model="flow.fritidved" >
-                        </td >
-
                         </td>
 
 
@@ -1108,6 +1101,9 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                         <td md-cell>Læge</td>
                         <td md-cell id="doctorDisplay_{{ i.node_uuid }}">{{ i.doctor}}</td>
 
+                        <td md-cell>Tiltrædes af læge</td>
+                        <td md-cell id="supervisingDoctorDisplay_{{ i.node_uuid }}">{{ i.supervisingDoctor}}</td>
+
                         <td md-cell>Kommentar</td>
                         <td md-cell id="kommentarDisplay_{{ i.node_uuid }}">{{i.kommentar }}</td>
                     </tr>
@@ -1119,8 +1115,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 
                         <td md-cell>Læge</td>
 
-                        <div>
-                            <td md-autocomplete
+                        <td md-cell><md-autocomplete
                                 md-selected-item="flow.doctor"
                                 md-search-text="doctorSearch"
                                 md-items="doctor in vm.propertyFilter(vm.propertyValues['doctor'],doctorSearch)"
@@ -1131,8 +1126,21 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                                     <span md-highlight-text="doctorSearch" md-highlight-flags="gi">{{doctor}}</span>
                                 </md-item-template>
                                 </md-autocomplete>
-                        </div>
+                        </td>
 
+                        <td md-cell>Tiltrædes af læge</td>
+
+                        <td md-cell><md-autocomplete
+                                md-selected-item="flow.supervisingDoctor"
+                                md-search-text="supervisingDoctorSearch"
+                                md-items="supervisingDoctor in vm.propertyFilter(vm.propertyValues['doctor'],supervisingDoctorSearch)"
+                                md-item-text="supervisingDoctor"
+                                md-clear-button="true"
+                                md-require-match="true">
+                                <md-item-template>
+                                    <span md-highlight-text="supervisingDoctorSearch" md-highlight-flags="gi">{{supervisingDoctor}}</span>
+                                </md-item-template>
+                                </md-autocomplete>
                         </td>
 
 
@@ -1141,8 +1149,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                         <td md-input-container class="md-block">
 
                             <input ng-model="flow.kommentar" >
-                        </td >
-
                         </td>
 
 
@@ -1166,8 +1172,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 
                         <td md-cell>Psykolog</td>
 
-                        <div >
-                            <td md-autocomplete
+                        <td md-cell><md-autocomplete
                                 md-selected-item="flow.psychologist"
                                 md-search-text="psychologistSearch"
                                 md-items="psychologist in vm.propertyFilter(vm.propertyValues['psychologist'],psychologistSearch)"
@@ -1178,8 +1183,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                                     <span md-highlight-text="psychologistSearch" md-highlight-flags="gi">{{psychologist}}</span>
                                 </md-item-template>
                                 </md-autocomplete>
-                        </div>
-
                         </td>
 
 
@@ -1188,8 +1191,6 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
                         <td md-input-container class="md-block">
 
                             <input ng-model="flow.kvalitetskontrol" >
-                        </td >
-
                         </td>
 
 
@@ -1231,7 +1232,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
             </md-button>
             <!--<md-button ng-disabled="save" ng-click="collapsed=vm.editCase(i);edit=collapsed;save=collapsed;">ret  </md-button>-->
             <md-button ng-disabled="vm.saveShow" ng-click="collapsed=vm.editCase(i);save=collapsed; ">ret  </md-button>
-            <md-button ng-click="save=false;edit=false;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">gem</md-button>
+            <md-button ng-click="save=false;edit=false;vm.save(i.node_uuid, i.doctor, i.supervisingDoctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">gem</md-button>
             <md-button ng-click="save=false;edit=false;vm.cancel(i.node_uuid)" ng-show="vm.saveShow">annuller</md-button>
             <md-button ng-show="!collapsed" ng-click="collapsed=!collapsed;vm.updateCard(i)" > <md-icon>keyboard_arrow_down</md-icon> </md-button>
             <md-button ng-show="collapsed" ng-click="collapsed=!collapsed"> <md-icon>keyboard_arrow_up</md-icon> </md-button>

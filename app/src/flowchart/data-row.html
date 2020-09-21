@@ -9,6 +9,7 @@
         <div layout="row">
             <div flex="15">{{i.creationDate | customFlowChartDate }} </div>
             <div flex="15">{{i.doctor  }}</div>
+            <div flex="15">{{i.supervisingDoctor}}</div>
             <div flex="15"><span class="go-to-case-link" ng-click="vm.gotoCase(i.caseNumber)">{{i.cprNumber}}</span> <img ng-show="i.redflag" src="app/assets/images/priority.png" class="priority"></div>
             <div flex="15">{{i.firstName}}</div>
             <div flex="15">{{i.lastName}}</div>
@@ -51,7 +52,7 @@
 
                 <md-button class="md-raised" ng-disabled="vm.saveShow" ng-click="vm.editing=true;collapsed=vm.editCase(i);save=collapsed;" ng-hide="!collapsed">Ret</md-button>
 
-                <md-button class="md-raised md-primary" ng-click="save=false;vm.editing=false;;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">Gem</md-button>
+                <md-button class="md-raised md-primary" ng-click="save=false;vm.editing=false;;vm.save(i.node_uuid, i.doctor, i.supervisingDoctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">Gem</md-button>
 
                 <md-button class="md-raised" ng-click="save=false;vm.editing=false;;vm.cancel(i.node_uuid)" ng-show="vm.saveShow">Annuller</md-button>
 
@@ -128,7 +129,7 @@
                                 <td md-cell class="key">Socialrådgiver:</td>
                                 <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="socialworkerDisplay_{{ i.node_uuid }}">{{i.socialworker}}</td>
                                 <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
-                                    <md-autocomplete 
+                                    <md-autocomplete
                                         flex md-selected-item="flow.socialworker"
                                         md-search-text="socialworkerSearch"
                                         md-items="socialworker in vm.propertyFilter(vm.propertyValues['socialworker'],socialworkerSearch)"
@@ -151,12 +152,12 @@
                                 <td md-cell class="key">Læge:</td>
                                 <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="doctorDisplay_{{ i.node_uuid }}">{{ i.doctor}}</td>
                                 <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
-                                    <md-autocomplete 
+                                    <md-autocomplete
                                         flex md-selected-item="flow.doctor"
                                         md-search-text="doctorSearch"
                                         md-items="doctor in vm.propertyFilter(vm.propertyValues['doctor'],doctorSearch)"
-                                        md-item-text="doctor" 
-                                        md-clear-button="true" 
+                                        md-item-text="doctor"
+                                        md-clear-button="true"
                                         md-require-match="true"
                                         md-floating-label=" "
                                         md-min-length="0">
@@ -168,17 +169,39 @@
                             </tr>
                             <!-- doctor, stop -->
 
+                            <!-- supervising doctor, start -->
+                            <tr md-row>
+                                <td md-cell class="key">Tiltrædes af læge:</td>
+                                <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="supervisingDoctorDisplay_{{ i.node_uuid }}">{{ i.supervisingDoctor}}</td>
+                                <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
+                                    <md-autocomplete
+                                        flex md-selected-item="flow.supervisingDoctor"
+                                        md-search-text="supervisingDoctorSearch"
+                                        md-items="doctor in vm.propertyFilter(vm.propertyValues['doctor'],supervisingDoctorSearch)"
+                                        md-item-text="doctor"
+                                        md-clear-button="true"
+                                        md-require-match="true"
+                                        md-floating-label=" "
+                                        md-min-length="0">
+                                        <md-item-template>
+                                            <span md-highlight-text="supervisingDoctorSearch" md-highlight-flags="gi">{{doctor}}</span>
+                                        </md-item-template>
+                                    </md-autocomplete>
+                                </td>
+                            </tr>
+                            <!-- supervising doctor, stop -->
+
                             <!-- psychologist, start -->
                             <tr md-row>
                                 <td md-cell class="key">Psykolog:</td>
                                 <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="psychologistDisplay_{{ i.node_uuid }}">{{ i.psychologist}}</td>
                                 <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
-                                    <md-autocomplete 
+                                    <md-autocomplete
                                         md-selected-item="flow.psychologist"
                                         md-search-text="psychologistSearch"
                                         md-items="psychologist in vm.propertyFilter(vm.propertyValues['psychologist'],psychologistSearch)"
-                                        md-item-text="psychologist" 
-                                        md-clear-button="true" 
+                                        md-item-text="psychologist"
+                                        md-clear-button="true"
                                         md-require-match="true"
                                         md-floating-label=" "
                                         md-min-length="0">

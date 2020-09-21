@@ -14,11 +14,11 @@
     <md-card-content>
         <div>
         <md-autocomplete flex
-            md-selected-item="case.placement" 
+            md-selected-item="case.placement"
             md-search-text="placementSearch"
-            md-items="placement in propertyFilter(propertyValues['placement'],placementSearch)" 
-            md-item-text="placement" 
-            md-min-length="0" 
+            md-items="placement in propertyFilter(propertyValues['placement'],placementSearch)"
+            md-item-text="placement"
+            md-min-length="0"
             md-floating-label="Placering"
             ng-disabled="!editPatientData"
             md-clear-button="editPatientData"
@@ -64,12 +64,12 @@
 
 
         <p class="md-subhead">Afgivet af<br></p>
-        <md-autocomplete flex 
-            md-selected-item="case.doctor" 
+        <md-autocomplete flex
+            md-selected-item="case.doctor"
             md-search-text="doctorSearch"
-            md-items="doctor in propertyFilter(propertyValues['doctor'],doctorSearch)" 
-            md-item-text="doctor" 
-            md-min-length="0" 
+            md-items="doctor in propertyFilter(propertyValues['doctor'],doctorSearch)"
+            md-item-text="doctor"
+            md-min-length="0"
             md-floating-label="Læge"
             ng-disabled="!editPatientData"
             md-clear-button="editPatientData"
@@ -79,12 +79,27 @@
             </md-item-template>
         </md-autocomplete>
 
-        <md-autocomplete flex 
-            md-selected-item="case.psychologist" 
+        <md-autocomplete flex
+            md-selected-item="case.supervisingDoctor"
+            md-search-text="supervisingDoctorSearch"
+            md-items="doctor in propertyFilter(propertyValues['doctor'],supervisingDoctorSearch)"
+            md-item-text="doctor"
+            md-min-length="0"
+            md-floating-label="Tiltrædes af læge"
+            ng-disabled="!editPatientData"
+            md-clear-button="editPatientData"
+            md-require-match="true">
+            <md-item-template>
+                <span md-highlight-text="supervisingDoctorSearch" md-highlight-flags="gi">{{doctor}}</span>
+            </md-item-template>
+        </md-autocomplete>
+
+        <md-autocomplete flex
+            md-selected-item="case.psychologist"
             md-search-text="psychSearch"
-            md-items="psychologist in propertyFilter(propertyValues['psychologist'],psychSearch)" 
-            md-item-text="psychologist" 
-            md-min-length="0" 
+            md-items="psychologist in propertyFilter(propertyValues['psychologist'],psychSearch)"
+            md-item-text="psychologist"
+            md-min-length="0"
             md-floating-label="Psykolog"
             ng-disabled="!editPatientData"
             md-clear-button="editPatientData"
@@ -94,12 +109,12 @@
             </md-item-template>
         </md-autocomplete>
 
-        <md-autocomplete flex 
-            md-selected-item="case.socialworker" 
+        <md-autocomplete flex
+            md-selected-item="case.socialworker"
             md-search-text="socialworkerSearch"
-            md-items="socialworker in propertyFilter(propertyValues['socialworker'],socialworkerSearch)" 
-            md-item-text="socialworker" 
-            md-min-length="0" 
+            md-items="socialworker in propertyFilter(propertyValues['socialworker'],socialworkerSearch)"
+            md-item-text="socialworker"
+            md-min-length="0"
             md-floating-label="Socialrådgiver"
             ng-disabled="!editPatientData"
             md-clear-button="editPatientData"
@@ -109,12 +124,12 @@
             </md-item-template>
         </md-autocomplete>
 
-        <md-autocomplete flex 
-            md-selected-item="case.secretary" 
+        <md-autocomplete flex
+            md-selected-item="case.secretary"
             md-search-text="secretarySearch"
-            md-items="secretary in propertyFilter(propertyValues['secretary'],secretarySearch)" 
-            md-item-text="secretary" 
-            md-min-length="0" 
+            md-items="secretary in propertyFilter(propertyValues['secretary'],secretarySearch)"
+            md-item-text="secretary"
+            md-min-length="0"
             md-floating-label="Sekretær"
             ng-disabled="!editPatientData"
             md-clear-button="editPatientData"

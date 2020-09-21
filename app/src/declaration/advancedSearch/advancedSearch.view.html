@@ -19,7 +19,6 @@
                                 </md-input-container>
                             </div>
 
-
                             <md-chips ng-model="searchParams.mainCharge"
                                       md-autocomplete-snap
                                       md-transform-chip="vm.transformChip($chip)"
@@ -32,6 +31,7 @@
                                   md-item-text="mainCarge"
                                   md-min-length="0"
                                   md-floating-label="Hovedsigtelse">
+
                                     <span md-highlight-text="mainChargeSearch" md-highlight-flags="gi">{{mainCarge}}</span>
                               </md-autocomplete>
                               <md-chip-template>
@@ -193,6 +193,21 @@
 
                                 <md-autocomplete flex
                                                  ng-show="searchParams.evalAll"
+                                                 md-selected-item="searchParams.supervisingDoctor"
+                                                 md-search-text="supervisingDoctorSearch"
+                                                 md-items="doctor in propertyFilter(propertyValues['doctor'],supervisingDoctorSearch)"
+                                                 md-item-text="doctor"
+                                                 md-min-length="0"
+                                                 md-floating-label="Tiltrædes af læge"
+                                                 md-require-match="true"
+                                                 md-clear-button="true">
+                                    <md-item-template>
+                                        <span md-highlight-text="supervisingDoctorSearch" md-highlight-flags="gi">{{doctor}}</span>
+                                    </md-item-template>
+                                </md-autocomplete>
+
+                                <md-autocomplete flex
+                                                 ng-show="searchParams.evalAll"
                                                  md-selected-item="searchParams.socialworker"
                                                  md-search-text="socialworkerSearch"
                                                  md-items="socialworker in propertyFilter(propertyValues['socialworker'],socialworkerSearch)"
@@ -332,6 +347,7 @@
                             <th md-column md-order-by="fullName">Navn</th>
                             <th md-column md-numeric md-order-by="cprNumber">CPR</th>
                             <th md-column md-order-by="doctor">Læge</th>
+                            <th md-column md-order-by="supervisingDoctor">Tiltrædes af læge</th>
                             <th md-column md-order-by="closed">Erklæring afgivet</th>
                             <th md-column md-order-by="psychologist">Psykologisk undersøgelse</th>
                         </tr>
@@ -346,6 +362,7 @@
                             <td md-cell>{{case.fullName}}</td>
                             <td md-cell>{{case.cprNumber}}</td>
                             <td md-cell>{{case.doctor}}</td>
+                            <td md-cell>{{case.supervisingDoctor}}</td>
                             <td md-cell>
                                 <span ng-if="!case.closed && case.declarationDate">Afgivet, mangler afslutning</span>
                                 <span ng-if="case.closed && !case.closedWithoutDeclaration">Afsluttet</span>
