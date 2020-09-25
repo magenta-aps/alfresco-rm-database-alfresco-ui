@@ -4,7 +4,7 @@ angular
     .module('openDeskApp')
     .controller('HeaderController', HeaderController);
 
-function HeaderController($scope, HeaderService, authService, $state, $timeout) {
+function HeaderController($scope, $transitions, HeaderService, authService, $state, $timeout) {
 
     var vm = this;
 
@@ -13,8 +13,7 @@ function HeaderController($scope, HeaderService, authService, $state, $timeout) 
     vm.actions = [];
     vm.isClosed = false;
     vm.loggedIn = false;
-    vm.backtosearch = false;
-    vm.backtosearchquery = "";
+    vm.previous = null;
 
     vm.canAccessSettings = canAccessSettings;
     vm.getUserName = getUserName;
@@ -26,20 +25,31 @@ function HeaderController($scope, HeaderService, authService, $state, $timeout) 
         updateHeaderActions();
         updateIsClosed();
         isLoggedIn();
-        vm.backtosearch = HeaderService.getBackToSearchStatus();
-        vm.backtosearchquery = HeaderService.getBackToSearchQuery();
-
     });
 
-    function gobacktosearch() {
+  	// when transitioning to the view, store which view we came from
+  	$transitions.onStart({ to: 'declaration.show.patientdata' }, function (transition) {
+      var previousView = transition.$from();
+      if (previousView.name === 'declaration.advancedSearch' || previousView.name === 'flowchart') {
+        vm.previous = {
+          name: transition.from().name,
+          params: transition.params()
+        }
+      } else {
+        vm.previous = null;
+      }
+  	});
+
+    function goback() {
         HeaderService.setBacktosearchStatus(false);
     $timeout(function() {
-       $state.go('declaration.advancedSearch', { searchquery: vm.backtosearchquery });
+       $state.go(vm.previous.name, vm.previous.params);
+       vm.previous = null
     });
 
 
 	}
-	vm.gobacktosearch = gobacktosearch;
+	vm.goback = goback;
 
     function isLoggedIn() {
         vm.loggedIn = authService.loggedin();
@@ -73,4 +83,3 @@ function HeaderController($scope, HeaderService, authService, $state, $timeout) 
         vm.isClosed = HeaderService.isClosed();
     }
 }
-
