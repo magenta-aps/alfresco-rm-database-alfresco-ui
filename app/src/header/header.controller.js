@@ -4,7 +4,7 @@ angular
     .module('openDeskApp')
     .controller('HeaderController', HeaderController);
 
-function HeaderController($scope, $transitions, HeaderService, authService, $state, $timeout) {
+function HeaderController($scope, $transitions, HeaderService, authService, $state, $stateParams, $timeout) {
 
     var vm = this;
 
@@ -28,11 +28,11 @@ function HeaderController($scope, $transitions, HeaderService, authService, $sta
     });
 
   	// when transitioning to the view, store which view we came from
-  	$transitions.onStart({ to: 'declaration.show.patientdata' }, function (transition) {
-      var previousView = transition.$from();
-      if (previousView.name === 'declaration.advancedSearch' || previousView.name === 'flowchart') {
+  	$transitions.onStart({ to: 'declaration.show.**' }, function (transition) {
+      var fromName = transition.from().name;
+      if (fromName === 'declaration.advancedSearch' || fromName === 'flowchart') {
         vm.previous = {
-          name: transition.from().name,
+          name: fromName,
           params: transition.params()
         }
       } else {

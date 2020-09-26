@@ -27,7 +27,7 @@ angular
       });
 
 
-function FlowChartController($scope, $stateParams, $translate, HeaderService, FlowChartService, propertyService, filterService, DeclarationService, Toast, authService, $anchorScroll, $location, $timeout, $state ) {
+function FlowChartController($scope, $translate, HeaderService, FlowChartService, propertyService, filterService, DeclarationService, Toast, authService, $anchorScroll, $location, $timeout, $state ) {
   var vm = this;
 
   $scope.flow = {};
@@ -59,9 +59,10 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
    return !(item.Message === null || item.Message.trim().length === 0)
   }
 
-
-
-
+  // on page load, get the data
+  $timeout(function() {
+    loaddata($state.params.type, '@rm:creationDate', 'true');
+  }, 0);
 
 
 function propertyFilter(array, query) {
@@ -71,7 +72,7 @@ function propertyFilter(array, query) {
 
 
     function gotoCase(caseNumber) {
-        $state.go('declaration.show', { caseid: caseNumber });
+        $state.go('declaration.show', { caseid: caseNumber, type: $state.params.type });
     }
 
     vm.gotoCase = gotoCase;
@@ -104,20 +105,20 @@ function propertyFilter(array, query) {
 
 
 
-    $timeout(function() {
-        loaddata('ongoing', '@rm:creationDate', 'true');
-        vm.currentCard = "ongoing";
-        }, 0);
   }
 
   function loaddata(value, sort, desc) {
+    $state.go('flowchart', {
+      type: value
+    }).then(function(state) {
       vm.showing = value;
       vm.currentCard = value;
 
-      FlowChartService.getEntries(value, sort, desc).then(function (response) {
-          vm.ongoing = response.entries;
-      });
- }
+      return FlowChartService.getEntries(value, sort, desc);
+    }).then(function (response) {
+      vm.ongoing = response.entries;
+    });
+  }
 
 
 
@@ -336,6 +337,3 @@ function propertyFilter(array, query) {
 
     vm.visitate = visitate;
 }
-
-
-
