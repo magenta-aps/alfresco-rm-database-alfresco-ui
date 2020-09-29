@@ -4,7 +4,7 @@ angular
     .module('openDeskApp')
     .controller('HeaderController', HeaderController);
 
-function HeaderController($scope, HeaderService, authService, $state, $timeout) {
+function HeaderController($scope, $transitions, HeaderService, authService, $state, $stateParams, $timeout) {
 
     var vm = this;
 
@@ -13,8 +13,7 @@ function HeaderController($scope, HeaderService, authService, $state, $timeout) 
     vm.actions = [];
     vm.isClosed = false;
     vm.loggedIn = false;
-    vm.backtosearch = false;
-    vm.backtosearchquery = "";
+    vm.previous = null;
 
     vm.canAccessSettings = canAccessSettings;
     vm.getUserName = getUserName;
@@ -26,20 +25,38 @@ function HeaderController($scope, HeaderService, authService, $state, $timeout) 
         updateHeaderActions();
         updateIsClosed();
         isLoggedIn();
-        vm.backtosearch = HeaderService.getBackToSearchStatus();
-        vm.backtosearchquery = HeaderService.getBackToSearchQuery();
-
     });
 
-    function gobacktosearch() {
+  	// when transitioning to the view, store which view we came from
+  	$transitions.onStart({ to: 'declaration.show.**' }, function (transition) {
+      var fromName = transition.from().name;
+      if (fromName === 'declaration.advancedSearch' || fromName === 'flowchart') {
+        vm.previous = {
+          name: fromName,
+          params: transition.params()
+        }
+      } else {
+        vm.previous = null;
+      }
+  	});
+
+    $transitions.onStart({ from: 'declaration.show.**' }, function (transition) {
+      $timeout(function () {
+        vm.previous = null;
+      }, 100); // wait for the $state.go() to finish in vm.goback()
+    });
+
+    function goback() {
         HeaderService.setBacktosearchStatus(false);
     $timeout(function() {
-       $state.go('declaration.advancedSearch', { searchquery: vm.backtosearchquery });
+       $state.go(vm.previous.name, vm.previous.params).then(function() {
+         vm.previous = null;
+       });
     });
 
 
 	}
-	vm.gobacktosearch = gobacktosearch;
+	vm.goback = goback;
 
     function isLoggedIn() {
         vm.loggedIn = authService.loggedin();
@@ -73,4 +90,3 @@ function HeaderController($scope, HeaderService, authService, $state, $timeout) 
         vm.isClosed = HeaderService.isClosed();
     }
 }
-

@@ -107,7 +107,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 
 		if (vm.backtosearch) {
-            HeaderService.addAction('Tilbage til søgning', 'description', gobacktosearch, false)
+            HeaderService.addAction('Tilbage', 'description', gobacktosearch, false)
         }
 
 		HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings)

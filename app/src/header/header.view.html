@@ -35,9 +35,8 @@
             <a ui-sref="declaration.show({caseid: vm.caseId})" style="color:white">
                 <h2>{{vm.title}}</h2>
             </a>
-
-            <md-button ng-if="vm.backtosearch"  title="tilbage til søgning" ui-sref="administration" ng-click="vm.gobacktosearch()">
-                        <span>tilbage til søgning</span>
+            <md-button ng-if="vm.previous"  title="tilbage" ui-sref="administration" ng-click="vm.goback()">
+                        <span>tilbage</span>
             </md-button>
 
 

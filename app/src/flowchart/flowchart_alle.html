@@ -13,7 +13,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 
 <div class="md-title">Arrestanter <a ng-click="vm.scroll('Ongoing')">næste</a> </div>
 
-<div  ng-show="vm.alle" ng-repeat="i in vm.ongoing.arrestanter" >
+<div  ng-show="vm.alle" ng-repeat="i in ongoing.arrestanter" >
     <md-card class="dropdown-card" id="{{ i.node_uuid }}" ng-hide="!(vm.editperid == i.node_uuid) && vm.startedit">
 
 
@@ -303,9 +303,9 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
             </md-button>
             <!--<md-button ng-disabled="save" ng-click="collapsed=vm.editCase(i);edit=collapsed;save=collapsed;">ret  </md-button>-->
             <md-button ng-disabled="vm.saveShow" ng-click="collapsed=vm.editCase(i);save=collapsed; ">ret  </md-button>
-            <md-button ng-click="save=false;edit=false;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">gem</md-button>
+            <md-button ng-click="save=false;edit=false;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status, $index)" ng-show="vm.saveShow">gem</md-button>
             <md-button ng-click="save=false;edit=false;vm.cancel(i.node_uuid)" ng-show="vm.saveShow">annuller</md-button>
-            <md-button ng-show="!collapsed" ng-click="collapsed=!collapsed;vm.updateCard(i)" > <md-icon>keyboard_arrow_down</md-icon> </md-button>
+            <md-button ng-show="!collapsed" ng-click="collapsed=!collapsed;vm.openCase($index)" > <md-icon>keyboard_arrow_down</md-icon> </md-button>
             <md-button ng-show="collapsed" ng-click="collapsed=!collapsed"> <md-icon>keyboard_arrow_up</md-icon> </md-button>
 
 
@@ -322,7 +322,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 <a class="anchor" id="Ongoing"></a>
 <div class="md-title"> <a ng-click="vm.scroll('Arrestanter')">forrige</a> Igangværende <a ng-click="vm.scroll('Waitinglist')">næste</a> </div>
 
-<div  ng-show="vm.alle" ng-repeat="i in vm.ongoing.ongoing" >
+<div  ng-show="vm.alle" ng-repeat="i in ongoing.ongoing" >
     <md-card class="dropdown-card" id="{{ i.node_uuid }}" ng-hide="!(vm.editperid == i.node_uuid) && vm.startedit">
 
 
@@ -612,9 +612,9 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
             </md-button>
             <!--<md-button ng-disabled="save" ng-click="collapsed=vm.editCase(i);edit=collapsed;save=collapsed;">ret  </md-button>-->
             <md-button ng-disabled="vm.saveShow" ng-click="collapsed=vm.editCase(i);save=collapsed; ">ret  </md-button>
-            <md-button ng-click="save=false;edit=false;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">gem</md-button>
+            <md-button ng-click="save=false;edit=false;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status, $index)" ng-show="vm.saveShow">gem</md-button>
             <md-button ng-click="save=false;edit=false;vm.cancel(i.node_uuid)" ng-show="vm.saveShow">annuller</md-button>
-            <md-button ng-show="!collapsed" ng-click="collapsed=!collapsed;vm.updateCard(i)" > <md-icon>keyboard_arrow_down</md-icon> </md-button>
+            <md-button ng-show="!collapsed" ng-click="collapsed=!collapsed;vm.openCase($index)" > <md-icon>keyboard_arrow_down</md-icon> </md-button>
             <md-button ng-show="collapsed" ng-click="collapsed=!collapsed"> <md-icon>keyboard_arrow_up</md-icon> </md-button>
 
 
@@ -632,7 +632,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 <a class="anchor" id="Waitinglist"></a>
 <div class="md-title"> <a ng-click="vm.scroll('Ongoing')">forrige</a> Venteliste <a ng-click="vm.scroll('Indlagt')">næste</a> </div>
 
-<div  ng-show="vm.alle" ng-repeat="i in vm.ongoing.waitinglist" >
+<div  ng-show="vm.alle" ng-repeat="i in ongoing.waitinglist" >
     <md-card class="dropdown-card" id="{{ i.node_uuid }}" ng-hide="!(vm.editperid == i.node_uuid) && vm.startedit">
 
 
@@ -922,9 +922,9 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
             </md-button>
             <!--<md-button ng-disabled="save" ng-click="collapsed=vm.editCase(i);edit=collapsed;save=collapsed;">ret  </md-button>-->
             <md-button ng-disabled="vm.saveShow" ng-click="collapsed=vm.editCase(i);save=collapsed; ">ret  </md-button>
-            <md-button ng-click="save=false;edit=false;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">gem</md-button>
+            <md-button ng-click="save=false;edit=false;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status, $index)" ng-show="vm.saveShow">gem</md-button>
             <md-button ng-click="save=false;edit=false;vm.cancel(i.node_uuid)" ng-show="vm.saveShow">annuller</md-button>
-            <md-button ng-show="!collapsed" ng-click="collapsed=!collapsed;vm.updateCard(i)" > <md-icon>keyboard_arrow_down</md-icon> </md-button>
+            <md-button ng-show="!collapsed" ng-click="collapsed=!collapsed;vm.openCase($index)" > <md-icon>keyboard_arrow_down</md-icon> </md-button>
             <md-button ng-show="collapsed" ng-click="collapsed=!collapsed"> <md-icon>keyboard_arrow_up</md-icon> </md-button>
 
 
@@ -941,7 +941,7 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
 <a class="anchor" id="Indlagte"></a>
 <div class="md-title"> <a ng-click="vm.scroll('Waitinglist')">forrige</a> Indlagte <a ng-click="vm.scroll('Ongoing')">næste</a> </div>
 
-<div  ng-show="vm.alle" ng-repeat="i in vm.ongoing.observation" >
+<div  ng-show="vm.alle" ng-repeat="i in ongoing.observation" >
     <md-card class="dropdown-card" id="{{ i.node_uuid }}" ng-hide="!(vm.editperid == i.node_uuid) && vm.startedit">
 
 
@@ -1231,9 +1231,9 @@ a.anchor{display: block; position: relative; top: -250px; visibility: hidden;}
             </md-button>
             <!--<md-button ng-disabled="save" ng-click="collapsed=vm.editCase(i);edit=collapsed;save=collapsed;">ret  </md-button>-->
             <md-button ng-disabled="vm.saveShow" ng-click="collapsed=vm.editCase(i);save=collapsed; ">ret  </md-button>
-            <md-button ng-click="save=false;edit=false;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">gem</md-button>
+            <md-button ng-click="save=false;edit=false;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status, $index)" ng-show="vm.saveShow">gem</md-button>
             <md-button ng-click="save=false;edit=false;vm.cancel(i.node_uuid)" ng-show="vm.saveShow">annuller</md-button>
-            <md-button ng-show="!collapsed" ng-click="collapsed=!collapsed;vm.updateCard(i)" > <md-icon>keyboard_arrow_down</md-icon> </md-button>
+            <md-button ng-show="!collapsed" ng-click="collapsed=!collapsed;vm.openCase($index)" > <md-icon>keyboard_arrow_down</md-icon> </md-button>
             <md-button ng-show="collapsed" ng-click="collapsed=!collapsed"> <md-icon>keyboard_arrow_up</md-icon> </md-button>
 
 
