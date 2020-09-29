@@ -51,7 +51,14 @@ function DeclarationService($http, $filter) {
   }
 
   function advancedSearch(skip, max, query) {
-    return $http.post(`/alfresco/s/database/retspsyk/page_entries?skip=${skip}&maxItems=${max}`, query)
+
+    // bugfix - if no mainCharge, send an undefined instead of an empty array. The backend dosnt handle empty arrays
+    let updatedQuery = JSON.parse(JSON.stringify(query));
+    if (query.mainCharge != undefined && query.mainCharge.length == 0) {
+      updatedQuery.mainCharge = undefined;
+    }
+
+    return $http.post(`/alfresco/s/database/retspsyk/page_entries?skip=${skip}&maxItems=${max}`, updatedQuery)
       .then(response => {
         return response.data;
       });
