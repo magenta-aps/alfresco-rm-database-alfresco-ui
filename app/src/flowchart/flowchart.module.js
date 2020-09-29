@@ -8,7 +8,7 @@ function config($stateProvider) {
   $stateProvider
     .state('flowchart', {
       parent: 'site',
-      url: '/flowchart?:type',
+      url: '/flowchart?:type&:index',
       params: {
         path: "/flowchart",
         breadcrumbPath: []

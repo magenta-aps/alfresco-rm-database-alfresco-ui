@@ -52,15 +52,15 @@
 
                 <md-button class="md-raised" ng-disabled="vm.saveShow" ng-click="vm.editing=true;collapsed=vm.editCase(i);save=collapsed;" ng-hide="!collapsed">Ret</md-button>
 
-                <md-button class="md-raised md-primary" ng-click="save=false;vm.editing=false;;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">Gem</md-button>
+                <md-button class="md-raised md-primary" ng-click="save=false;vm.editing=false;;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status, $index)" ng-show="vm.saveShow">Gem</md-button>
 
                 <md-button class="md-raised" ng-click="save=false;vm.editing=false;;vm.cancel(i.node_uuid)" ng-show="vm.saveShow">Annuller</md-button>
 
-                <md-button class="md-icon-button md-raised" ng-show="!collapsed && !vm.editing" ng-click="collapsed=!collapsed;vm.updateCard(i)">
+                <md-button class="md-icon-button md-raised show-details" ng-show="!collapsed && !vm.editing" ng-click="collapsed=!collapsed;vm.openCase($index)">
                     <md-tooltip>Vis detaljer</md-tooltip>
                     <md-icon>keyboard_arrow_down</md-icon>
                 </md-button>
-                <md-button class="md-icon-button md-raised" ng-show="collapsed && !vm.editing" ng-click="collapsed=!collapsed">
+                <md-button class="md-icon-button md-raised hide-details" ng-show="collapsed && !vm.editing" ng-click="collapsed=!collapsed">
                     <md-tooltip>Skjul detaljer</md-tooltip>
                     <md-icon>keyboard_arrow_up</md-icon>
                 </md-button>

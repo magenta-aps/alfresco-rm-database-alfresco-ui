@@ -1,25 +1,25 @@
 <div class="flowchart-navigation">
     <md-button class="md-raised {{vm.currentCard == 'arrestanter' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('arrestanter', '@rm:creationDate', 'true')">
-        {{'COMMON.ARRESTANTER' | translate }} <span class="flowchart-count">({{ vm.total.arrestanter }})</span>
+        {{'COMMON.ARRESTANTER' | translate }} <span class="flowchart-count">({{ total.arrestanter }})</span>
     </md-button>
 
     <md-button class="md-raised {{vm.currentCard == 'ongoing' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('ongoing', '@rm:creationDate', 'true')">
-        {{'COMMON.IGANGVÆRENDE' | translate }} <span class="flowchart-count">({{ vm.total.ongoing }})</span>
+        {{'COMMON.IGANGVÆRENDE' | translate }} <span class="flowchart-count">({{ total.ongoing }})</span>
     </md-button>
 
     <md-button class="md-raised {{vm.currentCard == 'waitinglist' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('waitinglist', '@rm:creationDate', 'true')">
-        {{'COMMON.VENTELISTE' | translate }} <span class="flowchart-count">({{ vm.total.waitinglist }})</span>
+        {{'COMMON.VENTELISTE' | translate }} <span class="flowchart-count">({{ total.waitinglist }})</span>
     </md-button>
 
     <md-button class="md-raised {{vm.currentCard == 'observation' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('observation', '@rm:creationDate', 'true')">
-        {{'COMMON.INDLAGTE' | translate }} <span class="flowchart-count">({{ vm.total.observation }})</span>
+        {{'COMMON.INDLAGTE' | translate }} <span class="flowchart-count">({{ total.observation }})</span>
     </md-button>
 
     <md-button class="md-raised {{vm.currentCard == 'ventendegr' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('ventendegr', '@rm:creationDate', 'true')">
-        {{'COMMON.VENTEDEGR' | translate }} <span class="flowchart-count">({{ vm.total.ventendegr }})</span>
+        {{'COMMON.VENTEDEGR' | translate }} <span class="flowchart-count">({{ total.ventendegr }})</span>
     </md-button>
 
     <md-button class="md-raised {{vm.currentCard == 'user' ?'md-primary':'default'}}" ng-show="vm.showUser" ng-click="vm.minesager=true;vm.loaddata('user', '@rm:creationDate', 'true')">
-        {{'COMMON.MINESAGER' | translate }} <span class="flowchart-count">({{ vm.total.user }})</span>
+        {{'COMMON.MINESAGER' | translate }} <span class="flowchart-count">({{ total.user }})</span>
     </md-button>
 </div>

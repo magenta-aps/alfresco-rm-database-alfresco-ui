@@ -63,7 +63,8 @@ function config($stateProvider) {
       url: '/sag/:caseid',
       params: {
               searchquery: {},
-              type: ''
+              type: '',
+              index: -1
             },
       views: {
         'content@': {

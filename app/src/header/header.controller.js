@@ -40,11 +40,18 @@ function HeaderController($scope, $transitions, HeaderService, authService, $sta
       }
   	});
 
+    $transitions.onStart({ from: 'declaration.show.**' }, function (transition) {
+      $timeout(function () {
+        vm.previous = null;
+      }, 100); // wait for the $state.go() to finish in vm.goback()
+    });
+
     function goback() {
         HeaderService.setBacktosearchStatus(false);
     $timeout(function() {
-       $state.go(vm.previous.name, vm.previous.params);
-       vm.previous = null
+       $state.go(vm.previous.name, vm.previous.params).then(function() {
+         vm.previous = null;
+       });
     });
 
 
