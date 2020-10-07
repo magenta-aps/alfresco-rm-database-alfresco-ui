@@ -5,9 +5,9 @@
 var gulp = require('gulp'),
     $ = require('gulp-load-plugins')(),
     fs = require('fs'),
+    path = require('path'),
     proxy = require('http-proxy-middleware'),
     autoprefixer = require('gulp-autoprefixer'),
-    gulpNSP = require('gulp-nsp'),
     pa11y = require('gulp-pa11y');
 
 // Config vars
@@ -104,17 +104,27 @@ gulp.task('css', function () {
         .on('error', $.util.log);
 });
 
-// Accessibility check
-gulp.task('acc_check', function () {
-    pa11y({ url: 'http://178.62.194.129/' });
+// Cache busting task
+gulp.task('cache_bust', ['scripts', 'css'], function () {
+    return gulp.src(['index**.html', 'dist/**.js', 'dist/**.css'])
+        .pipe($.revAll.revision({
+          hashLength: 8,
+          transformFilename: function (file, hash) {
+            var ext = path.extname(file.path);
+            var filename = path.basename(file.path, ext) + ext;
+            var re = new RegExp('(\\..{8})*\\' + ext + '$');
+            return filename.replace(re, '.' + hash.substr(0, 8)) + ext; // replace any previous hash(es) with the new one
+          }
+        }))
+        .pipe(gulp.dest(function (obj) {
+          return obj.base
+        }))
+        .pipe($.revNapkin())
 });
 
-// Security check
-gulp.task('sec_check', function (cb) {
-    gulpNSP({
-        package: __dirname + '/package.json',
-        stopOnError: false
-    }, cb);
+// Accessibility check
+gulp.task('acc_check', function () {
+    return pa11y({ url: 'http://178.62.194.129/' });
 });
 
 // Set up watchers
@@ -130,7 +140,7 @@ gulp.task('watch', function () {
 
 // This task is used to just build the scripts and CSS.
 // Useful if you want to deploy to production (e.g. with Apache).
-gulp.task('build', ['scripts', 'css', 'sec_check', 'acc_check']);
+gulp.task('build', ['scripts', 'css', 'acc_check', 'cache_bust']);
 
 gulp.task('demo', ['build', 'watch'], function () {
     createWebserver(environment.demo);
@@ -150,4 +160,3 @@ gulp.task('ui-test', ['e2e-tests']);
 // Running 'gulp' is equal to running 'gulp build watch'
 // In other words, the default task is the 'build' and 'watch' task
 gulp.task('default', ['build', 'watch']);
-
