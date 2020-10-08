@@ -51,7 +51,14 @@ function DeclarationService($http, $filter) {
   }
 
   function advancedSearch(skip, max, query) {
-    return $http.post(`/alfresco/s/database/retspsyk/page_entries?skip=${skip}&maxItems=${max}`, query)
+
+    // bugfix - if no mainCharge, send an undefined instead of an empty array. The backend dosnt handle empty arrays
+    let updatedQuery = JSON.parse(JSON.stringify(query));
+    if (query.mainCharge != undefined && query.mainCharge.length == 0) {
+      updatedQuery.mainCharge = undefined;
+    }
+
+    return $http.post(`/alfresco/s/database/retspsyk/page_entries?skip=${skip}&maxItems=${max}`, updatedQuery)
       .then(response => {
         return response.data;
       });
@@ -102,7 +109,11 @@ function DeclarationService($http, $filter) {
 
     }
 
-    var dformattet = d.getDate() + "." + (d.getMonth() + 1) + "." + d.getFullYear();
+    var formatted_date = (d.getDate() <= 9) ? "0" + d.getDate() : d.getDate();
+    var formatted_month = ( (d.getMonth()+1) <= 9) ? "0" + (d.getMonth()+1) : d.getMonth()+1;
+
+
+    var dformattet = formatted_date + "." + formatted_month + "." + d.getFullYear();
 
     return $http.post("/alfresco/s/contents/mergedoctemplate", {
       "id": desclaration['node-uuid'],

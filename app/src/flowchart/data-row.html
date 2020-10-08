@@ -1,18 +1,59 @@
 <a class="anchor" id="top_{{ i.node_uuid }}"></a>
 
 <md-card id="{{ i.node_uuid }}" ng-hide="!(vm.editperid == i.node_uuid) && vm.startedit">
-    <div class="card-content">
+<!--    <div class="card-content" style="background:red">-->
+    <div class="card-content" >
+
+
+
         <div layout="row">
-            <div flex="15">{{i.creationDate | customFlowChartDate }}</div>
+            <div flex="15">{{i.creationDate | customFlowChartDate }} </div>
             <div flex="15">{{i.doctor  }}</div>
-            <div flex="15"><span class="go-to-case-link" ng-click="vm.gotoCase(i.caseNumber)">{{i.cprNumber}}</span></div>
+            <div flex="15">{{i.supervisingDoctor}}</div>
+            <div flex="15"><span class="go-to-case-link" ng-click="vm.gotoCase(i.caseNumber)">{{i.cprNumber}}</span> <img ng-show="i.redflag" src="app/assets/images/priority.png" class="priority"></div>
             <div flex="15">{{i.firstName}}</div>
             <div flex="15">{{i.lastName}}</div>
             <div flex="40">{{i.mainCharge}}</div>
 
+
+            <div flex="5"></div>
+            <div flex="15">
+                <table>
+                    <tr align="center">
+                        <td>
+                            ​<input id="{{ i.node_uuid }}_1" type="checkbox" ng-model="i.box1" ng-click="vm.visitate(i, $event)" /><label  title="Tolk" for="{{ i.node_uuid }}_1">TO</label>&nbsp;​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                        </td>
+                        <td>
+                            ​<input id="{{ i.node_uuid }}_2" type="checkbox" id="2" ng-model="i.box2" ng-click="vm.visitate(i, $event)" /><label title="Fritidsundersøgelse" for="{{ i.node_uuid }}_2">F</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
+                        </td>
+                        <td>
+                            ​<input id="{{ i.node_uuid }}_3" type="checkbox" id="3" ng-model="i.box3" ng-click="vm.visitate(i, $event)" /><label title="Kontaktperson" for="{{ i.node_uuid }}_3">KP</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
+                        </td>
+                    </tr>
+                    <tr align="center">
+                        <td>
+                            ​<input type="checkbox" id="{{ i.node_uuid }}_4" ng-model="i.box4" ng-click="vm.visitate(i, $event)"/><label title="Levnedsbeskrivelse" for="{{ i.node_uuid }}_4">LEV</label>&nbsp;​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+                        </td>
+
+                        <td>
+                            ​<input type="checkbox" id="{{ i.node_uuid }}_5" ng-model="i.box5" ng-click="vm.visitate(i, $event)" /><label title="Psykologisk undersøgelse" for="{{ i.node_uuid }}_5">PU</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
+                        </td>
+
+                        <td>
+                            ​<input type="checkbox" id="{{ i.node_uuid }}_6" ng-model="i.box6" ng-click="vm.visitate(i, $event)" /><label title="Aktuddrag" for="{{ i.node_uuid }}_6">AKT</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
+                        </td>
+                    </tr>
+                </table>
+                </div>
+
             <div class="card-content__actions">
-                <md-button class="md-raised" ng-disabled="vm.saveShow" ng-click="vm.editing=true;collapsed=vm.editCase(i);save=collapsed;" ng-hide="vm.saveShow">Ret</md-button>
-                <md-button class="md-raised md-primary" ng-click="save=false;vm.editing=false;;vm.save(i.node_uuid, i.doctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">Gem</md-button>
+
+                <br><br>
+
+                <md-button class="md-raised" ng-disabled="vm.saveShow" ng-click="vm.editing=true;collapsed=vm.editCase(i);save=collapsed;" ng-hide="!collapsed">Ret</md-button>
+
+                <md-button class="md-raised md-primary" ng-click="save=false;vm.editing=false;;vm.save(i.node_uuid, i.doctor, i.supervisingDoctor, i.socialworker, i.psychologist, i.status)" ng-show="vm.saveShow">Gem</md-button>
+
                 <md-button class="md-raised" ng-click="save=false;vm.editing=false;;vm.cancel(i.node_uuid)" ng-show="vm.saveShow">Annuller</md-button>
 
                 <md-button class="md-icon-button md-raised" ng-show="!collapsed && !vm.editing" ng-click="collapsed=!collapsed;vm.updateCard(i)">
@@ -27,7 +68,7 @@
         </div>
     </div>
 
-    <md-content layout-wrap ng-if="collapsed" style="padding: 8px 16px;">
+    <md-content layout-wrap ng-if="collapsed" style="padding: 8px 16px;" >
         <md-table-container>
             <div layout="row">
 
@@ -35,21 +76,38 @@
                     <table md-table>
                         <tbody md-body>
                             <!-- status, start -->
+
+
+
                             <tr md-row>
+
+
+
                                 <td md-cell class="key">Status:</td>
                                 <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="statusDisplay_{{ i.node_uuid }}">{{i.status}}</td>
+
+<!--                                <td md-cell class="key">hvad er denne værdi: {{i.status}}</td>-->
+
                                 <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
-                                    <md-autocomplete 
-                                        md-selected-item="flow.status" 
-                                        md-search-text="statusSearch"
-                                        md-items="status in vm.propertyFilter(vm.propertyValues['status'],statusSearch)"
-                                        md-item-text="status" 
-                                        md-clear-button="true" 
-                                        md-require-match="true">
+
+                                    <md-autocomplete flex
+                                                     md-selected-item="flow.status"
+                                                     md-search-text="statusSearch"
+                                                     md-items="status in vm.propertyFilter(vm.propertyValues['status'],statusSearch)"
+                                                     md-item-text="status"
+                                                     md-min-length="0"
+                                                     md-clear-button="true"
+                                                     md-floating-label=" "
+                                                     md-require-match="true">
                                         <md-item-template>
                                             <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
                                         </md-item-template>
                                     </md-autocomplete>
+
+
+
+
+
                                 </td>
                             </tr>
                             <!-- status, stop -->
@@ -71,14 +129,16 @@
                                 <td md-cell class="key">Socialrådgiver:</td>
                                 <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="socialworkerDisplay_{{ i.node_uuid }}">{{i.socialworker}}</td>
                                 <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
-                                    <md-autocomplete 
+                                    <md-autocomplete
                                         flex md-selected-item="flow.socialworker"
                                         md-search-text="socialworkerSearch"
                                         md-items="socialworker in vm.propertyFilter(vm.propertyValues['socialworker'],socialworkerSearch)"
                                         md-item-text="socialworker"
                                         md-clear-button="true"
                                         md-require-match="true"
-                                        md-min-length="0">
+                                        md-min-length="0"
+                                        md-floating-label=" ">
+
                                         <md-item-template>
                                             <span md-highlight-text="socialworkerSearch" md-highlight-flags="gi">{{socialworker}}</span>
                                         </md-item-template>
@@ -92,13 +152,14 @@
                                 <td md-cell class="key">Læge:</td>
                                 <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="doctorDisplay_{{ i.node_uuid }}">{{ i.doctor}}</td>
                                 <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
-                                    <md-autocomplete 
+                                    <md-autocomplete
                                         flex md-selected-item="flow.doctor"
                                         md-search-text="doctorSearch"
                                         md-items="doctor in vm.propertyFilter(vm.propertyValues['doctor'],doctorSearch)"
-                                        md-item-text="doctor" 
-                                        md-clear-button="true" 
+                                        md-item-text="doctor"
+                                        md-clear-button="true"
                                         md-require-match="true"
+                                        md-floating-label=" "
                                         md-min-length="0">
                                         <md-item-template>
                                             <span md-highlight-text="doctorSearch" md-highlight-flags="gi">{{doctor}}</span>
@@ -108,18 +169,41 @@
                             </tr>
                             <!-- doctor, stop -->
 
+                            <!-- supervising doctor, start -->
+                            <tr md-row>
+                                <td md-cell class="key">Tiltrædes af læge:</td>
+                                <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="supervisingDoctorDisplay_{{ i.node_uuid }}">{{ i.supervisingDoctor}}</td>
+                                <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
+                                    <md-autocomplete
+                                        flex md-selected-item="flow.supervisingDoctor"
+                                        md-search-text="supervisingDoctorSearch"
+                                        md-items="doctor in vm.propertyFilter(vm.propertyValues['doctor'],supervisingDoctorSearch)"
+                                        md-item-text="doctor"
+                                        md-clear-button="true"
+                                        md-require-match="true"
+                                        md-floating-label=" "
+                                        md-min-length="0">
+                                        <md-item-template>
+                                            <span md-highlight-text="supervisingDoctorSearch" md-highlight-flags="gi">{{doctor}}</span>
+                                        </md-item-template>
+                                    </md-autocomplete>
+                                </td>
+                            </tr>
+                            <!-- supervising doctor, stop -->
+
                             <!-- psychologist, start -->
                             <tr md-row>
                                 <td md-cell class="key">Psykolog:</td>
                                 <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="psychologistDisplay_{{ i.node_uuid }}">{{ i.psychologist}}</td>
                                 <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
-                                    <md-autocomplete 
+                                    <md-autocomplete
                                         md-selected-item="flow.psychologist"
                                         md-search-text="psychologistSearch"
                                         md-items="psychologist in vm.propertyFilter(vm.propertyValues['psychologist'],psychologistSearch)"
-                                        md-item-text="psychologist" 
-                                        md-clear-button="true" 
+                                        md-item-text="psychologist"
+                                        md-clear-button="true"
                                         md-require-match="true"
+                                        md-floating-label=" "
                                         md-min-length="0">
                                         <md-item-template>
                                             <span md-highlight-text="psychologistSearch" md-highlight-flags="gi">{{psychologist}}</span>
@@ -148,8 +232,8 @@
                     <table md-table>
                         <tbody md-body>
                             <!-- samtykke, start -->
-                            <tr md-row>
-                                <td md-cell class="key">Samtykke til oplysninger:</td>
+                            <tr md-row> <!--renamed to Sagsresumé in #36539 -->
+                                <td md-cell class="key">Sagsresumé:</td>
                                 <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="samtykkeDisplay_{{ i.node_uuid }}">{{i.samtykkeopl}}</td>
                                 <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
                                     <md-input-container>

@@ -137,9 +137,11 @@
   "FLOWCHART": {
     "CREATED": "Sag oprettet",
     "DOKTOR": "Læge",
+    "SUPERVISING_DOCTOR": "Tiltrædes af læge",
     "CPR": "CPR-nummer",
     "FORNAVN": "Fornavn",
     "EFTERNAVN": "Efternavn",
-    "HOVEDSIGTELSE": "Hovedsigtelse"
+    "HOVEDSIGTELSE": "Hovedsigtelse",
+    "VISITATION": "Visitation"
   }
 }

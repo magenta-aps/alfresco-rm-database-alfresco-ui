@@ -28,7 +28,13 @@ function filterService($filter) {
     }
 
     function propertyFilter(array, query) {
+        console.log("hvad er query " + query);
+        console.log("i dette array: " + array);
         var hitList = $filter('propertyfilter')(array, query);
+        console.log("hvad er hitlist");
+        console.log(hitList);
+
+
         return hitList;
     }
 }

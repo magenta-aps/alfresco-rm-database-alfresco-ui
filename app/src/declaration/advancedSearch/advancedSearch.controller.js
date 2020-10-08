@@ -24,6 +24,8 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   vm.nextPage = nextPage;
   vm.clearResults = clearResults;
   vm.evalAll = evalAll;
+  vm.transformChip = transformChip;
+  vm.selectedCharge = null;
 
 
   $scope.searchParams.bua = "PS";
@@ -32,6 +34,9 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   if (Object.keys($stateParams.searchquery).length) {
 
         $scope.searchParams = $stateParams.searchquery;
+  }
+  if (!$scope.searchParams.mainCharge) {
+    $scope.searchParams.mainCharge = []
   }
 
   vm.noDeclaration = noDeclaration;
@@ -64,6 +69,7 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
           $scope.searchParams.noDeclaration = false;
 
           $scope.searchParams.doctor = '';
+          $scope.searchParams.supervisingDoctor = '';
 
           $scope.searchParams.socialworker = '';
 
@@ -79,6 +85,7 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
 
   function givenDeclaration() {
     $scope.searchParams.doctor = '';
+    $scope.searchParams.supervisingDoctor = '';
     $scope.searchParams.noDeclaration = false;
   }
 
@@ -126,6 +133,15 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
 
         });
       })
+  }
+
+  /**
+   * https://material.angularjs.org/latest/demo/chips -> Custom Inputs
+   * Return the proper object when the append is called.
+   */
+  function transformChip(chip) {
+    // just return the chip as we are simply dealing with a flat list of strings
+    return chip;
   }
 
   function nextPage() {

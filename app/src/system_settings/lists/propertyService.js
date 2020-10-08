@@ -44,32 +44,15 @@ angular.module('openDeskApp.declaration')
 
 			    // cleanup values for doctors, socialworkers, psycologists and secretaries - remove the userid
 
+					var userTypes = ["secretary", "socialworker", "psychologist", "doctor"];
 
-                console.log(propertyValues);
-
-                for (var x in propertyValues.secretary) {
-                    var secretary = propertyValues.secretary[x];
-                    var username = secretary.match(/ *\([^)]*\) */g);
-                    propertyValues.secretary[x] = propertyValues.secretary[x].replace(username, "");
-                }
-
-                for (var x in propertyValues.socialworker) {
-                    var socialworker = propertyValues.socialworker[x];
-                    var username = socialworker.match(/ *\([^)]*\) */g);
-                    propertyValues.socialworker[x] = propertyValues.socialworker[x].replace(username, "");
-                }
-
-                for (var x in propertyValues.psychologist) {
-                    var psychologist = propertyValues.psychologist[x];
-                    var username = psychologist.match(/ *\([^)]*\) */g);
-                    propertyValues.psychologist[x] = propertyValues.psychologist[x].replace(username, "");
-                }
-
-                for (var x in propertyValues.doctor) {
-                    var doctor = propertyValues.doctor[x];
-                    var username = doctor.match(/ *\([^)]*\) */g);
-                    propertyValues.doctor[x] = propertyValues.doctor[x].replace(username, "");
-                }
+					userTypes.forEach(function (type) {
+						for (var x in propertyValues[type]) {
+							var user = propertyValues[type][x];
+							var username = user.match(/ *\([^)]*\) */g);
+							propertyValues[type][x] = propertyValues[type][x].replace(username, "");
+						}
+					});
 
 				return propertyValues;
 			},
@@ -100,7 +83,7 @@ angular.module('openDeskApp.declaration')
 
 			/**
 			 * rename a property
-			 * 
+			 *
 			 */
 			renamePropertyValue: function (oldVal, newVal) {
 				propertyContent.forEach(function (prop, key) {
