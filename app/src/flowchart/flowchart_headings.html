@@ -4,7 +4,7 @@
             <div layout="row">
 
                 <div flex="15" ng-click="vm.clickcreationDate=!vm.clickcreationDate;vm.loaddata(vm.showing, '@rm:creationDate', vm.clickcreationDate)">
-                    {{'FLOWCHART.CREATED' | translate}} 
+                    {{'FLOWCHART.CREATED' | translate}}
                     <md-icon ng-show="vm.clickcreationDate">arrow_upward</md-icon>
                     <md-icon ng-show="!vm.clickcreationDate">arrow_downward</md-icon>
                 </div>
@@ -13,6 +13,12 @@
                     {{'FLOWCHART.DOKTOR' | translate}}
                     <md-icon ng-show="vm.clickdoktor">arrow_upward</md-icon>
                     <md-icon ng-show="!vm.clickdoktor">arrow_downward</md-icon>
+                </div>
+
+                <div flex="15" ng-click="vm.clickSupervisingDoktor=!vm.clickSupervisingDoktor;vm.loaddata(vm.showing, '@rm:supervisingDoctor', vm.clickSupervisingDoktor)">
+                    {{'FLOWCHART.SUPERVISING_DOCTOR' | translate}}
+                    <md-icon ng-show="vm.clickSupervisingDoktor">arrow_upward</md-icon>
+                    <md-icon ng-show="!vm.clickSupervisingDoktor">arrow_downward</md-icon>
                 </div>
 
                 <div flex="15" ng-click="vm.clickcpr=!vm.clickcpr;vm.loaddata(vm.showing, '@rm:cprNumber', vm.clickcpr)">

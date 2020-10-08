@@ -43,6 +43,13 @@
             </md-item-template>
         </md-autocomplete>
 
+        <div>
+        <md-input-container class="md-block">
+            <label>Arrest</label>
+            <input ng-model="case.arrest" ng-disabled="!editPatientData" required>
+        </md-input-container>
+        </div>
+
         <md-radio-group ng-model="case.declarationType" ng-disabled="!editPatientData">
             <md-radio-button value="kendelse" class="md-primary">Kendelse</md-radio-button>
             <md-radio-button value="samtykke">Samtykke</md-radio-button>

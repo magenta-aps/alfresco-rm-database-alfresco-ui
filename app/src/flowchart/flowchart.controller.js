@@ -127,7 +127,7 @@ function propertyFilter(array, query) {
 
 
 
-  function save(nodeuuid, doctor, socialworker, psychologist, status) {
+  function save(nodeuuid, doctor, supervisingDoctor, socialworker, psychologist, status) {
 
     DeclarationService.update($scope.flow)
     			.then(function (response) {
@@ -187,6 +187,8 @@ function propertyFilter(array, query) {
 
                 var val = angular.element(document.getElementById("doctorDisplay_"+ response["node-uuid"]));
                 val[0].innerText = formatEmpty(response.doctor);
+                var val = angular.element(document.getElementById("supervisingDoctorDisplay_"+ response["node-uuid"]));
+                val[0].innerText = formatEmpty(response.supervisingDoctor);
                 var val = angular.element(document.getElementById("kommentarDisplay_"+ response["node-uuid"]));
                 val[0].innerText = formatEmpty(response.kommentar);
                 var val = angular.element(document.getElementById("oplysningerEksterntDisplay_"+ response["node-uuid"]));
@@ -242,6 +244,7 @@ function propertyFilter(array, query) {
             $scope.flow["psychologist"] = response.psychologist;
             $scope.flow["socialworker"] = response.socialworker;
             $scope.flow["doctor"] = response.doctor;
+            $scope.flow["supervisingDoctor"] = response.supervisingDoctor;
             $scope.flow["status"] = response.status;
 
 
@@ -336,6 +339,3 @@ function propertyFilter(array, query) {
 
     vm.visitate = visitate;
 }
-
-
-
