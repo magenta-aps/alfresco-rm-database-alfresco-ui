@@ -60,6 +60,11 @@ function FlowChartController($scope, $rootScope, $translate, HeaderService, Flow
 
   // on page load, get the data
   activate().then(function() {
+
+    if ($state.params.type == undefined) {
+     $state.params.type = 'ongoing';
+    }
+
     return loaddata($state.params.type, '@rm:creationDate', 'true');
   }).then(function() {
     if ($rootScope.ongoing && $rootScope.ongoing.length && $state.params.index > -1) {
