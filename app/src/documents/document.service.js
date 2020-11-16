@@ -37,7 +37,6 @@ function documentService($http, EDITOR_CONFIG) {
 
     return $http.get(url)
       .then(function (response) {
-        console.log(response)
         return response;
       });
   }
@@ -59,7 +58,6 @@ function documentService($http, EDITOR_CONFIG) {
     return $http.post("/alfresco/s/contents/markedforedit", {
       "nodeRef": nodeRef, "method" : "add"
     }).then(function (response) {
-        console.log(response)
     //      var res = formatCase(response.data);
     //      return res;
     });
@@ -70,7 +68,6 @@ function documentService($http, EDITOR_CONFIG) {
         return $http.post("/alfresco/s/contents/markedforedit", {
             "nodeRef": nodeRef, "method" : "forceUnlock"
         }).then(function (response) {
-            console.log(response)
             //      var res = formatCase(response.data);
             //      return res;
         });

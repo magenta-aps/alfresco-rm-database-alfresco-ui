@@ -49,12 +49,9 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
 
   function back() {
-
-
       if (Object.keys($stateParams.tmpcrumb).length) {
           var splittedpath = vm.doc.location.path.split('/');
           var id = splittedpath[4];
-
           $state.go('declaration.show.documents', { caseid: id, breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef });
       }
   }
@@ -114,17 +111,13 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
 
   function activate() {
-
     if ( !vm.docHasParent) {
-
         if (vm.latest) {
             vm.showRevertButton = false;
         }
         else {
          vm.showRevertButton = true;
         }
-
-
     }
     else if (vm.latest) {
 
@@ -239,22 +232,12 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
   //Goes to the libreOffice online edit page
   function goToLOEditPage() {
-
             documentService.getState("workspace://SpacesStore/" + selectedDocumentNode).then(function (response) {
-
-
-
-
             if (!response.state) {
-
-
-
                   documentService.markDocumentAsEditing("workspace://SpacesStore/" + selectedDocumentNode).then(function (response) {
 
-
-
                                                 $state.go('lool', {
-                                                                  'nodeRef': vm.doc.nodeRef
+                                                                  'nodeRef': vm.doc.nodeRef, tmpcrumb: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef
                                                                 });
 
                                             });

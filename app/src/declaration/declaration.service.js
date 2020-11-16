@@ -134,9 +134,6 @@ function DeclarationService($http, $filter) {
   }
 
   function updateStat(year) {
-
-    console.log("updating stat for year" + year);
-
     $http.post("/alfresco/s/database/retspsyk/weeklystat", {
       "method": "initYear",
       "year": year
