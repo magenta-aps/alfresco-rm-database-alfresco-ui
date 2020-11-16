@@ -44,7 +44,6 @@ function HeaderService($rootScope, authService ) {
   }
 
   function updateBacktosearch(query) {
-        console.log("update backtosearch")
         backtosearchquery = query;
         backtosearchStatus = true;
   }

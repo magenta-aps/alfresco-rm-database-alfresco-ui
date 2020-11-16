@@ -44,8 +44,15 @@ function LoolController($stateParams, loolService, alfrescoNodeUtils, $state) {
         var shortRef = alfrescoNodeUtils.processNodeRef(vm.nodeRef).id;
 
 
+        console.log("loolcontroller");
+        console.log("$stateParams.tmpcrumb");
+        console.log($stateParams.tmpcrumb);
 
-        $state.go('document', { doc: shortRef });
+
+
+         // $state.go('declaration.show.documents', { caseid: id, breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef });
+         $state.go('document', { doc: shortRef, tmpcrumb: $stateParams.tmpcrumb, tmpNodeRef: $stateParams.tmpNodeRef });
+        // $state.go('document', { doc: shortRef });
         // window.history.go(-2);
 
       }

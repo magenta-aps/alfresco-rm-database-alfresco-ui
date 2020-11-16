@@ -20,8 +20,6 @@ function ContentListController($scope) {
   })
 
   $scope.open = function (content) {
-    console.log("heyhey");
-
     $scope.clickAction()(content)
   }
 }
