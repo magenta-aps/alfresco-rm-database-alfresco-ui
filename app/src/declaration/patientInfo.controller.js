@@ -199,10 +199,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
                         .then(function (response) {
 						vm.createdDateBeforeEdit = response.creationDate;
 						vm.declaratiotionDateBeforeEdit = response.declarationDate;
-						console.log("creationdate");
-						console.log(vm.createdDateBeforeEdit);
-							console.log("decdate");
-						console.log(vm.declaratiotionDateBeforeEdit);
 
                         if (response.locked4edit) {
 
