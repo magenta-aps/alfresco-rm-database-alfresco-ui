@@ -8,7 +8,7 @@
     </md-button>
 
     <md-button class="md-raised {{vm.currentCard == 'waitinglist' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('waitinglist', '@rm:creationDate', 'true')">
-        {{'COMMON.VENTELISTE' | translate }} <span class="flowchart-count">({{ vm.total.waitinglist }})</span>
+        {{'COMMON.IKKEFORDELT' | translate }} <span class="flowchart-count">({{ vm.total.waitinglist }})</span>
     </md-button>
 
     <md-button class="md-raised {{vm.currentCard == 'observation' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('observation', '@rm:creationDate', 'true')">

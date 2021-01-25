@@ -13,7 +13,9 @@ function config($stateProvider, USER_ROLES) {
 			nodeRef: null,
 			showArchived: null,
 			backToDocPreview: null,
-            authorizedRoles: [USER_ROLES.user]
+            authorizedRoles: [USER_ROLES.user],
+            tmpcrumb: {},
+            tmpNodeRef: null
 		},
         views: {
             'content@': {

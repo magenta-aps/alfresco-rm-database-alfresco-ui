@@ -140,8 +140,8 @@ function config($stateProvider, USER_ROLES) {
     params: {
       nodiref: null,
       authorizedRoles: [USER_ROLES.user],
-        tmpcrumb: {},
-        tmpNodeRef: null
+      tmpcrumb: {},
+      tmpNodeRef: null
     }
   });
 

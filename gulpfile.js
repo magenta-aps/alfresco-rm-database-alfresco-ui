@@ -33,7 +33,7 @@ var paths = {
 };
 
 var dist = {
-    name: 'opendesk-app',
+    name: 'opendesk-app-129',
     folder: './dist/'
 };
 
