@@ -20,6 +20,7 @@ function HeaderController($scope, HeaderService, authService, $state, $timeout) 
     vm.getUserName = getUserName;
     vm.logout = logout;
 
+
     $scope.$on('updateHeader', function () {
         updateHeaderTitle();
         updateCaseId();
@@ -33,13 +34,17 @@ function HeaderController($scope, HeaderService, authService, $state, $timeout) 
 
     function gobacktosearch() {
         HeaderService.setBacktosearchStatus(false);
-    $timeout(function() {
-       $state.go('declaration.advancedSearch', { searchquery: vm.backtosearchquery });
-    });
+        $timeout(function () {
+            $state.go('declaration.advancedSearch', {searchquery: vm.backtosearchquery});
+        });
+    }
+        vm.gobacktosearch = gobacktosearch;
 
-
-	}
-	vm.gobacktosearch = gobacktosearch;
+    function flowchart() {
+        $timeout(function() {
+            $state.go('flowchart', { declarationShortcutId: null })}
+        )}
+	vm.flowchart = flowchart;
 
     function isLoggedIn() {
         vm.loggedIn = authService.loggedin();

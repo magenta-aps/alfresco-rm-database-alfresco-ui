@@ -1,25 +1,61 @@
 <div class="flowchart-navigation">
-    <md-button class="md-raised {{vm.currentCard == 'arrestanter' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('arrestanter', '@rm:creationDate', 'true')">
-        {{'COMMON.ARRESTANTER' | translate }} <span class="flowchart-count">({{ vm.total.arrestanter }})</span>
-    </md-button>
 
-    <md-button class="md-raised {{vm.currentCard == 'ongoing' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('ongoing', '@rm:creationDate', 'true')">
-        {{'COMMON.IGANGVÆRENDE' | translate }} <span class="flowchart-count">({{ vm.total.ongoing }})</span>
-    </md-button>
 
-    <md-button class="md-raised {{vm.currentCard == 'waitinglist' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('waitinglist', '@rm:creationDate', 'true')">
-        {{'COMMON.IKKEFORDELT' | translate }} <span class="flowchart-count">({{ vm.total.waitinglist }})</span>
-    </md-button>
+    <div layout="row" class="md-raised">
+                <md-autocomplete
+                        md-selected-item="selectedItem.item"
+                        md-search-text="entrySearchQuery"
+                        md-items="case in vm.getEntries(entrySearchQuery)"
+                        placeholder="{{'DECLARATION.SEARCH_NAME_CPR' | translate}}"
+                        md-min-length="4" flex-gt-sm="15" id="flowSearch">
 
-    <md-button class="md-raised {{vm.currentCard == 'observation' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('observation', '@rm:creationDate', 'true')">
-        {{'COMMON.INDLAGTE' | translate }} <span class="flowchart-count">({{ vm.total.observation }})</span>
-    </md-button>
+                    <md-item-template>
 
-    <md-button class="md-raised {{vm.currentCard == 'ventendegr' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('ventendegr', '@rm:creationDate', 'true')">
-        {{'COMMON.VENTEDEGR' | translate }} <span class="flowchart-count">({{ vm.total.ventendegr }})</span>
-    </md-button>
+                    <span md-highlight-text="entrySearchQuery" md-highlight-flags="gi">
+                        {{case.cprNumber}} - {{case.firstName}} {{case.lastName}} ({{case.caseNumber}})
+                    </span>
+                    </md-item-template>
 
-    <md-button class="md-raised {{vm.currentCard == 'user' ?'md-primary':'default'}}" ng-show="vm.showUser" ng-click="vm.minesager=true;vm.loaddata('user', '@rm:creationDate', 'true')">
-        {{'COMMON.MINESAGER' | translate }} <span class="flowchart-count">({{ vm.total.user }})</span>
-    </md-button>
+                </md-autocomplete>
+
+            <md-button class="md-raised {{vm.currentCard == 'arrestanter' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('arrestanter', '@rm:creationDate', 'true')">
+                {{'COMMON.ARRESTANTER' | translate }} <span class="flowchart-count">({{ vm.total.arrestanter }})</span>
+            </md-button>
+
+            <md-button class="md-raised {{vm.currentCard == 'ongoing' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('ongoing', '@rm:creationDate', 'true')">
+                {{'COMMON.IGANGVÆRENDE' | translate }} <span class="flowchart-count">({{ vm.total.ongoing }})</span>
+            </md-button>
+
+            <md-button class="md-raised {{vm.currentCard == 'waitinglist' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('waitinglist', '@rm:creationDate', 'true')">
+                {{'COMMON.IKKEFORDELT' | translate }} <span class="flowchart-count">({{ vm.total.waitinglist }})</span>
+            </md-button>
+
+            <md-button class="md-raised {{vm.currentCard == 'observation' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('observation', '@rm:creationDate', 'true')">
+                {{'COMMON.INDLAGTE' | translate }} <span class="flowchart-count">({{ vm.total.observation }})</span>
+            </md-button>
+
+            <md-button class="md-raised {{vm.currentCard == 'ventendegr' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('ventendegr', '@rm:creationDate', 'true')">
+                {{'COMMON.VENTEDEGR' | translate }} <span class="flowchart-count">({{ vm.total.ventendegr }})</span>
+            </md-button>
+
+            <md-button class="md-raised {{vm.currentCard == 'user' ?'md-primary':'default'}}" ng-show="vm.showUser" ng-click="vm.minesager=true;vm.loaddata('user', '@rm:creationDate', 'true')">
+                {{'COMMON.MINESAGER' | translate }} <span class="flowchart-count">({{ vm.total.user }})</span>
+            </md-button>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
 </div>
+
+
+
+
+
+
+

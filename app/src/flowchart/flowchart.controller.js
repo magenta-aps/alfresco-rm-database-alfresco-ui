@@ -30,16 +30,41 @@ angular
 function FlowChartController($scope, $stateParams, $translate, HeaderService, FlowChartService, propertyService, filterService, DeclarationService, Toast, authService, $anchorScroll, $location, $timeout, $state ) {
   var vm = this;
 
-  $scope.flow = {};
+    $scope.selectedItem = {};
+
+    $scope.$watch('selectedItem.item', function(it) {
+        if (it) {
+            console.log("**** watch for flemming activated ****")
+            console.log(it);
+
+            DeclarationService.getStateOfDeclaration(it.caseNumber).then(function (response) {
+                if (response.data.state != "nostate") {
+                    $state.go('flowchart', {
+                        declarationShortcutId: it["node-uuid"],
+                        category: response.data.state
+                    });
+                }
+            });
+        }
+    });
+
+
+
+
+    $scope.flow = {};
 
   $scope.folderUuid = [];
 
   HeaderService.setTitle($translate.instant('COMMON.FLOWCHART'))
   activate();
 
+
+
+
   vm.updateCollapse = updateCollapse;
   vm.propertyValues = propertyService.getAllPropertyValues();
   vm.propertyFilter = propertyFilter;
+
 
 
   vm.showing = "";
@@ -55,9 +80,35 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
   vm.clickefternavn = false;
   vm.clickfornavn = false;
 
+  vm.test = test;
+
+    function test() {
+      console.log("setting @scope.flemming to 123");
+      $scope.flemming = "123";
+    }
+
+
+
+    vm.visitate = visitate;
+
+    $scope.selectedCase = null;
+    vm.getEntries = getEntries;
+    vm.getEntries2 = getEntries2;
+
   $scope.emptyOrNull = function(item) {
    return !(item.Message === null || item.Message.trim().length === 0)
   }
+
+
+    // function setFocus() {
+    //     setTimeout(function() {
+    //         document.getElementById('input-3').focus();
+    //         console.log("hey")
+    //         console.log(document.getElementById('input-3'))
+    //         // document.querySelector('fredagssnask').focus();
+    //     }, 1);
+    // }
+
 
 
 
@@ -99,15 +150,36 @@ function propertyFilter(array, query) {
                              vm.total.waitinglist = response.waitinglist;
                        });
 
+      if ($stateParams.declarationShortcutId != null) {
 
 
+              loaddataFlowChart($stateParams.category, '@rm:creationDate', 'true').then(function (response) {
+
+                  vm.ongoing = response;
+                  vm.currentCard = $stateParams.category;
+
+                  $timeout(function() {
+                      $location.hash("top_" + $stateParams.declarationShortcutId);
+                      $anchorScroll();
+
+                      var e = document.getElementById("detailButton_" + $stateParams.declarationShortcutId);
+                      e.click();
+
+                      $timeout(function() {
+                          window.scrollBy(0,-200);
+                      }, 50);
+                  },150);
+              });
 
 
+      }
+      else {
+          $timeout(function() {
+              loaddata('ongoing', '@rm:creationDate', 'true');
+              vm.currentCard = "ongoing";
+          }, 0);
+      }
 
-    $timeout(function() {
-        loaddata('ongoing', '@rm:creationDate', 'true');
-        vm.currentCard = "ongoing";
-        }, 0);
   }
 
   function loaddata(value, sort, desc) {
@@ -124,6 +196,14 @@ function propertyFilter(array, query) {
   vm.loaddata = loaddata;
 
 
+    function loaddataFlowChart(value, sort, desc) {
+        vm.showing = value;
+        vm.currentCard = value;
+
+        return FlowChartService.getEntries(value, sort, desc).then(function (response) {
+            return response.entries;
+        });
+    }
 
 
 
@@ -337,5 +417,20 @@ function propertyFilter(array, query) {
         });
     }
 
-    vm.visitate = visitate;
+    function getEntries(query) {
+  	    console.log("checking");
+        return FlowChartService.getAutoCompleteFlowChartEntries(0, 5, query)
+            .then(function (response) {
+                return response.entries;
+            })
+    }
+
+    function getEntries2(query) {
+        console.log("checking $scope.selectedCase");
+        console.log($scope.selectedCase);
+        return DeclarationService.getAutoComleteEntries(0, 5, query)
+            .then(function (response) {
+                return response.entries;
+            })
+    }
 }
