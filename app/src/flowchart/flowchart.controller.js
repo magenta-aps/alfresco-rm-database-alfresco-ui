@@ -34,9 +34,6 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
 
     $scope.$watch('selectedItem.item', function(it) {
         if (it) {
-            console.log("**** watch for flemming activated ****")
-            console.log(it);
-
             DeclarationService.getStateOfDeclaration(it.caseNumber).then(function (response) {
                 if (response.data.state != "nostate") {
                     $state.go('flowchart', {
@@ -49,9 +46,7 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
     });
 
 
-
-
-    $scope.flow = {};
+  $scope.flow = {};
 
   $scope.folderUuid = [];
 
@@ -80,13 +75,6 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
   vm.clickefternavn = false;
   vm.clickfornavn = false;
 
-  vm.test = test;
-
-    function test() {
-      console.log("setting @scope.flemming to 123");
-      $scope.flemming = "123";
-    }
-
 
 
     vm.visitate = visitate;
@@ -98,20 +86,6 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
   $scope.emptyOrNull = function(item) {
    return !(item.Message === null || item.Message.trim().length === 0)
   }
-
-
-    // function setFocus() {
-    //     setTimeout(function() {
-    //         document.getElementById('input-3').focus();
-    //         console.log("hey")
-    //         console.log(document.getElementById('input-3'))
-    //         // document.querySelector('fredagssnask').focus();
-    //     }, 1);
-    // }
-
-
-
-
 
 
 
@@ -418,7 +392,6 @@ function propertyFilter(array, query) {
     }
 
     function getEntries(query) {
-  	    console.log("checking");
         return FlowChartService.getAutoCompleteFlowChartEntries(0, 5, query)
             .then(function (response) {
                 return response.entries;
@@ -426,8 +399,6 @@ function propertyFilter(array, query) {
     }
 
     function getEntries2(query) {
-        console.log("checking $scope.selectedCase");
-        console.log($scope.selectedCase);
         return DeclarationService.getAutoComleteEntries(0, 5, query)
             .then(function (response) {
                 return response.entries;
