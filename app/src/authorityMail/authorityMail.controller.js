@@ -46,9 +46,6 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
   }
 
     $scope.$watch('vm.payload.defaultbody', function (newVal) {
-        console.log("hvad er vm.payload");
-        console.log(vm.payload.caseid);
-        console.log(newVal);
         if (newVal) {
             getDefaultMailBody(vm.payload.caseid);
         }

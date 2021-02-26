@@ -17,7 +17,8 @@ function DeclarationService($http, $filter) {
     getAutoComleteEntries: getAutoComleteEntries,
     getWaitingList: getWaitingList,
     advancedSearch: advancedSearch,
-    makeDeclarationDocument: makeDeclarationDocument
+    makeDeclarationDocument: makeDeclarationDocument,
+    getStateOfDeclaration: getStateOfDeclaration
   };
 
   return service;
@@ -140,7 +141,13 @@ function DeclarationService($http, $filter) {
     }).then(function (response) {
       console.log(response);
     });
+  }
+
+  function getStateOfDeclaration(casenum) {
+    return $http.post("/alfresco/s/database/retspsyk/flowchart", {"properties" : {"method": "getStateOfDeclaration", "casenumber": casenum}} );
 
   }
+
+
 
 }

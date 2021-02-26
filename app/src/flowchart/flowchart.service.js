@@ -16,6 +16,7 @@ function FlowChartService($http) {
     unlock: unlockEntry,
     update: updateEntry,
     getAutoComleteEntries: getAutoComleteEntries,
+    getAutoCompleteFlowChartEntries: getAutoCompleteFlowChartEntries,
     getWaitingList: getWaitingList,
     advancedSearch: advancedSearch,
     makeDeclarationDocument: makeDeclarationDocument
@@ -75,6 +76,17 @@ function FlowChartService($http) {
       .then(function (response) {
         return formatCase(response.data);
       });
+  }
+
+
+  function getAutoCompleteFlowChartEntries(skip, max, input) {
+    if (input.includes("#")) {
+      input = input.replace("#","!");
+    }
+    return $http.get("/alfresco/s/database/retspsyk/autocompleteentries" + "?skip=" + skip + "&maxItems=" + max + "&input=" + input + "&onlyflow=true")
+        .then(function (response) {
+          return response.data;
+        });
   }
 
   function getAutoComleteEntries(skip, max, input) {

@@ -9,7 +9,7 @@
                 <div>
                     <h2 class="od-user-name">{{ vm.getUserName() }}</h2>
 
-                    <md-button class="md-icon-button" ui-sref="flowchart">
+                    <md-button ng-click="vm.flowchart()" class="md-icon-button" >
                         <md-icon>bar_chart</md-icon>
                         <md-tooltip md-delay="500" md-direction="bottom">FlowChart</md-tooltip>
                     </md-button>

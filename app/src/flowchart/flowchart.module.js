@@ -11,7 +11,9 @@ function config($stateProvider) {
       url: '/flowchart',
       params: {
         path: "/flowchart",
-        breadcrumbPath: []
+        breadcrumbPath: [],
+        declarationShortcutId: null,
+        category: null
       },
       views: {
         'content@': {

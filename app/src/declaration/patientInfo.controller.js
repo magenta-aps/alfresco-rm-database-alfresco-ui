@@ -23,6 +23,8 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	vm.createdDateBeforeEdit;
 	vm.declaratiotionDateBeforeEdit;
 
+	vm.declarationState = "";
+
 
 	$scope.$on('$destroy', function () {
 		if ($scope.case.locked4edit) {
@@ -44,6 +46,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 			});
 	}
 
+	function shortcutToFlowchart() {
+				$state.go('flowchart', { declarationShortcutId: $scope.case["node-uuid"], category: vm.declarationState });
+	}
 
 	function gobacktosearch() {
         $state.go('declaration.advancedSearch', { searchquery: $stateParams.searchquery });
@@ -99,6 +104,10 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 			tooltip: canCreate[1].length > 0 ? canCreate[1] : undefined
 		}
 
+		var shortCutSettings = {
+			tooltip: "Genvej til flowchart"
+		}
+
 		if ($scope.case.hasOwnProperty('returnOfDeclarationDate')) {
 			$scope.case.returnOfDeclarationDate = new Date($scope.case.returnOfDeclarationDate);
 		}
@@ -110,19 +119,35 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
             HeaderService.addAction('Tilbage til søgning', 'description', gobacktosearch, false)
         }
 
-		HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings)
 
 
+		// only show button for flowchart if it has a state that will make it visible inside the flowchart
 
+		DeclarationService.getStateOfDeclaration(response.caseNumber).then (function(stateReponse) {
+			if (stateReponse.data.state != "nostate") {
+				vm.declarationState = stateReponse.data.state;
+				HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
+				HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings)
 
+				if (!response.closed) {
+					HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
+					HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
 
-		if (!response.closed) {
-			HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
-            HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+				} else {
+					if (HeaderService.canUnlockCases()) HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unLockCaseDialog);
+				}
 
-		} else {
-			if (HeaderService.canUnlockCases()) HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unLockCaseDialog);
-		}
+			}
+			else {
+				if (!response.closed) {
+					HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings)
+					HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
+					HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+				} else {
+					if (HeaderService.canUnlockCases()) HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unLockCaseDialog);
+				}
+			}
+		});
 	}
 
 	function propertyFilter(array, query) {
@@ -268,8 +293,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 				var year_after = $filter('date')($scope.case.creationDate,'yyyy');
 
 				var updateCalculatedStat = (before_formatted != after_formatted);
-				console.log("hvad er updatecal" + updateCalculatedStat);
-
 
 				var dec_before_formatted = $filter('date')(vm.declaratiotionDateBeforeEdit,'yyyy-MM-dd');
 				var dec_after_formatted = $filter('date')($scope.case.declarationDate,'yyyy-MM-dd');
