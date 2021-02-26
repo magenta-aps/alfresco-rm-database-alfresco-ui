@@ -56,7 +56,7 @@
 
                 <md-button class="md-raised" ng-click="save=false;vm.editing=false;;vm.cancel(i.node_uuid)" ng-show="vm.saveShow">Annuller</md-button>
 
-                <md-button class="md-icon-button md-raised" ng-show="!collapsed && !vm.editing" ng-click="collapsed=!collapsed;vm.updateCard(i)">
+                <md-button id="detailButton_{{ i.node_uuid }}" class="md-icon-button md-raised" ng-show="!collapsed && !vm.editing" ng-click="collapsed=!collapsed;vm.updateCard(i)">
                     <md-tooltip>Vis detaljer</md-tooltip>
                     <md-icon>keyboard_arrow_down</md-icon>
                 </md-button>
