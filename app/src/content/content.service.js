@@ -22,7 +22,8 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
     getCurrentFolderNodeRef: getCurrentFolderNodeRef,
     setCurrentFolderNodeRef: setCurrentFolderNodeRef,
     getFolderNodeRefFromPath: getFolderNodeRefFromPath,
-    getSharedFolderForBua: getSharedFolderForBua
+    getSharedFolderForBua: getSharedFolderForBua,
+      uploadFilesSetType: uploadFilesSetType
   };
 
   return service;
@@ -169,6 +170,29 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
         });
   }
 
+    function uploadFilesSetType(file, destination, nodetype, name) {
+        var formData = new FormData();
+        formData.append("filedata", file);
+        formData.append("overwrite", "true");
+        formData.append("nodeType", nodetype);
+        formData.append("name", name);
+
+        http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/587f589e-1b0a-449d-8001-e5123349b021/children
+        return $http.post("alfresco/api/-default-/public/alfresco/versions/1/nodes/" + destination +  "/children", formData, {
+            transformRequest: angular.identity,
+            headers: {
+                'Content-Type': undefined
+            }
+        }).then(function (response) {
+            var props = { "nodeRef" : "workspace://SpacesStore/" + response.data.entry.id};
+            console.log("hvad kommer tilbage");
+            console.log(response);
+            $http.post('/alfresco/s/contents/addpermission', props).then(function (response) {
+                return response;
+            });
+        });
+    }
+
    function uploadTemplateFiles(file, destination, templateType) {
       destination = destination ? destination : currentFolderNodeRef;
       var formData = new FormData();
@@ -195,6 +219,8 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
               return response;
           });
     }
+
+
 
   function download(nodeRef, name) {
     alfrescoDownloadService.downloadFile(nodeRef, name);
