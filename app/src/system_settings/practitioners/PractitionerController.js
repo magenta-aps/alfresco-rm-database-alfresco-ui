@@ -65,11 +65,19 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
   function updateBUA(user, firstName, lastName, oprettet) {
 
+
+
+
     $scope.selectedUser = user;
     $scope.selectedUserFirstName = firstName;
     $scope.selectedUserLastName = lastName;
     $scope.oprettet = oprettet;
 
+
+    console.log("åbner dialog openDialog");
+    practitionerService.getSignatureText($scope.selectedUser).then(function(response) {
+      $scope.signatureText = response.data.text;
+    });
 
     // fetch current user status
     practitionerService.getUserType(user).then(function (response) {

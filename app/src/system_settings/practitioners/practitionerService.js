@@ -12,7 +12,8 @@ angular.module('openDeskApp.declaration').factory('practitionerService', functio
     getUserType: getUserType,
     getSignatureDest: getSignatureDest,
     updateUserSignature: updateUserSignature,
-    isSignitureNodeCreated: isSignitureNodeCreated
+    isSignitureNodeCreated: isSignitureNodeCreated,
+      getSignatureText: getSignatureText
   };
 
   return service;
@@ -98,6 +99,15 @@ angular.module('openDeskApp.declaration').factory('practitionerService', functio
           return response
         })
   }
+
+    function getSignatureText(userName) {
+        return $http.get('/alfresco/s/userSignature?userName=' + userName + "&method=getSignatureText")
+            .then(function (response) {
+                console.log("getSignatureText");
+                console.log("for: " + userName);
+                return response
+            })
+    }
 
   function deactivateUser(userName) {
     return $http.get('/alfresco/s/userSignature?userName=' + userName + "&method")
