@@ -59,6 +59,24 @@ function DocumentController($scope, documentService, $stateParams, $state,
   vm.back = back;
 
 
+  function backToEmail()  {
+
+      if (Object.keys($stateParams.emailPayload).length) {
+          console.log(Object.keys($stateParams.emailPayload.caseid));
+          console.log(Object.keys($stateParams.emailPayload));
+          console.log(Object.keys($stateParams.emailPayload));
+          console.log(Object.keys($stateParams.emailPayload));
+
+      }
+
+
+      console.log("id");
+      console.log($stateParams.emailPayload.caseid);
+      // $state.go('declaration.show.documents', { caseid: vm.payload.caseid, breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef });
+  }
+
+  vm.backToEmail = backToEmail;
+
 
   function updateCollapse() {
     vm.collapse = !vm.collapse;
@@ -126,6 +144,13 @@ function DocumentController($scope, documentService, $stateParams, $state,
     else {
         vm.showRevertButton = true;
     }
+
+
+
+      vm.showBackToEmail = $stateParams.showBackToEmail;
+
+
+
 
     HeaderService.resetActions();
     setPDFViewerHeight();

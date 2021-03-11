@@ -7,7 +7,8 @@ function authorityMail($http) {
 
   var service = {
     send: send,
-    getDefaultMailBody : getDefaultMailBody
+    getDefaultMailBody : getDefaultMailBody,
+      getPreview : getPreview
   };
 
   return service;
@@ -40,4 +41,14 @@ function authorityMail($http) {
                 return response.data;
             });
     }
+
+     function getPreview(payload) {
+
+
+        payload.method = "preview";
+        return $http.post("/alfresco/s/contents/mailcontent", payload)
+         .then(function (response) {
+             return response;
+         });
+     }
 }

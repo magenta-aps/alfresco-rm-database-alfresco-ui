@@ -23,7 +23,27 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
 
   vm.payload.caseid = $stateParams.caseid;
 
+
+
+
   activated()
+
+
+  function preview() {
+      console.log("clicked")
+      authorityMail.getPreview(vm.payload).then( function (response) {
+
+
+
+          console.log("response");
+          console.log(response.data.previewNode);
+          $state.go('document', { doc: response.data.previewNode, tmpcrumb: $scope.crumbs, tmpNodeRef: $scope.folderUuid, showBackToEmail : true, emailPayload : vm.payload });
+
+
+
+      });
+  }
+  vm.preview = preview;
 
   function activated() {
 
@@ -66,6 +86,12 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
         $state.reload()
 
       })
+  }
+
+  function previewAddSigniture() {
+
+
+
   }
 
   function cancel() {

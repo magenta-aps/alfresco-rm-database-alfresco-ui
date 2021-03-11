@@ -49,10 +49,18 @@
         <md-dialog-actions>
             <md-button 
                 ng-if="!vm.loading"
-                ng-disabled="authorityMailForm.$invalid"
-                type="submit" 
+                ng-click="vm.preview()"
                 class="md-primary" 
                 aria-label="{{'COMMON.SEND' | translate}}"
+            >
+                {{'COMMON.PREVIEWSIGNATURE' | translate}}
+            </md-button>
+            <md-button
+                    ng-if="!vm.loading"
+                    ng-disabled="authorityMailForm.$invalid"
+                    type="submit"
+                    class="md-primary"
+                    aria-label="{{'COMMON.SEND' | translate}}"
             >
                 {{'COMMON.SEND' | translate}}
             </md-button>
