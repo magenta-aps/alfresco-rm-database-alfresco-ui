@@ -10,6 +10,8 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
   vm.payload = {};
   vm.payload.nodeRefs = [];
   vm.payload.defaultbody = false;
+  vm.payload.useSignature = false;
+
 
   vm.selectedFiles = $scope.selectedContent;
 
@@ -23,33 +25,24 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
 
   vm.payload.caseid = $stateParams.caseid;
 
-
-
-
+    if (Object.keys($stateParams.emailPayload).length !== 0) {
+        vm.payload.subject = $stateParams.emailPayload.subject;
+        vm.payload.authority = $stateParams.emailPayload.authority;
+        vm.payload.body = $stateParams.emailPayload.body;
+    }
   activated()
 
 
   function preview() {
-      console.log("clicked")
       authorityMail.getPreview(vm.payload).then( function (response) {
-
-
-
-          console.log("response");
-          console.log(response.data.previewNode);
-          $state.go('document', { doc: response.data.previewNode, tmpcrumb: $scope.crumbs, tmpNodeRef: $scope.folderUuid, showBackToEmail : true, emailPayload : vm.payload });
-
-
-
+      $state.go('document', { doc: response.data.previewNode, tmpcrumb: $scope.crumbs, tmpNodeRef: $scope.folderUuid, showBackToEmail : true, emailPayload : vm.payload, selectedFiles : vm.selectedFiles });
       });
   }
   vm.preview = preview;
 
   function activated() {
-
-
     vm.selectedFiles.forEach(file => {
-      vm.payload.nodeRefs.push(file.nodeRef);
+     vm.payload.nodeRefs.push(file.nodeRef);
     });
   }
 
@@ -70,7 +63,14 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
             getDefaultMailBody(vm.payload.caseid);
         }
         else {
-            vm.payload.body = "";
+
+            if ((Object.keys($stateParams.emailPayload).length !== 0)) {
+                // do nothing
+            }
+            else {
+                vm.payload.body = "";
+            }
+
         }
     })
 

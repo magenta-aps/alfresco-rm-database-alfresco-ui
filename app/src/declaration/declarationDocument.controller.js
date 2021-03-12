@@ -12,6 +12,22 @@ function DocumentController($scope, $mdDialog, $stateParams, DeclarationService,
   $scope.folderUuid;
   $scope.selectedContent;
 
+
+  // also check if came back from preview email signature...
+
+  if (Object.keys($stateParams.emailPayload).length !== 0) {
+
+    if ($stateParams.emailPayload.nodeRefs.length >= 1) {
+      $scope.selectedContent = $stateParams.selectedFiles;
+      authorityMailDialog();
+    }
+
+
+
+  }
+
+  console.log("hello from declarationDocumentController");
+
   $scope.$watch('selectedContent', function (newVal) {
     if (newVal == undefined) return;
     hasSelectedContent = newVal.length > 0;

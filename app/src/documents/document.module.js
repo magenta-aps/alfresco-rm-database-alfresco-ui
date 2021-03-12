@@ -143,7 +143,8 @@ function config($stateProvider, USER_ROLES) {
       tmpcrumb: {},
       tmpNodeRef: null,
       emailPayload: {},
-      showBackToEmail: false
+      showBackToEmail: false,
+      selectedFiles: {}
     }
   });
 

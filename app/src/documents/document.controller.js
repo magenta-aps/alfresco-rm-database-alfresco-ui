@@ -20,6 +20,7 @@ function DocumentController($scope, documentService, $stateParams, $state,
   vm.canRevertDocument = authService.isAuthorized('SiteEntryLockManager');
 
 
+
   if ($location.search().latest == undefined) {
     vm.latest = true;
   }
@@ -60,21 +61,10 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
 
   function backToEmail()  {
-
-      if (Object.keys($stateParams.emailPayload).length) {
-          console.log(Object.keys($stateParams.emailPayload.caseid));
-          console.log(Object.keys($stateParams.emailPayload));
-          console.log(Object.keys($stateParams.emailPayload));
-          console.log(Object.keys($stateParams.emailPayload));
-
-      }
-
-
-      console.log("id");
-      console.log($stateParams.emailPayload.caseid);
-      // $state.go('declaration.show.documents', { caseid: vm.payload.caseid, breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef });
+      console.log("dette sender jeg tilbage");
+      console.log($stateParams.emailPayload);
+      $state.go('declaration.show.documents', { caseid: $stateParams.emailPayload.caseid, breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef, emailPayload : $stateParams.emailPayload, selectedFiles :  $stateParams.selectedFiles});
   }
-
   vm.backToEmail = backToEmail;
 
 
