@@ -113,11 +113,11 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
   function updateUser() {
 
-    console.log("hey du");
+
+    console.log("hvad er $scope.signatureText");
     console.log($scope.signatureText);
 
-    practitionerService.updateUserSignature($scope.bua, $scope.selectedUser, $scope.signatureText)
-        .then(function (response) {
+    practitionerService.updateUserSignature($scope.bua, $scope.selectedUser, $scope.signatureText).then(function (response) {
 
           var buaValue = $scope.searchParams_bua;
 

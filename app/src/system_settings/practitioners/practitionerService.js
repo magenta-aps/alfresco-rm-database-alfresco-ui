@@ -33,7 +33,9 @@ angular.module('openDeskApp.declaration').factory('practitionerService', functio
   }
 
   function updateUserSignature(val, username, signature) {
-    return $http.get('/alfresco/s/updateUser?bua=' + val + "&userName=" +username + "&signature=" + signature + "&method=update")
+      console.log("hvad er $scope.signatureText");
+      console.log(signature);
+    return $http.get('/alfresco/s/updateUser?bua=' + val + "&userName=" +username + "&signature=" + encodeURI(signature) + "&method=update")
         .then(function (response) {
           return response
         })
