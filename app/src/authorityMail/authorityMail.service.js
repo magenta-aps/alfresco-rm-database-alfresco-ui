@@ -33,10 +33,9 @@ function authorityMail($http) {
   }
 
 
-    function getDefaultMailBody(decl) {
-        return $http.get('/alfresco/s/settings?node=' + decl)
+    function getDefaultMailBody(decl, dropdown) {
+        return $http.get('/alfresco/s/settings?node=' + decl + "&dropdown=" + dropdown)
             .then(function (response) {
-
                 return response.data;
             });
     }

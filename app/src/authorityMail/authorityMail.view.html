@@ -34,7 +34,14 @@
           </md-input-container>
 
 
-            <md-checkbox ng-model="vm.payload.defaultbody">standardtekst</md-checkbox>
+<md-input-container>standardtekst:
+            <select ng-model="vm.selectedDefaultBody" class="md-block">
+                <option ng-repeat="x in vm.defaultBodyText" value="{{x.model}}">{{x.model}} </option>
+            </select>
+<!--            <md-checkbox ng-model="vm.payload.defaultbody">standardtekst</md-checkbox>-->
+</md-input-container>
+
+
         <md-input-container class="md-block">
           <label>Besked</label>
 

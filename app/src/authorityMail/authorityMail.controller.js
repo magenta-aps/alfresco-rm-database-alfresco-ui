@@ -23,7 +23,19 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
 
   vm.payload.caseid = $stateParams.caseid;
 
+
+
+    vm.defaultBodyText = [
+        {model : "ingen"},
+        {model : "send"},
+        {model : "returnering"}
+    ];
+
+    vm.selectedDefaultBody = "ingen";
+
   activated()
+
+
 
   function activated() {
 
@@ -39,18 +51,20 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
 
 
 
-  function getDefaultMailBody(decl) {
-      authorityMail.getDefaultMailBody(decl).then( function(response) {
+  function getDefaultMailBody(decl, dropdown) {
+      console.log("hvda er dropdown: " + dropdown);
+      authorityMail.getDefaultMailBody(decl, dropdown).then( function(response) {
           vm.payload.body = response.text;
       });
   }
 
-    $scope.$watch('vm.payload.defaultbody', function (newVal) {
-        if (newVal) {
-            getDefaultMailBody(vm.payload.caseid);
+    $scope.$watch('vm.selectedDefaultBody', function (newVal) {
+        console.log("hvad er newVal" + newVal)
+        if (newVal == "ingen") {
+            vm.payload.body = "";
         }
         else {
-            vm.payload.body = "";
+            getDefaultMailBody(vm.payload.caseid, vm.selectedDefaultBody);
         }
     })
 
