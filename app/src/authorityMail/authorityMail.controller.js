@@ -22,6 +22,7 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
   vm.send = send;
   vm.cancel = cancel;
   vm.loading = false;
+  vm.showSignitureCheckBox = false;
 
   vm.payload.caseid = $stateParams.caseid;
 
@@ -32,6 +33,7 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
     }
   activated()
 
+    checkSignitureAvailibility();
 
   function preview() {
       authorityMail.getPreview(vm.payload).then( function (response) {
@@ -76,6 +78,18 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
 
     vm.payload.defaultbody
 
+
+    $scope.$watch('vm.payload.useSignature', function (newVal) {
+        if (newVal) {
+            console.log(newVal);
+        }
+        else {
+            console.log(newVal);
+        }
+    })
+
+
+
   function send() {
     vm.loading = true;
     authorityMail.send(vm.payload)
@@ -98,5 +112,14 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
     $mdDialog.cancel();
   }
 
+    function checkSignitureAvailibility() {
+      authorityMail.areSignituresAvailable($stateParams.caseid).then(function(response) {
+          vm.showSignitureCheckBox = response.data.available;
+      })
+    }
+
+
+
 }
+
 

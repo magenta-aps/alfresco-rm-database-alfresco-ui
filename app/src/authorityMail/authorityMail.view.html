@@ -35,7 +35,10 @@
 
 
             <md-checkbox ng-model="vm.payload.defaultbody">standardtekst</md-checkbox>
-            <md-checkbox ng-model="vm.payload.useSignature">Anvend indskannet signatur</md-checkbox>
+
+
+            <md-checkbox ng-show="vm.showSignitureCheckBox" ng-model="vm.payload.useSignature">Anvend indskannet signatur</md-checkbox>
+
         <md-input-container class="md-block">
           <label>Besked</label>
 
@@ -49,6 +52,7 @@
 
         <md-dialog-actions>
             <md-button 
+                ng-show="vm.payload.useSignature"
                 ng-if="!vm.loading"
                 ng-click="vm.preview()"
                 class="md-primary" 

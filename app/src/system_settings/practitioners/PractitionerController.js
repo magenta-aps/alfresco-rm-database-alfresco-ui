@@ -155,6 +155,10 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
     // practitionerService.isSignitureNodeCreated($scope.selectedUser);
 
     angular.forEach(vm.files, function (file) {
+
+      console.log("uploader for brugeren:" + $scope.selectedUser);
+      console.log("uploader til dest:" + $scope.destination);
+
       ContentService.uploadFilesSetType(file, $scope.destination, "rm:signature", $scope.selectedUser)
           .then(function (response) {
             vm.uploading = false;

@@ -8,7 +8,8 @@ function authorityMail($http) {
   var service = {
     send: send,
     getDefaultMailBody : getDefaultMailBody,
-      getPreview : getPreview
+    getPreview : getPreview,
+    areSignituresAvailable : areSignituresAvailable
   };
 
   return service;
@@ -42,9 +43,17 @@ function authorityMail($http) {
             });
     }
 
+    function areSignituresAvailable(caseId) {
+
+        var properties = {"caseid" : caseId, "method" : "signitureAvailability"}
+        return $http.post("/alfresco/s/contents/mailcontent", properties)
+            .then(function (response) {
+                return response;
+            });
+
+    }
+
      function getPreview(payload) {
-
-
         payload.method = "preview";
         return $http.post("/alfresco/s/contents/mailcontent", payload)
          .then(function (response) {
