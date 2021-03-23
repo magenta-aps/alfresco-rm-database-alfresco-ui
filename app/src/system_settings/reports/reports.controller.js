@@ -4,7 +4,7 @@ angular
   .module('openDeskApp.systemsettings')
   .controller('ReportsController', ReportsController);
 
-function ReportsController($scope, $stateParams, ContentService, HeaderService, $http ) {
+function ReportsController($scope, $stateParams, ContentService, HeaderService, $http, $filter ) {
   var vm = this;
 
   $scope.folderUuid = [];
@@ -13,6 +13,36 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
 
   vm.chartAval = "";
   vm.chartBval = "";
+
+  vm.createdFromDate = null;
+  vm.createdToDate = null;
+
+  vm.disableVentetiderButton = true;
+
+    $scope.$watch('vm.createdFromDate', function (newVal) {
+        if (newVal) {
+            if (vm.createdToDate != null) {
+                vm.disableVentetiderButton = false;
+            }
+        }
+        else {
+            vm.disableVentetiderButton = true;
+        }
+    })
+
+    $scope.$watch('vm.createdToDate', function (newVal) {
+        if (newVal) {
+            if (vm.createdFromDate != null) {
+                vm.disableVentetiderButton = false;
+            }
+        }
+        else {
+            vm.disableVentetiderButton = true;
+        }
+    })
+
+
+
 
   function chartA() {
        $http.post("/alfresco/s/database/retspsyk/weeklystat", {
@@ -50,6 +80,22 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
       });
   }
   vm.chartB = chartB;
+
+  function ventetidsRapport() {
+      var query = {};
+
+      if (vm.createdFromDate != null) {
+            query.createdFromDate= $filter('date')(vm.createdFromDate,'yyyy-MM-dd');
+            query.createdToDate= $filter('date')(vm.createdToDate,'yyyy-MM-dd');
+        }
+      console.log("query.createdFromDate");
+      console.log(query.createdFromDate);
+      console.log(query.createdToDate);
+  }
+
+    vm.ventetidsrapport = ventetidsRapport;
+
+
 
 
 
