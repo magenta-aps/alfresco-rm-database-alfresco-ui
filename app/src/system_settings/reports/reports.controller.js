@@ -23,6 +23,8 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
         if (newVal) {
             if (vm.createdToDate != null) {
                 vm.disableVentetiderButton = false;
+
+                vm.createdToDate= $filter('date')(vm.createdToDate,'yyyy-MM-dd');
             }
         }
         else {
@@ -34,6 +36,7 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
         if (newVal) {
             if (vm.createdFromDate != null) {
                 vm.disableVentetiderButton = false;
+                vm.createdFromDate= $filter('date')(vm.createdFromDate,'yyyy-MM-dd');
             }
         }
         else {
@@ -83,14 +86,36 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
 
   function ventetidsRapport() {
       var query = {};
-
-      if (vm.createdFromDate != null) {
-            query.createdFromDate= $filter('date')(vm.createdFromDate,'yyyy-MM-dd');
-            query.createdToDate= $filter('date')(vm.createdToDate,'yyyy-MM-dd');
-        }
+      //
+      // if (vm.createdFromDate != null) {
+      //       vm.createdFromDate= $filter('date')(vm.createdFromDate,'yyyy-MM-dd');
+      //       vm.createdToDate= $filter('date')(vm.createdToDate,'yyyy-MM-dd');
+      //   }
       console.log("query.createdFromDate");
-      console.log(query.createdFromDate);
-      console.log(query.createdToDate);
+      console.log(vm.createdFromDate);
+      console.log(vm.createdToDate);
+
+
+      $http.post("/alfresco/s/database/retspsyk/reports", {
+          "method": "waitingtime",
+          "createdFrom": vm.createdFromDate,
+          "createdTo": vm.createdToDate
+      }).then(function (response) {
+
+          console.log("response");
+          console.log(response);
+
+          // if (response.data.NodeRef == "") {
+          //     alert("der er ikke data til at kunne lave en graf for det indtastede år")
+          // }
+          // else {
+          //     ContentService.download("workspace://SpacesStore/" + response.data.NodeRef, "aar.ods");
+          // }
+
+
+      });
+
+
   }
 
     vm.ventetidsrapport = ventetidsRapport;
