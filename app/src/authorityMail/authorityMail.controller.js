@@ -92,14 +92,18 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
 
   function send() {
     vm.loading = true;
-    authorityMail.send(vm.payload)
-      .then(function () {
+
+    return authorityMail.send(vm.payload)
+      .then(function (response) {
         vm.loading = false;
         vm.cancel();
         Toast.show('Mailen blev sendt');
-        $state.reload()
+        // $state.reload();
+          console.log("hvad er response");
+          console.log(response);
+          return response;
+      });
 
-      })
   }
 
   function previewAddSigniture() {

@@ -28,8 +28,10 @@ function authorityMail($http) {
         payload.authority = email;
     }
       payload.method = "send";
+
     return $http.post("/alfresco/s/contents/mailcontent", payload)
       .then(function (response) {
+          console.log("sent");
         return response;
       });
   }

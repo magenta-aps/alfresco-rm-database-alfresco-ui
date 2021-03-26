@@ -4,7 +4,7 @@ angular
   .module('openDeskApp.declaration')
   .controller('DeclarationDocumentController', DocumentController);
 
-function DocumentController($scope, $mdDialog, $stateParams, DeclarationService, Toast, ContentService, HeaderService) {
+function DocumentController($scope, $mdDialog, $stateParams, DeclarationService, Toast, ContentService, HeaderService, $state) {
   var vm = this;
 
   var hasSelectedContent = false;
@@ -13,18 +13,27 @@ function DocumentController($scope, $mdDialog, $stateParams, DeclarationService,
   $scope.selectedContent;
 
 
+
+
   // also check if came back from preview email signature...
 
-  if (Object.keys($stateParams.emailPayload).length !== 0) {
+  console.log("checking for shit ");
+  console.log(Object.keys($stateParams.emailPayload).length);
+
+  if (Object.keys($stateParams.emailPayload).length !== 0 ) {
+
+    console.log("coming back from something")
 
     if ($stateParams.emailPayload.nodeRefs.length >= 1) {
+
+      console.log("coming back from emaiol")
+
+
       $scope.selectedContent = $stateParams.selectedFiles;
       authorityMailDialog();
     }
-
-
-
   }
+
 
   console.log("hello from declarationDocumentController");
 
@@ -104,7 +113,30 @@ function DocumentController($scope, $mdDialog, $stateParams, DeclarationService,
       controller: 'AuthorityMailController as vm',
       scope: $scope, // use parent scope in template
       preserveScope: true, // do not forget this if use parent scope
-      clickOutsideToClose: true
+      clickOutsideToClose: false
+    }).then (function (response) {
+      console.log("cleaning up the selected documents trueee");
+      console.log(response);
+    }).catch(function (response) {
+      console.log("cleaning up the selected documents errrr");
+      console.log(response)
+
+      console.log("**")
+      console.log($stateParams.caseid);
+      console.log($stateParams.tmpcrumb);
+      console.log($stateParams.breadcrumbPath[0].nodeUuid);
+      console.log("**");
+      console.log($stateParams);
+      console.log("$stateParams.breadcrumbPath" + $stateParams.breadcrumbPath);
+
+      $state.go('declaration.show.documents', { caseid: $stateParams.caseid, breadcrumbPath: $stateParams.breadcrumbPath, tmpNodeRef : $stateParams.breadcrumbPath[0].nodeUuid, emailPayload : undefined, selectedFiles :  undefined});
+
+
+
+
     });
+
+
+
   }
 }

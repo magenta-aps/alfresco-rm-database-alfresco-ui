@@ -62,6 +62,14 @@
             </md-button>
             <md-button
                     ng-if="!vm.loading"
+                    ng-click="vm.cancel()"
+                    class="md-primary"
+                    aria-label="{{'COMMON.SEND' | translate}}"
+            >
+                Fortryd
+            </md-button>
+            <md-button
+                    ng-if="!vm.loading"
                     ng-disabled="authorityMailForm.$invalid"
                     type="submit"
                     class="md-primary"
