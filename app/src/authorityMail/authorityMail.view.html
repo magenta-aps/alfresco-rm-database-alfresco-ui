@@ -35,6 +35,10 @@
 
 
             <md-checkbox ng-model="vm.payload.defaultbody">standardtekst</md-checkbox>
+
+
+            <md-checkbox ng-show="vm.showSignitureCheckBox" ng-model="vm.payload.useSignature">Anvend indskannet signatur</md-checkbox>
+
         <md-input-container class="md-block">
           <label>Besked</label>
 
@@ -48,11 +52,28 @@
 
         <md-dialog-actions>
             <md-button 
+                ng-show="vm.payload.useSignature"
                 ng-if="!vm.loading"
-                ng-disabled="authorityMailForm.$invalid"
-                type="submit" 
+                ng-click="vm.preview()"
                 class="md-primary" 
                 aria-label="{{'COMMON.SEND' | translate}}"
+            >
+                {{'COMMON.PREVIEWSIGNATURE' | translate}}
+            </md-button>
+            <md-button
+                    ng-if="!vm.loading"
+                    ng-click="vm.cancel()"
+                    class="md-primary"
+                    aria-label="{{'COMMON.SEND' | translate}}"
+            >
+                Fortryd
+            </md-button>
+            <md-button
+                    ng-if="!vm.loading"
+                    ng-disabled="authorityMailForm.$invalid"
+                    type="submit"
+                    class="md-primary"
+                    aria-label="{{'COMMON.SEND' | translate}}"
             >
                 {{'COMMON.SEND' | translate}}
             </md-button>

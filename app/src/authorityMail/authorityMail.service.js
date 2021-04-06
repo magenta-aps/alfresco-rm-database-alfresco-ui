@@ -7,7 +7,9 @@ function authorityMail($http) {
 
   var service = {
     send: send,
-    getDefaultMailBody : getDefaultMailBody
+    getDefaultMailBody : getDefaultMailBody,
+    getPreview : getPreview,
+    areSignituresAvailable : areSignituresAvailable
   };
 
   return service;
@@ -25,6 +27,7 @@ function authorityMail($http) {
 
         payload.authority = email;
     }
+      payload.method = "send";
 
     return $http.post("/alfresco/s/contents/mailcontent", payload)
       .then(function (response) {
@@ -40,4 +43,22 @@ function authorityMail($http) {
                 return response.data;
             });
     }
+
+    function areSignituresAvailable(caseId) {
+
+        var properties = {"caseid" : caseId, "method" : "signitureAvailability"}
+        return $http.post("/alfresco/s/contents/mailcontent", properties)
+            .then(function (response) {
+                return response;
+            });
+
+    }
+
+     function getPreview(payload) {
+        payload.method = "preview";
+        return $http.post("/alfresco/s/contents/mailcontent", payload)
+         .then(function (response) {
+             return response;
+         });
+     }
 }

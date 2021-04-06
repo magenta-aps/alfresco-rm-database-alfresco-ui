@@ -78,7 +78,9 @@ function config($stateProvider) {
       params: {
         path: "/Sites/retspsyk/documentLibary",
         breadcrumbPath: [],
-          tmpNodeRef: null
+          tmpNodeRef: null,
+        emailPayload : {},
+        selectedFiles : {}
 
       },
       views: {

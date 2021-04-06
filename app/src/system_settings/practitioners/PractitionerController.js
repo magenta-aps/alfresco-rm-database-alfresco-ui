@@ -4,12 +4,12 @@ angular
   .module('openDeskApp.declaration')
   .controller('PractitionerController', PractitionerController);
 
-function PractitionerController($scope, practitionerService, Toast, HeaderService, $mdDialog, $stateParams, $state, USER_ROLES) {
+function PractitionerController($scope, practitionerService, Toast, HeaderService, $mdDialog, $stateParams, $state, USER_ROLES, sessionService, ContentService) {
 
   $scope.allUsers = [];
 
   $scope.bua = false;
-
+  $scope.signatureText = "";
 
 
   $scope.query = {
@@ -18,6 +18,7 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
   HeaderService.resetActions();
 
+  getDestinationNodeRefSignatureFile("sd");
 
   $scope.$watch('allUsers', function (newVal, oldVal) {
     if (newVal.length == 0 || oldVal.length == 0) return;
@@ -64,11 +65,17 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
   function updateBUA(user, firstName, lastName, oprettet) {
 
+
+
+
     $scope.selectedUser = user;
     $scope.selectedUserFirstName = firstName;
     $scope.selectedUserLastName = lastName;
     $scope.oprettet = oprettet;
 
+    practitionerService.getSignatureText($scope.selectedUser).then(function(response) {
+      $scope.signatureText = response.data.text;
+    });
 
     // fetch current user status
     practitionerService.getUserType(user).then(function (response) {
@@ -104,8 +111,11 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
   function updateUser() {
 
-    practitionerService.updateUser($scope.bua, $scope.selectedUser)
-        .then(function (response) {
+
+    console.log("hvad er $scope.signatureText");
+    console.log($scope.signatureText);
+
+    practitionerService.updateUserSignature($scope.bua, $scope.selectedUser, $scope.signatureText).then(function (response) {
 
           var buaValue = $scope.searchParams_bua;
 
@@ -126,6 +136,75 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
   }
 
   $scope.updateUser = updateUser;
+
+
+  function uploadDialog() {
+    $mdDialog.show({
+      templateUrl: 'app/src/content/upload/upload.view.html',
+      controller: 'UploadController as vm',
+      destination: 'klap',
+      clickOutsideToClose: true
+    });
+  }
+
+  function uploadFiles() {
+    vm.uploading = true;
+
+    // practitionerService.isSignitureNodeCreated($scope.selectedUser);
+
+    angular.forEach(vm.files, function (file) {
+
+      console.log("uploader for brugeren:" + $scope.selectedUser);
+      console.log("uploader til dest:" + $scope.destination);
+
+      ContentService.uploadFilesSetType(file, $scope.destination, "rm:signature", $scope.selectedUser)
+          .then(function (response) {
+            vm.uploading = false;
+            cancelDialog();
+          });
+    });
+    vm.files = [];
+  }
+  var vm = this;
+  vm.upload = uploadFiles;
+
+  vm.signatureText = "";
+
+
+
+  function openDialog() {
+    $mdDialog.show({
+      templateUrl: 'app/src/content/upload/upload.view.html',
+      scope: $scope, // use parent scope in template
+      preserveScope: true, // do not forget this if use parent scope
+      clickOutsideToClose: true
+    });
+  }
+  $scope.openDialog = openDialog;
+
+  function cancelDialog() {
+    $mdDialog.cancel();
+    vm.files = [];
+  }
+  $scope.cancelDialog = cancelDialog;
+
+
+
+
+  function getDestinationNodeRefSignatureFile(usr) {
+
+    var usrName = sessionService.getUserInfo().user.userName;
+
+    console.log(usrName)
+
+    practitionerService.getSignatureDest(usrName).then(function (response) {
+      console.log("n");
+      console.log(response.data.nodeRef);
+      $scope.destination = response.data.nodeRef;
+    })
+  }
+
+  $scope.getDestinationNodeRefSignatureFile = getDestinationNodeRefSignatureFile;
 
   function reloadWithNewValue(value) {
 

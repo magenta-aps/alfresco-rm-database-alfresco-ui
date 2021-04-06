@@ -20,6 +20,7 @@ function DocumentController($scope, documentService, $stateParams, $state,
   vm.canRevertDocument = authService.isAuthorized('SiteEntryLockManager');
 
 
+
   if ($location.search().latest == undefined) {
     vm.latest = true;
   }
@@ -58,6 +59,11 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
   vm.back = back;
 
+
+  function backToEmail()  {
+      $state.go('declaration.show.documents', { caseid: $stateParams.emailPayload.caseid, breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef, emailPayload : $stateParams.emailPayload, selectedFiles :  $stateParams.selectedFiles});
+  }
+  vm.backToEmail = backToEmail;
 
 
   function updateCollapse() {
@@ -126,6 +132,13 @@ function DocumentController($scope, documentService, $stateParams, $state,
     else {
         vm.showRevertButton = true;
     }
+
+
+
+      vm.showBackToEmail = $stateParams.showBackToEmail;
+
+
+
 
     HeaderService.resetActions();
     setPDFViewerHeight();
