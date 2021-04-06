@@ -26,6 +26,7 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
 
   vm.payload.caseid = $stateParams.caseid;
 
+
     if (Object.keys($stateParams.emailPayload).length !== 0) {
         vm.payload.subject = $stateParams.emailPayload.subject;
         vm.payload.authority = $stateParams.emailPayload.authority;
@@ -33,7 +34,20 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
     }
   activated()
 
-    checkSignitureAvailibility();
+  checkSignitureAvailibility();
+
+
+
+    vm.defaultBodyText = [
+        {model : "ingen"},
+        {model : "send"},
+        {model : "returnering"}
+    ];
+
+    vm.selectedDefaultBody = "ingen";
+
+
+
 
   function preview() {
       authorityMail.getPreview(vm.payload).then( function (response) {
@@ -54,25 +68,26 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
 
 
 
-  function getDefaultMailBody(decl) {
-      authorityMail.getDefaultMailBody(decl).then( function(response) {
+  function getDefaultMailBody(decl, dropdown) {
+      console.log("hvda er dropdown: " + dropdown);
+      authorityMail.getDefaultMailBody(decl, dropdown).then( function(response) {
           vm.payload.body = response.text;
       });
   }
 
-    $scope.$watch('vm.payload.defaultbody', function (newVal) {
-        if (newVal) {
-            getDefaultMailBody(vm.payload.caseid);
+    $scope.$watch('vm.selectedDefaultBody', function (newVal) {
+        console.log("hvad er newVal" + newVal)
+        if (newVal == "ingen") {
+            vm.payload.body = "";
         }
         else {
-
             if ((Object.keys($stateParams.emailPayload).length !== 0)) {
                 // do nothing
             }
             else {
                 vm.payload.body = "";
             }
-
+            getDefaultMailBody(vm.payload.caseid, vm.selectedDefaultBody);
         }
     })
 
