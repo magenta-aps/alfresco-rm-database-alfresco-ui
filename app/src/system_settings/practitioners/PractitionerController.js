@@ -73,8 +73,6 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
     $scope.selectedUserLastName = lastName;
     $scope.oprettet = oprettet;
 
-
-    console.log("åbner dialog openDialog");
     practitionerService.getSignatureText($scope.selectedUser).then(function(response) {
       $scope.signatureText = response.data.text;
     });

@@ -81,10 +81,10 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
 
     $scope.$watch('vm.payload.useSignature', function (newVal) {
         if (newVal) {
-            console.log(newVal);
+            // console.log(newVal);
         }
         else {
-            console.log(newVal);
+            // console.log(newVal);
         }
     })
 
@@ -99,8 +99,6 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
         vm.cancel();
         Toast.show('Mailen blev sendt');
         // $state.reload();
-          console.log("hvad er response");
-          console.log(response);
           return response;
       });
 

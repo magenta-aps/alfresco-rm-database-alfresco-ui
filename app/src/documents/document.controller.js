@@ -61,9 +61,6 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
 
   function backToEmail()  {
-      console.log("dette sender jeg tilbage");
-      console.log($stateParams.emailPayload);
-      console.log($stateParams.selectedFiles);
       $state.go('declaration.show.documents', { caseid: $stateParams.emailPayload.caseid, breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef, emailPayload : $stateParams.emailPayload, selectedFiles :  $stateParams.selectedFiles});
   }
   vm.backToEmail = backToEmail;

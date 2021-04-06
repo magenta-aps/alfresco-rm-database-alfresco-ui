@@ -31,7 +31,6 @@ function authorityMail($http) {
 
     return $http.post("/alfresco/s/contents/mailcontent", payload)
       .then(function (response) {
-          console.log("sent");
         return response;
       });
   }
