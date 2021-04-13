@@ -14,6 +14,7 @@ function AlfrescoDownloadService(alfrescoNodeUtils, ALFRESCO_URI, sessionService
         var url = ALFRESCO_URI.webClientServiceProxy + "/api/node/content/" + alfrescoNodeUtils.processNodeRef(nodeRef).uri + "/" + fileName + "?a=true";
         url = sessionService.makeURL(url);
 
+
         var iframe = document.querySelector("#downloadFrame");
         if (iframe === null) {
             iframe = angular.element("<iframe id='downloadFrame' style='position:fixed;display:none;top:-1px;left:-1px;'/>");

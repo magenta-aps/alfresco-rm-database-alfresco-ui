@@ -4,7 +4,7 @@ angular
   .module('openDeskApp.systemsettings')
   .controller('ReportsController', ReportsController);
 
-function ReportsController($scope, $stateParams, ContentService, HeaderService, $http, $filter ) {
+function ReportsController($scope, $stateParams, ContentService, HeaderService, $http, $filter, alfrescoDownloadService ) {
   var vm = this;
 
   $scope.folderUuid = [];
@@ -92,18 +92,27 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
       //       vm.createdToDate= $filter('date')(vm.createdToDate,'yyyy-MM-dd');
       //   }
       console.log("query.createdFromDate");
-      console.log(vm.createdFromDate);
-      console.log(vm.createdToDate);
+      console.log($filter('date')(vm.createdFromDate,'yyyy-MM-dd'));
+      console.log($filter('date')(vm.createdToDate,'yyyy-MM-dd'));
 
 
       $http.post("/alfresco/s/database/retspsyk/reports", {
           "method": "waitingtime",
-          "createdFrom": vm.createdFromDate,
-          "createdTo": vm.createdToDate
+          "createdFrom": $filter('date')(vm.createdFromDate,'yyyy-MM-dd'),
+          "createdTo": $filter('date')(vm.createdToDate,'yyyy-MM-dd')
       }).then(function (response) {
 
           console.log("response");
           console.log(response);
+
+          alfrescoDownloadService.downloadFile(response.data.spreadsheet, "heydo");
+
+
+
+
+
+
+
 
           // if (response.data.NodeRef == "") {
           //     alert("der er ikke data til at kunne lave en graf for det indtastede år")
@@ -114,8 +123,6 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
 
 
       });
-
-
   }
 
     vm.ventetidsrapport = ventetidsRapport;
