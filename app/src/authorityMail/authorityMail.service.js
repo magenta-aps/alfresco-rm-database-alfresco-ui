@@ -43,9 +43,9 @@ function authorityMail($http) {
             });
     }
 
-    function areSignituresAvailable(caseId) {
+    function areSignituresAvailable(caseId, selectedFiles) {
 
-        var properties = {"caseid" : caseId, "method" : "signitureAvailability"}
+        var properties = {"caseid" : caseId, "method" : "signitureAvailability", "nodeRefs" : selectedFiles}
         return $http.post("/alfresco/s/contents/mailcontent", properties)
             .then(function (response) {
                 return response;

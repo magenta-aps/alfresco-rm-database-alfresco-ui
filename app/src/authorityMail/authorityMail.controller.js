@@ -130,7 +130,7 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
   }
 
     function checkSignitureAvailibility() {
-      authorityMail.areSignituresAvailable($stateParams.caseid).then(function(response) {
+      authorityMail.areSignituresAvailable($stateParams.caseid, vm.selectedFiles).then(function(response) {
           vm.showSignitureCheckBox = response.data.available;
       })
     }

@@ -4,7 +4,7 @@ angular
   .module('openDeskApp.declaration')
   .controller('PractitionerController', PractitionerController);
 
-function PractitionerController($scope, practitionerService, Toast, HeaderService, $mdDialog, $stateParams, $state, USER_ROLES, sessionService, ContentService) {
+function PractitionerController($scope, practitionerService, Toast, HeaderService, $mdDialog, $stateParams, $state, USER_ROLES, sessionService, ContentService, $translate) {
 
   $scope.allUsers = [];
 
@@ -154,15 +154,25 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
     angular.forEach(vm.files, function (file) {
 
-      console.log("uploader for brugeren:" + $scope.selectedUser);
-      console.log("uploader til dest:" + $scope.destination);
 
-      ContentService.uploadFilesSetType(file, $scope.destination, "rm:signature", $scope.selectedUser)
-          .then(function (response) {
-            vm.uploading = false;
-            cancelDialog();
+      if (file["type"] == "image/jpeg") {
+
+        ContentService.uploadFilesSetType(file, $scope.destination, "rm:signature", $scope.selectedUser)
+            .then(function (response) {
+              vm.uploading = false;
+              cancelDialog();
           });
-    });
+
+        }
+      else {
+        alert ($translate.instant('SIGNATUR.UPLOADERROR'));
+        vm.uploading = false;
+        cancelDialog();
+      }
+
+      });
+
+
     vm.files = [];
   }
   var vm = this;

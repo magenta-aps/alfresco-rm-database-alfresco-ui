@@ -145,5 +145,10 @@
     "EFTERNAVN": "Efternavn",
     "HOVEDSIGTELSE": "Hovedsigtelse",
     "VISITATION": "Visitation"
+  },
+  "SIGNATUR": {
+    "UPLOADERROR": "den valgte filtype understøttes ikke - det skal være af typen jpeg",
+    "UPLOAD" : "upload (kun jpg filer understøttes)"
+
   }
 }
