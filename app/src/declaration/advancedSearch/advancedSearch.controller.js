@@ -132,6 +132,16 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
           vm.searchResults.push(entry);
 
         });
+
+        if (query.waitingTime != undefined) {
+          console.log("done searching...")
+          console.log(query.waitingTime);
+
+          // get the average times for the returned selection of declarations
+          // todo make a backend func
+        }
+
+
       })
   }
 
