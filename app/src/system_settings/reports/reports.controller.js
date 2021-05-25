@@ -95,11 +95,18 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
       console.log($filter('date')(vm.createdFromDate,'yyyy-MM-dd'));
       console.log($filter('date')(vm.createdToDate,'yyyy-MM-dd'));
 
+      var postVarTO = "NOW";
+      if (vm.createdToDate != null) {
+          postVarTO = $filter('date')(vm.createdToDate,'yyyy-MM-dd')
+      }
+
+
+
 
       $http.post("/alfresco/s/database/retspsyk/reports", {
           "method": "waitingtime",
           "createdFrom": $filter('date')(vm.createdFromDate,'yyyy-MM-dd'),
-          "createdTo": $filter('date')(vm.createdToDate,'yyyy-MM-dd')
+          "createdTo": postVarTO
       }).then(function (response) {
 
           console.log("response");
