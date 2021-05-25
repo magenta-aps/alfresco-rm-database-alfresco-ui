@@ -141,7 +141,10 @@ function config($stateProvider, USER_ROLES) {
       nodiref: null,
       authorizedRoles: [USER_ROLES.user],
       tmpcrumb: {},
-      tmpNodeRef: null
+      tmpNodeRef: null,
+      emailPayload: {},
+      showBackToEmail: false,
+      selectedFiles: {}
     }
   });
 
