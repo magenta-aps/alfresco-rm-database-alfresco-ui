@@ -47,6 +47,20 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
 
 
 
+
+    function testMail() {
+        $http.post("/alfresco/s/conversions/script", { "properties" : {
+            "method": "testmail",
+            "uuid": "testmail"}
+        }).then(function (response) {
+            console.log("mail triggered");
+            console.log(response);
+        });
+    }
+
+    vm.testMail = testMail;
+
+
   function chartA() {
        $http.post("/alfresco/s/database/retspsyk/weeklystat", {
         "method": "spreadsheetA",
