@@ -126,22 +126,7 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
           console.log("response");
           console.log(response);
 
-          alfrescoDownloadService.downloadFile(response.data.spreadsheet, "heydo");
-
-
-
-
-
-
-
-
-          // if (response.data.NodeRef == "") {
-          //     alert("der er ikke data til at kunne lave en graf for det indtastede år")
-          // }
-          // else {
-          //     ContentService.download("workspace://SpacesStore/" + response.data.NodeRef, "aar.ods");
-          // }
-
+          alfrescoDownloadService.downloadFile(response.data.spreadsheet, "download");
 
       });
   }
