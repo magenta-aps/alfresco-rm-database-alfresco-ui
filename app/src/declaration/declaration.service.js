@@ -65,6 +65,20 @@ function DeclarationService($http, $filter) {
       });
   }
 
+  function advancedSearchReturnAverage(skip, max, query) {
+
+    // bugfix - if no mainCharge, send an undefined instead of an empty array. The backend dosnt handle empty arrays
+    let updatedQuery = JSON.parse(JSON.stringify(query));
+    if (query.mainCharge != undefined && query.mainCharge.length == 0) {
+      updatedQuery.mainCharge = undefined;
+    }
+
+    return $http.post(`/alfresco/s/database/retspsyk/page_entries?skip=${skip}&maxItems=${max}`, updatedQuery)
+        .then(response => {
+          return response.data;
+        });
+  }
+
   function getWaitingList(skip, max) {
     return $http.get(`/alfresco/s/database/retspsyk/waitinglist?skip=${skip}&maxItems=${max}`)
       .then(function (response) {

@@ -136,6 +136,7 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
         if (query.waitingTime != undefined) {
           console.log("done searching...")
           console.log(query.waitingTime);
+          console.log(response);
 
           // get the average times for the returned selection of declarations
           // todo make a backend func
