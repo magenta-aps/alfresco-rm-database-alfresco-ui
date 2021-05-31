@@ -4,7 +4,7 @@ angular
   .module('openDeskApp.systemsettings')
   .controller('ReportsController', ReportsController);
 
-function ReportsController($scope, $stateParams, ContentService, HeaderService, $http, $filter ) {
+function ReportsController($scope, $stateParams, ContentService, HeaderService, $http, $filter, alfrescoDownloadService ) {
   var vm = this;
 
   $scope.folderUuid = [];
@@ -23,6 +23,8 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
         if (newVal) {
             if (vm.createdToDate != null) {
                 vm.disableVentetiderButton = false;
+
+                vm.createdToDate= $filter('date')(vm.createdToDate,'yyyy-MM-dd');
             }
         }
         else {
@@ -34,6 +36,7 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
         if (newVal) {
             if (vm.createdFromDate != null) {
                 vm.disableVentetiderButton = false;
+                vm.createdFromDate= $filter('date')(vm.createdFromDate,'yyyy-MM-dd');
             }
         }
         else {
@@ -42,6 +45,20 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
     })
 
 
+
+
+
+    function testMail() {
+        $http.post("/alfresco/s/conversions/script", { "properties" : {
+            "method": "testmail",
+            "uuid": "testmail"}
+        }).then(function (response) {
+            console.log("mail triggered");
+            console.log(response);
+        });
+    }
+
+    vm.testMail = testMail;
 
 
   function chartA() {
@@ -83,14 +100,35 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
 
   function ventetidsRapport() {
       var query = {};
-
-      if (vm.createdFromDate != null) {
-            query.createdFromDate= $filter('date')(vm.createdFromDate,'yyyy-MM-dd');
-            query.createdToDate= $filter('date')(vm.createdToDate,'yyyy-MM-dd');
-        }
+      //
+      // if (vm.createdFromDate != null) {
+      //       vm.createdFromDate= $filter('date')(vm.createdFromDate,'yyyy-MM-dd');
+      //       vm.createdToDate= $filter('date')(vm.createdToDate,'yyyy-MM-dd');
+      //   }
       console.log("query.createdFromDate");
-      console.log(query.createdFromDate);
-      console.log(query.createdToDate);
+      console.log($filter('date')(vm.createdFromDate,'yyyy-MM-dd'));
+      console.log($filter('date')(vm.createdToDate,'yyyy-MM-dd'));
+
+      var postVarTO = "NOW";
+      if (vm.createdToDate != null) {
+          postVarTO = $filter('date')(vm.createdToDate,'yyyy-MM-dd')
+      }
+
+
+
+
+      $http.post("/alfresco/s/database/retspsyk/reports", {
+          "method": "waitingtime",
+          "createdFrom": $filter('date')(vm.createdFromDate,'yyyy-MM-dd'),
+          "createdTo": postVarTO
+      }).then(function (response) {
+
+          console.log("response");
+          console.log(response);
+
+          alfrescoDownloadService.downloadFile(response.data.spreadsheet, "download");
+
+      });
   }
 
     vm.ventetidsrapport = ventetidsRapport;
