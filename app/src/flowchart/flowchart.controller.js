@@ -182,7 +182,6 @@ function propertyFilter(array, query) {
 
 
   function save(nodeuuid, doctor, supervisingDoctor, socialworker, psychologist, status) {
-
     DeclarationService.update($scope.flow)
     			.then(function (response) {
     				Toast.show('Ændringerne er gemt');

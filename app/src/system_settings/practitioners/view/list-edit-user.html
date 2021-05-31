@@ -1,4 +1,4 @@
-<md-dialog aria-label="Opdater brugeren ">
+<md-dialog  width="300" aria-label="Opdater brugeren ">
     <form name="renameForm" ng-submit="updateUser()">
         <md-toolbar>
             <div class="md-toolbar-tools">
@@ -11,9 +11,19 @@
         </md-toolbar>
 
         <md-dialog-content class="md-padding">
+
             <md-input-container class="md-block">
                  <md-checkbox aria-label="aktiveret" ng-model="bua">BUA Bruger</md-checkbox>
             </md-input-container>
+
+            Signatur: <md-button ng-click="openDialog()"> {{ 'SIGNATUR.UPLOAD' | translate}}  </md-button>
+
+            <md-input-container class="md-block">
+                <label>Tekst</label>
+                <textarea class="textarea-highlight" ng-model="signatureText" rows="3" ></textarea>
+            </md-input-container>
+
+
 
             <div>Oprettet: {{oprettet}}</div>
 
