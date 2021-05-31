@@ -20,5 +20,34 @@
 
     </md-card-content>
 
+    <md-card-content>
+
+        <div> Rapport for ventetider: </div>
+
+        <div layout-gt-sm="row" class="layout-gt-sm-row">
+            <md-input-container>
+                <label>Fra</label>
+                <md-datepicker ng-model="vm.createdFromDate"></md-datepicker>
+            </md-input-container>
+            <md-input-container>
+                <label>Til</label>
+                <md-datepicker ng-model="vm.createdToDate"></md-datepicker>
+            </md-input-container>
+        </div>
+
+<!--        <md-button ng-disabled="vm.disableVentetiderButton" ng-click="vm.ventetidsrapport()" >Klik for at lave en ventetidsrapport</md-button>-->
+        <md-button  ng-click="vm.ventetidsrapport()" >Klik for at lave en ventetidsrapport</md-button>
+
+<!--        <md-button  ng-click="vm.testMail()" >Klik for at sende en testmail med en rapport over aktive ventetider de sidste 14 dage</md-button>-->
+
+
+
+
+
+    </md-card-content>
+
+
+
+
 </md-card>
 
