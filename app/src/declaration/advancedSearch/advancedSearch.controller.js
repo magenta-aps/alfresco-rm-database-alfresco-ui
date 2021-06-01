@@ -27,6 +27,24 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   vm.transformChip = transformChip;
   vm.selectedCharge = null;
 
+  function mapVenteTid(input) {
+
+    console.log(input)
+
+    if (input == "passive") {
+      return "Gennemsnitlig passiv ventetid"
+    }
+    else if (input == "active") {
+      return "Gennemsnitlig aktiv ventetid"
+    }
+    else if (input == "total") {
+      return "Gennemsnitlig samlet ventetid"
+    }
+    else return "";
+  }
+
+  vm.mapVenteTid = mapVenteTid;
+
 
   $scope.searchParams.bua = "PS";
   $scope.searchParams.closed = "CLOSED";
@@ -133,13 +151,11 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
 
         });
 
+        vm.showAverage = false;
         if (query.waitingTime != undefined) {
-          console.log("done searching...")
-          console.log(query.waitingTime);
-          console.log(response);
-
-          // get the average times for the returned selection of declarations
-          // todo make a backend func
+          vm.showAverage = true;
+          vm.average = response.average;
+          vm.averageText = vm.mapVenteTid(query.waitingTime.time);
         }
 
 
