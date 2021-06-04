@@ -155,20 +155,21 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
     angular.forEach(vm.files, function (file) {
 
 
-      if (file["type"] == "image/jpeg") {
+      // if (file["type"] == "image/jpeg") {
 
         ContentService.uploadFilesSetType(file, $scope.destination, "rm:signature", $scope.selectedUser)
             .then(function (response) {
+              console.log("response")
+              console.log(response)
               vm.uploading = false;
               cancelDialog();
           });
-
-        }
-      else {
-        alert ($translate.instant('SIGNATUR.UPLOADERROR'));
-        vm.uploading = false;
-        cancelDialog();
-      }
+      //   }
+      // else {
+      //   alert ($translate.instant('SIGNATUR.UPLOADERROR'));
+      //   vm.uploading = false;
+      //   cancelDialog();
+      // }
 
       });
 

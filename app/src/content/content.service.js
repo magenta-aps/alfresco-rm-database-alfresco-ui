@@ -185,10 +185,14 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
             }
         }).then(function (response) {
             var props = { "nodeRef" : "workspace://SpacesStore/" + response.data.entry.id};
-            console.log("hvad kommer tilbage");
-            console.log(response);
-            $http.post('/alfresco/s/contents/addpermission', props).then(function (response) {
-                return response;
+            return $http.post('/alfresco/s/contents/addpermission', props).then(function (response) {
+
+                // convert to jpeg if it was a pdf
+                return $http.post('/alfresco/s/contents/transformpdftojpg', props).then(function (response) {
+                    return response;
+                });
+
+
             });
         });
     }
