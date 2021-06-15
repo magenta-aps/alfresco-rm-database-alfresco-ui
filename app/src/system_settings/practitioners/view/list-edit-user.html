@@ -1,3 +1,16 @@
+<script>
+    document.write('<base href="' + document.location + '" />');
+</script>
+
+<!--<link rel="stylesheet" href="ng-img-crop.css" />-->
+<script src="bower_components/ng-img-crop.js"></script>
+
+<style>
+    .smaller {
+        width: 20%;
+    }
+</style>
+
 <md-dialog  width="300" aria-label="Opdater brugeren ">
     <form name="renameForm" ng-submit="updateUser()">
         <md-toolbar>
@@ -16,6 +29,9 @@
                  <md-checkbox aria-label="aktiveret" ng-model="bua">BUA Bruger</md-checkbox>
             </md-input-container>
 
+
+            <div><img ng-src= {{elphoto}} class="smaller" /></div>
+
             Signatur: <md-button ng-click="openDialog()"> {{ 'SIGNATUR.UPLOAD' | translate}}  </md-button>
 
             <md-input-container class="md-block">
@@ -26,6 +42,10 @@
 
 
             <div>Oprettet: {{oprettet}}</div>
+
+<!--            <ui-cropper image="myImage" result-image="myCroppedImage" result-image-format="image/jpeg"></ui-cropper>-->
+
+
 
         </md-dialog-content>
 

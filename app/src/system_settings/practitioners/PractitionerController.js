@@ -11,12 +11,20 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
   $scope.bua = false;
   $scope.signatureText = "";
 
+  // $scope.myImage = 'https://raw.githubusercontent.com/CrackerakiUA/ui-cropper/master/screenshots/live.jpg';
+  // $scope.myCroppedImage = ''; // in this variable you will have dataUrl of cropped area.
+
 
   $scope.query = {
     order: 'firstName'
   };
 
   HeaderService.resetActions();
+
+
+
+
+
 
   getDestinationNodeRefSignatureFile("sd");
 
@@ -73,9 +81,15 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
     $scope.selectedUserLastName = lastName;
     $scope.oprettet = oprettet;
 
+
+
+
     practitionerService.getSignatureText($scope.selectedUser).then(function(response) {
       $scope.signatureText = response.data.text;
+      $scope.elphoto = '/alfresco/s/api/node/workspace/SpacesStore/' + response.data.nodeRef + '/content';
+      console.log("hvad er node på elphoto:" + response.data.nodeRef);
     });
+
 
     // fetch current user status
     practitionerService.getUserType(user).then(function (response) {
@@ -112,8 +126,6 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
   function updateUser() {
 
 
-    console.log("hvad er $scope.signatureText");
-    console.log($scope.signatureText);
 
     practitionerService.updateUserSignature($scope.bua, $scope.selectedUser, $scope.signatureText).then(function (response) {
 
@@ -155,11 +167,21 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
     angular.forEach(vm.files, function (file) {
 
 
-      // if (file["type"] == "image/jpeg") {
+
+
+      // var data = $scope.myCroppedImage.replace(/^data:image\/\w+;base64,/, "");;
+      //
+      //
+      // const base64 =  data;
+      // const imageName = 'names.jpg';
+      // const imageBlob = dataURItoBlob(base64);
+      // const imageFile = new File([imageBlob], imageName, { type: 'image/jpg' });
+
+
 
         ContentService.uploadFilesSetType(file, $scope.destination, "rm:signature", $scope.selectedUser)
             .then(function (response) {
-              console.log("response")
+              console.log("response tjek her")
               console.log(response)
               vm.uploading = false;
               cancelDialog();
@@ -233,5 +255,16 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
   }
 
   $scope.reloadWithNewValue = reloadWithNewValue;
+
+  function dataURItoBlob(dataURI) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/png' });
+    return blob;
+  }
 
 }
