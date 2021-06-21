@@ -10,9 +10,13 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
   $scope.bua = false;
   $scope.signatureText = "";
+  $scope.showCrop = false;
+  $scope.elphoto = null;
+  $scope.showCropFunction = false;
+  $scope.showSignatureImage = true;
 
   // $scope.myImage = 'https://raw.githubusercontent.com/CrackerakiUA/ui-cropper/master/screenshots/live.jpg';
-  // $scope.myCroppedImage = ''; // in this variable you will have dataUrl of cropped area.
+  $scope.myCroppedImage = ''; // in this variable you will have dataUrl of cropped area.
 
 
   $scope.query = {
@@ -23,7 +27,21 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
 
 
+  function startCrop() {
+    $scope.showCropFunction = true;
+    $scope.showSignatureImage = false;
+  }
 
+  $scope.startCrop = startCrop;
+
+
+  function cropIt(vl) {
+    $scope.showCropFunction = false;
+    $scope.showSignatureImage = true;
+    $scope.elphoto = $scope.myCroppedImage;
+
+  }
+  $scope.cropIt = cropIt;
 
 
   getDestinationNodeRefSignatureFile("sd");

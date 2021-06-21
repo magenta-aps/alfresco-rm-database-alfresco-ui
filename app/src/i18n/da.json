@@ -109,7 +109,8 @@
     "ETHNICITIES": "Etniciteter",
     "STATUS": "Status",
     "NODECLARATION": "Afsluttet uden erklæring",
-    "EMAILAUTHORITIES": "Myndigheder"
+    "EMAILAUTHORITIES": "Myndigheder",
+    "CROP" : "beskær"
   },
   "LOGIN": {
     "LOGIN": "Log ind",

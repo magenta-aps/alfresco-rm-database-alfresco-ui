@@ -1,14 +1,25 @@
-<script>
-    document.write('<base href="' + document.location + '" />');
-</script>
+<!--<script>-->
+<!--    document.write('<base href="' + document.location + '" />');-->
+<!--</script>-->
 
 <!--<link rel="stylesheet" href="ng-img-crop.css" />-->
-<script src="bower_components/ng-img-crop.js"></script>
+
 
 <style>
     .smaller {
         width: 20%;
     }
+</style>
+
+
+<style>
+    .cropArea {
+        width:500px;
+        height:550px;
+
+        margin-top:250px;
+    }
+
 </style>
 
 <md-dialog  width="300" aria-label="Opdater brugeren ">
@@ -30,9 +41,17 @@
             </md-input-container>
 
 
-            <div><img ng-src= {{elphoto}} class="smaller" /></div>
+            <div class="cropArea md-block" ng-show="showCropFunction" style="margin-top: 100px">
+                <ui-cropper max-canvas-dimensions="{w: 640, h: 480}" area-type="square" image="elphoto" result-image="myCroppedImage" result-image-format="image/jpeg"></ui-cropper>
+                <md-button ng-click="cropIt(myCroppedImage)" >{{"Questions.button.save"|translate}}</md-button>
+            </div>
 
-            Signatur: <md-button ng-click="openDialog()"> {{ 'SIGNATUR.UPLOAD' | translate}}  </md-button>
+
+            <div ng-show="showSignatureImage">Underskrift som anvendes: (<a href="#!" ng-click="startCrop()">{{ 'ADMIN.CROP' | translate }}</a>)</div>
+
+            <div ng-show="showSignatureImage"><img border="1" ng-src= {{elphoto}} class="smaller" /></div>
+
+            <md-button ng-click="openDialog()"> {{ 'SIGNATUR.UPLOAD' | translate}}  </md-button>
 
             <md-input-container class="md-block">
                 <label>Tekst</label>
@@ -41,9 +60,10 @@
 
 
 
+
             <div>Oprettet: {{oprettet}}</div>
 
-<!--            <ui-cropper image="myImage" result-image="myCroppedImage" result-image-format="image/jpeg"></ui-cropper>-->
+
 
 
 
