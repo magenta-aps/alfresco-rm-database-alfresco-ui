@@ -18,7 +18,14 @@
         height:550px;
 
         margin-top:250px;
+
     }
+    .cropArea canvas {
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+    }
+
+
 
 </style>
 
@@ -42,14 +49,14 @@
 
 
             <div class="cropArea md-block" ng-show="showCropFunction" style="margin-top: 100px">
-                <ui-cropper max-canvas-dimensions="{w: 640, h: 480}" area-type="square" image="elphoto" result-image="myCroppedImage" result-image-format="image/jpeg"></ui-cropper>
-                <md-button ng-click="cropIt(myCroppedImage)" >{{"Questions.button.save"|translate}}</md-button>
+                <ui-cropper max-canvas-dimensions="{w: 640, h: 480}" area-type="rectangle" image="elphoto" result-image="myCroppedImage" result-image-format="image/jpeg" aspect-ratio="0"></ui-cropper>
+                <md-button ng-click="cropIt(myCroppedImage)" >{{"crop.button.save"|translate}}</md-button>
             </div>
 
 
             <div ng-show="showSignatureImage">Underskrift som anvendes: (<a href="#!" ng-click="startCrop()">{{ 'ADMIN.CROP' | translate }}</a>)</div>
 
-            <div ng-show="showSignatureImage"><img border="1" ng-src= {{elphoto}} class="smaller" /></div>
+            <div ng-show="showSignatureImage"><img border="1" ng-src= {{elphoto}}  class="smaller" /></div>
 
             <md-button ng-click="openDialog()"> {{ 'SIGNATUR.UPLOAD' | translate}}  </md-button>
 

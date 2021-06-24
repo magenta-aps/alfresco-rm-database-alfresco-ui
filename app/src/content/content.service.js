@@ -188,6 +188,8 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
                 'Content-Type': undefined
             }
         }).then(function (responseUpload) {
+            console.log("uploaded");
+            console.log(responseUpload);
             var props = { "nodeRef" : "workspace://SpacesStore/" + responseUpload.data.entry.id};
             return $http.post('/alfresco/s/contents/addpermission', props).then(function (response) {
 
@@ -196,7 +198,7 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
                 console.log("hvad er name: ");
                 console.log(file);
 
-                if (!(file.name.indexOf("jpeg") !== -1) && !(file.name.indexOf("JPEG") !== -1)) {
+                if (!(file.name.indexOf("jpeg") !== -1) && !(file.name.indexOf("JPEG") !== -1) && !(file.name.indexOf("jpg") !== -1) && !(file.name.indexOf("JPG") !== -1) ) {
                     return $http.post('/alfresco/s/contents/transformpdftojpg', props).then(function (responseConvert) {
                         return responseConvert;
                     });

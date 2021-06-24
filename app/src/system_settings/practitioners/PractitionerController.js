@@ -25,8 +25,6 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
   HeaderService.resetActions();
 
-
-
   function startCrop() {
     $scope.showCropFunction = true;
     $scope.showSignatureImage = false;
@@ -38,7 +36,22 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
   function cropIt(vl) {
     $scope.showCropFunction = false;
     $scope.showSignatureImage = true;
-    $scope.elphoto = $scope.myCroppedImage;
+    // $scope.elphoto = $scope.myCroppedImage;
+
+    var data = $scope.myCroppedImage.replace(/^data:image\/\w+;base64,/, "");
+
+
+    const base64 =  data;
+    const imageName = 'names.jpeg';
+    const imageBlob = dataURItoBlob(base64);
+    const imageFile = new File([imageBlob], imageName, { type: 'image/jpg' });
+
+    ContentService.uploadFilesSetType(imageFile, $scope.destination, "rm:signature", $scope.selectedUser)
+        .then(function (response) {
+          vm.uploading = false;
+          cancelDialog();
+        });
+
 
   }
   $scope.cropIt = cropIt;
@@ -104,8 +117,7 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
     practitionerService.getSignatureText($scope.selectedUser).then(function(response) {
       $scope.signatureText = response.data.text;
-      $scope.elphoto = '/alfresco/s/api/node/workspace/SpacesStore/' + response.data.nodeRef + '/content';
-      console.log("hvad er node på elphoto:" + response.data.nodeRef);
+      $scope.elphoto = '/alfresco/s/api/node/workspace/SpacesStore/' + response.data.nodeRef + '/content' + "?" + Math.random();
     });
 
 
@@ -180,23 +192,7 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
   function uploadFiles() {
     vm.uploading = true;
 
-    // practitionerService.isSignitureNodeCreated($scope.selectedUser);
-
     angular.forEach(vm.files, function (file) {
-
-
-
-
-      // var data = $scope.myCroppedImage.replace(/^data:image\/\w+;base64,/, "");;
-      //
-      //
-      // const base64 =  data;
-      // const imageName = 'names.jpg';
-      // const imageBlob = dataURItoBlob(base64);
-      // const imageFile = new File([imageBlob], imageName, { type: 'image/jpg' });
-
-
-
         ContentService.uploadFilesSetType(file, $scope.destination, "rm:signature", $scope.selectedUser)
             .then(function (response) {
               console.log("response tjek her")
@@ -204,13 +200,6 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
               vm.uploading = false;
               cancelDialog();
           });
-      //   }
-      // else {
-      //   alert ($translate.instant('SIGNATUR.UPLOADERROR'));
-      //   vm.uploading = false;
-      //   cancelDialog();
-      // }
-
       });
 
 
@@ -220,7 +209,6 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
   vm.upload = uploadFiles;
 
   vm.signatureText = "";
-
 
 
   function openDialog() {
@@ -246,11 +234,7 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
     var usrName = sessionService.getUserInfo().user.userName;
 
-    console.log(usrName)
-
     practitionerService.getSignatureDest(usrName).then(function (response) {
-      console.log("n");
-      console.log(response.data.nodeRef);
       $scope.destination = response.data.nodeRef;
     })
   }
