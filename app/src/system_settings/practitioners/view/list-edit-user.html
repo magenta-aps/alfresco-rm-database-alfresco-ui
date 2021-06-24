@@ -49,7 +49,7 @@
 
 
             <div class="cropArea md-block" ng-show="showCropFunction" style="margin-top: 100px">
-                <ui-cropper max-canvas-dimensions="{w: 640, h: 480}" area-type="rectangle" image="elphoto" result-image="myCroppedImage" result-image-format="image/jpeg" aspect-ratio="0"></ui-cropper>
+                <ui-cropper  area-type="rectangle" image="elphoto" result-image="myCroppedImage" result-image-format="image/jpeg" result-image-size='{w: 340,h: 200}' init-max-area="true" aspect-ratio="0"></ui-cropper>
                 <md-button ng-click="cropIt(myCroppedImage)" >{{"crop.button.save"|translate}}</md-button>
             </div>
 
