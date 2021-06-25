@@ -42,9 +42,9 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
 
     const base64 =  data;
-    const imageName = 'names.jpeg';
+    const imageName = 'names.png';
     const imageBlob = dataURItoBlob(base64);
-    const imageFile = new File([imageBlob], imageName, { type: 'image/jpg' });
+    const imageFile = new File([imageBlob], imageName, { type: 'image/png' });
 
     ContentService.uploadFilesSetType(imageFile, $scope.destination, "rm:signature", $scope.selectedUser)
         .then(function (response) {

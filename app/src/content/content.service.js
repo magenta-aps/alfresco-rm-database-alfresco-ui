@@ -198,7 +198,7 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
                 console.log("hvad er name: ");
                 console.log(file);
 
-                if (!(file.name.indexOf("jpeg") !== -1) && !(file.name.indexOf("JPEG") !== -1) && !(file.name.indexOf("jpg") !== -1) && !(file.name.indexOf("JPG") !== -1) ) {
+                if (!(file.name.indexOf("jpeg") !== -1) && !(file.name.indexOf("JPEG") !== -1) && !(file.name.indexOf("jpg") !== -1) && !(file.name.indexOf("JPG") !== -1)  && !(file.name.indexOf("png") !== -1) && !(file.name.indexOf("PNG") !== -1)) {
                     return $http.post('/alfresco/s/contents/transformpdftojpg', props).then(function (responseConvert) {
                         return responseConvert;
                     });
