@@ -124,12 +124,16 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		// only show button for flowchart if it has a state that will make it visible inside the flowchart
 
 		DeclarationService.getStateOfDeclaration(response.caseNumber).then (function(stateReponse) {
-			if (stateReponse.data.state != "nostate") {
+
+			if (stateReponse.data.state != "nostate" || stateReponse.data.temporaryEdit) {
+				
+				//todo - sørg for mulighed for at hoppe til den nye status supopl.. i linien under her
+				
 				vm.declarationState = stateReponse.data.state;
 				HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
 				HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings)
 
-				if (!response.closed) {
+				if (!response.closed || stateReponse.data.temporaryEdit) {
 					HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
 					HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
 
@@ -216,6 +220,10 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 	function editCase() {
 
+		console.log("repening");
+		console.log("repening");
+		console.log("repening");
+
 		var currentUser = authService.getUserInfo().user.userName;
 
 		// reload case, as it might have been locked by another user
@@ -226,11 +234,10 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 						vm.declaratiotionDateBeforeEdit = response.declarationDate;
 
                         if (response.locked4edit) {
-
-                        if (currentUser != $scope.case.locked4editBy) {
-                		        alert("sagen er låst for redigering af " + response.locked4editBy);
-                		        return false;
-                		    }
+							if (currentUser != $scope.case.locked4editBy) {
+									alert("sagen er låst for redigering af " + response.locked4editBy);
+									return false;
+								}
                 		}
 
                 		$scope.editPatientData = true;
@@ -276,6 +283,8 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		if (!$scope.case.hasOwnProperty("closedWithoutDeclaration")) {
 				$scope.case.closedWithoutDeclaration = false;
 		}
+
+		$scope.case.closeCaseButtonPressed = false;
 
 
 		DeclarationService.update($scope.case)
@@ -342,6 +351,8 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		else {
 			$scope.case.closedWithoutDeclaration = false;
 		}
+
+		$scope.case.closeCaseButtonPressed = true;
 
 		$scope.case.closedWithoutDeclarationReason = $scope.closeCaseParams.reason;
 		$scope.case.closedWithoutDeclarationSentTo = $scope.closeCaseParams.sentTo;
