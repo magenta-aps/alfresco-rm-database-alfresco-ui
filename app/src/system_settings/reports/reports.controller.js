@@ -66,7 +66,7 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
         "method": "spreadsheetA",
         "year": vm.chartAval
       }).then(function (response) {
-          console.log(response);
+
 
            if (response.data.NodeRef == "") {
                alert("der er ikke data til at kunne lave en graf for det indtastede år")
@@ -105,9 +105,6 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
       //       vm.createdFromDate= $filter('date')(vm.createdFromDate,'yyyy-MM-dd');
       //       vm.createdToDate= $filter('date')(vm.createdToDate,'yyyy-MM-dd');
       //   }
-      console.log("query.createdFromDate");
-      console.log($filter('date')(vm.createdFromDate,'yyyy-MM-dd'));
-      console.log($filter('date')(vm.createdToDate,'yyyy-MM-dd'));
 
       var postVarTO = "NOW";
       if (vm.createdToDate != null) {
@@ -122,10 +119,6 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
           "createdFrom": $filter('date')(vm.createdFromDate,'yyyy-MM-dd'),
           "createdTo": postVarTO
       }).then(function (response) {
-
-          console.log("response");
-          console.log(response);
-
           alfrescoDownloadService.downloadFile(response.data.spreadsheet, "download");
 
       });

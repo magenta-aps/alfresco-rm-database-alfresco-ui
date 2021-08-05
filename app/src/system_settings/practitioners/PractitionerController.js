@@ -110,11 +110,6 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
   }
 
   function updateUser() {
-
-
-    console.log("hvad er $scope.signatureText");
-    console.log($scope.signatureText);
-
     practitionerService.updateUserSignature($scope.bua, $scope.selectedUser, $scope.signatureText).then(function (response) {
 
           var buaValue = $scope.searchParams_bua;
@@ -205,11 +200,7 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
     var usrName = sessionService.getUserInfo().user.userName;
 
-    console.log(usrName)
-
     practitionerService.getSignatureDest(usrName).then(function (response) {
-      console.log("n");
-      console.log(response.data.nodeRef);
       $scope.destination = response.data.nodeRef;
     })
   }

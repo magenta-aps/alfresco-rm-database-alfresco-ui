@@ -58,6 +58,7 @@
     "PATIENT_DATA": "Patient Data",
     "SAVE_AND_LOCK": "Gem og afslut",
     "LOCK": "Afslut",
+    "LOCK_TMP": "Afslut midlertig rettelse",
     "LOCK_DECLARATION": "Afslut",
     "UNLOCK_DECLARATION": "Redigér",
     "REOPENFORSUPOPL": "Genåben til Supplerende mentalerklæring",

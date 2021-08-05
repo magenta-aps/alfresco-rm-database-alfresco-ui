@@ -25,6 +25,8 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 	vm.declarationState = "";
 
+	vm.isOpenForTMPEdit = false;
+
 
 	$scope.$on('$destroy', function () {
 		if ($scope.case.locked4edit) {
@@ -126,16 +128,30 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		DeclarationService.getStateOfDeclaration(response.caseNumber).then (function(stateReponse) {
 
 			if (stateReponse.data.state != "nostate" || stateReponse.data.temporaryEdit) {
-				
-				//todo - sørg for mulighed for at hoppe til den nye status supopl.. i linien under her
-				
-				vm.declarationState = stateReponse.data.state;
-				HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
-				HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings)
 
-				if (!response.closed || stateReponse.data.temporaryEdit) {
+				vm.declarationState = stateReponse.data.state;
+
+
+
+				// not closed and not open for temp edit
+				if (!response.closed && !stateReponse.data.temporaryEdit) {
+					HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings)
+					HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
 					HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
 					HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+				}
+				else if (stateReponse.data.temporaryEdit) {
+
+					// only for supopl
+					if (stateReponse.data.hasAspectSupopl == true) {
+						HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
+					}
+
+
+					HeaderService.addAction('DECLARATION.LOCK_TMP', 'lock', lockCaseDialog);
+					HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+
+					vm.isOpenForTMPEdit = true;
 
 				} else {
 					if (HeaderService.canUnlockCases()) HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unLockCaseDialog);
@@ -151,6 +167,14 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 					if (HeaderService.canUnlockCases()) HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unLockCaseDialog);
 				}
 			}
+		});
+	}
+
+
+
+	function isOpenForTMPEdit() {
+		return DeclarationService.getStateOfDeclaration($scope.case.caseNumber).then (function(stateReponse) {
+			return (stateReponse.data.temporaryEdit);
 		});
 	}
 
@@ -209,9 +233,14 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
     $scope.unlockCase = function () {
 
+
+
+
+
 		DeclarationService.unlock($scope.case, $scope.unlockCaseParams)
 			.then(function () {
 				HeaderService.resetActions();
+
 				activated();
 				Toast.show('Sagen er låst op')
                 $mdDialog.cancel();
@@ -219,11 +248,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	}
 
 	function editCase() {
-
-		console.log("repening");
-		console.log("repening");
-		console.log("repening");
-
 		var currentUser = authService.getUserInfo().user.userName;
 
 		// reload case, as it might have been locked by another user
@@ -311,15 +335,11 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 				var dec_updateCalculatedStat = (dec_before_formatted != dec_after_formatted);
 
-				console.log("hvad er dec_updateCalculatedStat");
-				console.log(dec_updateCalculatedStat);
-
 				if (updateCalculatedStat) {
 					if (year_before == year_after) {
 						DeclarationService.updateStat(year_after);
 					}
 					else {
-						console.log("both years need an update")
 						DeclarationService.updateStat(year_before);
 						DeclarationService.updateStat(year_after);
 					}
@@ -330,7 +350,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 						DeclarationService.updateStat(dec_year_after);
 					}
 					else {
-						console.log("both years need an update in declaration")
 						DeclarationService.updateStat(dec_year_before);
 						DeclarationService.updateStat(dec_year_after);
 					}
