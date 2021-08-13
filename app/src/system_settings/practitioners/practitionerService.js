@@ -14,7 +14,8 @@ angular.module('openDeskApp.declaration').factory('practitionerService', functio
     updateUserSignature: updateUserSignature,
     isSignitureNodeCreated: isSignitureNodeCreated,
     getSignatureText: getSignatureText,
-    getSignatureImage: getSignatureImage
+    getSignatureImage: getSignatureImage,
+    markUserAsHavingASignature: markUserAsHavingASignature
   };
 
   return service;
@@ -94,6 +95,13 @@ angular.module('openDeskApp.declaration').factory('practitionerService', functio
 
   function isSignitureNodeCreated(userName) {
     return $http.get('/alfresco/s/userSignature?userName=' + userName + "&method=exists")
+        .then(function (response) {
+          return response
+        })
+  }
+
+  function markUserAsHavingASignature(userName) {
+    return $http.get('/alfresco/s/userSignature?userName=' + userName + "&method=mark")
         .then(function (response) {
           return response
         })

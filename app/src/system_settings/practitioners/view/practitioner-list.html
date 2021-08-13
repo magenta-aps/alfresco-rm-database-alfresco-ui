@@ -52,7 +52,7 @@ table.md-table:not(.md-row-select) th.md-column:nth-child(n+2):nth-last-child(n+
 
                 <tbody md-body>
                     <tr md-row ng-repeat="user in allUsers | orderBy: query.order" ng-if="user.userName!='admin'" >
-                        <td md-cell ng-click="updateBUA(user.userName, user.firstName, user.lastName, user.oprettet)" class="clickable" >{{user.firstName}} {{user.lastName}}  {{user.bua}} </td>
+                        <td md-cell ng-click="updateBUA(user.userName, user.firstName, user.lastName, user.oprettet)" class="clickable" >{{user.firstName}} {{user.lastName}}  {{user.bua}} ({{user.signatureAdded}})</td>
                         <td md-cell>
                             <md-checkbox aria-label="aktiveret" ng-model="user.active"></md-checkbox>
                         </td>
