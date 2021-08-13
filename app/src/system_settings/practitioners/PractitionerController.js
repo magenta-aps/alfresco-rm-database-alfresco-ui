@@ -154,9 +154,6 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
   }
 
   function updateUser() {
-
-
-
     practitionerService.updateUserSignature($scope.bua, $scope.selectedUser, $scope.signatureText).then(function (response) {
 
           var buaValue = $scope.searchParams_bua;

@@ -50,6 +50,7 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
 
   $scope.folderUuid = [];
 
+  HeaderService.resetActions();
   HeaderService.setTitle($translate.instant('COMMON.FLOWCHART'))
   activate();
 
@@ -122,6 +123,7 @@ function propertyFilter(array, query) {
 
                              vm.total.ventendegr = response.ventendegr;
                              vm.total.waitinglist = response.waitinglist;
+                             vm.total.supopl = response.supopl;
                        });
 
       if ($stateParams.declarationShortcutId != null) {

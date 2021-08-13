@@ -206,10 +206,6 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
                 else {
                     return responseUpload.data.entry.id;
                 }
-
-
-
-
             });
         });
     }
