@@ -13,7 +13,8 @@ angular.module('openDeskApp.declaration').factory('practitionerService', functio
     getSignatureDest: getSignatureDest,
     updateUserSignature: updateUserSignature,
     isSignitureNodeCreated: isSignitureNodeCreated,
-      getSignatureText: getSignatureText
+    getSignatureText: getSignatureText,
+    getSignatureImage: getSignatureImage
   };
 
   return service;
@@ -103,6 +104,10 @@ angular.module('openDeskApp.declaration').factory('practitionerService', functio
             .then(function (response) {
                 return response
             })
+    }
+
+    function getSignatureImage(nodeRef) {
+      return $http.get('/alfresco/s/api/node/workspace/SpacesStore/' + nodeRef + '/content');
     }
 
   function deactivateUser(userName) {
