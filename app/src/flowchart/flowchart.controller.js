@@ -162,6 +162,8 @@ function propertyFilter(array, query) {
 
       FlowChartService.getEntries(value, sort, desc).then(function (response) {
           vm.ongoing = response.entries;
+          console.log("whats been loaded");
+          console.log(response.entries);
       });
  }
 
