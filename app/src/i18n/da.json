@@ -48,7 +48,7 @@
     "IKKEFORDELT" : "Ikke fordelt",
     "INDLAGTE" : "Indlagte",
     "VENTEDEGR" : "Ventende Grønlandske",
-    "SUPOPL" : "supplerede opl.",
+    "SUPOPL" : "supplerende udt.",
     "MINESAGER" : "Mine sager"
   },
   "DECLARATION": {
@@ -61,7 +61,7 @@
     "LOCK_TMP": "Afslut midlertig rettelse",
     "LOCK_DECLARATION": "Afslut",
     "UNLOCK_DECLARATION": "Redigér",
-    "REOPENFORSUPOPL": "Genåben til Supplerende mentalerklæring",
+    "REOPENFORSUPOPL": "Genåben til Supplerende udt.",
     "REOPENEDIT": "Redigering af patientdata",
     "UNLOCK": "Redigér",
     "REOPEN": "Genåben",
