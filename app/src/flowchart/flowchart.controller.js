@@ -108,6 +108,12 @@ function propertyFilter(array, query) {
 
 
   function activate() {
+
+      FlowChartService.getEntries("chart").then(function (response) {
+          console.log("done chart");
+      });
+
+
     $scope.isLoading = true;
 
     FlowChartService.getEntries("total").then(function (response) {
