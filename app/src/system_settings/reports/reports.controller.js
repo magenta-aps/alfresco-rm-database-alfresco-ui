@@ -111,14 +111,15 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
           postVarTO = $filter('date')(vm.createdToDate,'yyyy-MM-dd')
       }
 
-
-
-
       $http.post("/alfresco/s/database/retspsyk/reports", {
           "method": "waitingtime",
           "createdFrom": $filter('date')(vm.createdFromDate,'yyyy-MM-dd'),
           "createdTo": postVarTO
       }).then(function (response) {
+
+          console.log("whats the response");
+          console.log(response);
+
           alfrescoDownloadService.downloadFile(response.data.spreadsheet, "download");
 
       });

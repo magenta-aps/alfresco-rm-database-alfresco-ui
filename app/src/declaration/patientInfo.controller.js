@@ -148,7 +148,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 					}
 
 
-					HeaderService.addAction('DECLARATION.LOCK_TMP', 'lock', lockCaseDialog);
+					HeaderService.addAction('DECLARATION.LOCK_TMP', 'lock', lockCase);
 					HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
 
 					vm.isOpenForTMPEdit = true;
@@ -222,6 +222,16 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		});
 	}
 
+	function lockCase() {
+		if ($scope.case.closedWithoutDeclaration) {
+			$scope.closeCaseParams = {closed : 'no-declaration'}
+		}
+		else {
+			$scope.closeCaseParams = {closed : ''}
+		}
+		$scope.closeCase();
+	}
+
     function unLockCaseDialog() {
         $mdDialog.show({
             templateUrl: 'app/src/declaration/view/unLock-dialog.html',
@@ -232,23 +242,35 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
     }
 
     $scope.unlockCase = function () {
-
-
-
-
-
 		DeclarationService.unlock($scope.case, $scope.unlockCaseParams)
 			.then(function () {
 				HeaderService.resetActions();
-
 				activated();
 				Toast.show('Sagen er låst op')
                 $mdDialog.cancel();
+
+				console.log("what did you doooo.");
+				console.log($scope.unlockCaseParams);
+
+				if ($scope.unlockCaseParams == 'reopenEdit') {
+					// open for edit
+					console.log("openingn for edit")
+					console.log("openingn for edit")
+					editCase()
+				}
+
+
+
+				// console.
+
 			});
 	}
 
 	function editCase() {
 		var currentUser = authService.getUserInfo().user.userName;
+		console.log("hvem er currentUser?");
+		console.log(currentUser);
+
 
 		// reload case, as it might have been locked by another user
 
@@ -257,6 +279,10 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 						vm.createdDateBeforeEdit = response.creationDate;
 						vm.declaratiotionDateBeforeEdit = response.declarationDate;
 
+							console.log("$scope.case.locked4editBy");
+							console.log($scope.case.locked4editBy);
+							console.log("response.locked4edit");
+							console.log(response.locked4edit);
                         if (response.locked4edit) {
 							if (currentUser != $scope.case.locked4editBy) {
 									alert("sagen er låst for redigering af " + response.locked4editBy);
@@ -265,27 +291,26 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
                 		}
 
                 		$scope.editPatientData = true;
-                		lockedForEdit(true);
-                		HeaderService.resetActions();
-                		HeaderService.addAction('DECLARATION.SAVE_AND_LOCK', 'save', lockCaseDialog)
-                		HeaderService.addAction('COMMON.SAVE', 'save', saveCase)
+							lockedForEdit(true).then(function (response) {
+								console.log("going to reset")
+								HeaderService.resetActions();
 
+								// check if this was a usecase of reopening a case, then dont show lockCaseDialog, instead, just lock the case again after save has been finished. just extend savecase like closecase has been done.
 
+										// her
+								console.log("vm.isOpenForTMPEdit")
+								console.log()
 
+								if (vm.isOpenForTMPEdit) {
+									HeaderService.addAction('COMMON.SAVE', 'save', saveCaseAndClose)
+								}
+								else {
+									HeaderService.addAction('DECLARATION.SAVE_AND_LOCK', 'save', lockCaseDialog)
+									HeaderService.addAction('COMMON.SAVE', 'save', saveCase)
+									}
 
-
+							});
                         })
-
-
-
-
-
-
-
-
-
-
-
 	}
 
 	function lockedForEdit(lock) {
@@ -296,7 +321,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 			locked4editBy: lock ? currentUser : {}
 		};
 
-		DeclarationService.update(locked);
+		return DeclarationService.update(locked);
 	}
 
 	function saveCase() {
@@ -357,6 +382,78 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 				$state.reload();
 			});
+	}
+
+	function saveCaseAndClose() {
+
+
+
+		$scope.case.fullName = $scope.case.firstName + ' ' + $scope.case.lastName;
+		$scope.case.locked4edit = false;
+		$scope.case.locked4editBy = {};
+
+		if (!$scope.case.hasOwnProperty("closedWithoutDeclaration")) {
+			$scope.case.closedWithoutDeclaration = false;
+		}
+
+		$scope.case.closeCaseButtonPressed = false;
+
+
+		DeclarationService.update($scope.case)
+			.then(function () {
+				$scope.editPatientData = false;
+				activated();
+				Toast.show('Ændringerne er gemt');
+
+
+				// creationdate
+				var before_formatted = $filter('date')(vm.createdDateBeforeEdit,'yyyy-MM-dd');
+				var after_formatted = $filter('date')($scope.case.creationDate,'yyyy-MM-dd');
+
+				var year_before = $filter('date')(vm.createdDateBeforeEdit,'yyyy');
+				var year_after = $filter('date')($scope.case.creationDate,'yyyy');
+
+				var updateCalculatedStat = (before_formatted != after_formatted);
+
+				var dec_before_formatted = $filter('date')(vm.declaratiotionDateBeforeEdit,'yyyy-MM-dd');
+				var dec_after_formatted = $filter('date')($scope.case.declarationDate,'yyyy-MM-dd');
+
+				var dec_year_before = $filter('date')(vm.declaratiotionDateBeforeEdit,'yyyy');
+				var dec_year_after = $filter('date')($scope.case.declarationDate,'yyyy');
+
+				var dec_updateCalculatedStat = (dec_before_formatted != dec_after_formatted);
+
+				if (updateCalculatedStat) {
+					if (year_before == year_after) {
+						DeclarationService.updateStat(year_after);
+					}
+					else {
+						DeclarationService.updateStat(year_before);
+						DeclarationService.updateStat(year_after);
+					}
+				}
+
+				if (dec_updateCalculatedStat) {
+					if (dec_year_before == dec_year_after) {
+						DeclarationService.updateStat(dec_year_after);
+					}
+					else {
+						DeclarationService.updateStat(dec_year_before);
+						DeclarationService.updateStat(dec_year_after);
+					}
+				}
+
+				if ($scope.case.closedWithoutDeclaration) {
+					$scope.closeCaseParams = {closed : 'no-declaration'}
+				}
+				else {
+					$scope.closeCaseParams = {closed : ''}
+				}
+				$state.reload();
+				$scope.closeCase();
+			});
+
+
 	}
 
 	$scope.closeCase = function () {
