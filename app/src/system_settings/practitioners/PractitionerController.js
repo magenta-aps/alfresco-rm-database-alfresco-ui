@@ -4,7 +4,7 @@ angular
   .module('openDeskApp.declaration')
   .controller('PractitionerController', PractitionerController);
 
-function PractitionerController($scope, practitionerService, Toast, HeaderService, $mdDialog, $stateParams, $state, USER_ROLES, sessionService, ContentService, $translate) {
+function PractitionerController($scope, practitionerService, Toast, HeaderService, $mdDialog, $stateParams, $state, USER_ROLES, sessionService, ContentService, $translate, authService) {
 
   $scope.allUsers = [];
 
@@ -104,38 +104,42 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
   function updateBUA(user, firstName, lastName, oprettet) {
 
-
-
-
     $scope.selectedUser = user;
     $scope.selectedUserFirstName = firstName;
     $scope.selectedUserLastName = lastName;
     $scope.oprettet = oprettet;
 
-
-
-
     practitionerService.getSignatureText($scope.selectedUser).then(function(response) {
       $scope.signatureText = response.data.text;
-      $scope.elphoto = '/alfresco/s/api/node/workspace/SpacesStore/' + response.data.nodeRef + '/content' + "?" + Math.random();
-    });
+
+      if (response.data.nodeRef != undefined) {
+        $scope.elphoto = '/alfresco/s/api/node/workspace/SpacesStore/' + response.data.nodeRef + '/content' + "?alf_ticket=" + authService.getUserInfo().ticket + "&random="  + Math.random();
+      }
+      else {
+        $scope.elphoto = "";
+      }
+
+      // fetch current user status
+      practitionerService.getUserType(user).then(function (response) {
+
+        $scope.bua = response.data.result;
 
 
-    // fetch current user status
-    practitionerService.getUserType(user).then(function (response) {
 
-      $scope.bua = response.data.result;
+        $mdDialog.show({
+          templateUrl: 'app/src/system_settings/practitioners/view/list-edit-user.html',
+          scope: $scope, // use parent scope in template
+          preserveScope: true, // do not forget this if use parent scope
+          clickOutsideToClose: true
+        });
 
-
-
-      $mdDialog.show({
-        templateUrl: 'app/src/system_settings/practitioners/view/list-edit-user.html',
-        scope: $scope, // use parent scope in template
-        preserveScope: true, // do not forget this if use parent scope
-        clickOutsideToClose: true
       });
 
+
     });
+
+
+
 
 
 
@@ -160,6 +164,7 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
           var buaValue = $scope.searchParams_bua;
 
+          console.log("need to reload");
 
           try {
             $state.go('administration.practitioners', {
@@ -196,16 +201,39 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
             .then(function (response) {
               console.log("response tjek her")
               console.log(response)
+
+
+
               vm.uploading = false;
-              cancelDialog();
+              vm.files = [];
+              var buaValue = $scope.searchParams_bua;
+
+
+              // mark the user as having a signature available
+              practitionerService.markUserAsHavingASignature($scope.selectedUser).then(function (response) {
+                try {
+                  $state.go('administration.practitioners', {
+                    authorizedRoles: [USER_ROLES.roleManager],
+                    searchquery: buaValue,
+                    onlyActive: $scope.only_active
+                  }, {reload: true});
+                }
+                catch(err) {
+                  console.log("err");
+                  console.log(err);
+                }
+              });
+
+
+
+
+              // cancelDialog();
+
+
           });
       });
-
-    // mark the user as having a signature available
-    practitionerService.markUserAsHavingASignature($scope.selectedUser);
-
-    vm.files = [];
   }
+
   var vm = this;
   vm.upload = uploadFiles;
 
@@ -225,8 +253,16 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
   function cancelDialog() {
     $mdDialog.cancel();
     vm.files = [];
+    $scope.elphoto = null;
   }
   $scope.cancelDialog = cancelDialog;
+
+
+  function cancelEditDialog() {
+    $mdDialog.cancel();
+    $scope.elphoto = null;
+  }
+  $scope.cancelEditDialog = cancelEditDialog;
 
 
 
