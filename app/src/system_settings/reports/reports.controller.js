@@ -14,6 +14,8 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
   vm.chartAval = "";
   vm.chartBval = "";
 
+  vm.reportStarted = false;
+
   vm.createdFromDate = null;
   vm.createdToDate = null;
 
@@ -99,6 +101,9 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
   vm.chartB = chartB;
 
   function ventetidsRapport() {
+
+      vm.reportStarted = true;
+
       var query = {};
       //
       // if (vm.createdFromDate != null) {
@@ -119,6 +124,7 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
 
           console.log("whats the response");
           console.log(response);
+          vm.reportStarted = false;
 
           alfrescoDownloadService.downloadFile(response.data.spreadsheet, "download");
 
