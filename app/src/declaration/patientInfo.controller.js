@@ -121,46 +121,28 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
             HeaderService.addAction('Tilbage til søgning', 'description', gobacktosearch, false)
         }
 
-
-
 		// only show button for flowchart if it has a state that will make it visible inside the flowchart
 
 		DeclarationService.getStateOfDeclaration(response.caseNumber).then (function(stateReponse) {
 
-			if (stateReponse.data.state != "nostate" || stateReponse.data.temporaryEdit) {
+			// either normalediting or speciel edit if case has been reopened
+			if (stateReponse.data.temporaryEdit) {
 
+				// do speciel edit
 				vm.declarationState = stateReponse.data.state;
+				vm.isOpenForTMPEdit = true;
 
-
-
-				// not closed and not open for temp edit
-				if (!response.closed && !stateReponse.data.temporaryEdit) {
-					HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings)
-					HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
-					HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
-					HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
-				}
-				else if (stateReponse.data.temporaryEdit) {
-
+				if (stateReponse.data.hasAspectSupopl == true) {
 					// only for supopl
-					if (stateReponse.data.hasAspectSupopl == true) {
-						HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
-					}
-
-
-					HeaderService.addAction('DECLARATION.LOCK_TMP', 'lock', lockCase);
+					HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
 					HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
-
-					vm.isOpenForTMPEdit = true;
-
-				} else {
-					if (HeaderService.canUnlockCases()) HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unLockCaseDialog);
+					//her
 				}
-
 			}
 			else {
 				if (!response.closed) {
 					HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings)
+					HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
 					HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
 					HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
 				} else {
@@ -249,28 +231,21 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 				Toast.show('Sagen er låst op')
                 $mdDialog.cancel();
 
-				console.log("what did you doooo.");
+				console.log("$scope.unlockCaseParams")
 				console.log($scope.unlockCaseParams);
 
-				if ($scope.unlockCaseParams == 'reopenEdit') {
+				if (($scope.unlockCaseParams == 'reopenEdit')) {
 					// open for edit
-					console.log("openingn for edit")
-					console.log("openingn for edit")
+					vm.isOpenForTMPEdit = true;
 					editCase()
+				} else {
+					vm.isOpenForTMPEdit = true;
 				}
-
-
-
-				// console.
-
 			});
 	}
 
 	function editCase() {
 		var currentUser = authService.getUserInfo().user.userName;
-		console.log("hvem er currentUser?");
-		console.log(currentUser);
-
 
 		// reload case, as it might have been locked by another user
 
@@ -279,10 +254,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 						vm.createdDateBeforeEdit = response.creationDate;
 						vm.declaratiotionDateBeforeEdit = response.declarationDate;
 
-							console.log("$scope.case.locked4editBy");
-							console.log($scope.case.locked4editBy);
-							console.log("response.locked4edit");
-							console.log(response.locked4edit);
                         if (response.locked4edit) {
 							if (currentUser != $scope.case.locked4editBy) {
 									alert("sagen er låst for redigering af " + response.locked4editBy);
@@ -293,21 +264,23 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
                 		$scope.editPatientData = true;
 							lockedForEdit(true).then(function (response) {
 								console.log("going to reset")
+								console.log("vm.isOpenForTMPEdit");
+								console.log(vm.isOpenForTMPEdit);
+
 								HeaderService.resetActions();
 
+
+
 								// check if this was a usecase of reopening a case, then dont show lockCaseDialog, instead, just lock the case again after save has been finished. just extend savecase like closecase has been done.
-
-										// her
-								console.log("vm.isOpenForTMPEdit")
-								console.log()
-
 								if (vm.isOpenForTMPEdit) {
+									console.log("inside vm.isOpenForTMPEdit");
 									HeaderService.addAction('COMMON.SAVE', 'save', saveCaseAndClose)
 								}
 								else {
+									console.log("inside not vm.isopenfortmpedit")
 									HeaderService.addAction('DECLARATION.SAVE_AND_LOCK', 'save', lockCaseDialog)
 									HeaderService.addAction('COMMON.SAVE', 'save', saveCase)
-									}
+								}
 
 							});
                         })
@@ -386,7 +359,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 	function saveCaseAndClose() {
 
-
+		vm.isOpenForTMPEdit = false;
 
 		$scope.case.fullName = $scope.case.firstName + ' ' + $scope.case.lastName;
 		$scope.case.locked4edit = false;
@@ -487,3 +460,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		$mdDialog.cancel();
 	}
 }
+
+
+
