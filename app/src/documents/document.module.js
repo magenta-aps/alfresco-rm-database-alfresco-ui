@@ -144,6 +144,7 @@ function config($stateProvider, USER_ROLES) {
       tmpNodeRef: null,
       emailPayload: {},
       showBackToEmail: false,
+      showBackToReport: false,
       selectedFiles: {}
     }
   });

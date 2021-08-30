@@ -65,6 +65,13 @@ function DocumentController($scope, documentService, $stateParams, $state,
   }
   vm.backToEmail = backToEmail;
 
+    function backToReport()  {
+        // delete the tmp chart
+        documentService.deleteTmpChartFile(vm.tmpChartNodeRef);
+        $state.go('administration.reports', {});
+    }
+    vm.backToReport = backToReport;
+
 
   function updateCollapse() {
     vm.collapse = !vm.collapse;
@@ -136,8 +143,8 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
 
       vm.showBackToEmail = $stateParams.showBackToEmail;
-
-
+      vm.showBackToReport = $stateParams.showBackToReport;
+      vm.tmpChartNodeRef = selectedDocumentNode;
 
 
     HeaderService.resetActions();
@@ -188,14 +195,22 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
             documentService.getVersions(selectedDocumentNode).then(function (response) {
 
-            vm.history = response;
+                console.log("hvad er vm.history")
+                console.log(vm.history);
+                console.log("hvad er vm.history")
 
-            if (revisioncall) {
-                vm.history.latest_version = ""
-            }
-            else {
-                vm.history.latest_version = response[0].version;
-            }
+                vm.history = response;
+
+                console.log("hvad er vm.history")
+                console.log(vm.history);
+                console.log("hvad er vm.history")
+
+                // if (revisioncall) {
+                //     vm.history.latest_version = ""
+                // }
+                // else {
+                //     vm.history.latest_version = response[0].version;
+                // }
     });
   });
 }
@@ -204,7 +219,6 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
 
     vm.store = vm.doc.store;
-
 
     if (vm.docHasParent) {
           documentService.getThumbnail(vm.parentNodeId, vm.nodeId).then(function (response) {
@@ -231,7 +245,15 @@ function DocumentController($scope, documentService, $stateParams, $state,
             vm.plugin = plugin
 
             $scope.config = plugin;
+
+            console.log("hvad er plugin")
+            console.log(plugin);
+
             $scope.viewerTemplateUrl = documentPreviewService.templatesUrl + plugin.templateUrl;
+
+              console.log("$scope.viewerTemplateUrl")
+              console.log($scope.viewerTemplateUrl);
+
             $scope.download = function () {
               alfrescoDownloadService.downloadFile($scope.config.nodeRef, $scope.config.fileName);
             };

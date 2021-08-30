@@ -155,27 +155,34 @@ background-color: #e1e1e1;
                 {{'COMMON.DOWNLOAD' | translate }}
             </md-button>
         </div>
-        <div>
+        </div>
+
+        <div ng-show="!vm.showBackToEmail && !vm.showBackToReport">
             <md-button ng-click="vm.updatePreview()" class="md-text-icon-button md-primary">
                 <md-icon md-menu-align-target>cached</md-icon>
                 {{'COMMON.UPDATE' | translate }} {{'COMMON.PREVIEW' | translate}}
             </md-button>
         </div>
 
-        <div>
+        <div ng-show="!vm.showBackToEmail && !vm.showBackToReport">
             <md-button ng-click="vm.back()" class="md-text-icon-button md-primary">
                 <md-icon md-menu-align-target>arrow_back</md-icon>
                 {{'COMMON.BACK' | translate }}
             </md-button>
         </div>
-        </div>
-
 
         <div ng-show="vm.showBackToEmail">
         <md-button ng-click="vm.backToEmail()" class="md-text-icon-button md-primary">
             <md-icon md-menu-align-target>arrow_back</md-icon>
             {{'COMMON.BACK_TOEMAIL' | translate }}
         </md-button>
+        </div>
+
+        <div ng-show="vm.showBackToReport">
+            <md-button ng-click="vm.backToReport()" class="md-text-icon-button md-primary">
+                <md-icon md-menu-align-target>arrow_back</md-icon>
+                {{'COMMON.BACK_TOREPORT' | translate }}
+            </md-button>
         </div>
 
 

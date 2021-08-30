@@ -51,7 +51,8 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
   $scope.folderUuid = [];
 
   HeaderService.setTitle($translate.instant('COMMON.FLOWCHART'))
-  activate();
+
+    activate();
 
 
 
@@ -109,9 +110,10 @@ function propertyFilter(array, query) {
 
   function activate() {
 
-      FlowChartService.getEntries("chart").then(function (response) {
-          console.log("done chart");
-      });
+     // console.log("hey");
+     // FlowChartService.getEntries("chart").then(function (response) {
+     //      console.log("done chart");
+     //  });
 
 
     $scope.isLoading = true;
