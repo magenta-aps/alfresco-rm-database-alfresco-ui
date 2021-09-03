@@ -4,7 +4,7 @@ angular
 	.module('openDeskApp.declaration')
 	.controller('PatientInfoController', PatientInfoController);
 
-function PatientInfoController($scope, $state, $stateParams, $mdDialog, DeclarationService, filterService, cprService, authService, Toast, HeaderService, $filter) {
+function PatientInfoController($scope, $state, $stateParams, $mdDialog, DeclarationService, filterService, cprService, authService, Toast, HeaderService, $filter, $timeout, $q) {
 
 	var vm = this;
 	$scope.DeclarationService = DeclarationService;
@@ -12,6 +12,13 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	$scope.case;
 	$scope.isLoading = false;
 	vm.backtosearch = false;
+
+	console.log("loading page again")
+
+	vm.enforceSolar = $stateParams.enforceSolarDelay;
+
+	console.log("hvad er vm.enforceSolar");
+	console.log(vm.enforceSolar);
 
 	$scope.propertyFilter = propertyFilter;
 	$scope.addNewBidiagnosis = addNewBidiagnosis;
@@ -26,6 +33,60 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	vm.declarationState = "";
 
 	vm.isOpenForTMPEdit = false;
+
+	vm.waitPromiseSupopl = function() {
+		var defer = $q.defer();
+		$timeout(function() {
+     		console.log("header waitPromiseSupopl");
+
+			if ($scope.case.closedWithoutDeclaration) {
+				$scope.closeCaseParams = {closed : 'no-declaration'}
+			}
+			else {
+				$scope.closeCaseParams = {closed : ''}
+			}
+
+			// only for supopl
+			HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
+			HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+			HeaderService.addAction('afslut sup.opl', 'lock', $scope.closeCase);
+			vm.enforceSolar = false;
+
+			}, 15000);
+		return defer.promise;
+	};
+
+	vm.waitPromiseNormal = function(declarationSettings_) {
+		var defer = $q.defer();
+		$timeout(function() {
+			console.log("header waitPromiseNormal.....");
+			// only for supopl
+			HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings_)
+			HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
+			HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
+			HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+			vm.enforceSolar = false;
+
+		}, 15000);
+		return defer.promise;
+	};
+
+	vm.waitPromiseCanUnlock = function() {
+		var defer = $q.defer();
+		$timeout(function() {
+			console.log("header waitPromiseCanUnlock.....");
+			// only for supopl
+			HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unLockCaseDialog);
+			vm.enforceSolar = false;
+		}, 15000);
+		return defer.promise;
+	};
+
+
+
+
+
+
 
 
 	$scope.$on('$destroy', function () {
@@ -90,8 +151,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 	function setEverything(response) {
 
-
-
 		$scope.case = response;
 		var bua = response.bua ? ' (BUA)' : '';
 		HeaderService.resetActions();
@@ -114,9 +173,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 			$scope.case.returnOfDeclarationDate = new Date($scope.case.returnOfDeclarationDate);
 		}
 
-
-
-
 		if (vm.backtosearch) {
             HeaderService.addAction('Tilbage til søgning', 'description', gobacktosearch, false)
         }
@@ -132,21 +188,50 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 				vm.declarationState = stateReponse.data.state;
 				vm.isOpenForTMPEdit = true;
 
+
+				// check if you have to wait for solar consistency - triggering edit on a case that was just saved messes up the menu if solr hasn't finished indexing
 				if (stateReponse.data.hasAspectSupopl == true) {
-					// only for supopl
-					HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
-					HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
-					//her
+
+					// encapsulate inside a wait if ensureSolar = true
+
+					if (vm.enforceSolar) {
+						vm.waitPromiseSupopl();
+					}
+					else {
+						HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
+						HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+
+						if ($scope.case.closedWithoutDeclaration) {
+							$scope.closeCaseParams = {closed : 'no-declaration'}
+						}
+						else {
+							$scope.closeCaseParams = {closed : ''}
+						}
+						HeaderService.addAction('afslut sup.opl', 'edit', $scope.closeCase);
+					}
 				}
 			}
 			else {
 				if (!response.closed) {
-					HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings)
-					HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
-					HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
-					HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+					if (vm.enforceSolar) {
+						vm.waitPromiseNormal(declarationSettings);
+					}
+					else {
+						HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings)
+						HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
+						HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
+						HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+					}
 				} else {
-					if (HeaderService.canUnlockCases()) HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unLockCaseDialog);
+					if (HeaderService.canUnlockCases()) {
+						if (vm.enforceSolar) {
+							vm.waitPromiseCanUnlock();
+						}
+						else {
+							HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unLockCaseDialog);
+						}
+
+					}
 				}
 			}
 		});
@@ -263,18 +348,26 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
                 		$scope.editPatientData = true;
 							lockedForEdit(true).then(function (response) {
-								console.log("going to reset")
-								console.log("vm.isOpenForTMPEdit");
-								console.log(vm.isOpenForTMPEdit);
-
 								HeaderService.resetActions();
-
-
 
 								// check if this was a usecase of reopening a case, then dont show lockCaseDialog, instead, just lock the case again after save has been finished. just extend savecase like closecase has been done.
 								if (vm.isOpenForTMPEdit) {
-									console.log("inside vm.isOpenForTMPEdit");
-									HeaderService.addAction('COMMON.SAVE', 'save', saveCaseAndClose)
+
+									// if edit for sup then dont saveandclose - evt. lav et opslag og se om den har et aspekt..... her
+
+									DeclarationService.getStateOfDeclaration(response.caseNumber).then (function(stateReponse) {
+										console.log("stateReponse.data.hasAspectSupopl == true")
+										console.log(stateReponse.data.hasAspectSupopl == true);
+										if (stateReponse.data.hasAspectSupopl == true) {
+											console.log("option a");
+											// her
+											HeaderService.addAction('COMMON.SAVE', 'save', saveCase)
+										}
+										else {
+											console.log("option b");
+											HeaderService.addAction('COMMON.SAVE', 'save', saveCaseAndClose)
+										}
+									});
 								}
 								else {
 									console.log("inside not vm.isopenfortmpedit")
@@ -298,6 +391,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	}
 
 	function saveCase() {
+
+		console.log("****** savecase");
+
 		$scope.case.fullName = $scope.case.firstName + ' ' + $scope.case.lastName;
 		$scope.case.locked4edit = false;
 		$scope.case.locked4editBy = {};
@@ -353,11 +449,17 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 					}
 				}
 
-				$state.reload();
+				console.log("never gets here.....");
+				console.log("$scope.case.caseNumber")
+				console.log($scope.case.caseNumber)
+
+				$state.go('declaration.show', { caseid: $scope.case.caseNumber, enforceSolarDelay: true }, {reload: true});
 			});
 	}
 
 	function saveCaseAndClose() {
+
+		console.log("save and close kaldt");
 
 		vm.isOpenForTMPEdit = false;
 
@@ -422,8 +524,10 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 				else {
 					$scope.closeCaseParams = {closed : ''}
 				}
-				$state.reload();
+
+				// $state.reload;
 				$scope.closeCase();
+
 			});
 
 
@@ -449,11 +553,13 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 		DeclarationService.update($scope.case)
 				.then(function () {
-				HeaderService.resetActions();
-				HeaderService.setClosed(true);
-				activated();
-				$mdDialog.cancel();
-			})
+
+				// HeaderService.resetActions();
+				// HeaderService.setClosed(true);
+				// activated();
+				// $mdDialog.cancel();
+				$state.go('declaration.show', { caseid: $scope.case.caseNumber, enforceSolarDelay: true }, {reload: true});
+				})
 	}
 
 	$scope.cancel = function () {

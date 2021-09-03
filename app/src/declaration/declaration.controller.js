@@ -8,5 +8,7 @@ function DeclarationController($scope, propertyService) {
   $scope.case = {};
   $scope.propertyValues = propertyService.getAllPropertyValues();
 
+  console.log("stuck here...");
+
 
 }
