@@ -34,52 +34,58 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 	vm.isOpenForTMPEdit = false;
 
-	vm.waitPromiseSupopl = function() {
-		var defer = $q.defer();
-		$timeout(function() {
-     		console.log("header waitPromiseSupopl");
+	vm.waitPromiseSupopl = function(state) {
+		console.log("header waitPromiseSupopl");
+		if ($scope.case.closedWithoutDeclaration) {
+			$scope.closeCaseParams = {closed : 'no-declaration'}
+		}
+		else {
+			$scope.closeCaseParams = {closed : ''}
+		}
+		vm.declarationState = state;
 
-			if ($scope.case.closedWithoutDeclaration) {
-				$scope.closeCaseParams = {closed : 'no-declaration'}
-			}
-			else {
-				$scope.closeCaseParams = {closed : ''}
-			}
+		// only for supopl
+		HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
+		HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+		HeaderService.addAction('afslut sup.opl', 'lock', $scope.closeCase);
+		vm.enforceSolar = false;
 
-			// only for supopl
-			HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
-			HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
-			HeaderService.addAction('afslut sup.opl', 'lock', $scope.closeCase);
-			vm.enforceSolar = false;
+		// var defer = $q.defer();
+		// $timeout(function() {
 
-			}, 15000);
-		return defer.promise;
+		// 	}, 15000);
+		// return defer.promise;
 	};
 
-	vm.waitPromiseNormal = function(declarationSettings_) {
-		var defer = $q.defer();
-		$timeout(function() {
-			console.log("header waitPromiseNormal.....");
-			// only for supopl
-			HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings_)
-			HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
-			HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
-			HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
-			vm.enforceSolar = false;
+	vm.waitPromiseNormal = function(declarationSettings_, state) {
+		console.log("header waitPromiseNormal.....");
+		// only for supopl
 
-		}, 15000);
-		return defer.promise;
+		vm.declarationState = state;
+
+		HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings_)
+		HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
+		HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
+		HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+		vm.enforceSolar = false;
+
+		// var defer = $q.defer();
+		// $timeout(function() {
+		// }, 15000);
+		// return defer.promise;
 	};
 
 	vm.waitPromiseCanUnlock = function() {
-		var defer = $q.defer();
-		$timeout(function() {
-			console.log("header waitPromiseCanUnlock.....");
-			// only for supopl
-			HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unLockCaseDialog);
-			vm.enforceSolar = false;
-		}, 15000);
-		return defer.promise;
+
+		console.log("header waitPromiseCanUnlock.....");
+		// only for supopl
+		HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unLockCaseDialog);
+		vm.enforceSolar = false;
+
+		// var defer = $q.defer();
+		// $timeout(function() {
+		// }, 15000);
+		// return defer.promise;
 	};
 
 
@@ -110,6 +116,14 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	}
 
 	function shortcutToFlowchart() {
+				console.log("shortcutToFlowChart");
+
+				console.log("vm.declarationState");
+				console.log(vm.declarationState);
+
+				console.log("$scope.case[\"node-uuid\"]");
+				console.log($scope.case["node-uuid"]);
+
 				$state.go('flowchart', { declarationShortcutId: $scope.case["node-uuid"], category: vm.declarationState });
 	}
 
@@ -195,7 +209,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 					// encapsulate inside a wait if ensureSolar = true
 
 					if (vm.enforceSolar) {
-						vm.waitPromiseSupopl();
+						vm.waitPromiseSupopl(stateReponse.data.state);
 					}
 					else {
 						HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
@@ -212,9 +226,11 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 				}
 			}
 			else {
+				vm.declarationState = stateReponse.data.state;
 				if (!response.closed) {
+
 					if (vm.enforceSolar) {
-						vm.waitPromiseNormal(declarationSettings);
+						vm.waitPromiseNormal(declarationSettings, stateReponse.data.state);
 					}
 					else {
 						HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings)
