@@ -62,7 +62,8 @@ function config($stateProvider) {
     .state('declaration.show', {
       url: '/sag/:caseid',
       params: {
-              searchquery: {}
+              searchquery: {},
+              enforceSolarDelay: false
             },
       views: {
         'content@': {

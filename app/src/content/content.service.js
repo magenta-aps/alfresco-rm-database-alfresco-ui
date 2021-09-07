@@ -171,6 +171,10 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
   }
 
     function uploadFilesSetType(file, destination, nodetype, name) {
+
+      console.log("hvad er file");
+      console.log(file);
+
         var formData = new FormData();
         formData.append("filedata", file);
         formData.append("overwrite", "true");
@@ -183,12 +187,25 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
             headers: {
                 'Content-Type': undefined
             }
-        }).then(function (response) {
-            var props = { "nodeRef" : "workspace://SpacesStore/" + response.data.entry.id};
-            console.log("hvad kommer tilbage");
-            console.log(response);
-            $http.post('/alfresco/s/contents/addpermission', props).then(function (response) {
-                return response;
+        }).then(function (responseUpload) {
+            console.log("uploaded");
+            console.log(responseUpload);
+            var props = { "nodeRef" : "workspace://SpacesStore/" + responseUpload.data.entry.id};
+            return $http.post('/alfresco/s/contents/addpermission', props).then(function (response) {
+
+                // convert to jpeg if it was a pdf
+
+                console.log("hvad er name: ");
+                console.log(file);
+
+                if (!(file.name.indexOf("jpeg") !== -1) && !(file.name.indexOf("JPEG") !== -1) && !(file.name.indexOf("jpg") !== -1) && !(file.name.indexOf("JPG") !== -1)  && !(file.name.indexOf("png") !== -1) && !(file.name.indexOf("PNG") !== -1)) {
+                    return $http.post('/alfresco/s/contents/transformpdftojpg', props).then(function (responseConvert) {
+                        return responseConvert;
+                    });
+                }
+                else {
+                    return responseUpload.data.entry.id;
+                }
             });
         });
     }

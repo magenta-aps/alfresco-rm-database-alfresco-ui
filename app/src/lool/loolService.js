@@ -33,9 +33,6 @@ function loolService($http, transformRequestAsFormPost, ALFRESCO_URI) {
         var encNodeRef = encodeURIComponent(nodeRef);
         return $http.get('/lool/token?nodeRef=' + nodeRef + '&action=edit')
             .then(function (response) {
-                console.log(response.data.access_token, response.data.wopi_src_url);
-                console.log(response.data.access_token, response.data.wopi_src_url);
-                console.log(response.data.access_token, response.data.wopi_src_url);
                 return response.data;
             })
     }
@@ -44,7 +41,7 @@ function loolService($http, transformRequestAsFormPost, ALFRESCO_URI) {
         return $http.post("/alfresco/s/contents/markedforedit", {
           "nodeRef": nodeRef, "method" : "add"
         }).then(function (response) {
-            console.log(response)
+
     //      var res = formatCase(response.data);
     //      return res;
         });
@@ -54,7 +51,6 @@ function loolService($http, transformRequestAsFormPost, ALFRESCO_URI) {
         return $http.post("/alfresco/s/contents/markedforedit", {
           "nodeRef": nodeRef, "method" : "remove"
         }).then(function (response) {
-            console.log(response)
         });
       }
 

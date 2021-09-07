@@ -48,6 +48,7 @@
     "IKKEFORDELT" : "Ikke fordelt",
     "INDLAGTE" : "Indlagte",
     "VENTEDEGR" : "Ventende Grønlandske",
+    "SUPOPL" : "supplerende udt.",
     "MINESAGER" : "Mine sager"
   },
   "DECLARATION": {
@@ -57,11 +58,13 @@
     "PATIENT_DATA": "Patient Data",
     "SAVE_AND_LOCK": "Gem og afslut",
     "LOCK": "Afslut",
+    "LOCK_TMP": "Afslut supplerende udt.",
     "LOCK_DECLARATION": "Afslut",
-    "UNLOCK_DECLARATION": "Genåbn",
-    "SKIPFLOW": "Genåbn uden flowchart",
-    "KEEPFLOW": "Genåbn med flowchart",
-    "UNLOCK": "Genåben",
+    "UNLOCK_DECLARATION": "Redigér",
+    "REOPENFORSUPOPL": "Genåben til Supplerende udt.",
+    "REOPENEDIT": "Redigering af patientdata",
+    "UNLOCK": "Redigér",
+    "UNLOCK_BOTTON": "Næste",
     "REOPEN": "Genåben",
     "DECLARATION_CLOSED": "Sagen er afsluttet",
     "CLOSED_WITHOUT_DECLARATION": "Afsluttet uden erklæring",
@@ -109,7 +112,8 @@
     "ETHNICITIES": "Etniciteter",
     "STATUS": "Status",
     "NODECLARATION": "Afsluttet uden erklæring",
-    "EMAILAUTHORITIES": "Myndigheder"
+    "EMAILAUTHORITIES": "Myndigheder",
+    "CROP" : "beskær"
   },
   "LOGIN": {
     "LOGIN": "Log ind",
@@ -148,7 +152,7 @@
   },
   "SIGNATUR": {
     "UPLOADERROR": "den valgte filtype understøttes ikke - det skal være af typen jpeg",
-    "UPLOAD" : "upload (kun jpg filer understøttes)"
+    "UPLOAD" : "upload (kun pdf filer understøttes)"
 
   }
 }
