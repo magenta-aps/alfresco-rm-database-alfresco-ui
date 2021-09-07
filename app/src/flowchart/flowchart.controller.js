@@ -122,6 +122,7 @@ function propertyFilter(array, query) {
                              vm.showUser = (vm.total.user != " -bruger ikke fundet-");
 
                              vm.total.ventendegr = response.ventendegr;
+                             vm.total.igangvaerendegr = response.igangvaerendegr;
                              vm.total.waitinglist = response.waitinglist;
                              vm.total.supopl = response.supopl;
                        });
@@ -406,3 +407,4 @@ function propertyFilter(array, query) {
             })
     }
 }
+
