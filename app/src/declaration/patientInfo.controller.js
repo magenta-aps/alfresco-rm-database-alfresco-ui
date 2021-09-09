@@ -47,7 +47,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		// only for supopl
 		HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
 		HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
-		HeaderService.addAction('afslut sup.opl', 'lock', $scope.closeCase);
+		HeaderService.addAction('DECLARATION.LOCK_TMP', 'lock', $scope.closeCase);
 		vm.enforceSolar = false;
 
 		// var defer = $q.defer();
@@ -221,7 +221,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 						else {
 							$scope.closeCaseParams = {closed : ''}
 						}
-						HeaderService.addAction('afslut sup.opl', 'edit', $scope.closeCase);
+						HeaderService.addAction('DECLARATION.LOCK_TMP', 'edit', $scope.closeCase);
 					}
 				}
 			}
