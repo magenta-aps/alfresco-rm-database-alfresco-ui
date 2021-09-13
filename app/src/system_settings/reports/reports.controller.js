@@ -14,6 +14,8 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
   vm.chartAval = "";
   vm.chartBval = "";
 
+  vm.reportStarted = false;
+
   vm.createdFromDate = null;
   vm.createdToDate = null;
 
@@ -66,7 +68,7 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
         "method": "spreadsheetA",
         "year": vm.chartAval
       }).then(function (response) {
-          console.log(response);
+
 
            if (response.data.NodeRef == "") {
                alert("der er ikke data til at kunne lave en graf for det indtastede år")
@@ -99,23 +101,20 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
   vm.chartB = chartB;
 
   function ventetidsRapport() {
+
+      vm.reportStarted = true;
+
       var query = {};
       //
       // if (vm.createdFromDate != null) {
       //       vm.createdFromDate= $filter('date')(vm.createdFromDate,'yyyy-MM-dd');
       //       vm.createdToDate= $filter('date')(vm.createdToDate,'yyyy-MM-dd');
       //   }
-      console.log("query.createdFromDate");
-      console.log($filter('date')(vm.createdFromDate,'yyyy-MM-dd'));
-      console.log($filter('date')(vm.createdToDate,'yyyy-MM-dd'));
 
       var postVarTO = "NOW";
       if (vm.createdToDate != null) {
           postVarTO = $filter('date')(vm.createdToDate,'yyyy-MM-dd')
       }
-
-
-
 
       $http.post("/alfresco/s/database/retspsyk/reports", {
           "method": "waitingtime",
@@ -123,8 +122,9 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
           "createdTo": postVarTO
       }).then(function (response) {
 
-          console.log("response");
+          console.log("whats the response");
           console.log(response);
+          vm.reportStarted = false;
 
           alfrescoDownloadService.downloadFile(response.data.spreadsheet, "download");
 

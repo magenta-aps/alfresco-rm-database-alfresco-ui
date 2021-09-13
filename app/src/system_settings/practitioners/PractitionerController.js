@@ -4,12 +4,19 @@ angular
   .module('openDeskApp.declaration')
   .controller('PractitionerController', PractitionerController);
 
-function PractitionerController($scope, practitionerService, Toast, HeaderService, $mdDialog, $stateParams, $state, USER_ROLES, sessionService, ContentService, $translate) {
+function PractitionerController($scope, practitionerService, Toast, HeaderService, $mdDialog, $stateParams, $state, USER_ROLES, sessionService, ContentService, $translate, authService) {
 
   $scope.allUsers = [];
 
   $scope.bua = false;
   $scope.signatureText = "";
+  $scope.showCrop = false;
+  $scope.elphoto = null;
+  $scope.showCropFunction = false;
+  $scope.showSignatureImage = true;
+
+  // $scope.myImage = 'https://raw.githubusercontent.com/CrackerakiUA/ui-cropper/master/screenshots/live.jpg';
+  $scope.myCroppedImage = ''; // in this variable you will have dataUrl of cropped area.
 
 
   $scope.query = {
@@ -17,6 +24,38 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
   };
 
   HeaderService.resetActions();
+
+  function startCrop() {
+    $scope.showCropFunction = true;
+    $scope.showSignatureImage = false;
+  }
+
+  $scope.startCrop = startCrop;
+
+
+  function cropIt(vl) {
+    $scope.showCropFunction = false;
+    $scope.showSignatureImage = true;
+    // $scope.elphoto = $scope.myCroppedImage;
+
+    var data = $scope.myCroppedImage.replace(/^data:image\/\w+;base64,/, "");
+
+
+    const base64 =  data;
+    const imageName = 'names.png';
+    const imageBlob = dataURItoBlob(base64);
+    const imageFile = new File([imageBlob], imageName, { type: 'image/png' });
+
+    ContentService.uploadFilesSetType(imageFile, $scope.destination, "rm:signature", $scope.selectedUser)
+        .then(function (response) {
+          vm.uploading = false;
+          cancelDialog();
+        });
+
+
+  }
+  $scope.cropIt = cropIt;
+
 
   getDestinationNodeRefSignatureFile("sd");
 
@@ -65,9 +104,6 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
   function updateBUA(user, firstName, lastName, oprettet) {
 
-
-
-
     $scope.selectedUser = user;
     $scope.selectedUserFirstName = firstName;
     $scope.selectedUserLastName = lastName;
@@ -75,23 +111,35 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
     practitionerService.getSignatureText($scope.selectedUser).then(function(response) {
       $scope.signatureText = response.data.text;
-    });
 
-    // fetch current user status
-    practitionerService.getUserType(user).then(function (response) {
+      if (response.data.nodeRef != undefined) {
+        $scope.elphoto = '/alfresco/s/api/node/workspace/SpacesStore/' + response.data.nodeRef + '/content' + "?alf_ticket=" + authService.getUserInfo().ticket + "&random="  + Math.random();
+      }
+      else {
+        $scope.elphoto = "";
+      }
 
-      $scope.bua = response.data.result;
+      // fetch current user status
+      practitionerService.getUserType(user).then(function (response) {
+
+        $scope.bua = response.data.result;
 
 
 
-      $mdDialog.show({
-        templateUrl: 'app/src/system_settings/practitioners/view/list-edit-user.html',
-        scope: $scope, // use parent scope in template
-        preserveScope: true, // do not forget this if use parent scope
-        clickOutsideToClose: true
+        $mdDialog.show({
+          templateUrl: 'app/src/system_settings/practitioners/view/list-edit-user.html',
+          scope: $scope, // use parent scope in template
+          preserveScope: true, // do not forget this if use parent scope
+          clickOutsideToClose: true
+        });
+
       });
 
+
     });
+
+
+
 
 
 
@@ -106,19 +154,17 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
     practitionerService.getUserPermissions(val, only_active)
       .then(function (response) {
         $scope.allUsers = response.data;
+        console.log("hvad er response.data")
+        console.log(response.data);
       })
   }
 
   function updateUser() {
-
-
-    console.log("hvad er $scope.signatureText");
-    console.log($scope.signatureText);
-
     practitionerService.updateUserSignature($scope.bua, $scope.selectedUser, $scope.signatureText).then(function (response) {
 
           var buaValue = $scope.searchParams_bua;
 
+          console.log("need to reload");
 
           try {
             $state.go('administration.practitioners', {
@@ -150,36 +196,48 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
   function uploadFiles() {
     vm.uploading = true;
 
-    // practitionerService.isSignitureNodeCreated($scope.selectedUser);
-
     angular.forEach(vm.files, function (file) {
-
-
-      if (file["type"] == "image/jpeg") {
-
         ContentService.uploadFilesSetType(file, $scope.destination, "rm:signature", $scope.selectedUser)
             .then(function (response) {
+              console.log("response tjek her")
+              console.log(response)
+
+
+
               vm.uploading = false;
-              cancelDialog();
+              vm.files = [];
+              var buaValue = $scope.searchParams_bua;
+
+
+              // mark the user as having a signature available
+              practitionerService.markUserAsHavingASignature($scope.selectedUser).then(function (response) {
+                try {
+                  $state.go('administration.practitioners', {
+                    authorizedRoles: [USER_ROLES.roleManager],
+                    searchquery: buaValue,
+                    onlyActive: $scope.only_active
+                  }, {reload: true});
+                }
+                catch(err) {
+                  console.log("err");
+                  console.log(err);
+                }
+              });
+
+
+
+
+              // cancelDialog();
+
+
           });
-
-        }
-      else {
-        alert ($translate.instant('SIGNATUR.UPLOADERROR'));
-        vm.uploading = false;
-        cancelDialog();
-      }
-
       });
-
-
-    vm.files = [];
   }
+
   var vm = this;
   vm.upload = uploadFiles;
 
   vm.signatureText = "";
-
 
 
   function openDialog() {
@@ -195,8 +253,16 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
   function cancelDialog() {
     $mdDialog.cancel();
     vm.files = [];
+    $scope.elphoto = null;
   }
   $scope.cancelDialog = cancelDialog;
+
+
+  function cancelEditDialog() {
+    $mdDialog.cancel();
+    $scope.elphoto = null;
+  }
+  $scope.cancelEditDialog = cancelEditDialog;
 
 
 
@@ -205,11 +271,7 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
 
     var usrName = sessionService.getUserInfo().user.userName;
 
-    console.log(usrName)
-
     practitionerService.getSignatureDest(usrName).then(function (response) {
-      console.log("n");
-      console.log(response.data.nodeRef);
       $scope.destination = response.data.nodeRef;
     })
   }
@@ -232,5 +294,16 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
   }
 
   $scope.reloadWithNewValue = reloadWithNewValue;
+
+  function dataURItoBlob(dataURI) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/png' });
+    return blob;
+  }
 
 }
