@@ -1,3 +1,34 @@
+<!--<script>-->
+<!--    document.write('<base href="' + document.location + '" />');-->
+<!--</script>-->
+
+<!--<link rel="stylesheet" href="ng-img-crop.css" />-->
+
+
+<style>
+    .smaller {
+        width: 20%;
+    }
+</style>
+
+
+<style>
+    .cropArea {
+        width:500px;
+        height:550px;
+
+        margin-top:250px;
+
+    }
+    .cropArea canvas {
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+    }
+
+
+
+</style>
+
 <md-dialog  width="300" aria-label="Opdater brugeren ">
     <form name="renameForm" ng-submit="updateUser()">
         <md-toolbar>
@@ -16,14 +47,24 @@
                  <md-checkbox aria-label="aktiveret" ng-model="bua">BUA Bruger</md-checkbox>
             </md-input-container>
 
-            Signatur: <md-button ng-click="openDialog()"> {{ 'SIGNATUR.UPLOAD' | translate}}  </md-button>
+
+            <div class="cropArea md-block" ng-show="showCropFunction" style="margin-top: 100px">
+<!--                <ui-cropper  area-type="rectangle" image="elphoto" result-image="myCroppedImage" result-image-format="image/jpeg" result-image-size='{w: 340,h: 200}' init-max-area="true" aspect-ratio="0"></ui-cropper>-->
+                <ui-cropper  area-type="rectangle" aspect-ratio="0" image="elphoto" result-image="myCroppedImage" result-image-format="image/png" result-image-size='{w: 740,h: 800}' init-max-area="true" aspect-ratio="0" ></ui-cropper>
+                <md-button ng-click="cropIt(myCroppedImage)" >{{"ADMIN.CROP"|translate}}</md-button>
+            </div>
+
+
+            <div ng-show="showSignatureImage">Underskrift som anvendes: (<a href="#!" ng-click="startCrop()">{{ 'ADMIN.CROP' | translate }}</a>)</div>
+
+            <div ng-show="showSignatureImage"><img border="1" ng-src= {{elphoto}}  class="smaller" /></div>
+
+            <md-button ng-click="openDialog()"> {{ 'SIGNATUR.UPLOAD' | translate}}  </md-button>
 
             <md-input-container class="md-block">
                 <label>Tekst</label>
                 <textarea class="textarea-highlight" ng-model="signatureText" rows="3" ></textarea>
             </md-input-container>
-
-
 
             <div>Oprettet: {{oprettet}}</div>
 

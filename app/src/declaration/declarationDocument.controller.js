@@ -17,25 +17,16 @@ function DocumentController($scope, $mdDialog, $stateParams, DeclarationService,
 
   // also check if came back from preview email signature...
 
-  console.log("checking for shit ");
-  console.log(Object.keys($stateParams.emailPayload).length);
-
   if (Object.keys($stateParams.emailPayload).length !== 0 ) {
 
-    console.log("coming back from something")
-
     if ($stateParams.emailPayload.nodeRefs.length >= 1) {
-
-      console.log("coming back from emaiol")
-
-
       $scope.selectedContent = $stateParams.selectedFiles;
       authorityMailDialog();
     }
   }
 
 
-  console.log("hello from declarationDocumentController");
+
 
   $scope.$watch('selectedContent', function (newVal) {
     if (newVal == undefined) return;
@@ -115,20 +106,8 @@ function DocumentController($scope, $mdDialog, $stateParams, DeclarationService,
       preserveScope: true, // do not forget this if use parent scope
       clickOutsideToClose: false
     }).then (function (response) {
-      console.log("cleaning up the selected documents trueee");
-      console.log(response);
+
     }).catch(function (response) {
-      console.log("cleaning up the selected documents errrr");
-      console.log(response)
-
-      console.log("**")
-      console.log($stateParams.caseid);
-      console.log($stateParams.tmpcrumb);
-      console.log($stateParams.breadcrumbPath[0].nodeUuid);
-      console.log("**");
-      console.log($stateParams);
-      console.log("$stateParams.breadcrumbPath" + $stateParams.breadcrumbPath);
-
       $state.go('declaration.show.documents', { caseid: $stateParams.caseid, breadcrumbPath: $stateParams.breadcrumbPath, tmpNodeRef : $stateParams.breadcrumbPath[0].nodeUuid, emailPayload : undefined, selectedFiles :  undefined});
 
 
