@@ -126,6 +126,10 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
           console.log(response);
           vm.reportStarted = false;
 
+          // clear the date fields #44036
+          vm.createdFromDate = null;
+          vm.createdToDate = null;
+
           alfrescoDownloadService.downloadFile(response.data.spreadsheet, "download");
 
       });
