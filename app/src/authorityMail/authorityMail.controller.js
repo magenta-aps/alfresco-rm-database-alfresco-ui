@@ -69,14 +69,12 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
 
 
   function getDefaultMailBody(decl, dropdown) {
-      console.log("hvda er dropdown: " + dropdown);
       authorityMail.getDefaultMailBody(decl, dropdown).then( function(response) {
           vm.payload.body = response.text;
       });
   }
 
     $scope.$watch('vm.selectedDefaultBody', function (newVal) {
-        console.log("hvad er newVal" + newVal)
         if (newVal == "ingen") {
             vm.payload.body = "";
         }

@@ -27,6 +27,7 @@ angular
         'dcbImgFallback',
         'openDeskApp.declaration',
         'openDeskApp.filebrowser',
+        'uiCropper',
         'md.data.table',
 
         /*DO NOT REMOVE MODULES PLACEHOLDER!!!*/ //openDesk-modules

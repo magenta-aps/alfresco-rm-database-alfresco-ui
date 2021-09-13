@@ -14,8 +14,8 @@
         <md-dialog-content class="md-padding">
 
             <md-radio-group ng-model="unlockCaseParams" required>
-                <md-radio-button value="skipflow"> {{'DECLARATION.SKIPFLOW' | translate}}</md-radio-button>
-                <md-radio-button value="keepflow"> {{'DECLARATION.KEEPFLOW' | translate}}</md-radio-button>
+                <md-radio-button value="reopenSupopl"> {{'DECLARATION.REOPENFORSUPOPL' | translate}}</md-radio-button>
+                <md-radio-button value="reopenEdit"> {{'DECLARATION.REOPENEDIT' | translate}}</md-radio-button>
             </md-radio-group>
 
 
@@ -23,7 +23,7 @@
 
         <md-dialog-actions>
             <md-button ng-disabled="lockDeclarationForm.$invalid" type="submit" class="md-primary md-text-icon-button">
-                <md-icon>lock_open</md-icon> Genåbn
+                <md-icon>lock_open</md-icon> {{'DECLARATION.UNLOCK_BOTTON' | translate}}
             </md-button>
         </md-dialog-actions>
     </form>

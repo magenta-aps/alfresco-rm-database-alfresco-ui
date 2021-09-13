@@ -112,8 +112,7 @@ function advancedEntryFilter() {
 
             alreadyAdded = false;
         });
-        console.log(filteredEntries);
-        alert("pow!");
+
         return filteredEntries;
     };
 }
