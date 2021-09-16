@@ -14,6 +14,7 @@ function documentService($http, EDITOR_CONFIG) {
     getThumbnail: getThumbnail,
     getVersions: getVersions,
     forceUnlock: forceUnlock,
+    deleteTmpChartFile: deleteTmpChartFile
   };
 
   return service;
@@ -24,6 +25,18 @@ function documentService($http, EDITOR_CONFIG) {
           return response
         })
 }
+
+
+  function deleteTmpChartFile(nodeRef) {
+      $http.post("/alfresco/s/database/retspsyk/weeklystat", {
+          "method": "deleteTmpChartFile",
+          "tmpNodeRef": nodeRef
+      }).then(function (response) {
+          console.log("blev det skidt slettet");
+          console.log(response);
+      });
+  }
+
 
   function getDocument(documentNodeRef) {
     return $http.get('/slingshot/doclib/node/workspace/SpacesStore/' + documentNodeRef)

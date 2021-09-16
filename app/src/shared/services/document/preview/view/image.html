@@ -1,6 +1,13 @@
 <div>
+
+
+<!--    fix for #    -->
+<!--    <a href="{{imageUrl}}" target="_blank">-->
+<!--        <img ng-show="!itemMaxSizeExceeded" src="{{previewUrl}}"/>-->
+<!--    </a>-->
+
     <a href="{{imageUrl}}" target="_blank">
-        <img ng-show="!itemMaxSizeExceeded" src="{{previewUrl}}"/>
+        <img ng-show="!itemMaxSizeExceeded" src="{{imageUrl}}"/>
     </a>
 
     <p ng-show="itemMaxSizeExceeded">

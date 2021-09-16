@@ -4,7 +4,7 @@ angular
   .module('openDeskApp.systemsettings')
   .controller('ReportsController', ReportsController);
 
-function ReportsController($scope, $stateParams, ContentService, HeaderService, $http, $filter, alfrescoDownloadService ) {
+function ReportsController($scope, $stateParams, ContentService, HeaderService, $http, $filter, alfrescoDownloadService, $state ) {
   var vm = this;
 
   $scope.folderUuid = [];
@@ -74,7 +74,9 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
                alert("der er ikke data til at kunne lave en graf for det indtastede år")
            }
            else {
-               ContentService.download("workspace://SpacesStore/" + response.data.NodeRef, "uge.ods");
+               // forward to previewmode
+               $state.go('document', { doc: response.data.NodeRef, tmpcrumb: "", tmpNodeRef: "", showBackToReport : true });
+               // ContentService.download("workspace://SpacesStore/" + response.data.NodeRef, "uge.ods");
            }
 
 
@@ -92,7 +94,8 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
               alert("der er ikke data til at kunne lave en graf for det indtastede år")
           }
           else {
-              ContentService.download("workspace://SpacesStore/" + response.data.NodeRef, "aar.ods");
+              $state.go('document', { doc: response.data.NodeRef, tmpcrumb: "", tmpNodeRef: "", showBackToReport : true });
+              // ContentService.download("workspace://SpacesStore/" + response.data.NodeRef, "aar.ods");
           }
 
 
