@@ -322,6 +322,17 @@
                             </md-card-content>
                     </md-card>
                 </div>
+
+            </div>
+
+            <div layout="column" flex="75">
+            <md-card flex>
+                <md-card-content>
+                <div layout="row">
+                    <md-checkbox ng-model="searchParams.print" ">Printvenlig</md-checkbox>
+                </div>
+                </md-card-content>
+            </md-card>
             </div>
 
             <md-button ng-click="vm.advancedSearch(0, 25, searchParams); vm.toggleResults()" class="md-raised md-primary">Søg</md-button>

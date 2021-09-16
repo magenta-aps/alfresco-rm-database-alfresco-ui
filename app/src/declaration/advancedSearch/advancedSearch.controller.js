@@ -116,6 +116,9 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
     clean(query);
     vm.isLoading = true;
 
+    console.log("hvad er print");
+    console.log(query.print);
+
     query.createdFromDate= $filter('date')(query.createdFromDate,'yyyy-MM-dd');
     query.createdToDate= $filter('date')(query.createdToDate,'yyyy-MM-dd');
 
@@ -124,14 +127,21 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
 
     DeclarationService.advancedSearch(skip, max, query)
       .then(response => {
-        vm.isLoading = false;
-        vm.totalResults = Number(response.total);
-        vm.next = Number(response.next);
 
-        angular.forEach(response.entries, entry => {
-          vm.searchResults.push(entry);
 
-        });
+        if (query.print != undefined) {
+          $state.go('document', { doc: response.nodeRef});
+        }
+        else {
+          vm.isLoading = false;
+          vm.totalResults = Number(response.total);
+          vm.next = Number(response.next);
+
+          angular.forEach(response.entries, entry => {
+            vm.searchResults.push(entry);
+
+          });
+        }
       })
   }
 
