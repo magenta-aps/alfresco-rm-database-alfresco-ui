@@ -81,7 +81,8 @@ function config($stateProvider) {
         breadcrumbPath: [],
           tmpNodeRef: null,
         emailPayload : {},
-        selectedFiles : {}
+        selectedFiles : {},
+        selectedDefaultBody : {}
 
       },
       views: {
