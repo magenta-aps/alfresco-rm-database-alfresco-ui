@@ -124,9 +124,6 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
           "createdFrom": $filter('date')(vm.createdFromDate,'yyyy-MM-dd'),
           "createdTo": postVarTO
       }).then(function (response) {
-
-          console.log("whats the response");
-          console.log(response);
           vm.reportStarted = false;
 
           alfrescoDownloadService.downloadFile(response.data.spreadsheet, "download");

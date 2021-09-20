@@ -17,6 +17,13 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
   $scope.standardBrowser = (strPath.includes("Template"))
 
 
+    // #45541 fix
+    if ($stateParams.init) {
+        $stateParams.breadcrumbPath = [];
+    };
+
+
+
   $scope.$watch('folderUuid', function (newVal, oldVal) {
 
       // fixed #31810 - otherwise it would fail, as a watch is always triggered twice. https://stackoverflow.com/questions/33105362/angular-scope-watch-newval-oldval
@@ -30,12 +37,6 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
           $stateParams.tmpNodeRef = null;
           $scope.folderUuid = tmp;
           getContent(tmp);
-
-
-
-
-
-
       }
 
       else {
@@ -91,12 +92,13 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
   }
 
   $scope.openBreadcrumb = function (content) {
-
     var index = $stateParams.breadcrumbPath.indexOf(content) + 1;
-
     if (index < $stateParams.breadcrumbPath.length) {
         $stateParams.breadcrumbPath = $stateParams.breadcrumbPath.splice(0, index);
         $scope.folderUuid = content.nodeUuid;
+
+        // fixes bug, #45541
+        ContentService.setCurrentFolderNodeRef("workspace://SpacesStore/" + content.nodeUuid);
    }
   }
 

@@ -115,10 +115,6 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   function advancedSearch(skip, max, query) {
     clean(query);
     vm.isLoading = true;
-
-    console.log("hvad er print");
-    console.log(query.print);
-
     query.createdFromDate= $filter('date')(query.createdFromDate,'yyyy-MM-dd');
     query.createdToDate= $filter('date')(query.createdToDate,'yyyy-MM-dd');
 

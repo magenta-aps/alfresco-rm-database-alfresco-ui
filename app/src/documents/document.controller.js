@@ -194,16 +194,7 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
 
             documentService.getVersions(selectedDocumentNode).then(function (response) {
-
-                console.log("hvad er vm.history")
-                console.log(vm.history);
-                console.log("hvad er vm.history")
-
                 vm.history = response;
-
-                console.log("hvad er vm.history")
-                console.log(vm.history);
-                console.log("hvad er vm.history")
 
                 // if (revisioncall) {
                 //     vm.history.latest_version = ""
@@ -245,14 +236,7 @@ function DocumentController($scope, documentService, $stateParams, $state,
             vm.plugin = plugin
 
             $scope.config = plugin;
-
-            console.log("hvad er plugin")
-            console.log(plugin);
-
             $scope.viewerTemplateUrl = documentPreviewService.templatesUrl + plugin.templateUrl;
-
-              console.log("$scope.viewerTemplateUrl")
-              console.log($scope.viewerTemplateUrl);
 
             $scope.download = function () {
               alfrescoDownloadService.downloadFile($scope.config.nodeRef, $scope.config.fileName);
