@@ -149,7 +149,7 @@ background-color: #e1e1e1;
                 {{'DOCUMENT.EDIT_DOCUMENT' | translate }}
             </md-button>
         </div>
-        <div>
+        <div ng-show="!vm.showBackToSearch">
             <md-button ng-click="vm.downloadDocument()" class="md-text-icon-button md-primary">
                 <md-icon md-menu-align-target>get_app</md-icon>
                 {{'COMMON.DOWNLOAD' | translate }}
@@ -162,7 +162,7 @@ background-color: #e1e1e1;
             </md-button>
         </div>
 
-        <div>
+        <div ng-show="!vm.showBackToSearch">
             <md-button ng-click="vm.back()" class="md-text-icon-button md-primary">
                 <md-icon md-menu-align-target>arrow_back</md-icon>
                 {{'COMMON.BACK' | translate }}
@@ -176,6 +176,13 @@ background-color: #e1e1e1;
             <md-icon md-menu-align-target>arrow_back</md-icon>
             {{'COMMON.BACK_TOEMAIL' | translate }}
         </md-button>
+        </div>
+
+        <div ng-show="vm.showBackToSearch">
+            <md-button ng-click="vm.backToSearch()" class="md-text-icon-button md-primary">
+                <md-icon md-menu-align-target>arrow_back</md-icon>
+                {{'COMMON.BACK_TOSEARCH' | translate }}
+            </md-button>
         </div>
 
 

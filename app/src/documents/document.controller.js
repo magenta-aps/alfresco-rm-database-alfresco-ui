@@ -18,8 +18,7 @@ function DocumentController($scope, documentService, $stateParams, $state,
   vm.cancelDialog = cancelDialog;
   vm.updateCollapse = updateCollapse;
   vm.canRevertDocument = authService.isAuthorized('SiteEntryLockManager');
-
-
+  vm.showBackToSearch = $stateParams.showBackToSearch;
 
   if ($location.search().latest == undefined) {
     vm.latest = true;
@@ -64,6 +63,11 @@ function DocumentController($scope, documentService, $stateParams, $state,
       $state.go('declaration.show.documents', { caseid: $stateParams.emailPayload.caseid, breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef, emailPayload : $stateParams.emailPayload, selectedFiles :  $stateParams.selectedFiles});
   }
   vm.backToEmail = backToEmail;
+
+  function backToSearch()  {
+      $state.go('declaration.advancedSearch', { searchquery: $stateParams.searchquery });
+  }
+  vm.backToSearch = backToSearch;
 
 
   function updateCollapse() {
@@ -136,8 +140,7 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
 
     vm.showBackToEmail = $stateParams.showBackToEmail;
-
-
+    vm.showBackToSearch = $stateParams.showBackToSearch;
 
 
     HeaderService.resetActions();

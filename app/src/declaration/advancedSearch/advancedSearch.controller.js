@@ -33,8 +33,18 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   $scope.searchParams.closed = "CLOSED";
 
   if (Object.keys($stateParams.searchquery).length) {
-
         $scope.searchParams = $stateParams.searchquery;
+
+        console.log("whats inside thm $scope.searchParams");
+        console.log($scope.searchParams);
+
+
+        // unset the printfriendly property when coming back from the preview document view
+        if ($scope.searchParams.hasOwnProperty("preview")) {
+          $scope.searchParams.preview = undefined;
+        }
+
+
   }
   if (!$scope.searchParams.mainCharge) {
     $scope.searchParams.mainCharge = []
@@ -96,7 +106,6 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   }
 
   function gotoCase(caseNumber) {
-
     $state.go('declaration.show', { caseid: caseNumber, searchquery : $scope.searchParams });
   }
 
@@ -139,7 +148,7 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
       .then(response => {
 
         if (preview) {
-          $state.go('document', { doc: response.nodeRef});
+          $state.go('document', { doc: response.nodeRef, showBackToSearch: true, searchquery : $scope.searchParams});
         }
         else {
           vm.isLoading = false;
