@@ -135,7 +135,7 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
 
 
-      vm.showBackToEmail = $stateParams.showBackToEmail;
+    vm.showBackToEmail = $stateParams.showBackToEmail;
 
 
 

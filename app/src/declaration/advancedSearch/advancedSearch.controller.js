@@ -19,6 +19,7 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   $scope.propertyValues = propertyService.getAllPropertyValues();
   $scope.propertyFilter = propertyFilter;
 
+  vm.printFriendlytStarted = false;
   vm.toggleResults = toggleResults;
   vm.advancedSearch = advancedSearch;
   vm.nextPage = nextPage;
@@ -112,7 +113,7 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
     vm.searchResults = [];
   }
 
-  function advancedSearch(skip, max, query) {
+  function advancedSearch(skip, max, query, preview) {
     clean(query);
     vm.isLoading = true;
 
@@ -125,11 +126,19 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
     query.declarationFromDate= $filter('date')(query.declarationFromDate,'yyyy-MM-dd');
     query.declarationToDate= $filter('date')(query.declarationToDate,'yyyy-MM-dd');
 
+
+    if (preview) {
+      console.log("preview var true");
+      query.preview = "true";
+    }
+
+    console.log("hvad er query.print")
+    console.log(query)
+
     DeclarationService.advancedSearch(skip, max, query)
       .then(response => {
 
-
-        if (query.print != undefined) {
+        if (preview) {
           $state.go('document', { doc: response.nodeRef});
         }
         else {
@@ -154,8 +163,15 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
     return chip;
   }
 
+  function printFriendly() {
+    vm.printFriendlytStarted = true;
+    vm.advancedSearch(0,25, $scope.searchParams, true);
+  }
+
+  vm.printFriendly = printFriendly;
+
   function nextPage() {
-    advancedSearch(vm.next, 25, $scope.searchParams)
+    advancedSearch(vm.next, 25, $scope.searchParams, false)
   }
 
   function clean(obj) {
