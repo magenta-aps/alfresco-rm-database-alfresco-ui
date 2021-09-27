@@ -119,7 +119,9 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
         vm.loading = false;
         vm.cancel();
         Toast.show('Mailen blev sendt');
-        // $state.reload();
+          // fixes bug when returning results in a messed up breadcrum
+          $stateParams.emailPayload = [];
+          $state.reload();
           return response;
       });
 
@@ -133,6 +135,8 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
 
   function cancel() {
     $mdDialog.cancel();
+    $stateParams.emailPayload = [];
+    $state.reload();
   }
 
     function checkSignitureAvailibility() {
