@@ -61,7 +61,7 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
 
   function backToEmail()  {
-      $state.go('declaration.show.documents', { caseid: $stateParams.emailPayload.caseid, breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef, emailPayload : $stateParams.emailPayload, selectedFiles :  $stateParams.selectedFiles});
+      $state.go('declaration.show.documents', { caseid: $stateParams.emailPayload.caseid, breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef, emailPayload : $stateParams.emailPayload, selectedFiles :  $stateParams.selectedFiles, selectedDefaultBody : $stateParams.selectedDefaultBody});
   }
   vm.backToEmail = backToEmail;
 

@@ -11,6 +11,7 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
   vm.payload.nodeRefs = [];
   vm.payload.defaultbody = false;
   vm.payload.useSignature = false;
+  vm.payload.body = "";
 
 
   vm.selectedFiles = $scope.selectedContent;
@@ -30,8 +31,15 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
     if (Object.keys($stateParams.emailPayload).length !== 0) {
         vm.payload.subject = $stateParams.emailPayload.subject;
         vm.payload.authority = $stateParams.emailPayload.authority;
-        vm.payload.body = $stateParams.emailPayload.body;
+        vm.payload["body"] = $stateParams.emailPayload.body;
+        vm.payload.useSignature = true;
+        vm.selectedDefaultBody = $stateParams.selectedDefaultBody;
     }
+    else {
+        vm.selectedDefaultBody = "ingen";
+    }
+
+
   activated()
 
   checkSignitureAvailibility();
@@ -44,14 +52,14 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
         {model : "returnering"}
     ];
 
-    vm.selectedDefaultBody = "ingen";
+
 
 
 
 
   function preview() {
       authorityMail.getPreview(vm.payload).then( function (response) {
-      $state.go('document', { doc: response.data.previewNode, tmpcrumb: $scope.crumbs, tmpNodeRef: $scope.folderUuid, showBackToEmail : true, emailPayload : vm.payload, selectedFiles : vm.selectedFiles });
+        $state.go('document', { doc: response.data.previewNode, tmpcrumb: $scope.crumbs, tmpNodeRef: $scope.folderUuid, showBackToEmail : true, emailPayload : vm.payload, selectedFiles : vm.selectedFiles, selectedDefaultBody : vm.selectedDefaultBody });
       });
   }
   vm.preview = preview;
@@ -76,14 +84,14 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
 
     $scope.$watch('vm.selectedDefaultBody', function (newVal) {
         if (newVal == "ingen") {
-            vm.payload.body = "";
+            // vm.payload.body = "";
         }
         else {
             if ((Object.keys($stateParams.emailPayload).length !== 0)) {
                 // do nothing
             }
             else {
-                vm.payload.body = "";
+                // vm.payload.body = "";
             }
             getDefaultMailBody(vm.payload.caseid, vm.selectedDefaultBody);
         }

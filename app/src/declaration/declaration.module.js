@@ -82,7 +82,9 @@ function config($stateProvider) {
           tmpNodeRef: null,
         emailPayload : {},
         selectedFiles : {},
-        init : false
+        init : false,
+        selectedDefaultBody : {}
+
 
       },
       views: {

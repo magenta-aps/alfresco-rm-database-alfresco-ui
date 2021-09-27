@@ -145,7 +145,8 @@ function config($stateProvider, USER_ROLES) {
       emailPayload: {},
       showBackToEmail: false,
       showBackToReport: false,
-      selectedFiles: {}
+      selectedFiles: {},
+      selectedDefaultBody: null,
     }
   });
 
