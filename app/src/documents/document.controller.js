@@ -156,6 +156,9 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
     vm.showBackToSearch = $stateParams.showBackToSearch;
 
+    console.log("hvad er backtosearch")
+    console.log(vm.showBackToSearch);
+
 
 
     HeaderService.resetActions();
