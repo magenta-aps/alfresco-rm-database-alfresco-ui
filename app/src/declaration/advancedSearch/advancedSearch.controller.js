@@ -19,6 +19,7 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   $scope.propertyValues = propertyService.getAllPropertyValues();
   $scope.propertyFilter = propertyFilter;
 
+  vm.printFriendlytStarted = false;
   vm.toggleResults = toggleResults;
   vm.advancedSearch = advancedSearch;
   vm.nextPage = nextPage;
@@ -32,8 +33,18 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   $scope.searchParams.closed = "CLOSED";
 
   if (Object.keys($stateParams.searchquery).length) {
-
         $scope.searchParams = $stateParams.searchquery;
+
+        console.log("whats inside thm $scope.searchParams");
+        console.log($scope.searchParams);
+
+
+        // unset the printfriendly property when coming back from the preview document view
+        if ($scope.searchParams.hasOwnProperty("preview")) {
+          $scope.searchParams.preview = undefined;
+        }
+
+
   }
   if (!$scope.searchParams.mainCharge) {
     $scope.searchParams.mainCharge = []
@@ -95,7 +106,6 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   }
 
   function gotoCase(caseNumber) {
-
     $state.go('declaration.show', { caseid: caseNumber, searchquery : $scope.searchParams });
   }
 
@@ -112,7 +122,7 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
     vm.searchResults = [];
   }
 
-  function advancedSearch(skip, max, query) {
+  function advancedSearch(skip, max, query, preview) {
     clean(query);
     vm.isLoading = true;
     query.createdFromDate= $filter('date')(query.createdFromDate,'yyyy-MM-dd');
@@ -121,12 +131,20 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
     query.declarationFromDate= $filter('date')(query.declarationFromDate,'yyyy-MM-dd');
     query.declarationToDate= $filter('date')(query.declarationToDate,'yyyy-MM-dd');
 
+
+    if (preview) {
+      console.log("preview var true");
+      query.preview = "true";
+    }
+
+    console.log("hvad er query.print")
+    console.log(query)
+
     DeclarationService.advancedSearch(skip, max, query)
       .then(response => {
 
-
-        if (query.print != undefined) {
-          $state.go('document', { doc: response.nodeRef});
+        if (preview) {
+          $state.go('document', { doc: response.nodeRef, showBackToSearch: true, searchquery : $scope.searchParams});
         }
         else {
           vm.isLoading = false;
@@ -150,8 +168,15 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
     return chip;
   }
 
+  function printFriendly() {
+    vm.printFriendlytStarted = true;
+    vm.advancedSearch(0,25, $scope.searchParams, true);
+  }
+
+  vm.printFriendly = printFriendly;
+
   function nextPage() {
-    advancedSearch(vm.next, 25, $scope.searchParams)
+    advancedSearch(vm.next, 25, $scope.searchParams, false)
   }
 
   function clean(obj) {

@@ -18,8 +18,7 @@ function DocumentController($scope, documentService, $stateParams, $state,
   vm.cancelDialog = cancelDialog;
   vm.updateCollapse = updateCollapse;
   vm.canRevertDocument = authService.isAuthorized('SiteEntryLockManager');
-
-
+  vm.showBackToSearch = $stateParams.showBackToSearch;
 
   if ($location.search().latest == undefined) {
     vm.latest = true;
@@ -65,12 +64,19 @@ function DocumentController($scope, documentService, $stateParams, $state,
   }
   vm.backToEmail = backToEmail;
 
+
     function backToReport()  {
         // delete the tmp chart
         documentService.deleteTmpChartFile(vm.tmpChartNodeRef);
         $state.go('administration.reports', {});
     }
     vm.backToReport = backToReport;
+
+  function backToSearch()  {
+      $state.go('declaration.advancedSearch', { searchquery: $stateParams.searchquery });
+  }
+  vm.backToSearch = backToSearch;
+
 
 
   function updateCollapse() {
@@ -142,9 +148,14 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
 
 
+
       vm.showBackToEmail = $stateParams.showBackToEmail;
       vm.showBackToReport = $stateParams.showBackToReport;
       vm.tmpChartNodeRef = selectedDocumentNode;
+
+
+    vm.showBackToSearch = $stateParams.showBackToSearch;
+
 
 
     HeaderService.resetActions();

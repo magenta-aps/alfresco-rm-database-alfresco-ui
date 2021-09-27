@@ -145,8 +145,11 @@ function config($stateProvider, USER_ROLES) {
       emailPayload: {},
       showBackToEmail: false,
       showBackToReport: false,
-      selectedFiles: {},
       selectedDefaultBody: null,
+      selectedFiles: {},
+      showBackToSearch: false,
+      searchquery: {}
+
     }
   });
 
