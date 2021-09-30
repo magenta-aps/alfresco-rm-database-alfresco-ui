@@ -18,8 +18,7 @@ function DocumentController($scope, documentService, $stateParams, $state,
   vm.cancelDialog = cancelDialog;
   vm.updateCollapse = updateCollapse;
   vm.canRevertDocument = authService.isAuthorized('SiteEntryLockManager');
-
-
+  vm.showBackToSearch = $stateParams.showBackToSearch;
 
   if ($location.search().latest == undefined) {
     vm.latest = true;
@@ -61,9 +60,23 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
 
   function backToEmail()  {
-      $state.go('declaration.show.documents', { caseid: $stateParams.emailPayload.caseid, breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef, emailPayload : $stateParams.emailPayload, selectedFiles :  $stateParams.selectedFiles});
+      $state.go('declaration.show.documents', { caseid: $stateParams.emailPayload.caseid, breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef, emailPayload : $stateParams.emailPayload, selectedFiles :  $stateParams.selectedFiles, selectedDefaultBody : $stateParams.selectedDefaultBody});
   }
   vm.backToEmail = backToEmail;
+
+
+    function backToReport()  {
+        // delete the tmp chart
+        documentService.deleteTmpChartFile(vm.tmpChartNodeRef);
+        $state.go('administration.reports', {});
+    }
+    vm.backToReport = backToReport;
+
+  function backToSearch()  {
+      $state.go('declaration.advancedSearch', { searchquery: $stateParams.searchquery });
+  }
+  vm.backToSearch = backToSearch;
+
 
 
   function updateCollapse() {
@@ -135,8 +148,16 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
 
 
-      vm.showBackToEmail = $stateParams.showBackToEmail;
 
+      vm.showBackToEmail = $stateParams.showBackToEmail;
+      vm.showBackToReport = $stateParams.showBackToReport;
+      vm.tmpChartNodeRef = selectedDocumentNode;
+
+
+    vm.showBackToSearch = $stateParams.showBackToSearch;
+
+    console.log("hvad er backtosearch")
+    console.log(vm.showBackToSearch);
 
 
 
@@ -187,15 +208,14 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
 
             documentService.getVersions(selectedDocumentNode).then(function (response) {
+                vm.history = response;
 
-            vm.history = response;
-
-            if (revisioncall) {
-                vm.history.latest_version = ""
-            }
-            else {
-                vm.history.latest_version = response[0].version;
-            }
+                // if (revisioncall) {
+                //     vm.history.latest_version = ""
+                // }
+                // else {
+                //     vm.history.latest_version = response[0].version;
+                // }
     });
   });
 }
@@ -204,7 +224,6 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
 
     vm.store = vm.doc.store;
-
 
     if (vm.docHasParent) {
           documentService.getThumbnail(vm.parentNodeId, vm.nodeId).then(function (response) {
@@ -232,6 +251,7 @@ function DocumentController($scope, documentService, $stateParams, $state,
 
             $scope.config = plugin;
             $scope.viewerTemplateUrl = documentPreviewService.templatesUrl + plugin.templateUrl;
+
             $scope.download = function () {
               alfrescoDownloadService.downloadFile($scope.config.nodeRef, $scope.config.fileName);
             };

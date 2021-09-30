@@ -37,13 +37,9 @@ function FlowChartService($http) {
 
     function getEntries(entry, sort, desc) {
         return $http.post("/alfresco/s/database/retspsyk/flowchart", {
-
           "properties": {"method" : entry, "sort" : sort, "desc" : desc},
-
         }).then(function (response) {
-
           return response.data;
-
         });
     }
 

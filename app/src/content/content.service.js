@@ -151,7 +151,9 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
   }
 
   function uploadFiles(file, destination) {
+
     destination = destination ? destination : currentFolderNodeRef;
+
     var formData = new FormData();
     formData.append("filedata", file);
     formData.append("overwrite", "false");
@@ -172,9 +174,6 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
 
     function uploadFilesSetType(file, destination, nodetype, name) {
 
-      console.log("hvad er file");
-      console.log(file);
-
         var formData = new FormData();
         formData.append("filedata", file);
         formData.append("overwrite", "true");
@@ -188,16 +187,10 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
                 'Content-Type': undefined
             }
         }).then(function (responseUpload) {
-            console.log("uploaded");
-            console.log(responseUpload);
             var props = { "nodeRef" : "workspace://SpacesStore/" + responseUpload.data.entry.id};
             return $http.post('/alfresco/s/contents/addpermission', props).then(function (response) {
 
                 // convert to jpeg if it was a pdf
-
-                console.log("hvad er name: ");
-                console.log(file);
-
                 if (!(file.name.indexOf("jpeg") !== -1) && !(file.name.indexOf("JPEG") !== -1) && !(file.name.indexOf("jpg") !== -1) && !(file.name.indexOf("JPG") !== -1)  && !(file.name.indexOf("png") !== -1) && !(file.name.indexOf("PNG") !== -1)) {
                     return $http.post('/alfresco/s/contents/transformpdftojpg', props).then(function (responseConvert) {
                         return responseConvert;
@@ -277,7 +270,7 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
 
         return $http.post('/alfresco/s/contents/movecontent', payload)
           .then(function (response) {
-            console.log(response);
+            // console.log(response);
           });
     }
 

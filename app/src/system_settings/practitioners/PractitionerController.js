@@ -154,8 +154,7 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
     practitionerService.getUserPermissions(val, only_active)
       .then(function (response) {
         $scope.allUsers = response.data;
-        console.log("hvad er response.data")
-        console.log(response.data);
+
       })
   }
 
@@ -163,8 +162,6 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
     practitionerService.updateUserSignature($scope.bua, $scope.selectedUser, $scope.signatureText).then(function (response) {
 
           var buaValue = $scope.searchParams_bua;
-
-          console.log("need to reload");
 
           try {
             $state.go('administration.practitioners', {
@@ -199,10 +196,6 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
     angular.forEach(vm.files, function (file) {
         ContentService.uploadFilesSetType(file, $scope.destination, "rm:signature", $scope.selectedUser)
             .then(function (response) {
-              console.log("response tjek her")
-              console.log(response)
-
-
 
               vm.uploading = false;
               vm.files = [];

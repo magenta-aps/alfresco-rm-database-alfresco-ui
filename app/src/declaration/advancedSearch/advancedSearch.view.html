@@ -322,9 +322,9 @@
                             </md-card-content>
                     </md-card>
                 </div>
-            </div>
 
-            <md-button ng-click="vm.advancedSearch(0, 25, searchParams); vm.toggleResults()" class="md-raised md-primary">Søg</md-button>
+            </div>
+            <md-button ng-click="vm.advancedSearch(0, 25, searchParams, false); vm.toggleResults()" class="md-raised md-primary">Søg</md-button>
         </div>
     </div>
 
@@ -380,4 +380,11 @@
                 <md-button class="md-raised md-primary" flex ng-click="vm.nextPage()">Vis flere</md-button>
             </div>
         </md-card-content>
+
+
+
+<!--                        <md-checkbox ng-model="searchParams.print" ">Printvenlig</md-checkbox>-->
+    <md-button ng-disabled="vm.printFriendlytStarted" class="md-raised md-primary" flex ng-click="vm.printFriendly()">Printvenlig</md-button>
+
+
     </md-card>
