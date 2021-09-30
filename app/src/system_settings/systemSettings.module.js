@@ -58,7 +58,7 @@ function config($stateProvider, USER_ROLES) {
         }
       })
       .state('administration.reports', {
-        url: '/dokumentskabeloner',
+        url: '/reports',
         params: {
           authorizedRoles: [USER_ROLES.templateFolderValueManager],
           path: "/Sites/retspsyk/reports",

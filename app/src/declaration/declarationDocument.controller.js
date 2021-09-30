@@ -15,17 +15,16 @@ function DocumentController($scope, $mdDialog, $stateParams, DeclarationService,
 
 
 
+
+
   // also check if came back from preview email signature...
 
   if (Object.keys($stateParams.emailPayload).length !== 0 ) {
-
     if ($stateParams.emailPayload.nodeRefs.length >= 1) {
       $scope.selectedContent = $stateParams.selectedFiles;
       authorityMailDialog();
     }
   }
-
-
 
 
   $scope.$watch('selectedContent', function (newVal) {
