@@ -125,7 +125,8 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
           "createdTo": postVarTO
       }).then(function (response) {
           vm.reportStarted = false;
-
+          vm.createdToDate = null;
+          vm.createdFromDate = null;
           alfrescoDownloadService.downloadFile(response.data.spreadsheet, "download");
 
       });
