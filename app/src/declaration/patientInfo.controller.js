@@ -175,8 +175,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 				// check if you have to wait for solar consistency - triggering edit on a case that was just saved messes up the menu if solr hasn't finished indexing
 				if (stateReponse.data.hasAspectSupopl == true) {
 
-					// encapsulate inside a wait if ensureSolar = true
-
 					if (vm.enforceSolar) {
 						vm.waitPromiseSupopl(stateReponse.data.state);
 					}
@@ -192,6 +190,18 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 						}
 						HeaderService.addAction('DECLARATION.LOCK_TMP', 'edit', $scope.closeCase);
 					}
+				}
+				else {
+					HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+
+					if ($scope.case.closedWithoutDeclaration) {
+						$scope.closeCaseParams = {closed : 'no-declaration'}
+					}
+					else {
+						$scope.closeCaseParams = {closed : ''}
+					}
+					HeaderService.addAction('DECLARATION.LOCK_TMPOPENEDIT', 'edit', $scope.closeCase);
+
 				}
 			}
 			else {
