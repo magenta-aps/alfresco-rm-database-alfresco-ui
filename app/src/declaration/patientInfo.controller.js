@@ -28,7 +28,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	vm.isOpenForTMPEdit = false;
 
 	vm.waitPromiseSupopl = function(state) {
-
 		if ($scope.case.closedWithoutDeclaration) {
 			$scope.closeCaseParams = {closed : 'no-declaration'}
 		}
@@ -37,7 +36,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		}
 		vm.declarationState = state;
 
-		// only for supopl
 		HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
 		HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
 		HeaderService.addAction('DECLARATION.LOCK_TMP', 'lock', $scope.closeCase);
@@ -60,17 +58,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	};
 
 	vm.waitPromiseCanUnlock = function() {
-		// only for supopl
 		HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unLockCaseDialog);
 		vm.enforceSolar = false;
 	};
-
-
-
-
-
-
-
 
 	$scope.$on('$destroy', function () {
 		if ($scope.case.locked4edit) {
