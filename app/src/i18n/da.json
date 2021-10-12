@@ -84,7 +84,8 @@
     "journalNumber": "Journalnummer",
     "referingAgency": "Henvisende instans",
     "observationDate": "Observation Påbegyndt",
-    "declarationType": "Kendelse/samtykke"
+    "declarationType": "Kendelse/samtykke",
+    "KONKLUSKABELON_OPRET": "OPRET BERIGTIGELSE"
   },
   "DOCUMENT": {
     "DOCUMENT": "Dokument",
