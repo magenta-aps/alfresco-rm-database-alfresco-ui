@@ -15,6 +15,33 @@ function DocumentPreviewService(alfrescoDocumentService, sessionService, $http, 
     return service;
 
     function previewDocumentPlugin(nodeRef) {
+
+        // api/-default-/public/alfresco/versions/1/nodes/ab771f07-8ddf-4153-ad4b-c8507a98ff5b/content?attachment=true
+
+         var pas = nodeRef.split("/");
+         console.log("pas");
+         console.log(pas);
+         $http.get("alfresco/api/-default-/public/alfresco/versions/1/nodes/" + pas[pas.length-1] + "/content?attachment=true").then(function (response) {
+         // $http.get("alfresco/api/-default-/public/alfresco/versions/1/nodes/" + pas[pas.length-1]).then(function (response) {
+
+
+             return $http.post("https://oda-lool-test.rm.dk:9980/lool/convert-to/pdf", {
+                 "data": response.data
+             }).then(function (responsePDF) {
+                 console.log("hvad er pdf response?");
+                 console.log(responsePDF);
+
+
+             });
+
+             // https://oda-lool-test.rm.dk:9980/convert-to
+
+
+            console.log("hvad er response");
+            console.log(response);
+        });
+
+
         var _this = this;
         return alfrescoDocumentService.retrieveSingleDocument(nodeRef).then(function (item) {
             return _this._getPluginByMimeType(item);
