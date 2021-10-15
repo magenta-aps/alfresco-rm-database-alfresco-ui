@@ -86,7 +86,10 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	function makeBerigtigelsesDocument() {
 		DeclarationService.makeBerigtigelsesDocument($scope.case)
 			.then(function (response) {
-				$state.go('document', { doc: response.id });
+				console.log("hvats zhere");
+				console.log($stateParams);
+				$state.go('document', { doc: response.id, showBackToCase : true });
+				// $state.go('document', { doc: shortRef, tmpcrumb: $scope.crumbs, tmpNodeRef: $scope.folderUuid });
 			});
 	}
 

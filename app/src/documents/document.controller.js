@@ -19,6 +19,7 @@ function DocumentController($scope, documentService, $stateParams, $state,
   vm.updateCollapse = updateCollapse;
   vm.canRevertDocument = authService.isAuthorized('SiteEntryLockManager');
   vm.showBackToSearch = $stateParams.showBackToSearch;
+  vm.showBackToCase = $stateParams.showBackToCase;
 
   if ($location.search().latest == undefined) {
     vm.latest = true;
@@ -55,8 +56,14 @@ function DocumentController($scope, documentService, $stateParams, $state,
           $state.go('declaration.show.documents', { caseid: id, breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef });
       }
   }
-
   vm.back = back;
+
+  function backToCase() {
+      var splittedpath = vm.doc.location.path.split('/');
+      var id = splittedpath[4];
+      $state.go('declaration.show.documents', { caseid: id });
+  }
+  vm.backToCase = backToCase;
 
 
   function backToEmail()  {

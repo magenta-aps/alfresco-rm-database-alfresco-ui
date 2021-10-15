@@ -165,7 +165,7 @@ background-color: #e1e1e1;
         </div>
 
 
-        <div ng-show="!vm.showBackToEmail && !vm.showBackToReport && !vm.showBackToSearch">
+        <div ng-show="!vm.showBackToEmail && !vm.showBackToReport && !vm.showBackToSearch && !vm.showBackToCase">
             <md-button ng-click="vm.back()" class="md-text-icon-button md-primary">
                 <md-icon md-menu-align-target>arrow_back</md-icon>
                 {{'COMMON.BACK' | translate }}
@@ -177,6 +177,13 @@ background-color: #e1e1e1;
             <md-icon md-menu-align-target>arrow_back</md-icon>
             {{'COMMON.BACK_TOEMAIL' | translate }}
         </md-button>
+        </div>
+
+        <div ng-show="vm.showBackToCase">
+            <md-button ng-click="vm.backToCase()" class="md-text-icon-button md-primary">
+                <md-icon md-menu-align-target>arrow_back</md-icon>
+                {{'COMMON.BACK' | translate }}
+            </md-button>
         </div>
 
 
