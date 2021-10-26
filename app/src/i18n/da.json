@@ -85,7 +85,8 @@
     "referingAgency": "Henvisende instans",
     "observationDate": "Observation Påbegyndt",
     "declarationType": "Kendelse/samtykke",
-    "KONKLUSKABELON_OPRET": "OPRET BERIGTIGELSE"
+    "SUPPLEREDEOPL_OPRET": "OPRET SUPPLEREDE OPL.",
+    "BERIGTIGELSE_OPRET": "OPRET BERIGTIGELSE"
   },
   "DOCUMENT": {
     "DOCUMENT": "Dokument",

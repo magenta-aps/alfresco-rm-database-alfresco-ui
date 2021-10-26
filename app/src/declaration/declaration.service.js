@@ -19,6 +19,7 @@ function DeclarationService($http, $filter) {
     advancedSearch: advancedSearch,
     makeDeclarationDocument: makeDeclarationDocument,
     makeBerigtigelsesDocument: makeBerigtigelsesDocument,
+    makeSuppleredeUdtDocument: makeSuppleredeUdtDocument,
     getStateOfDeclaration: getStateOfDeclaration
   };
 
@@ -153,6 +154,34 @@ function DeclarationService($http, $filter) {
     var dformattet = formatted_date + "." + formatted_month + "." + d.getFullYear();
 
     return $http.post("/alfresco/s/contents/mergeberigtigelsestemplate", {
+      "id": desclaration['node-uuid'],
+      "type": desclaration.declarationType,
+      "retten": desclaration.rulingCourt,
+      "dato": dformattet
+    }).then(function (response) {
+      return response.data;
+    });
+  }
+
+  function makeSuppleredeUdtDocument(desclaration) {
+
+    var d;
+    if (desclaration.rulingDate == undefined) {
+      d = new Date();
+
+    }
+    else {
+      d = new Date(desclaration.rulingDate);
+
+    }
+
+    var formatted_date = (d.getDate() <= 9) ? "0" + d.getDate() : d.getDate();
+    var formatted_month = ( (d.getMonth()+1) <= 9) ? "0" + (d.getMonth()+1) : d.getMonth()+1;
+
+
+    var dformattet = formatted_date + "." + formatted_month + "." + d.getFullYear();
+
+    return $http.post("/alfresco/s/contents/mergesuppleredeudttemplate", {
       "id": desclaration['node-uuid'],
       "type": desclaration.declarationType,
       "retten": desclaration.rulingCourt,

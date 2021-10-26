@@ -19,6 +19,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	vm.isNumber = isNumber;
 	vm.makeDeclarationDocument = makeDeclarationDocument;
 	vm.makeBerigtigelsesDocument = makeBerigtigelsesDocument;
+	vm.makeSuppleredeUdttDocument = makeSuppleredeUdttDocument;
 	vm.gobacktosearch = gobacktosearch;
 
 	vm.createdDateBeforeEdit;
@@ -85,6 +86,16 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 	function makeBerigtigelsesDocument() {
 		DeclarationService.makeBerigtigelsesDocument($scope.case)
+			.then(function (response) {
+				console.log("hvats zhere");
+				console.log($stateParams);
+				$state.go('document', { doc: response.id, showBackToCase : true });
+				// $state.go('document', { doc: shortRef, tmpcrumb: $scope.crumbs, tmpNodeRef: $scope.folderUuid });
+			});
+	}
+
+	function makeSuppleredeUdttDocument() {
+		DeclarationService.makeSuppleredeUdtDocument($scope.case)
 			.then(function (response) {
 				console.log("hvats zhere");
 				console.log($stateParams);
@@ -181,7 +192,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 					}
 					else {
 						HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
-						HeaderService.addAction('DECLARATION.KONKLUSKABELON_OPRET', 'create', makeBerigtigelsesDocument);
+						HeaderService.addAction('DECLARATION.SUPPLEREDEOPL_OPRET', 'create', makeSuppleredeUdttDocument);
 						HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
 
 						if ($scope.case.closedWithoutDeclaration) {
@@ -203,7 +214,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 						$scope.closeCaseParams = {closed : ''}
 					}
 					HeaderService.addAction('DECLARATION.LOCK_TMPOPENEDIT', 'edit', $scope.closeCase);
-
 				}
 			}
 			else {
@@ -355,7 +365,8 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 											HeaderService.addAction('COMMON.SAVE', 'save', saveCase)
 										}
 										else {
-											HeaderService.addAction('DECLARATION.KONKLUSKABELON_OPRET', 'create', makeBerigtigelsesDocument);
+											// ændrer nu
+											HeaderService.addAction('DECLARATION.BERIGTIGELSE_OPRET', 'create', makeBerigtigelsesDocument);
 											HeaderService.addAction('COMMON.SAVE', 'save', saveCaseAndClose);
 										}
 									});
