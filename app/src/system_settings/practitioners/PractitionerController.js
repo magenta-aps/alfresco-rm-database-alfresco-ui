@@ -4,11 +4,13 @@ angular
   .module('openDeskApp.declaration')
   .controller('PractitionerController', PractitionerController);
 
-function PractitionerController($scope, practitionerService, Toast, HeaderService, $mdDialog, $stateParams, $state, USER_ROLES, sessionService, ContentService, $translate, authService) {
+function PractitionerController($scope, practitionerService, Toast, HeaderService, $mdDialog, $stateParams, $state, USER_ROLES, sessionService, ContentService, $translate, authService, $filter) {
 
   $scope.allUsers = [];
 
   $scope.bua = false;
+
+  $scope.expirydate;
   $scope.signatureText = "";
   $scope.showCrop = false;
   $scope.elphoto = null;
@@ -122,8 +124,11 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
       // fetch current user status
       practitionerService.getUserType(user).then(function (response) {
 
-        $scope.bua = response.data.result;
+      console.log("hvad er response")
+      console.log(response)
 
+        $scope.bua = response.data.result.bua;
+        $scope.expirydate = response.data.result.expiry_date
 
 
         $mdDialog.show({
@@ -158,8 +163,21 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
       })
   }
 
+  // called when pressing save
   function updateUser() {
-    practitionerService.updateUserSignature($scope.bua, $scope.selectedUser, $scope.signatureText).then(function (response) {
+
+
+    console.log($scope.expirydate)
+
+    var selectedDate = undefined;
+
+    if ($scope.expirydate != "") {
+      selectedDate = $filter('date')($scope.expirydate,'yyyy-MM-dd');
+    }
+
+
+
+    practitionerService.updateUserSignature($scope.bua, $scope.selectedUser, $scope.signatureText, selectedDate).then(function (response) {
 
           var buaValue = $scope.searchParams_bua;
 
@@ -230,7 +248,9 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
   var vm = this;
   vm.upload = uploadFiles;
 
+
   vm.signatureText = "";
+  vm.expirydate = "1";
 
 
   function openDialog() {
