@@ -233,7 +233,7 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
 
 
   function download(nodeRef, name) {
-    alfrescoDownloadService.downloadFile(nodeRef, name);
+      alfrescoDownloadService.downloadFile(nodeRef, name);
   }
 
   function downloadZippedFiles(files) {

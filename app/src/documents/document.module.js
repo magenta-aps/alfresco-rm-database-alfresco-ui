@@ -148,7 +148,8 @@ function config($stateProvider, USER_ROLES) {
       selectedDefaultBody: null,
       selectedFiles: {},
       showBackToSearch: false,
-      searchquery: {}
+      searchquery: {},
+      showBackToCase: false,
 
     }
   });

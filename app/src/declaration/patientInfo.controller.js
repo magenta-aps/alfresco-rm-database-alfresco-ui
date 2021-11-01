@@ -18,6 +18,8 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	vm.lookupCPR = lookupCPR;
 	vm.isNumber = isNumber;
 	vm.makeDeclarationDocument = makeDeclarationDocument;
+	vm.makeBerigtigelsesDocument = makeBerigtigelsesDocument;
+	vm.makeSuppleredeUdttDocument = makeSuppleredeUdttDocument;
 	vm.gobacktosearch = gobacktosearch;
 
 	vm.createdDateBeforeEdit;
@@ -28,7 +30,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	vm.isOpenForTMPEdit = false;
 
 	vm.waitPromiseSupopl = function(state) {
-
 		if ($scope.case.closedWithoutDeclaration) {
 			$scope.closeCaseParams = {closed : 'no-declaration'}
 		}
@@ -37,7 +38,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		}
 		vm.declarationState = state;
 
-		// only for supopl
 		HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
 		HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
 		HeaderService.addAction('DECLARATION.LOCK_TMP', 'lock', $scope.closeCase);
@@ -60,17 +60,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	};
 
 	vm.waitPromiseCanUnlock = function() {
-		// only for supopl
 		HeaderService.addAction('DECLARATION.UNLOCK', 'lock_open', unLockCaseDialog);
 		vm.enforceSolar = false;
 	};
-
-
-
-
-
-
-
 
 	$scope.$on('$destroy', function () {
 		if ($scope.case.locked4edit) {
@@ -89,6 +81,26 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		DeclarationService.makeDeclarationDocument($scope.case)
 			.then(function (response) {
 				$state.go('document', { doc: response.id });
+			});
+	}
+
+	function makeBerigtigelsesDocument() {
+		DeclarationService.makeBerigtigelsesDocument($scope.case)
+			.then(function (response) {
+				console.log("hvats zhere");
+				console.log($stateParams);
+				$state.go('document', { doc: response.id, showBackToCase : true });
+				// $state.go('document', { doc: shortRef, tmpcrumb: $scope.crumbs, tmpNodeRef: $scope.folderUuid });
+			});
+	}
+
+	function makeSuppleredeUdttDocument() {
+		DeclarationService.makeSuppleredeUdtDocument($scope.case)
+			.then(function (response) {
+				console.log("hvats zhere");
+				console.log($stateParams);
+				$state.go('document', { doc: response.id, showBackToCase : true });
+				// $state.go('document', { doc: shortRef, tmpcrumb: $scope.crumbs, tmpNodeRef: $scope.folderUuid });
 			});
 	}
 
@@ -180,6 +192,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 					}
 					else {
 						HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
+						HeaderService.addAction('DECLARATION.SUPPLEREDEOPL_OPRET', 'create', makeSuppleredeUdttDocument);
 						HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
 
 						if ($scope.case.closedWithoutDeclaration) {
@@ -188,7 +201,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 						else {
 							$scope.closeCaseParams = {closed : ''}
 						}
-						HeaderService.addAction('DECLARATION.LOCK_TMP', 'edit', $scope.closeCase);
+						 HeaderService.addAction('DECLARATION.LOCK_TMP', 'edit', $scope.closeCase);
 					}
 				}
 				else {
@@ -201,7 +214,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 						$scope.closeCaseParams = {closed : ''}
 					}
 					HeaderService.addAction('DECLARATION.LOCK_TMPOPENEDIT', 'edit', $scope.closeCase);
-
 				}
 			}
 			else {
@@ -306,8 +318,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
     $scope.unlockCase = function () {
 		DeclarationService.unlock($scope.case, $scope.unlockCaseParams)
 			.then(function () {
-				HeaderService.resetActions();
-				activated();
+
 				Toast.show('Sagen er låst op')
                 $mdDialog.cancel();
 
@@ -316,6 +327,8 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 					vm.isOpenForTMPEdit = true;
 					editCase()
 				} else {
+					HeaderService.resetActions();
+					activated();
 					vm.isOpenForTMPEdit = true;
 				}
 			});
@@ -352,7 +365,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 											HeaderService.addAction('COMMON.SAVE', 'save', saveCase)
 										}
 										else {
-											HeaderService.addAction('COMMON.SAVE', 'save', saveCaseAndClose)
+											// ændrer nu
+											HeaderService.addAction('DECLARATION.BERIGTIGELSE_OPRET', 'create', makeBerigtigelsesDocument);
+											HeaderService.addAction('COMMON.SAVE', 'save', saveCaseAndClose);
 										}
 									});
 								}
