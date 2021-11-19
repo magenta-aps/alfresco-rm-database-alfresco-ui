@@ -12,6 +12,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	$scope.case;
 	$scope.isLoading = false;
 	vm.backtosearch = false;
+
+
+	// todo remove this as its not used anymore
 	vm.enforceSolar = $stateParams.enforceSolarDelay;
 	$scope.propertyFilter = propertyFilter;
 	$scope.addNewBidiagnosis = addNewBidiagnosis;
@@ -87,20 +90,16 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	function makeBerigtigelsesDocument() {
 		DeclarationService.makeBerigtigelsesDocument($scope.case)
 			.then(function (response) {
-				console.log("hvats zhere");
-				console.log($stateParams);
-				$state.go('document', { doc: response.id, showBackToCase : true });
-				// $state.go('document', { doc: shortRef, tmpcrumb: $scope.crumbs, tmpNodeRef: $scope.folderUuid });
+				// $state.go('document', { doc: response.id, showBackToCase : true });
+				Toast.show('Berigtigelse oprettet');
 			});
 	}
 
 	function makeSuppleredeUdttDocument() {
 		DeclarationService.makeSuppleredeUdtDocument($scope.case)
 			.then(function (response) {
-				console.log("hvats zhere");
-				console.log($stateParams);
-				$state.go('document', { doc: response.id, showBackToCase : true });
-				// $state.go('document', { doc: shortRef, tmpcrumb: $scope.crumbs, tmpNodeRef: $scope.folderUuid });
+				// $state.go('document', { doc: response.id, showBackToCase : true });
+				Toast.show('Suppleredeudtalelse oprettet');
 			});
 	}
 
@@ -202,9 +201,15 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 							$scope.closeCaseParams = {closed : ''}
 						}
 						 HeaderService.addAction('DECLARATION.LOCK_TMP', 'edit', $scope.closeCase);
+
 					}
 				}
 				else {
+
+
+					// # https://redmine.magenta-aps.dk/issues/46005#note-11
+					HeaderService.addAction('DECLARATION.BERIGTIGELSE_OPRET', 'create', makeBerigtigelsesDocument);
+
 					HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
 
 					if ($scope.case.closedWithoutDeclaration) {
@@ -365,9 +370,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 											HeaderService.addAction('COMMON.SAVE', 'save', saveCase)
 										}
 										else {
-											// ændrer nu
-											HeaderService.addAction('DECLARATION.BERIGTIGELSE_OPRET', 'create', makeBerigtigelsesDocument);
-											HeaderService.addAction('COMMON.SAVE', 'save', saveCaseAndClose);
+
+											HeaderService.addAction('COMMON.SAVE', 'save', saveCase);
+											// HeaderService.addAction('COMMON.SAVE', 'save', saveCaseAndClose);
 										}
 									});
 								}
@@ -446,7 +451,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 						DeclarationService.updateStat(dec_year_after);
 					}
 				}
-				$state.go('declaration.show', { caseid: $scope.case.caseNumber, enforceSolarDelay: true }, {reload: true});
+				$state.go('declaration.show', { caseid: $scope.case.caseNumber, enforceSolarDelay: false }, {reload: true});
 			});
 	}
 
@@ -548,7 +553,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 				// HeaderService.setClosed(true);
 				// activated();
 				// $mdDialog.cancel();
-				$state.go('declaration.show', { caseid: $scope.case.caseNumber, enforceSolarDelay: true }, {reload: true});
+				$state.go('declaration.show', { caseid: $scope.case.caseNumber, enforceSolarDelay: false }, {reload: true});
 				})
 	}
 
