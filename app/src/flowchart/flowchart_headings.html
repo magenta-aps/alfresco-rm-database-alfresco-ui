@@ -21,6 +21,12 @@
                     <md-icon ng-show="!vm.clickSupervisingDoktor">arrow_downward</md-icon>
                 </div>
 
+                <div flex="15" ng-click="vm.clickPsychologist=!vm.clickPsychologist;vm.loaddata(vm.showing, '@rm:psychologist', vm.clickPsychologist)">
+                    {{'FLOWCHART.PSYCHOLIGST' | translate}}
+                    <md-icon ng-show="vm.clickPsychologist">arrow_upward</md-icon>
+                    <md-icon ng-show="!vm.clickPsychologist">arrow_downward</md-icon>
+                </div>
+
                 <div flex="15" ng-click="vm.clickcpr=!vm.clickcpr;vm.loaddata(vm.showing, '@rm:cprNumber', vm.clickcpr)">
                     {{'FLOWCHART.CPR' | translate}}
                     <md-icon ng-show="vm.clickcpr">arrow_upward</md-icon>
