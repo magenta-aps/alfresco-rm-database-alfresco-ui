@@ -19,7 +19,8 @@ function FlowChartService($http) {
     getAutoCompleteFlowChartEntries: getAutoCompleteFlowChartEntries,
     getWaitingList: getWaitingList,
     advancedSearch: advancedSearch,
-    makeDeclarationDocument: makeDeclarationDocument
+    makeDeclarationDocument: makeDeclarationDocument,
+    isBUAUser: isBUAUser
   };
 
   return service;
@@ -120,6 +121,12 @@ function FlowChartService($http) {
   }
 
 
+
+  function isBUAUser() {
+    return $http.get('/alfresco/s/usertype').then(function (response) {
+          return response.data.bua;
+        })
+  }
 
   function createEntry(entry) {
     return $http.post("/alfresco/s/database/retspsyk/entry", {

@@ -46,6 +46,14 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
     });
 
 
+  FlowChartService.isBUAUser().then(function(response) {
+      console.log(response);
+      vm.isBua = response;
+
+  });
+
+
+
   $scope.flow = {};
 
   $scope.folderUuid = [];
@@ -70,6 +78,8 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
   vm.alle = false;
   vm.minesager= false;
   vm.editing = false;
+
+  vm.isBua = false;
 
   vm.clickcreationDate = true;
   vm.clickcpr = true;
