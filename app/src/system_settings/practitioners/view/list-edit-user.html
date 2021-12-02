@@ -9,6 +9,9 @@
     .smaller {
         width: 20%;
     }
+
+
+
 </style>
 
 
@@ -48,6 +51,16 @@
             </md-input-container>
 
 
+            <md-input-container >
+                <md-tab-label>Udløbsdato</md-tab-label>
+                <md-datepicker  ng-model="expirydate">Udløbsdato</md-datepicker>
+            </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Tekst</label>
+                <textarea class="textarea-highlight" ng-model="signatureText" rows="3" ></textarea>
+            </md-input-container>
+
             <div class="cropArea md-block" ng-show="showCropFunction" style="margin-top: 100px">
 <!--                <ui-cropper  area-type="rectangle" image="elphoto" result-image="myCroppedImage" result-image-format="image/jpeg" result-image-size='{w: 340,h: 200}' init-max-area="true" aspect-ratio="0"></ui-cropper>-->
                 <ui-cropper  area-type="rectangle" aspect-ratio="0" image="elphoto" result-image="myCroppedImage" result-image-format="image/png" result-image-size='{w: 740,h: 800}' init-max-area="true" aspect-ratio="0" ></ui-cropper>
@@ -59,19 +72,20 @@
 
             <div ng-show="showSignatureImage"><img border="1" ng-src= {{elphoto}}  class="smaller" /></div>
 
-            <md-button ng-click="openDialog()"> {{ 'SIGNATUR.UPLOAD' | translate}}  </md-button>
+            <md-button class="md-raised" ng-click="openDialog()"> {{ 'SIGNATUR.UPLOAD' | translate}}  </md-button>
 
-            <md-input-container class="md-block">
-                <label>Tekst</label>
-                <textarea class="textarea-highlight" ng-model="signatureText" rows="3" ></textarea>
-            </md-input-container>
 
-            <div>Oprettet: {{oprettet}}</div>
+
+<!--            <div>Oprettet: {{oprettet}}</div>-->
+
+
+
+
 
         </md-dialog-content>
 
         <md-dialog-actions>
-            <md-button type="submit" class="md-primary" ng-disabled="renameForm.$invalid" aria-label="{{'COMMON.RENAME' | translate}}">{{'COMMON.SAVE' | translate}}</md-button>
+            <md-button type="submit" class="md-primary" aria-label="{{'COMMON.RENAME' | translate}}">{{'COMMON.SAVE' | translate}}</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

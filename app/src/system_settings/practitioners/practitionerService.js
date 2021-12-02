@@ -34,14 +34,15 @@ angular.module('openDeskApp.declaration').factory('practitionerService', functio
     })
   }
 
-  function updateUserSignature(val, username, signature) {
-    return $http.get('/alfresco/s/updateUser?bua=' + val + "&userName=" +username + "&signature=" + encodeURI(signature) + "&method=update")
+  function updateUserSignature(val, username, signature, selectedDate) {
+    return $http.get('/alfresco/s/updateUser?bua=' + val + "&userName=" +username + "&selectedDate=" + selectedDate + "&signature=" + encodeURI(signature) + "&method=update")
         .then(function (response) {
           return response
         })
   }
 
   function updateUser(val, username) {
+      console.log("saving...")
     return $http.get('/alfresco/s/updateUser?bua=' + val + "&userName=" +username + "&method=update")
         .then(function (response) {
           return response
