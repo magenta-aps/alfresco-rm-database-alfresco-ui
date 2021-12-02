@@ -34,6 +34,8 @@
                 {{'COMMON.INDLAGTE' | translate }} <span class="flowchart-count">({{ vm.total.observation }})</span>
             </md-button>
 
+        <span ng-hide="vm.isBua">
+
             <md-button class="md-raised {{vm.currentCard == 'ventendegr' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('ventendegr', '@rm:creationDate', 'true')">
                 {{'COMMON.VENTEDEGR' | translate }} <span class="flowchart-count">({{ vm.total.ventendegr }})</span>
             </md-button>
@@ -41,6 +43,7 @@
             <md-button class="md-raised {{vm.currentCard == 'igangvaerendegr' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('igangvaerendegr', '@rm:creationDate', 'true')">
                 {{'COMMON.IGANGGR' | translate }} <span class="flowchart-count">({{ vm.total.igangvaerendegr }})</span>
             </md-button>
+        </span>
 
             <md-button class="md-raised {{vm.currentCard == 'supopl' ?'md-primary':'default'}}" ng-click="vm.minesager=false;vm.loaddata('supopl', '@rm:creationDate', 'true')">
                 {{'COMMON.SUPOPL' | translate }} <span class="flowchart-count">({{ vm.total.supopl }})</span>

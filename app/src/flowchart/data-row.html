@@ -17,7 +17,11 @@
 
 
             <div flex="5"></div>
+
+
             <div flex="15">
+
+                <span ng-hide="vm.isBua">
                 <table>
                     <tr align="center">
                         <td>
@@ -39,12 +43,16 @@
                             ​<input type="checkbox" id="{{ i.node_uuid }}_5" ng-model="i.box5" ng-click="vm.visitate(i, $event)" /><label title="Psykologisk undersøgelse" for="{{ i.node_uuid }}_5">PU</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
                         </td>
 
+
                         <td>
                             ​<input type="checkbox" id="{{ i.node_uuid }}_6" ng-model="i.box6" ng-click="vm.visitate(i, $event)" /><label title="Aktuddrag" for="{{ i.node_uuid }}_6">AKT</label>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​&nbsp;
                         </td>
                     </tr>
                 </table>
+                    <span>
+
                 </div>
+
 
             <div class="card-content__actions">
 
