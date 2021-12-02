@@ -10,6 +10,7 @@
             <div flex="15">{{i.creationDate | customFlowChartDate }} </div>
             <div flex="15">{{i.doctor  }}</div>
             <div flex="15">{{i.supervisingDoctor}}</div>
+            <div flex="15">{{i.psychologist}}</div>
             <div flex="15"><span class="go-to-case-link" ng-click="vm.gotoCase(i.caseNumber)">{{i.cprNumber}}</span> <img ng-show="i.redflag" src="app/assets/images/priority.png" class="priority"></div>
             <div flex="15">{{i.firstName}}</div>
             <div flex="15">{{i.lastName}}</div>
