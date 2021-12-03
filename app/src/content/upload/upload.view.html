@@ -11,6 +11,10 @@
         </md-toolbar>
 
         <md-dialog-content class="md-padding">
+
+
+
+
             <input type="file" ngf-select ngf-multiple="true" ng-model="vm.files" required>
 
             <ul>
@@ -22,6 +26,8 @@
             <div layout="row" layout-sm="column" layout-align="space-around">
                 <md-progress-circular md-mode="indeterminate" ng-show="vm.uploading"></md-progress-circular>
             </div>
+
+            <md-checkbox ng-model="vm.useSignature">Anvend indskannet signatur på dette dokument</md-checkbox>
 
             <md-button class="md-primary" type="submit" ng-disabled="vm.files.length == 0 || vm.uploading">
                 <md-icon>file_upload</md-icon>
