@@ -23,7 +23,8 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
     setCurrentFolderNodeRef: setCurrentFolderNodeRef,
     getFolderNodeRefFromPath: getFolderNodeRefFromPath,
     getSharedFolderForBua: getSharedFolderForBua,
-      uploadFilesSetType: uploadFilesSetType
+    uploadFilesSetType: uploadFilesSetType,
+    addSignitureAspectToDocument: addSignitureAspectToDocument
   };
 
   return service;
@@ -150,7 +151,7 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
       });
   }
 
-  function uploadFiles(file, destination) {
+  function uploadFiles(file, destination, signature) {
 
     destination = destination ? destination : currentFolderNodeRef;
 
@@ -167,9 +168,25 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
         }).then(function (response) {
             var props = { "nodeRef" : response.data.nodeRef};
               $http.post('/alfresco/s/contents/addpermission', props).then(function (response) {
+
+
+                                   if (signature) {
+                                       console.log("we will add a signature aspect")
+                                        $http.post('/alfresco/s/contents/addsignature', props).then(function (response) {
+                                           console.log(response);
+                                        });
+                                   }
+
                                     return response;
                                   });
         });
+  }
+
+
+  function addSignitureAspectToDocument(nodeRef) {
+      console.log("nodeRef to be set for signature")
+      console.log("nodeRef to be set for signature")
+      console.log(nodeRef)
   }
 
     function uploadFilesSetType(file, destination, nodetype, name) {

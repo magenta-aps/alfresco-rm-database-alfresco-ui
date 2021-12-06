@@ -15,12 +15,13 @@ function UploadController($rootScope, $mdDialog, ContentService, $scope) {
     vm.openTemplateDialog = openTemplateDialog;
     vm.files = [];
     vm.uploading = false;
+    vm.useSignature = false;
 
     function uploadFiles() {
         vm.uploading = true;
 
         angular.forEach(vm.files, function (file) {
-            ContentService.uploadFiles(file)
+            ContentService.uploadFiles(file, undefined, vm.useSignature)
                 .then(function (response) {
                     vm.uploading = false;
                     cancelDialog();
