@@ -22,8 +22,6 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
         $stateParams.breadcrumbPath = [];
     };
 
-
-
   $scope.$watch('folderUuid', function (newVal, oldVal) {
 
       // fixed #31810 - otherwise it would fail, as a watch is always triggered twice. https://stackoverflow.com/questions/33105362/angular-scope-watch-newval-oldval

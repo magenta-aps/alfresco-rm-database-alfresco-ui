@@ -13,7 +13,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	$scope.isLoading = false;
 	vm.backtosearch = false;
 
-
 	// todo remove this as its not used anymore
 	vm.enforceSolar = $stateParams.enforceSolarDelay;
 	$scope.propertyFilter = propertyFilter;
@@ -560,6 +559,11 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	$scope.cancel = function () {
 		$mdDialog.cancel();
 	}
+
+
+
+
+
 }
 
 
