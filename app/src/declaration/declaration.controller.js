@@ -9,4 +9,5 @@ function DeclarationController($scope, propertyService) {
   $scope.propertyValues = propertyService.getAllPropertyValues();
 
 
+
 }

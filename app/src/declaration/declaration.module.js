@@ -16,6 +16,17 @@ function config($stateProvider) {
       }
     }
   })
+      .state('declarationTEST', {
+        parent: 'site',
+        url: '/erklaeringerTEST',
+        views: {
+          'content@': {
+            templateUrl: 'app/src/declaration/search/search.view.html',
+            controller: 'DeclarationSearchController',
+            controllerAs: 'vm'
+          }
+        }
+      })
     .state('declaration.advancedSearch', {
       url: '/advanceret-soegning',
       params: {

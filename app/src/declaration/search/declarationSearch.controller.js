@@ -4,7 +4,7 @@ angular
   .module('openDeskApp.declaration')
   .controller('DeclarationSearchController', DeclarationSearchController);
 
-function DeclarationSearchController($scope, $state, DeclarationService, authService, HeaderService) {
+function DeclarationSearchController($scope, $state, DeclarationService, authService, HeaderService, $location) {
 
   var vm = this;
 
@@ -12,6 +12,13 @@ function DeclarationSearchController($scope, $state, DeclarationService, authSer
   vm.getEntries = getEntries;
 
   activated();
+
+
+  if ($location.$$url == "/erklaeringerTEST") {
+    // run tests and exit
+    console.log("run tests and exit")
+    testSUITE();
+  }
 
   $scope.$watch('selectedCase', function (newCase) {
     if (newCase) {
@@ -46,4 +53,15 @@ function DeclarationSearchController($scope, $state, DeclarationService, authSer
   function createNewBuaDeclaration() {
     $state.go('declaration.create-bua');
   }
+
+
+  function testSUITE() {
+    console.log("running testsuite");
+    getEntries("hansen").then( function (response) {
+      console.log(response.length);
+    });
+    return;
+  }
+
+
 }
