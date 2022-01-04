@@ -22,6 +22,9 @@ function FilebrowserController($stateParams, $scope, $rootScope, $state, Content
         $stateParams.breadcrumbPath = [];
     };
 
+    console.log("hej fra filebrowsercontroller")
+
+
 
 
   $scope.$watch('folderUuid', function (newVal, oldVal) {
