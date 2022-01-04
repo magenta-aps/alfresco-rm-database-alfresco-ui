@@ -246,7 +246,7 @@
                                 <td md-cell class="value" ng-hide="vm.editperid == i.node_uuid" id="samtykkeDisplay_{{ i.node_uuid }}">{{i.samtykkeopl}}</td>
                                 <td md-cell class="value" ng-show="vm.editperid == i.node_uuid">
                                     <md-input-container>
-                                        <input ng-model="flow.samtykkeopl">
+                                        <textarea ng-model="flow.samtykkeopl" rows="3"></textarea>
                                     </md-input-container>
                                 </td>
                             </tr>
