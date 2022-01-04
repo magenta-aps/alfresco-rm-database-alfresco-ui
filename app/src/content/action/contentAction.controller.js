@@ -150,30 +150,17 @@ function ContentActionController($scope, $mdDialog, ContentService, $state, $roo
     }
 
     $scope.addToMail = function() {
-
       angular.forEach(vm.contentList, function (content) {
-        console.log("adding...");
-        console.log("adding...");
-        console.log(content);
-
-
         var o = {"name" : content.name, "nodeRef" : content.nodeRef}
 
         if ($rootScope.duf != null) {
           $rootScope.duf.push(o);
-          // $rootScope.duf.push(content.nodeRef);
         }
         else {
           $rootScope.duf = [];
           $rootScope.duf.push(o);
-          // $rootScope.duf.push(content.nodeRef);
         }
-
-
       })
-
-
-
     }
 
 }

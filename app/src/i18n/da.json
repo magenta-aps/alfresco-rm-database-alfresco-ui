@@ -52,7 +52,8 @@
     "VENTEDEGR" : "Ventende Grønlandske",
     "IGANGGR" : "Igangværende Grønlandske",
     "SUPOPL" : "supplerende udt.",
-    "MINESAGER" : "Mine sager"
+    "MINESAGER" : "Mine sager",
+    "MAIL" : "Tilføj til mail"
   },
   "DECLARATION": {
     "NEW_DECLARATION": "Ny sag",

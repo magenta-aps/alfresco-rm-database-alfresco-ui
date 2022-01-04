@@ -4,30 +4,46 @@ angular
   .module('openDeskApp.declaration')
   .controller('DeclarationController', DeclarationController);
 
-function DeclarationController($scope, propertyService, $rootScope) {
+function DeclarationController($scope, propertyService, $rootScope, HeaderService, $mdDialog, $state, $stateParams) {
+
+  var vm = this;
+
   $scope.case = {};
   $scope.propertyValues = propertyService.getAllPropertyValues();
 
-
-  // $scope.duf = "declarationController1";
-
-
-  // lav en watcher som tjekker rootscope.duff og sætter scope.duf til den nye værdi.
-
-
   function clearList() {
-    console.log("clicked clearList")
     $rootScope.duf = null;
   }
+   $scope.clearList = clearList();
+
+  $scope.authorityMailDialogMulti = authorityMailDialog;
+
+  function authorityMailDialog() {
+    $scope.selectedContent = $rootScope.duf;
+
+    $mdDialog.show({
+      templateUrl: 'app/src/authorityMail/authorityMail.view.html',
+      controller: 'AuthorityMailController as vm',
+      scope: $scope, // use parent scope in template
+      preserveScope: true, // do not forget this if use parent scope
+      clickOutsideToClose: false
+    }).then(function (response) {
+      $scope.clearList();
+      $state.go('declaration.show.documents', { caseid: $stateParams.caseid, breadcrumbPath: $stateParams.breadcrumbPath, tmpNodeRef : $stateParams.breadcrumbPath[0].nodeUuid, emailPayload : undefined, selectedFiles :  undefined});
+    }).catch(function (response) {
+      $scope.clearList();
+      $state.go('declaration.show.documents', { caseid: $stateParams.caseid, breadcrumbPath: $stateParams.breadcrumbPath, tmpNodeRef : $stateParams.breadcrumbPath[0].nodeUuid, emailPayload : undefined, selectedFiles :  undefined});
+    });
+  }
+
+
+
   $scope.clearList = clearList;
 
   $scope.showMailAttachments = false;
 
   $rootScope.$watch('duf', function (newVal) {
-
     if (newVal) {
-      console.log("der skete noget");
-      console.log(newVal);
       $scope.duf = newVal;
       $scope.showMailAttachments = true;
     }
@@ -35,9 +51,8 @@ function DeclarationController($scope, propertyService, $rootScope) {
       $scope.duf = undefined;
       $scope.showMailAttachments = false;
     }
-
-
   });
 
 
 }
+
