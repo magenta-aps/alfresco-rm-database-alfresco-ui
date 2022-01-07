@@ -320,23 +320,49 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
         });
     }
 
+	function canAccessUndoCloseCase() {
+		var roles = authService.getUserRoles();
+		console.log("roles");
+		console.log(roles);
+
+		if (!roles) return false;
+
+		if (roles.indexOf('SiteEntryLockManager') > -1) {
+			return true;
+		}
+		return false;
+	}
+
+	$scope.canAccessUndoCloseCase = canAccessUndoCloseCase;
+
     $scope.unlockCase = function () {
-		DeclarationService.unlock($scope.case, $scope.unlockCaseParams)
-			.then(function () {
 
-				Toast.show('Sagen er låst op')
-                $mdDialog.cancel();
-
-				if (($scope.unlockCaseParams == 'reopenEdit')) {
-					// open for edit
-					vm.isOpenForTMPEdit = true;
-					editCase()
-				} else {
+		if (($scope.unlockCaseParams == 'undoCloseCase')) {
+			$mdDialog.cancel();
+			DeclarationService.undoCloseCaseEntry($scope.case)
+				.then(function (response) {
 					HeaderService.resetActions();
 					activated();
-					vm.isOpenForTMPEdit = true;
-				}
-			});
+				});
+		}
+		else {
+			DeclarationService.unlock($scope.case, $scope.unlockCaseParams)
+				.then(function () {
+
+					Toast.show('Sagen er låst op')
+					$mdDialog.cancel();
+
+					if (($scope.unlockCaseParams == 'reopenEdit')) {
+						// open for edit
+						vm.isOpenForTMPEdit = true;
+						editCase()
+					} else {
+						HeaderService.resetActions();
+						activated();
+						vm.isOpenForTMPEdit = true;
+					}
+				});
+		}
 	}
 
 	function editCase() {

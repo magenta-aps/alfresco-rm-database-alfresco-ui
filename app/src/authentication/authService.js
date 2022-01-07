@@ -151,4 +151,6 @@ function authService($q, $http, $window, $state, sessionService) {
   function getUserRoles() {
     return roles;
   }
+
+
 }

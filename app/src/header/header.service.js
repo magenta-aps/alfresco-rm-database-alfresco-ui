@@ -123,6 +123,8 @@ function HeaderService($rootScope, authService ) {
     return false;
   }
 
+
+
   function canUnlockCases() {
     return authService.isAuthorized('SiteEntryLockManager');
   }
