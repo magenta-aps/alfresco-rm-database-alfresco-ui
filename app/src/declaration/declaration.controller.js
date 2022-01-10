@@ -43,10 +43,10 @@ function DeclarationController($scope, propertyService, $rootScope, HeaderServic
       clickOutsideToClose: false
     }).then(function (response) {
       $scope.clearList();
-      $state.go('declaration.show.documents', { caseid: $stateParams.caseid, breadcrumbPath: $stateParams.breadcrumbPath, tmpNodeRef : $stateParams.breadcrumbPath[0].nodeUuid, emailPayload : undefined, selectedFiles :  undefined});
+      $state.go('declaration.show.documents', { caseid: $stateParams.caseid, breadcrumbPath: [], tmpNodeRef : $stateParams.breadcrumbPath[0].nodeUuid, emailPayload : undefined, selectedFiles :  undefined});
     }).catch(function (response) {
       $scope.clearList();
-      $state.go('declaration.show.documents', { caseid: $stateParams.caseid, breadcrumbPath: $stateParams.breadcrumbPath, tmpNodeRef : $stateParams.breadcrumbPath[0].nodeUuid, emailPayload : undefined, selectedFiles :  undefined});
+      $state.go('declaration.show.documents', { caseid: $stateParams.caseid, breadcrumbPath: [], tmpNodeRef : $stateParams.breadcrumbPath[0].nodeUuid, emailPayload : undefined, selectedFiles :  undefined});
     });
   }
 
