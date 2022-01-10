@@ -168,15 +168,10 @@ function ContentService($http, $rootScope, $interval, alfrescoNodeUtils, fileUti
         }).then(function (response) {
             var props = { "nodeRef" : response.data.nodeRef};
               $http.post('/alfresco/s/contents/addpermission', props).then(function (response) {
-
-
                                    if (signature) {
-                                       console.log("we will add a signature aspect")
                                         $http.post('/alfresco/s/contents/addsignature', props).then(function (response) {
-                                           console.log(response);
                                         });
                                    }
-
                                     return response;
                                   });
         });

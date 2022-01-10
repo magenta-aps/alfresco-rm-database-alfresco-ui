@@ -38,8 +38,6 @@ function DocumentPreviewService(alfrescoDocumentService, sessionService, $http, 
 
         var _this = this;
         return alfrescoDocumentService.retrieveSingleDocument(nodeRef).then(function (item) {
-            console.log("hvad er item");
-            console.log(item);
             return _this._getPluginByMimeType(item);
         });
     }

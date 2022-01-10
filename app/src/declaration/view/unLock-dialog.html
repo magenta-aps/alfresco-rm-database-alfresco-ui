@@ -12,13 +12,13 @@
         </md-toolbar>
 
         <md-dialog-content class="md-padding">
-
             <md-radio-group ng-model="unlockCaseParams" required>
                 <md-radio-button value="reopenSupopl"> {{'DECLARATION.REOPENFORSUPOPL' | translate}}</md-radio-button>
                 <md-radio-button value="reopenEdit"> {{'DECLARATION.REOPENEDIT' | translate}}</md-radio-button>
+
+                <md-radio-button ng-if="canAccessUndoCloseCase" value="undoCloseCase"> {{'DECLARATION.UNDOCLOSECASE' | translate}}</md-radio-button>
+
             </md-radio-group>
-
-
         </md-dialog-content>
 
         <md-dialog-actions>

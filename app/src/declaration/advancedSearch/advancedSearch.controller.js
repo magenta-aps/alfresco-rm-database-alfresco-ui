@@ -35,10 +35,6 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   if (Object.keys($stateParams.searchquery).length) {
         $scope.searchParams = $stateParams.searchquery;
 
-        console.log("whats inside thm $scope.searchParams");
-        console.log($scope.searchParams);
-
-
         // unset the printfriendly property when coming back from the preview document view
         if ($scope.searchParams.hasOwnProperty("preview")) {
           $scope.searchParams.preview = undefined;
@@ -133,12 +129,8 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
 
 
     if (preview) {
-      console.log("preview var true");
       query.preview = "true";
     }
-
-    console.log("hvad er query.print")
-    console.log(query)
 
     DeclarationService.advancedSearch(skip, max, query)
       .then(response => {
