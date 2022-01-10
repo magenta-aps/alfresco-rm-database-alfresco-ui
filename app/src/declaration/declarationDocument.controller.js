@@ -14,13 +14,6 @@ function DocumentController($scope, $mdDialog, $stateParams, DeclarationService,
   $scope.folderUuid;
   $scope.selectedContent;
 
-
-
-
-
-
-
-
   // also check if came back from preview email signature...
 
   if (Object.keys($stateParams.emailPayload).length !== 0 ) {
@@ -117,13 +110,6 @@ function DocumentController($scope, $mdDialog, $stateParams, DeclarationService,
 
     }).catch(function (response) {
       $state.go('declaration.show.documents', { caseid: $stateParams.caseid, breadcrumbPath: $stateParams.breadcrumbPath, tmpNodeRef : $stateParams.breadcrumbPath[0].nodeUuid, emailPayload : undefined, selectedFiles :  undefined});
-
-
-
-
     });
-
-
-
   }
 }

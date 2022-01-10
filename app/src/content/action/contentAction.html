@@ -39,5 +39,12 @@
             </md-button>
         </md-menu-item>
 
+        <md-menu-item ng-if="action.mail">
+            <md-button ng-click="addToMail()">
+                <md-icon md-menu-align-target>remove_circle_outline</md-icon>
+                {{'COMMON.MAIL' | translate }}
+            </md-button>
+        </md-menu-item>
+
     </md-menu-content>
 </md-menu>
