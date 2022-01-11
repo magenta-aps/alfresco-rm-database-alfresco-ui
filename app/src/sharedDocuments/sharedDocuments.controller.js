@@ -25,7 +25,7 @@ function SharedDocumentsController($scope, $stateParams, $translate, ContentServ
 
                     var buaUser = response.data.result;
 
-                    if (buaUser) {
+                    if (buaUser.bua) {
 
                         ContentService.getSharedFolderForBua()
                             .then(function (response) {
