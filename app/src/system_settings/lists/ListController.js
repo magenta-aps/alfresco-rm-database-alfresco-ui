@@ -9,11 +9,20 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
   $scope.selectedContent = [];
   $scope.newEntry = '';
   $scope.newEntry_email = '';
+  $scope.newEntry_by = '';
+  $scope.newEntry_postnr = '';
+  $scope.newEntry_adresse = '';
   $scope.renameOriginal = {};
 
 
   $scope.listTitle = $stateParams.listTitle;
-  $scope.listContent = propertyService.getPropertyContent($stateParams.listData);
+
+  if ($scope.listTitle == "Henvisende instans") {
+      $scope.listContent = propertyService.getPropertyContentHenvisende($stateParams.listData);
+  } else {
+      $scope.listContent = propertyService.getPropertyContent($stateParams.listData);
+  }
+
 
   HeaderService.addAction('COMMON.ADD', 'add', addNewDialog);
 
@@ -44,7 +53,10 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
 
     // choose special dialog if myndigheder
 
-    if ($scope.listTitle == "Myndighed") {
+      console.log("$scope.listTitle");
+      console.log($scope.listTitle);
+
+    if ($scope.listTitle == "Henvisende instans") {
 
             $mdDialog.show({
               templateUrl: 'app/src/system_settings/lists/view/list-create-myndighed.html',
@@ -77,7 +89,10 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
 
   $scope.renameDialog = function (value) {
 
-    if ($scope.listTitle == "Myndighed") {
+    if ($scope.listTitle == "Henvisende instans") {
+
+        console.log("hvad er value");
+        console.log(value);
 
 
     var email = value.title.match(/ *\([^)]*\) */g);
@@ -100,7 +115,7 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
 
         $scope.renameOriginal = angular.copy(value);
         $scope.newEntry = title;
-        $scope.newEntry_email = email;
+        $scope.newEntry_email = value.email;
 
         $mdDialog.show({
           templateUrl: 'app/src/system_settings/lists/view/list-rename-myndighed.html',
@@ -127,8 +142,19 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
 
   $scope.addNew = function () {
 
-    if ($scope.listTitle == "Myndighed") {
-        propertyService.addPropertyValue($scope.newEntry + " (" + $scope.newEntry_email +")");
+    if ($scope.listTitle == "Henvisende instans") {
+
+        var newObj = {titel : $scope.newEntry,
+                      adresse : $scope.newEntry_adresse,
+                      postnr : $scope.newEntry_postnr,
+                      by : $scope.newEntry_by,
+                      email : $scope.newEntry_email }
+
+        console.log("object");
+        console.log(newObj.toString());
+
+        propertyService.addPropertyValue(JSON.stringify(newObj));
+        // propertyService.addPropertyValue($scope.newEntry + " (" + $scope.newEntry_email +")");
     }
     else {
         propertyService.addPropertyValue($scope.newEntry);
@@ -151,8 +177,8 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
 
   $scope.rename = function () {
 
-    if ($scope.listTitle == "Myndighed") {
-        propertyService.renamePropertyValue($scope.renameOriginal, { title: $scope.newEntry + " (" + $scope.newEntry_email +")" });
+    if ($scope.listTitle == "Henvisende instans") {
+        propertyService.renamePropertyValueHenvisende($scope.renameOriginal, { title: $scope.newEntry + " (" + $scope.newEntry_email +")" });
   } else {
         propertyService.renamePropertyValue($scope.renameOriginal, { title: $scope.newEntry });
   }

@@ -57,10 +57,44 @@ angular.module('openDeskApp.declaration')
 				return propertyValues;
 			},
 
+			getPropertyContentHenvisende: function (property) {
+			propertyName = property;
+			propertyContent = [];
+			console.log("hvad er property?")
+			console.log(property)
+			var content = getValuesForProperty(property);
+			console.log("hvad er content")
+			console.log(content);
+
+			if (!content) return propertyContent;
+
+			content.forEach(function (elem, key) {
+
+				console.log("elem");
+
+				var obj = JSON.parse(elem);
+
+				console.log(obj);
+
+				propertyContent.push({
+					title: obj.titel,
+					email: obj.email,
+					selected: false
+				});
+			}, this);
+
+			return propertyContent;
+		},
+
 			getPropertyContent: function (property) {
 				propertyName = property;
 				propertyContent = [];
+				console.log("hvad er property?")
+				console.log(property)
 				var content = getValuesForProperty(property);
+				console.log("hvad er content")
+				console.log(content);
+
 				if (!content) return propertyContent;
 
 				content.forEach(function (elem, key) {
@@ -95,6 +129,36 @@ angular.module('openDeskApp.declaration')
 			},
 
 			deletePropertyValues: function (values) {
+				propertyContent.forEach(function (prop, key) {
+					values.forEach(function (value) {
+						if (prop.title == value.title) {
+							propertyContent.splice(key, 1);
+						}
+					});
+				});
+				saveChanges();
+			},
+
+			/**
+			 * rename a property for henvisende
+			 *
+			 */
+			renamePropertyValueHenvisende: function (oldVal, newVal) {
+				propertyContent.forEach(function (prop, key) {
+
+					// if (prop.title == oldVal.title)
+					// 	propertyContent.splice(key, 1);
+					console.log("prop");
+					console.log(prop);
+					// console.log(typeof prop === 'object')
+
+
+				})
+				// propertyContent.push(newVal);
+				saveChanges();
+			},
+
+			deletePropertyValuesHenvisende: function (values) {
 				propertyContent.forEach(function (prop, key) {
 					values.forEach(function (value) {
 						if (prop.title == value.title) {

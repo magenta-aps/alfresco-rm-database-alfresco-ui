@@ -137,7 +137,10 @@
   "MEMBER": {
     "NAME": "Navn",
     "ROLE": "Rolle",
-    "EMAIL": "Email"
+    "EMAIL": "Email",
+    "POST": "Post nr.",
+    "ADRESSE": "Adresse",
+    "BY": "By"
   },
   "MENU": {
     "LOGOUT": "Log ud"
