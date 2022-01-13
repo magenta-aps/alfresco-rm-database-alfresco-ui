@@ -12,16 +12,33 @@
         </md-toolbar>
 
         <md-dialog-content class="md-padding">
-
             <md-input-container class="md-block">
                 <label>{{'MEMBER.NAME' | translate}}</label>
                 <input ng-model="newEntry" md-autofocus required>
             </md-input-container>
 
             <md-input-container class="md-block">
-                <label>{{'MEMBER.EMAIL' | translate}}</label>
-                <input ng-model="newEntry_email" required>
+                <label>{{'MEMBER.ADRESSE' | translate}}</label>
+                <input ng-model="newEntry_adresse" md-autofocus required>
             </md-input-container>
+
+            <div layout="row" flex>
+                <md-input-container class="md-block">
+                    <label>{{'MEMBER.POST' | translate}}</label>
+                    <input ng-model="newEntry_postnr" md-autofocus required>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>{{'MEMBER.BY' | translate}}</label>
+                    <input ng-model="newEntry_by" md-autofocus required>
+                </md-input-container>
+            </div>
+
+            <md-input-container class="md-block">
+                <label>{{'MEMBER.EMAIL' | translate}}</label>
+                <input ng-model="newEntry_email" md-autofocus required>
+            </md-input-container>
+
         </md-dialog-content>
 
         <md-dialog-actions>

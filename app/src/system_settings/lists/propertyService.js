@@ -22,8 +22,6 @@ angular.module('openDeskApp.declaration')
 			});
 		}
 
-
-		// todo det er her der er en fejl, du får gemt string og ikke et objekt.
 		function saveChanges() {
 			var values = [];
 			propertyContent.forEach(function (property) {
@@ -32,7 +30,6 @@ angular.module('openDeskApp.declaration')
 			setPropertyValues(propertyName, values);
 		}
 
-		// todo det er her der er en fejl, du får gemt string og ikke et objekt.
 		function saveChangesHenvisende() {
 			var values = [];
 			propertyContent.forEach(function (property) {
@@ -49,6 +46,24 @@ angular.module('openDeskApp.declaration')
 						propertyValues = response.data;
 						return response.data;
 					});
+			},
+
+			getAllPropertyValuesForHenvisende: function () {
+
+				var returnList = [];
+
+				var referengyAgency = propertyValues["referingAgency"];
+				console.log("referengyAgency");
+				console.log(referengyAgency);
+
+				for (var x in referengyAgency) {
+					var agent = referengyAgency[x];
+					console.log("agent")
+					console.log(agent.title);
+					returnList.push(agent.title);
+				}
+				return returnList;
+
 			},
 
 			getAllPropertyValues: function () {

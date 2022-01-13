@@ -53,7 +53,17 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
 
     // choose special dialog if myndigheder
 
-    if ($scope.listTitle == "Henvisende instans") {
+      if ($scope.listTitle == "Myndighed") {
+
+          $mdDialog.show({
+              templateUrl: 'app/src/system_settings/lists/view/list-create-myndighed.html',
+              scope: $scope, // use parent scope in template
+              preserveScope: true, // do not forget this if use parent scope
+              clickOutsideToClose: true
+          });
+      }
+
+    else if ($scope.listTitle == "Henvisende instans") {
 
             $mdDialog.show({
               templateUrl: 'app/src/system_settings/lists/view/list-create-myndighed.html',
@@ -63,7 +73,6 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
             });
     }
     else {
-
           $mdDialog.show({
               templateUrl: 'app/src/system_settings/lists/view/list-create.html',
               scope: $scope, // use parent scope in template
@@ -86,7 +95,40 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
 
   $scope.renameDialog = function (value) {
 
-    if ($scope.listTitle == "Henvisende instans") {
+      if ($scope.listTitle == "Myndighed") {
+
+
+          var email = value.title.match(/ *\([^)]*\) */g);
+
+          if (email != null) {
+
+              email = email[0];
+              email = email.replace("(","");
+              email = email.replace(")","");
+              email = email.trim();
+          }
+
+          var title = value.title.replace(email, ",");
+
+          title = title.replace("(","");
+          title = title.replace(")","");
+          title = title.replace(",","");
+          title = title.trim();
+
+
+          $scope.renameOriginal = angular.copy(value);
+          $scope.newEntry = title;
+          $scope.newEntry_email = email;
+
+          $mdDialog.show({
+              templateUrl: 'app/src/system_settings/lists/view/list-rename-myndighed.html',
+              scope: $scope, // use parent scope in template
+              preserveScope: true, // do not forget this if use parent scope
+              clickOutsideToClose: true
+          });
+      }
+
+    else if ($scope.listTitle == "Henvisende instans") {
 
         $scope.newEntry = value.title;
 
@@ -123,7 +165,7 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
         $scope.newEntry_email = value.email;
 
         $mdDialog.show({
-          templateUrl: 'app/src/system_settings/lists/view/list-rename-myndighed.html',
+          templateUrl: 'app/src/system_settings/lists/view/list-rename-henviser.html',
           scope: $scope, // use parent scope in template
           preserveScope: true, // do not forget this if use parent scope
           clickOutsideToClose: true
@@ -147,7 +189,11 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
 
   $scope.addNew = function () {
 
-    if ($scope.listTitle == "Henvisende instans") {
+      if ($scope.listTitle == "Myndighed") {
+          propertyService.addPropertyValue($scope.newEntry + " (" + $scope.newEntry_email +")");
+      }
+
+    else if ($scope.listTitle == "Henvisende instans") {
 
         var newObj = {title : $scope.newEntry,
                       adresse : $scope.newEntry_adresse,
@@ -187,7 +233,12 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
 
   $scope.rename = function () {
 
-    if ($scope.listTitle == "Henvisende instans") {
+
+      if ($scope.listTitle == "Myndighed") {
+          propertyService.renamePropertyValue($scope.renameOriginal, { title: $scope.newEntry + " (" + $scope.newEntry_email +")" });
+      }
+
+      else if ($scope.listTitle == "Henvisende instans") {
         propertyService.renamePropertyValueHenvisende($scope.renameOriginal, { title: $scope.newEntry,
                                                                                  adresse: $scope.newEntry_adresse,
                                                                                  postnr: $scope.newEntry_postnr,
