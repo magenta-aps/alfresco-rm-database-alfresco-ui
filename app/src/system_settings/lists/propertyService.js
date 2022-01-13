@@ -24,10 +24,19 @@ angular.module('openDeskApp.declaration')
 
 
 		// todo det er her der er en fejl, du får gemt string og ikke et objekt.
-		unction saveChanges() {
+		function saveChanges() {
 			var values = [];
 			propertyContent.forEach(function (property) {
 				values.push(property.title);
+			})
+			setPropertyValues(propertyName, values);
+		}
+
+		// todo det er her der er en fejl, du får gemt string og ikke et objekt.
+		function saveChangesHenvisende() {
+			var values = [];
+			propertyContent.forEach(function (property) {
+				values.push(property);
 			})
 			setPropertyValues(propertyName, values);
 		}
@@ -67,35 +76,24 @@ angular.module('openDeskApp.declaration')
 
 
 
-			// tmp
-
-				// return [];
-
+			// tmp for testing, reset contents in table
+				    // return [];
 
 			if (!content) return propertyContent;
 
 			content.forEach(function (elem, key) {
 
+				if (elem.hasOwnProperty("title")) {
 
-
-				// todo: check if valid json
-
-				var obj = JSON.parse(elem);
-
-
-
-				if (obj.hasOwnProperty("titel")) {
-
-
-
-					propertyContent.push({
-						title: obj.titel,
-						email: obj.email,
-						by: obj.by,
-						postnr: obj.postnr,
-						adresse: obj.adresse,
+					var newObj = {
+						title: elem.title,
+						email: elem.email,
+						by: elem.by,
+						postnr: elem.postnr,
+						adresse: elem.adresse,
 						selected: false
-					});
+					}
+					propertyContent.push(newObj);
 				}
 			}, this);
 
@@ -119,6 +117,11 @@ angular.module('openDeskApp.declaration')
 				}, this);
 
 				return propertyContent;
+			},
+
+			addPropertyValueHenvisende: function (value) {
+				propertyContent.push(value);
+				saveChangesHenvisende();
 			},
 
 			addPropertyValue: function (value) {
@@ -159,22 +162,14 @@ angular.module('openDeskApp.declaration')
 			 */
 			renamePropertyValueHenvisende: function (oldVal, newVal) {
 
-
-
-
 				propertyContent.forEach(function (prop, key) {
 
 					if (prop.title == oldVal.title) {
-						//console.log("found it");
-					    propertyContent.splice(key, 1);
+					     propertyContent.splice(key, 1);
 					}
-
-					// console.log(typeof prop === 'object')
-
-
 				})
 				propertyContent.push(newVal);
-				saveChanges();
+				saveChangesHenvisende();
 			},
 
 			deletePropertyValuesHenvisende: function (values) {
@@ -185,7 +180,7 @@ angular.module('openDeskApp.declaration')
 						}
 					});
 				});
-				saveChanges();
+				saveChangesHenvisende();
 			}
 		};
 	});

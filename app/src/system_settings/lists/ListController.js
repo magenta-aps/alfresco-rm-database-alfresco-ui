@@ -19,10 +19,6 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
 
   if ($scope.listTitle == "Henvisende instans") {
       $scope.listContent = propertyService.getPropertyContentHenvisende($stateParams.listData);
-
-      console.log("hvad er listContent")
-      console.log($scope.listContent);
-
   } else {
       $scope.listContent = propertyService.getPropertyContent($stateParams.listData);
   }
@@ -56,9 +52,6 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
   function addNewDialog() {
 
     // choose special dialog if myndigheder
-
-      console.log("$scope.listTitle");
-      console.log($scope.listTitle);
 
     if ($scope.listTitle == "Henvisende instans") {
 
@@ -94,11 +87,6 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
   $scope.renameDialog = function (value) {
 
     if ($scope.listTitle == "Henvisende instans") {
-
-        console.log("hvad er value");
-        console.log(value);
-
-        // du har
 
         $scope.newEntry = value.title;
 
@@ -161,17 +149,13 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
 
     if ($scope.listTitle == "Henvisende instans") {
 
-        var newObj = {titel : $scope.newEntry,
+        var newObj = {title : $scope.newEntry,
                       adresse : $scope.newEntry_adresse,
                       postnr : $scope.newEntry_postnr,
                       by : $scope.newEntry_by,
                       email : $scope.newEntry_email }
 
-        console.log("object");
-        console.log(newObj.toString());
-
-        propertyService.addPropertyValue(JSON.stringify(newObj));
-        // propertyService.addPropertyValue($scope.newEntry + " (" + $scope.newEntry_email +")");
+        propertyService.addPropertyValueHenvisende(newObj);
     }
     else {
         propertyService.addPropertyValue($scope.newEntry);
@@ -184,10 +168,19 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
   }
 
   $scope.delete = function () {
-    propertyService.deletePropertyValues($scope.selectedContent);
-    angular.forEach($scope.selectedContent, function (deleted) {
-      Toast.show(deleted.title + ' blev slettet');
-    })
+
+      if ($scope.listTitle == "Henvisende instans") {
+          propertyService.deletePropertyValuesHenvisende($scope.selectedContent);
+          angular.forEach($scope.selectedContent, function (deleted) {
+              Toast.show(deleted.title + ' blev slettet');
+          })
+      }
+      else {
+          propertyService.deletePropertyValues($scope.selectedContent);
+          angular.forEach($scope.selectedContent, function (deleted) {
+              Toast.show(deleted.title + ' blev slettet');
+          })
+      }
     $scope.selectedContent = [];
     $scope.cancel();
   }
