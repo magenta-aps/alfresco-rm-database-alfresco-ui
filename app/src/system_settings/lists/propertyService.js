@@ -22,7 +22,9 @@ angular.module('openDeskApp.declaration')
 			});
 		}
 
-		function saveChanges() {
+
+		// todo det er her der er en fejl, du får gemt string og ikke et objekt.
+		unction saveChanges() {
 			var values = [];
 			propertyContent.forEach(function (property) {
 				values.push(property.title);
@@ -60,27 +62,41 @@ angular.module('openDeskApp.declaration')
 			getPropertyContentHenvisende: function (property) {
 			propertyName = property;
 			propertyContent = [];
-			console.log("hvad er property?")
-			console.log(property)
+
 			var content = getValuesForProperty(property);
-			console.log("hvad er content")
-			console.log(content);
+
+
+
+			// tmp
+
+				// return [];
+
 
 			if (!content) return propertyContent;
 
 			content.forEach(function (elem, key) {
 
-				console.log("elem");
+
+
+				// todo: check if valid json
 
 				var obj = JSON.parse(elem);
 
-				console.log(obj);
 
-				propertyContent.push({
-					title: obj.titel,
-					email: obj.email,
-					selected: false
-				});
+
+				if (obj.hasOwnProperty("titel")) {
+
+
+
+					propertyContent.push({
+						title: obj.titel,
+						email: obj.email,
+						by: obj.by,
+						postnr: obj.postnr,
+						adresse: obj.adresse,
+						selected: false
+					});
+				}
 			}, this);
 
 			return propertyContent;
@@ -89,11 +105,9 @@ angular.module('openDeskApp.declaration')
 			getPropertyContent: function (property) {
 				propertyName = property;
 				propertyContent = [];
-				console.log("hvad er property?")
-				console.log(property)
+
 				var content = getValuesForProperty(property);
-				console.log("hvad er content")
-				console.log(content);
+
 
 				if (!content) return propertyContent;
 
@@ -144,17 +158,22 @@ angular.module('openDeskApp.declaration')
 			 *
 			 */
 			renamePropertyValueHenvisende: function (oldVal, newVal) {
+
+
+
+
 				propertyContent.forEach(function (prop, key) {
 
-					// if (prop.title == oldVal.title)
-					// 	propertyContent.splice(key, 1);
-					console.log("prop");
-					console.log(prop);
+					if (prop.title == oldVal.title) {
+						//console.log("found it");
+					    propertyContent.splice(key, 1);
+					}
+
 					// console.log(typeof prop === 'object')
 
 
 				})
-				// propertyContent.push(newVal);
+				propertyContent.push(newVal);
 				saveChanges();
 			},
 

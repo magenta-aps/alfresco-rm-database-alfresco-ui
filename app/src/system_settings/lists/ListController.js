@@ -19,6 +19,10 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
 
   if ($scope.listTitle == "Henvisende instans") {
       $scope.listContent = propertyService.getPropertyContentHenvisende($stateParams.listData);
+
+      console.log("hvad er listContent")
+      console.log($scope.listContent);
+
   } else {
       $scope.listContent = propertyService.getPropertyContent($stateParams.listData);
   }
@@ -93,6 +97,19 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
 
         console.log("hvad er value");
         console.log(value);
+
+        // du har
+
+        $scope.newEntry = value.title;
+
+        $scope.newEntry_adresse = value.adresse;
+        $scope.newEntry_postnr = value.postnr;
+        $scope.newEntry_by = value.by;
+        $scope.newEntry_email = value.email;
+
+
+
+
 
 
     var email = value.title.match(/ *\([^)]*\) */g);
@@ -178,7 +195,13 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
   $scope.rename = function () {
 
     if ($scope.listTitle == "Henvisende instans") {
-        propertyService.renamePropertyValueHenvisende($scope.renameOriginal, { title: $scope.newEntry + " (" + $scope.newEntry_email +")" });
+        propertyService.renamePropertyValueHenvisende($scope.renameOriginal, { title: $scope.newEntry,
+                                                                                 adresse: $scope.newEntry_adresse,
+                                                                                 postnr: $scope.newEntry_postnr,
+                                                                                 by: $scope.newEntry_by,
+                                                                                 email: $scope.newEntry_email}
+        );
+
   } else {
         propertyService.renamePropertyValue($scope.renameOriginal, { title: $scope.newEntry });
   }
