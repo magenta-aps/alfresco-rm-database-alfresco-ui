@@ -124,9 +124,6 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
       // fetch current user status
       practitionerService.getUserType(user).then(function (response) {
 
-      console.log("hvad er response")
-      console.log(response)
-
         $scope.bua = response.data.result.bua;
         $scope.expirydate = response.data.result.expiry_date
 
@@ -167,7 +164,7 @@ function PractitionerController($scope, practitionerService, Toast, HeaderServic
   function updateUser() {
 
 
-    console.log($scope.expirydate)
+
 
     var selectedDate = undefined;
 

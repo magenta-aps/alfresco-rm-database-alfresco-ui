@@ -4,7 +4,7 @@ angular
   .module('oda.content')
   .controller('ContentActionController', ContentActionController);
 
-function ContentActionController($scope, $mdDialog, ContentService, $state) {
+function ContentActionController($scope, $mdDialog, ContentService, $state, $rootScope) {
 
   var vm = this;
   vm.contentList = [];
@@ -21,7 +21,8 @@ function ContentActionController($scope, $mdDialog, ContentService, $state) {
     delete: false,
     rename: false,
     edit: false,
-    download: false
+    download: false,
+    mail: false
   }
 
   activate();
@@ -72,6 +73,7 @@ function ContentActionController($scope, $mdDialog, ContentService, $state) {
         $scope.action.download = true
         $scope.action.rename = true;
         $scope.action.delete = true;
+        $scope.action.mail = true;
         break;
     }
   }
@@ -92,6 +94,13 @@ function ContentActionController($scope, $mdDialog, ContentService, $state) {
 
 
   $scope.renameDialog = function () {
+    console.log("clicked rename: see what vars available...");
+    console.log("$rootScope");
+    console.log($rootScope);
+
+    // $rootScope.duf = "noller fra contentAction siger hej";
+    $rootScope.duf = ["fil1.doc", "fil2.doc"];
+
     $mdDialog.show({
       templateUrl: 'app/src/content/action/rename.view.html',
       scope: $scope, // use parent scope in template
@@ -131,13 +140,26 @@ function ContentActionController($scope, $mdDialog, ContentService, $state) {
           });
       };
 
-
   $scope.rename = function () {
       angular.forEach(vm.contentList, function (content) {
         ContentService.rename(content.nodeRef, $scope.newName)
           .then(function () {
             $scope.cancelDialog();
           });
+      })
+    }
+
+    $scope.addToMail = function() {
+      angular.forEach(vm.contentList, function (content) {
+        var o = {"name" : content.name, "nodeRef" : content.nodeRef}
+
+        if ($rootScope.duf != null) {
+          $rootScope.duf.push(o);
+        }
+        else {
+          $rootScope.duf = [];
+          $rootScope.duf.push(o);
+        }
       })
     }
 

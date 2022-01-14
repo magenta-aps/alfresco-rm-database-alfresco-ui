@@ -53,6 +53,10 @@ function DocumentController($scope, documentService, $stateParams, $state,
       if (Object.keys($stateParams.tmpcrumb).length) {
           var splittedpath = vm.doc.location.path.split('/');
           var id = splittedpath[4];
+
+          console.log("er tmpcrumb corrupt?: ");
+          console.log($stateParams.tmpcrumb);
+
           $state.go('declaration.show.documents', { caseid: id, breadcrumbPath: $stateParams.tmpcrumb, tmpNodeRef : $stateParams.tmpNodeRef });
       }
   }

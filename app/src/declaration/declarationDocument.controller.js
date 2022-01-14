@@ -7,15 +7,12 @@ angular
 function DocumentController($scope, $mdDialog, $stateParams, DeclarationService, Toast, ContentService, HeaderService, $state) {
   var vm = this;
 
+  console.log("yellow from documentcontrOLLER");
+
   var hasSelectedContent = false;
 
   $scope.folderUuid;
   $scope.selectedContent;
-
-
-
-
-
 
   // also check if came back from preview email signature...
 
@@ -38,6 +35,11 @@ function DocumentController($scope, $mdDialog, $stateParams, DeclarationService,
   function activate() {
     DeclarationService.get($stateParams.caseid)
       .then(function (response) {
+
+        console.log("hvad er der i reponse");
+        console.log(response['store-protocol'] + '://' + response['store-identifier'] + '/' + response['node-uuid']);
+
+
         var bua = response.bua ? ' (BUA)' : '';
         HeaderService.setTitle(response.firstName + ' ' + response.lastName + ' ( ' + response.caseNumber + ' / ' + response.cprNumber + ' )' + bua);
         HeaderService.setClosed(response.closed);
@@ -108,13 +110,6 @@ function DocumentController($scope, $mdDialog, $stateParams, DeclarationService,
 
     }).catch(function (response) {
       $state.go('declaration.show.documents', { caseid: $stateParams.caseid, breadcrumbPath: $stateParams.breadcrumbPath, tmpNodeRef : $stateParams.breadcrumbPath[0].nodeUuid, emailPayload : undefined, selectedFiles :  undefined});
-
-
-
-
     });
-
-
-
   }
 }

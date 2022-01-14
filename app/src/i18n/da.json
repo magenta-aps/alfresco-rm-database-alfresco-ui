@@ -52,7 +52,8 @@
     "VENTEDEGR" : "Ventende Grønlandske",
     "IGANGGR" : "Igangværende Grønlandske",
     "SUPOPL" : "supplerende udt.",
-    "MINESAGER" : "Mine sager"
+    "MINESAGER" : "Mine sager",
+    "MAIL" : "Tilføj til mail"
   },
   "DECLARATION": {
     "NEW_DECLARATION": "Ny sag",
@@ -67,6 +68,7 @@
     "UNLOCK_DECLARATION": "Redigér",
     "REOPENFORSUPOPL": "Genåben til Supplerende udt.",
     "REOPENEDIT": "Redigering af patientdata",
+    "UNDOCLOSECASE": "Annullér afslutning af sagen",
     "UNLOCK": "Redigér",
     "UNLOCK_BOTTON": "Næste",
     "REOPEN": "Genåben",
