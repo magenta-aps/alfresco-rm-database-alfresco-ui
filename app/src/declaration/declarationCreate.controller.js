@@ -16,6 +16,7 @@ function DeclarationCreateController($scope, $state, $translate, DeclarationServ
   $scope.case.creationDate = new Date();
   $scope.propertyValues = propertyService.getAllPropertyValues();
   $scope.propertyFilter = propertyFilter;
+  $scope.agents = propertyService.getAllPropertyValuesForHenvisende();
   $scope.addNewBidiagnosis = addNewBidiagnosis;
   vm.lookupCPR = lookupCPR;
 

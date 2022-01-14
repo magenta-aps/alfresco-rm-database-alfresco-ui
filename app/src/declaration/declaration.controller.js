@@ -12,5 +12,7 @@ function DeclarationController($scope, propertyService) {
 
   $scope.agents = propertyService.getAllPropertyValuesForHenvisende();
 
+  console.log("agents");
+
 
 }
