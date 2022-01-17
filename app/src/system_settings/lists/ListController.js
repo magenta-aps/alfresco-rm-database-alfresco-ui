@@ -20,6 +20,8 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
   if ($scope.listTitle == "Henvisende instans") {
       propertyService.initPropertyValues();
       $scope.listContent = propertyService.getPropertyContentHenvisende($stateParams.listData);
+      console.log("hvad er $scope.listContent");
+      console.log($scope.listContent);
   } else {
       $scope.listContent = propertyService.getPropertyContent($stateParams.listData);
   }
@@ -65,6 +67,14 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
       }
 
     else if ($scope.listTitle == "Henvisende instans") {
+
+           // du skal nulstille alle værdier i boksene
+
+          $scope.newEntry = "";
+          $scope.newEntry_adresse = "";
+          $scope.newEntry_postnr = "";
+          $scope.newEntry_by = "";
+
 
             $mdDialog.show({
               templateUrl: 'app/src/system_settings/lists/view/list-create-henviser.html',
@@ -136,34 +146,8 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
         $scope.newEntry_adresse = value.adresse;
         $scope.newEntry_postnr = value.postnr;
         $scope.newEntry_by = value.by;
-        $scope.newEntry_email = value.email;
-
-
-
-
-
-
-    var email = value.title.match(/ *\([^)]*\) */g);
-
-    if (email != null) {
-
-        email = email[0];
-        email = email.replace("(","");
-        email = email.replace(")","");
-        email = email.trim();
-    }
-
-    var title = value.title.replace(email, ",");
-
-    title = title.replace("(","");
-    title = title.replace(")","");
-    title = title.replace(",","");
-    title = title.trim();
-
 
         $scope.renameOriginal = angular.copy(value);
-        $scope.newEntry = title;
-        $scope.newEntry_email = value.email;
 
         $mdDialog.show({
           templateUrl: 'app/src/system_settings/lists/view/list-rename-henviser.html',
@@ -199,8 +183,7 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
         var newObj = {title : $scope.newEntry,
                       adresse : $scope.newEntry_adresse,
                       postnr : $scope.newEntry_postnr,
-                      by : $scope.newEntry_by,
-                      email : $scope.newEntry_email }
+                      by : $scope.newEntry_by}
 
         propertyService.addPropertyValueHenvisende(newObj);
 
