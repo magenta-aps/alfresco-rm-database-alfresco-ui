@@ -35,7 +35,8 @@ angular.module('openDeskApp.declaration')
 			propertyContent.forEach(function (property) {
 				values.push(property);
 			})
-			setPropertyValues(propertyName, values);
+			setPropertyValues(propertyName, values).then(function(response) {
+			});
 		}
 
 		return {
@@ -53,13 +54,9 @@ angular.module('openDeskApp.declaration')
 				var returnList = [];
 
 				var referengyAgency = propertyValues["referingAgency"];
-				console.log("referengyAgency");
-				console.log(referengyAgency);
 
 				for (var x in referengyAgency) {
 					var agent = referengyAgency[x];
-					console.log("agent")
-					console.log(agent.title);
 					returnList.push(agent.title);
 				}
 				return returnList;
@@ -89,14 +86,14 @@ angular.module('openDeskApp.declaration')
 
 			var content = getValuesForProperty(property);
 
-
-
 			// tmp for testing, reset contents in table
 				    // return [];
 
 			if (!content) return propertyContent;
 
 			content.forEach(function (elem, key) {
+
+				elem = JSON.parse(elem);
 
 				if (elem.hasOwnProperty("title")) {
 

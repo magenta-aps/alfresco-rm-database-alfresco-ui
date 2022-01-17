@@ -18,6 +18,7 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
   $scope.listTitle = $stateParams.listTitle;
 
   if ($scope.listTitle == "Henvisende instans") {
+      propertyService.initPropertyValues();
       $scope.listContent = propertyService.getPropertyContentHenvisende($stateParams.listData);
   } else {
       $scope.listContent = propertyService.getPropertyContent($stateParams.listData);
@@ -66,7 +67,7 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
     else if ($scope.listTitle == "Henvisende instans") {
 
             $mdDialog.show({
-              templateUrl: 'app/src/system_settings/lists/view/list-create-myndighed.html',
+              templateUrl: 'app/src/system_settings/lists/view/list-create-henviser.html',
               scope: $scope, // use parent scope in template
               preserveScope: true, // do not forget this if use parent scope
               clickOutsideToClose: true
@@ -202,6 +203,7 @@ function ListController($scope, $stateParams, $mdDialog, Toast, propertyService,
                       email : $scope.newEntry_email }
 
         propertyService.addPropertyValueHenvisende(newObj);
+
     }
     else {
         propertyService.addPropertyValue($scope.newEntry);
