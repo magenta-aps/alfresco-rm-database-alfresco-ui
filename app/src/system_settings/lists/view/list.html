@@ -9,7 +9,8 @@
           </tr>
         </thead>
         <tbody md-body>
-          <tr md-row ng-repeat="content in listContent | orderBy: query.order">
+
+        <tr md-row ng-repeat="content in listContent | orderBy: query.order">
             <td md-cell>
               <md-checkbox aria-label="{{content.title}}" ng-model="content.selected"></md-checkbox>
             </td>
@@ -17,6 +18,7 @@
               <md-icon class="list-edit" style="height: 16px; width: 16px; min-height: 16px; min-width: 16px; font-size: 16px;">edit</md-icon> {{content.title}}
             </td>
           </tr>
+
         </tbody>
       </table>
     </md-table-container>

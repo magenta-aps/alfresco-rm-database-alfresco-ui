@@ -754,6 +754,7 @@
     "TYPE": "Type",
     "ROLE": "Role",
     "EMAIL": "Email",
+    "BY": "By",
     "CHANGE": "Change",
     "ADD_MEMBERS": "Add members",
     "ADD_MEMBER": "Add member",

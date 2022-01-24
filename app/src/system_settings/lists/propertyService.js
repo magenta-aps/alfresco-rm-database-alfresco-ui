@@ -30,6 +30,15 @@ angular.module('openDeskApp.declaration')
 			setPropertyValues(propertyName, values);
 		}
 
+		function saveChangesHenvisende() {
+			var values = [];
+			propertyContent.forEach(function (property) {
+				values.push(property);
+			})
+			setPropertyValues(propertyName, values).then(function(response) {
+			});
+		}
+
 		return {
 
 			initPropertyValues: function () {
@@ -38,6 +47,20 @@ angular.module('openDeskApp.declaration')
 						propertyValues = response.data;
 						return response.data;
 					});
+			},
+
+			getAllPropertyValuesForHenvisende: function () {
+
+				var returnList = [];
+
+				var referengyAgency = propertyValues["referingAgency"];
+
+				for (var x in referengyAgency) {
+					var agent = referengyAgency[x];
+					returnList.push(agent.title);
+				}
+				return returnList;
+
 			},
 
 			getAllPropertyValues: function () {
@@ -57,10 +80,45 @@ angular.module('openDeskApp.declaration')
 				return propertyValues;
 			},
 
+			getPropertyContentHenvisende: function (property) {
+			propertyName = property;
+			propertyContent = [];
+
+			var content = getValuesForProperty(property);
+
+			// tmp for testing, reset contents in table
+				    // return [];
+
+			if (!content) return propertyContent;
+
+			content.forEach(function (elem, key) {
+
+				elem = JSON.parse(elem);
+
+				if (elem.hasOwnProperty("title")) {
+
+					var newObj = {
+						title: elem.title,
+						email: elem.email,
+						by: elem.by,
+						postnr: elem.postnr,
+						adresse: elem.adresse,
+						selected: false
+					}
+					propertyContent.push(newObj);
+				}
+			}, this);
+
+			return propertyContent;
+		},
+
 			getPropertyContent: function (property) {
 				propertyName = property;
 				propertyContent = [];
+
 				var content = getValuesForProperty(property);
+
+
 				if (!content) return propertyContent;
 
 				content.forEach(function (elem, key) {
@@ -71,6 +129,11 @@ angular.module('openDeskApp.declaration')
 				}, this);
 
 				return propertyContent;
+			},
+
+			addPropertyValueHenvisende: function (value) {
+				propertyContent.push(value);
+				saveChangesHenvisende();
 			},
 
 			addPropertyValue: function (value) {
@@ -103,6 +166,33 @@ angular.module('openDeskApp.declaration')
 					});
 				});
 				saveChanges();
+			},
+
+			/**
+			 * rename a property for henvisende
+			 *
+			 */
+			renamePropertyValueHenvisende: function (oldVal, newVal) {
+
+				propertyContent.forEach(function (prop, key) {
+
+					if (prop.title == oldVal.title) {
+					     propertyContent.splice(key, 1);
+					}
+				})
+				propertyContent.push(newVal);
+				saveChangesHenvisende();
+			},
+
+			deletePropertyValuesHenvisende: function (values) {
+				propertyContent.forEach(function (prop, key) {
+					values.forEach(function (value) {
+						if (prop.title == value.title) {
+							propertyContent.splice(key, 1);
+						}
+					});
+				});
+				saveChangesHenvisende();
 			}
 		};
 	});

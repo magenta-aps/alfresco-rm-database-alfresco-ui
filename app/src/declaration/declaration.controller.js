@@ -68,5 +68,11 @@ function DeclarationController($scope, propertyService, $rootScope, HeaderServic
   });
 
 
+
+  $scope.agents = propertyService.getAllPropertyValuesForHenvisende();
+
+  console.log("agents");
+
+
 }
 
