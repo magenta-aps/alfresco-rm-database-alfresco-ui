@@ -18,6 +18,7 @@ function DeclarationService($http, $filter) {
     getWaitingList: getWaitingList,
     advancedSearch: advancedSearch,
     makeDeclarationDocument: makeDeclarationDocument,
+    makeBrevDocument: makeBrevDocument,
     makeBerigtigelsesDocument: makeBerigtigelsesDocument,
     makeSuppleredeUdtDocument: makeSuppleredeUdtDocument,
     getStateOfDeclaration: getStateOfDeclaration,
@@ -129,6 +130,16 @@ function DeclarationService($http, $filter) {
       return response.data;
     });
   }
+
+  function makeBrevDocument(desclaration) {
+
+    return $http.post("/alfresco/s/contents/mergebrevtemplate", {
+      "id": desclaration['node-uuid']
+    }).then(function (response) {
+      return response.data;
+    });
+  }
+
 
   function makeBerigtigelsesDocument(desclaration) {
 

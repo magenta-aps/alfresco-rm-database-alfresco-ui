@@ -86,6 +86,13 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 			});
 	}
 
+	function makeBrevDocument() {
+		DeclarationService.makeBrevDocument($scope.case)
+			.then(function (response) {
+				$state.go('document', { doc: response.id });
+			});
+	}
+
 	function makeBerigtigelsesDocument() {
 		DeclarationService.makeBerigtigelsesDocument($scope.case)
 			.then(function (response) {
@@ -229,6 +236,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 					}
 					else {
 						HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings)
+						HeaderService.addAction('Opret brev', 'description', makeBrevDocument)
 						HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
 						HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
 						HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
@@ -585,12 +593,11 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	$scope.cancel = function () {
 		$mdDialog.cancel();
 	}
-
-
-
-
-
 }
+
+
+
+
 
 
 
