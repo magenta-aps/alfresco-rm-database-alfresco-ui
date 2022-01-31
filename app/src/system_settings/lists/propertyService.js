@@ -57,6 +57,24 @@ angular.module('openDeskApp.declaration')
 
 				for (var x in referengyAgency) {
 					var agent = referengyAgency[x];
+
+
+					agent = JSON.parse(agent);
+					console.log("hvad er agent");
+					console.log(agent);
+
+					if (agent.hasOwnProperty("title")) {
+
+						var newObj = {
+							title: agent.title,
+							email: agent.email,
+							by: agent.by,
+							postnr: agent.postnr,
+							adresse: agent.adresse,
+							selected: false
+						}
+					}
+
 					returnList.push(agent.title);
 				}
 				return returnList;
