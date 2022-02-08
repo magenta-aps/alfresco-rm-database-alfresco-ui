@@ -19,6 +19,7 @@
                                 </md-input-container>
                             </div>
 
+                            <div>
                             <md-chips ng-model="searchParams.mainCharge"
                                       md-autocomplete-snap
                                       md-transform-chip="vm.transformChip($chip)"
@@ -39,23 +40,36 @@
                               </md-chip-template>
                             </md-chips>
                             <md-tooltip md-direction="top" md-delay="500" ng-if="searchParams.mainCharge != null">{{searchParams.mainCharge.join(', ')}}</md-tooltip>
+                            </div>
 
-                            <md-autocomplete
-                                    md-selected-item="searchParams.mainDiagnosis"
-                                    md-search-text="diagnosisSearch"
-                                    md-items="diagnosis in propertyFilter(propertyValues['diagnosis'],diagnosisSearch)"
-                                    md-item-text="mainDiagnosis"
-                                    md-min-length="0"
-                                    md-floating-label="Hoveddiagnose"
-                                    md-require-match="true"
-                                    md-clear-button="true">
-                                <md-item-template>
-                                    <span md-highlight-text="mainDiagnosisSearch" md-highlight-flags="gi">{{diagnosis}}</span>
-                                </md-item-template>
-                            </md-autocomplete>
-                            <md-tooltip md-direction="top" md-delay="500" ng-if="searchParams.mainDiagnosis != null">{{searchParams.mainDiagnosis}}</md-tooltip>
+                            <div>
+                            <md-chips ng-model="searchParams.mainDiagnosis"
+                                      md-transform-chip="vm.ChipHD($chip)"
+                                      input-aria-label="Hoveddiagnose"
+                                      md-require-match="true">
+                                <md-autocomplete
+                                        md-selected-item="vm.selectedDiagnosis"
+                                        md-search-text="diagnosisSearch"
+                                        md-items="diagnosis in propertyFilter(propertyValues['diagnosis'],diagnosisSearch)"
+                                        md-item-text="mainDiagnosis"
+                                        md-min-length="0"
+                                        md-floating-label="Hoveddiagnose"
+                                        md-require-match="true"
+                                        md-clear-button="true">
+                                    <md-item-template>
+                                        <span md-highlight-text="mainDiagnosisSearch" md-highlight-flags="gi">{{diagnosis}}</span>
+                                    </md-item-template>
+                                </md-autocomplete>
+                                <md-chip-template>
+                                    {{ $chip }}
+                                </md-chip-template>
+                            </md-chips>
+                            <md-tooltip md-direction="top" md-delay="500" ng-if="searchParams.mainDiagnosis != null">{{searchParams.mainDiagnosis.join(', ')}}</md-tooltip>
+                            </div>
 
-                            <md-input-container class="md-block">
+
+
+                            <md-input-container class="md-block"><x></x>
                                 <label>Sagsstatus</label>
                                 <md-select ng-model="searchParams.closed">
                                     <md-option ng-value="'CLOSED'" >Afsluttet</md-option>
@@ -64,8 +78,13 @@
                                 </md-select>
                             </md-input-container>
 
+                        <div>
+                        <md-chips ng-model="searchParams.placement"
+                                  md-transform-chip="vm.ChipMD($chip)"
+                                  input-aria-label="Placering"
+                                  md-require-match="true">
                             <md-autocomplete
-                                md-selected-item="searchParams.placement"
+                                md-selected-item="vm.selectedPlacement"
                                 md-search-text="placementSearch"
                                 md-items="placement in propertyFilter(propertyValues['placement'],placementSearch)"
                                 md-item-text="placement"
@@ -77,10 +96,20 @@
                                 <span md-highlight-text="placementSearch" md-highlight-flags="gi">{{placement}}</span>
                             </md-item-template>
                             </md-autocomplete>
-                            <md-tooltip md-direction="top" md-delay="500" ng-if="searchParams.placement != null">{{searchParams.placement}}</md-tooltip>
+                            <md-chip-template>
+                                {{ $chip }}
+                            </md-chip-template>
+                        </md-chips>
+                            <md-tooltip md-direction="top" md-delay="500" ng-if="searchParams.placement != null">{{searchParams.placement.join(', ')}}</md-tooltip>
+                        </div>
 
+                        <div>
+                        <md-chips ng-model="searchParams.sanctionProposal"
+                                  md-transform-chip="vm.ChipSP($chip)"
+                                  input-aria-label="Sanktionsforslag"
+                                  md-require-match="true">
                             <md-autocomplete
-                                md-selected-item="searchParams.sanctionProposal"
+                                md-selected-item="vm.selectedSanctionProposal"
                                 md-search-text="sanctionProposalSearch"
                                 md-items="sanctionProposal in propertyFilter(propertyValues['sanctionProposal'],sanctionProposalSearch)"
                                 md-item-text="sanctionProposal"
@@ -92,7 +121,12 @@
                                     <span md-highlight-text="sanctionProposalSearch" md-highlight-flags="gi">{{sanctionProposal}}</span>
                                 </md-item-template>
                             </md-autocomplete>
-                            <md-tooltip md-direction="top" md-delay="500" ng-if="searchParams.sanctionProposal != null">{{searchParams.sanctionProposal}}</md-tooltip>
+                            <md-chip-template>
+                                {{ $chip }}
+                            </md-chip-template>
+                        </md-chips>
+                            <md-tooltip md-direction="top" md-delay="500" ng-if="searchParams.sanctionProposal != null">{{searchParams.sanctionProposal.join(', ')}}</md-tooltip>
+                            </div>
 
                             <div layout-gt-sm="row" class="layout-gt-sm-row">
                                 <md-input-container>
@@ -124,19 +158,32 @@
 
                             </div>
 
-                            <md-autocomplete
-                                md-selected-item="searchParams.status"
-                                md-search-text="statusSearch"
-                                md-items="status in propertyFilter(propertyValues['status'],statusSearch)"
-                                md-item-text="status"
-                                md-min-length="0"
-                                md-floating-label="Retslig status"
-                                md-require-match="true"
-                                md-clear-button="true">
-                                <md-item-template>
-                                    <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
-                                </md-item-template>
-                            </md-autocomplete>
+                            <div>
+                            <md-chips ng-model="searchParams.status"
+                                      md-transform-chip="vm.ChipSTATUS($chip)"
+                                      input-aria-label="Sanktionsforslag"
+                                      md-require-match="true">
+                                <md-autocomplete
+                                    md-selected-item="vm.selectedStatus"
+                                    md-search-text="statusSearch"
+                                    md-items="status in propertyFilter(propertyValues['status'],statusSearch)"
+                                    md-item-text="status"
+                                    md-min-length="0"
+                                    md-floating-label="Retslig status"
+                                    md-require-match="true"
+                                    md-clear-button="true">
+                                    <md-item-template>
+                                        <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
+                                    </md-item-template>
+                                </md-autocomplete>
+
+                                <md-chip-template>
+                                    {{ $chip }}
+                                </md-chip-template>
+
+                            </md-chips>
+                            </div>
+
 
                             <md-input-container class="md-block">
                                 <label>Type</label>
@@ -161,9 +208,15 @@
                             <div class="md-input-container md-block">
                                 <md-checkbox ng-model="searchParams.evalAll" ng-change="vm.evalAll()">Erklæring</md-checkbox>
 
-                                <md-autocomplete flex
+
+                                <div>
+                                    <md-chips ng-model="searchParams.psychologist"
+                                              md-transform-chip="vm.ChipPSYC($chip)"
+                                              input-aria-label="Psykolog"
+                                              md-require-match="true">
+                                        <md-autocomplete flex
                                                  ng-show="searchParams.evalAll"
-                                                 md-selected-item="searchParams.psychologist"
+                                                 md-selected-item="vm.selectedPSYC"
                                                  md-search-text="psychSearch"
                                                  md-items="psychologist in propertyFilter(propertyValues['psychologist'],psychSearch)"
                                                  md-item-text="psychologist"
@@ -176,24 +229,53 @@
                                     </md-item-template>
                                 </md-autocomplete>
 
-                                <md-autocomplete flex
-                                                 ng-show="searchParams.evalAll"
-                                                 md-selected-item="searchParams.doctor"
-                                                 md-search-text="doctorSearch"
-                                                 md-items="doctor in propertyFilter(propertyValues['doctor'],doctorSearch)"
-                                                 md-item-text="doctor"
-                                                 md-min-length="0"
-                                                 md-floating-label="Læge"
-                                                 md-require-match="true"
-                                                 md-clear-button="true">
-                                    <md-item-template>
-                                        <span md-highlight-text="doctorSearch" md-highlight-flags="gi">{{doctor}}</span>
-                                    </md-item-template>
-                                </md-autocomplete>
+                                <md-chip-template>
+                                    {{ $chip }}
+                                </md-chip-template>
 
-                                <md-autocomplete flex
+
+
+                            </md-chips>
+                        </div>
+
+                                <div>
+                                <md-chips ng-model="searchParams.doctor"
+                                          md-transform-chip="vm.ChipDOCTOR($chip)"
+                                          input-aria-label="Læge"
+                                          md-require-match="true">
+                                    <md-autocomplete flex
+                                                     ng-show="searchParams.evalAll"
+                                                     md-selected-item="vm.selectedDoctor"
+                                                     md-search-text="doctorSearch"
+                                                     md-items="doctor in propertyFilter(propertyValues['doctor'],doctorSearch)"
+                                                     md-item-text="doctor"
+                                                     md-min-length="0"
+                                                     md-floating-label="Læge"
+                                                     md-require-match="true"
+                                                     md-clear-button="true">
+                                        <md-item-template>
+                                            <span md-highlight-text="doctorSearch" md-highlight-flags="gi">{{doctor}}</span>
+                                        </md-item-template>
+                                    </md-autocomplete>
+
+
+                                    <md-chip-template>
+                                        {{ $chip }}
+                                    </md-chip-template>
+
+
+
+                                </md-chips>
+                                </div>
+
+                                <div>
+                                    <md-chips ng-model="searchParams.supervisingDoctor"
+                                              md-transform-chip="vm.ChipSUPERVISOR($chip)"
+                                              input-aria-label="Tiltrædes af læge"
+                                              md-require-match="true">
+                                        <md-autocomplete flex
                                                  ng-show="searchParams.evalAll"
-                                                 md-selected-item="searchParams.supervisingDoctor"
+                                                 md-selected-item="vm.selectedSUPERVISOR"
                                                  md-search-text="supervisingDoctorSearch"
                                                  md-items="doctor in propertyFilter(propertyValues['doctor'],supervisingDoctorSearch)"
                                                  md-item-text="doctor"
@@ -206,9 +288,21 @@
                                     </md-item-template>
                                 </md-autocomplete>
 
-                                <md-autocomplete flex
+                                        <md-chip-template>
+                                            {{ $chip }}
+                                        </md-chip-template>
+
+                                    </md-chips>
+                                </div>
+
+                                <div>
+                                    <md-chips ng-model="searchParams.socialworker"
+                                              md-transform-chip="vm.ChipSOCIAL($chip)"
+                                              input-aria-label="Socialrådgiver"
+                                              md-require-match="true">
+                                        <md-autocomplete flex
                                                  ng-show="searchParams.evalAll"
-                                                 md-selected-item="searchParams.socialworker"
+                                                 md-selected-item="vm.selectedSOCIAL"
                                                  md-search-text="socialworkerSearch"
                                                  md-items="socialworker in propertyFilter(propertyValues['socialworker'],socialworkerSearch)"
                                                  md-item-text="socialworker"
@@ -219,7 +313,14 @@
                                     <md-item-template>
                                         <span md-highlight-text="socialworkerSearch" md-highlight-flags="gi">{{socialworker}}</span>
                                     </md-item-template>
-                                </md-autocomplete>
+                                        </md-autocomplete>
+
+                                        <md-chip-template>
+                                            {{ $chip }}
+                                        </md-chip-template>
+
+                                    </md-chips>
+                                </div>
 
                                 <div layout-gt-sm="row" class="layout-gt-sm-row" ng-show="searchParams.evalAll">
                                     <md-input-container>
