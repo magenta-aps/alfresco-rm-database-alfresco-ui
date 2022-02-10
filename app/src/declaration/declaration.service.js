@@ -64,6 +64,38 @@ function DeclarationService($http, $filter) {
       updatedQuery.mainCharge = undefined;
     }
 
+    if (query.mainDiagnosis != undefined && query.mainDiagnosis.length == 0) {
+      updatedQuery.mainDiagnosis = undefined;
+    }
+
+    if (query.placement != undefined && query.placement.length == 0) {
+      updatedQuery.placement = undefined;
+    }
+
+    if (query.sanctionProposal != undefined && query.sanctionProposal.length == 0) {
+      updatedQuery.sanctionProposal = undefined;
+    }
+
+    if (query.status != undefined && query.status.length == 0) {
+      updatedQuery.status = undefined;
+    }
+
+    if (query.doctor != undefined && query.doctor.length == 0) {
+      updatedQuery.doctor = undefined;
+    }
+
+    if (query.socialworker != undefined && query.socialworker.length == 0) {
+      updatedQuery.socialworker = undefined;
+    }
+
+    if (query.supervisingDoctor != undefined && query.supervisingDoctor.length == 0) {
+      updatedQuery.supervisingDoctor = undefined;
+    }
+
+    if (query.psychologist != undefined && query.psychologist.length == 0) {
+      updatedQuery.psychologist = undefined;
+    }
+
     return $http.post(`/alfresco/s/database/retspsyk/page_entries?skip=${skip}&maxItems=${max}`, updatedQuery)
       .then(response => {
         return response.data;
