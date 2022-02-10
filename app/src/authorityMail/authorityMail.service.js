@@ -29,6 +29,9 @@ function authorityMail($http) {
     }
       payload.method = "send";
 
+      console.log("hvad er payload");
+      console.log(payload);
+
     return $http.post("/alfresco/s/contents/mailcontent", payload)
       .then(function (response) {
         return response;
