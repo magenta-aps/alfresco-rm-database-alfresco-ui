@@ -43,6 +43,7 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   vm.selectedPSYC = null;
   vm.selectedSOCIAL = null;
   vm.selectedSUPERVISOR = null;
+  vm.selectedSanctionProposal = null;
 
 
   $scope.searchParams.bua = "PS";
@@ -93,7 +94,6 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   if (!$scope.searchParams.psychologist) {
     $scope.searchParams.psychologist = []
   }
-
 
 
 
@@ -148,7 +148,7 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   }
 
   function socialEval() {
-    $scope.searchParams.socialworker = '';
+    // $scope.searchParams.socialworker = '';
     $scope.searchParams.noDeclaration = false;
   }
 
