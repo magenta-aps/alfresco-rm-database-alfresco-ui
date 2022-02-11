@@ -1,12 +1,14 @@
 'use strict'
 
 
+
+
 angular.module('openDeskApp.documents')
   .controller('DocumentController', DocumentController);
 
 
 function DocumentController($scope, documentService, $stateParams, $state,
-  documentPreviewService, alfrescoDownloadService, $window, HeaderService,$location, $mdDialog, authService) {
+  documentPreviewService, alfrescoDownloadService, $window, HeaderService,$location, $mdDialog, authService, $http) {
 
   var vm = this;
 
@@ -20,6 +22,8 @@ function DocumentController($scope, documentService, $stateParams, $state,
   vm.canRevertDocument = authService.isAuthorized('SiteEntryLockManager');
   vm.showBackToSearch = $stateParams.showBackToSearch;
   vm.showBackToCase = $stateParams.showBackToCase;
+
+
 
   if ($location.search().latest == undefined) {
     vm.latest = true;
@@ -304,9 +308,43 @@ function DocumentController($scope, documentService, $stateParams, $state,
   }
 
   function downloadDocument() {
-    var versionRef = vm.store + $stateParams.doc;
-    alfrescoDownloadService.downloadFile(versionRef, vm.doc.location.file);
+
+      // test downlaod af den
+
+      return $http.get("/alfresco/s/slingshot/node/content/workspace/SpacesStore/6d189325-1e3f-4bec-a44a-ced38f8d248c")
+          .then(function (response) {
+              // console.log("hvad er reponse")
+              // console.log(response.data);
+              // console.log("hvad er reponse")
+
+
+//              var base64result = response.data.substr(response.data.indexOf(',') + 1);
+  //            console.log(base64result)
+
+
+
+              documentService.getDocument(selectedDocumentNode).then(function (resp) {
+
+                console.log("hvad er response")
+                console.log(resp.item.contentUrl)
+                  printJS("/alfresco/s/api/node/content/workspace/SpacesStore/6d189325-1e3f-4bec-a44a-ced38f8d248c?alf_ticket=TICKET_8064806128dc3fbce7843d70cbea4910d1e4b725");
+              });
+
+
+
+
+
+          })
+      
+      
+
+
+
+    // var versionRef = vm.store + $stateParams.doc;
+    // alfrescoDownloadService.downloadFile(versionRef, vm.doc.location.file);
   }
+
+
 
 
   function acceptEditVersionDialog() {
@@ -320,6 +358,8 @@ function DocumentController($scope, documentService, $stateParams, $state,
           $window.location.href = '#!/dokument/' + selectedDocumentNode;
         })
     }
+
+
 
 
 

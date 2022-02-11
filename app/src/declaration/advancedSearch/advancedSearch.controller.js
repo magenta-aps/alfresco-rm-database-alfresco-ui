@@ -136,7 +136,16 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
       .then(response => {
 
         if (preview) {
-          $state.go('document', { doc: response.nodeRef, showBackToSearch: true, searchquery : $scope.searchParams});
+          // $state.go('document', { doc: response.nodeRef, showBackToSearch: true, searchquery : $scope.searchParams});
+
+          // hent fil og lav en print(på den)
+
+          documentService.getDocument(response.nodeRef).then(function (svr) {
+            console.log("svr");
+            console.log(svr);
+          });
+
+
         }
         else {
           vm.isLoading = false;
