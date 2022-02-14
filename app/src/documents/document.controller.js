@@ -308,40 +308,8 @@ function DocumentController($scope, documentService, $stateParams, $state,
   }
 
   function downloadDocument() {
-
-      // test downlaod af den
-
-      return $http.get("/alfresco/s/slingshot/node/content/workspace/SpacesStore/6d189325-1e3f-4bec-a44a-ced38f8d248c")
-          .then(function (response) {
-              // console.log("hvad er reponse")
-              // console.log(response.data);
-              // console.log("hvad er reponse")
-
-
-//              var base64result = response.data.substr(response.data.indexOf(',') + 1);
-  //            console.log(base64result)
-
-
-
-              documentService.getDocument(selectedDocumentNode).then(function (resp) {
-
-                console.log("hvad er response")
-                console.log(resp.item.contentUrl)
-                  printJS("/alfresco/s/api/node/content/workspace/SpacesStore/6d189325-1e3f-4bec-a44a-ced38f8d248c?alf_ticket=TICKET_8064806128dc3fbce7843d70cbea4910d1e4b725");
-              });
-
-
-
-
-
-          })
-      
-      
-
-
-
-    // var versionRef = vm.store + $stateParams.doc;
-    // alfrescoDownloadService.downloadFile(versionRef, vm.doc.location.file);
+    var versionRef = vm.store + $stateParams.doc;
+    alfrescoDownloadService.downloadFile(versionRef, vm.doc.location.file);
   }
 
 
