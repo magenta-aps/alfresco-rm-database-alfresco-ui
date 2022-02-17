@@ -73,6 +73,7 @@
     "UNLOCK_BOTTON": "Næste",
     "REOPEN": "Genåben",
     "DECLARATION_CLOSED": "Sagen er afsluttet",
+    "DECLARATION_OPEN_SUPL_UDTL": "Genåbnet for supplerede udtalelse",
     "CLOSED_WITHOUT_DECLARATION": "Afsluttet uden erklæring",
     "WAITINGLIST": "Venteliste",
     "SEE_CURRENT_WAITINGLIST": "Se den aktuelle venteliste",
