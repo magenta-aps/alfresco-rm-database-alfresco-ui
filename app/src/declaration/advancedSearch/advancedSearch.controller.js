@@ -178,6 +178,9 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
     query.declarationFromDate= $filter('date')(query.declarationFromDate,'yyyy-MM-dd');
     query.declarationToDate= $filter('date')(query.declarationToDate,'yyyy-MM-dd');
 
+    console.log("hvad er preview");
+    console.log(preview);
+
 
     if (preview) {
       query.preview = "true";
@@ -187,7 +190,12 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
       .then(response => {
 
         if (preview) {
-          $state.go('document', { doc: response.nodeRef, showBackToSearch: true, searchquery : $scope.searchParams});
+
+          var printUrl = "/alfresco/s/api/node/content/workspace/SpacesStore/" + response.nodeRef;
+
+          printJS(printUrl);
+          query.preview = false;
+          vm.printFriendlytStarted = false;
         }
         else {
           vm.isLoading = false;
