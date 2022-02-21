@@ -20,12 +20,15 @@ function HeaderController($scope, HeaderService, authService, $state, $timeout) 
     vm.getUserName = getUserName;
     vm.logout = logout;
 
+    vm.isClosedSupl = false;
+
 
     $scope.$on('updateHeader', function () {
         updateHeaderTitle();
         updateCaseId();
         updateHeaderActions();
         updateIsClosed();
+        updateClosedSuplOpl();
         isLoggedIn();
         vm.backtosearch = HeaderService.getBackToSearchStatus();
         vm.backtosearchquery = HeaderService.getBackToSearchQuery();
@@ -76,6 +79,10 @@ function HeaderController($scope, HeaderService, authService, $state, $timeout) 
 
     function updateIsClosed() {
         vm.isClosed = HeaderService.isClosed();
+    }
+
+    function updateClosedSuplOpl() {
+        vm.isClosedSupl = HeaderService.isClosedSupl();
     }
 }
 

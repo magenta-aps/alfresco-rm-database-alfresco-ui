@@ -43,7 +43,9 @@
 
             <span flex></span>
             <h2 ng-if="vm.isClosed">
-                <md-icon>done</md-icon> {{'DECLARATION.DECLARATION_CLOSED' | translate}}
+
+                <div ng-hide="vm.isClosedSupl"> <md-icon>done</md-icon> {{'DECLARATION.DECLARATION_CLOSED' | translate}}</div>
+                <div ng-show="vm.isClosedSupl"> <md-icon>done</md-icon> {{'DECLARATION.DECLARATION_OPEN_SUPL_UDTL' | translate}}</div>
             </h2>
             <div ng-repeat="action in vm.actions" ng-mouseover="action.showTooltip=true" ng-mouseleave="action.showTooltip=false">
                 <md-button ng-click="action.action()" ng-class="action.primary ? 'md-raised md-primary md-hue-2' : ''">
