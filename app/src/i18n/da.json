@@ -73,7 +73,7 @@
     "UNLOCK_BOTTON": "Næste",
     "REOPEN": "Genåben",
     "DECLARATION_CLOSED": "Sagen er afsluttet",
-    "DECLARATION_OPEN_SUPL_UDTL": "Genåbnet for supplerede udtalelse",
+    "DECLARATION_OPEN_SUPL_UDTL": "Genåbnet til suppl. udt.",
     "CLOSED_WITHOUT_DECLARATION": "Afsluttet uden erklæring",
     "WAITINGLIST": "Venteliste",
     "SEE_CURRENT_WAITINGLIST": "Se den aktuelle venteliste",
@@ -88,7 +88,7 @@
     "referingAgency": "Henvisende instans",
     "observationDate": "Observation Påbegyndt",
     "declarationType": "Kendelse/samtykke",
-    "SUPPLEREDEOPL_OPRET": "OPRET SUPPLEREDE UDT.",
+    "SUPPLEREDEOPL_OPRET": "Opret suppl. udt.",
     "BERIGTIGELSE_OPRET": "OPRET BERIGTIGELSE"
   },
   "DOCUMENT": {
