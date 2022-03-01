@@ -131,10 +131,10 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
               var userSigText = responseSig.data.text;
 
               vm.payload.body = vm.payload.body + "\n\n" + userSigText;
+              vm.payload.body += "\n\nTel. +45 7847 2640"
+              vm.payload.body += "\nAUH Psykiatrien ▪ Retspsykiatrisk Afdeling, Indgang L"
+              vm.payload.body += "\nTyge Søndergaards Vej 26 \▪ DK-8200 Aarhus N"
           });
-
-
-
       });
   }
 
@@ -146,6 +146,9 @@ function AuthorityMailController($scope, $mdDialog, Toast, authorityMail, proper
             practitionerService.getSignatureText(userName).then(function(response) {
                 var userSigText = response.data.text;
                 vm.payload.body = "\nmed venlig hilsen\n\n" + userSigText;
+                vm.payload.body += "\n\nTel. +45 7847 2640"
+                vm.payload.body += "\nAUH Psykiatrien ▪ Retspsykiatrisk Afdeling, Indgang L"
+                vm.payload.body += "\nTyge Søndergaards Vej 26 \▪ DK-8200 Aarhus N"
             });
 
 
