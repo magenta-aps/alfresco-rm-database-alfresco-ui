@@ -17,16 +17,33 @@ function authorityMail($http) {
   function send(payload) {
 
     var email = payload.authority.match(/ *\([^)]*\) */g);
+    var bcc = payload.bcc.match(/ *\([^)]*\) */g);
 
-    if (email != null) {
 
-        email = email[0];
-        email = email.replace("(","");
-        email = email.replace(")","");
-        email = email.trim();
+      if (email != null) {
 
-        payload.authority = email;
+          email = email[0];
+          email = email.replace("(","");
+          email = email.replace(")","");
+          email = email.trim();
+
+          payload.authority = email;
+      }
+
+    if (bcc != null) {
+
+        bcc = bcc[0];
+        bcc = bcc.replace("(","");
+        bcc = bcc.replace(")","");
+        bcc = bcc.trim();
+
+        payload.bcc = bcc;
     }
+
+
+
+
+
       payload.method = "send";
 
       console.log("hvad er payload");
