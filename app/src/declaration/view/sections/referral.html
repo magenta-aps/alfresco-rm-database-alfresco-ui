@@ -6,7 +6,8 @@
     </md-card-title>
     <md-card-content>
         <div>
-            <md-autocomplete flex md-selected-item="case.referingAgency" md-search-text="agencySearch" md-items="agency in agents"
+            <!--            <md-autocomplete flex md-selected-item="case.referingAgency" md-search-text="agencySearch" md-items="agency in agents"-->
+            <md-autocomplete flex md-selected-item="case.referingAgency" md-search-text="agencySearch" md-items="agency in propertyFilter(agents,agencySearch)"
                 md-item-text="agency" md-min-length="0" md-floating-label="Henvisende instans" ng-disabled="!editPatientData"
                 md-clear-button="editPatientData" md-require-match="true">
                 <md-item-template>
