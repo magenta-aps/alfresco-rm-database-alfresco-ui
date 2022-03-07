@@ -18,8 +18,6 @@ function authorityMail($http) {
 
     var email = payload.authority.match(/ *\([^)]*\) */g);
 
-
-
       if (email != null) {
 
           email = email[0];
