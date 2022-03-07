@@ -17,7 +17,7 @@ function authorityMail($http) {
   function send(payload) {
 
     var email = payload.authority.match(/ *\([^)]*\) */g);
-    var bcc = payload.bcc.match(/ *\([^)]*\) */g);
+
 
 
       if (email != null) {
@@ -30,7 +30,10 @@ function authorityMail($http) {
           payload.authority = email;
       }
 
-    if (bcc != null) {
+
+    if (payload.bcc != null) {
+
+        var bcc = payload.bcc.match(/ *\([^)]*\) */g);
 
         bcc = bcc[0];
         bcc = bcc.replace("(","");
@@ -38,6 +41,9 @@ function authorityMail($http) {
         bcc = bcc.trim();
 
         payload.bcc = bcc;
+    }
+    else {
+        payload.bcc = "";
     }
 
 
