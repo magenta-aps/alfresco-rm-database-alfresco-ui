@@ -63,12 +63,21 @@
         text-decoration: underline;
     }
 
+    ng-include[src*="flowchart_navigation.html"] {
+        font-weight: bold;
+        position: sticky;
+        top: 150px;
+        z-index: 1;
+    }
+
     ng-include[src*="flowchart_headings.html"] {
         font-weight: bold;
         position: sticky;
-        top: 130px;
+        top: 220px;
         z-index: 1;
     }
+
+
 
     .flowchart-headers div[role="button"] {
         cursor: pointer;
@@ -104,7 +113,8 @@
     }
 
     label {
-        color: #f00;
+        color: #98aeb8;
+        /*color: #f00;*/
     }
     input {
         display: none;
@@ -121,7 +131,8 @@
 
 
     input[type=checkbox]:checked + label {
-        color: #0f0;
+        color: #000000;
+        /*color: #0f0;*/
     }
 
 

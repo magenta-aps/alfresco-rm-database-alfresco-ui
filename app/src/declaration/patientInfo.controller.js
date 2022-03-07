@@ -157,6 +157,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		HeaderService.setTitle(response.firstName + ' ' + response.lastName + ' ( ' + response.caseNumber + ' / ' + response.cprNumber + ' )' + bua);
 		HeaderService.setCaseId(response.caseNumber);
 		HeaderService.setClosed(response.closed);
+		HeaderService.setClosedSupl(false);
 		
 		var canCreate = canCreateDeclarationDocument(response)
 
@@ -199,6 +200,10 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 						HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
 						HeaderService.addAction('DECLARATION.SUPPLEREDEOPL_OPRET', 'create', makeSuppleredeUdttDocument);
 						HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
+
+						HeaderService.setClosedSupl(true);
+
+
 
 						if ($scope.case.closedWithoutDeclaration) {
 							$scope.closeCaseParams = {closed : 'no-declaration'}

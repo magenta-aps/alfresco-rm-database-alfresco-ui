@@ -6,6 +6,7 @@
     </span>
 
     <span ng-if="(currentCase.hasOwnProperty('closed') && currentCase.closed) || (currentCase.hasOwnProperty('closedWithoutDeclaration') && currentCase.closedWithoutDeclaration)">
+
         <md-icon>done</md-icon> {{'DECLARATION.DECLARATION_CLOSED' | translate}}
 
         <md-button ng-if="canReopenEntries" class="md-text-icon-button" aria-label="genåben sagen" ng-click="unlockEntry()">

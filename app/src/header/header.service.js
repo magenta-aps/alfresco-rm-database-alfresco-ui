@@ -10,6 +10,7 @@ function HeaderService($rootScope, authService ) {
   var closed = false;
   var backtosearchquery;
   var backtosearchStatus = false;
+  var closedSupl = false;
 
 
   var service = {
@@ -28,7 +29,9 @@ function HeaderService($rootScope, authService ) {
     updateBacktosearch : updateBacktosearch,
     getBackToSearchStatus : getBackToSearchStatus,
     getBackToSearchQuery : getBackToSearchQuery,
-    setBacktosearchStatus : setBacktosearchStatus
+    setBacktosearchStatus : setBacktosearchStatus,
+    isClosedSupl : isClosedSupl,
+    setClosedSupl : setClosedSupl
 
       };
 
@@ -100,9 +103,19 @@ function HeaderService($rootScope, authService ) {
     $rootScope.$broadcast('updateHeader');
   }
 
+  function setClosedSupl(val) {
+   closedSupl = val;
+   $rootScope.$broadcast('updateHeader');
+  }
+
+
   function isClosed() {
     return closed;
   }
+
+    function isClosedSupl() {
+        return closedSupl;
+    }
 
   function getUserName() {
     var user = authService.getUserInfo().user;

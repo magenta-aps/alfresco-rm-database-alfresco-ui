@@ -18,16 +18,40 @@ function authorityMail($http) {
 
     var email = payload.authority.match(/ *\([^)]*\) */g);
 
-    if (email != null) {
+      if (email != null) {
 
-        email = email[0];
-        email = email.replace("(","");
-        email = email.replace(")","");
-        email = email.trim();
+          email = email[0];
+          email = email.replace("(","");
+          email = email.replace(")","");
+          email = email.trim();
 
-        payload.authority = email;
+          payload.authority = email;
+      }
+
+
+    if (payload.bcc != null) {
+
+        var bcc = payload.bcc.match(/ *\([^)]*\) */g);
+
+        bcc = bcc[0];
+        bcc = bcc.replace("(","");
+        bcc = bcc.replace(")","");
+        bcc = bcc.trim();
+
+        payload.bcc = bcc;
     }
+    else {
+        payload.bcc = "";
+    }
+
+
+
+
+
       payload.method = "send";
+
+      console.log("hvad er payload");
+      console.log(payload);
 
     return $http.post("/alfresco/s/contents/mailcontent", payload)
       .then(function (response) {

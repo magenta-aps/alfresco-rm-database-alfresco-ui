@@ -26,7 +26,24 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   vm.clearResults = clearResults;
   vm.evalAll = evalAll;
   vm.transformChip = transformChip;
+  vm.ChipHD = ChipHD;
+  vm.ChipMD = ChipMD;
+  vm.ChipSP = ChipSP;
+  vm.ChipSTATUS = ChipSTATUS;
+  vm.ChipDOCTOR = ChipDOCTOR;
+  vm.ChipSUPERVISOR = ChipSUPERVISOR;
+  vm.ChipSOCIAL = ChipSOCIAL;
+  vm.ChipPSYC = ChipPSYC;
   vm.selectedCharge = null;
+  vm.selectedDiagnosis = null;
+  vm.selectedPlacement = null;
+  vm.sanctionProposal = null;
+  vm.selectedStatus = null;
+  vm.selectedDoctor = null;
+  vm.selectedPSYC = null;
+  vm.selectedSOCIAL = null;
+  vm.selectedSUPERVISOR = null;
+  vm.selectedSanctionProposal = null;
 
 
   $scope.searchParams.bua = "PS";
@@ -45,6 +62,40 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   if (!$scope.searchParams.mainCharge) {
     $scope.searchParams.mainCharge = []
   }
+
+  if (!$scope.searchParams.mainDiagnosis) {
+    $scope.searchParams.mainDiagnosis = []
+  }
+
+  if (!$scope.searchParams.placement) {
+    $scope.searchParams.placement = []
+  }
+
+  if (!$scope.searchParams.sanctionProposal) {
+    $scope.searchParams.sanctionProposal = []
+  }
+
+  if (!$scope.searchParams.status) {
+    $scope.searchParams.status = []
+  }
+
+  if (!$scope.searchParams.doctor) {
+    $scope.searchParams.doctor = []
+  }
+
+  if (!$scope.searchParams.socialworker) {
+    $scope.searchParams.socialworker = []
+  }
+
+  if (!$scope.searchParams.supervisingDoctor) {
+    $scope.searchParams.supervisingDoctor = []
+  }
+
+  if (!$scope.searchParams.psychologist) {
+    $scope.searchParams.psychologist = []
+  }
+
+
 
   vm.noDeclaration = noDeclaration;
   vm.psychEval = psychEval;
@@ -72,13 +123,13 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
 
     function evalAll() {
 
-          $scope.searchParams.psychologist = '';
+          // $scope.searchParams.psychologist = '';
           $scope.searchParams.noDeclaration = false;
 
-          $scope.searchParams.doctor = '';
-          $scope.searchParams.supervisingDoctor = '';
+          // $scope.searchParams.doctor = '';
+          // $scope.searchParams.supervisingDoctor = '';
 
-          $scope.searchParams.socialworker = '';
+          // $scope.searchParams.socialworker = '';
 
           $scope.searchParams.declarationFromDate = null;
           $scope.searchParams.declarationToDate = null;
@@ -97,7 +148,7 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   }
 
   function socialEval() {
-    $scope.searchParams.socialworker = '';
+    // $scope.searchParams.socialworker = '';
     $scope.searchParams.noDeclaration = false;
   }
 
@@ -127,6 +178,9 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
     query.declarationFromDate= $filter('date')(query.declarationFromDate,'yyyy-MM-dd');
     query.declarationToDate= $filter('date')(query.declarationToDate,'yyyy-MM-dd');
 
+    console.log("hvad er preview");
+    console.log(preview);
+
 
     if (preview) {
       query.preview = "true";
@@ -136,7 +190,12 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
       .then(response => {
 
         if (preview) {
-          $state.go('document', { doc: response.nodeRef, showBackToSearch: true, searchquery : $scope.searchParams});
+
+          var printUrl = "/alfresco/s/api/node/content/workspace/SpacesStore/" + response.nodeRef;
+
+          printJS(printUrl);
+          query.preview = false;
+          vm.printFriendlytStarted = false;
         }
         else {
           vm.isLoading = false;
@@ -159,6 +218,47 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
     // just return the chip as we are simply dealing with a flat list of strings
     return chip;
   }
+
+  function ChipHD(chip) {
+    // just return the chip as we are simply dealing with a flat list of strings
+    return chip;
+  }
+
+  function ChipMD(chip) {
+    // just return the chip as we are simply dealing with a flat list of strings
+    return chip;
+  }
+
+  function ChipSP(chip) {
+    // just return the chip as we are simply dealing with a flat list of strings
+    return chip;
+  }
+
+  function ChipSTATUS(chip) {
+    // just return the chip as we are simply dealing with a flat list of strings
+    return chip;
+  }
+
+  function ChipDOCTOR(chip) {
+    // just return the chip as we are simply dealing with a flat list of strings
+    return chip;
+  }
+
+  function ChipSOCIAL(chip) {
+    // just return the chip as we are simply dealing with a flat list of strings
+    return chip;
+  }
+
+  function ChipPSYC(chip) {
+    // just return the chip as we are simply dealing with a flat list of strings
+    return chip;
+  }
+
+  function ChipSUPERVISOR(chip) {
+    // just return the chip as we are simply dealing with a flat list of strings
+    return chip;
+  }
+
 
   function printFriendly() {
     vm.printFriendlytStarted = true;

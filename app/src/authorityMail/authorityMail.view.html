@@ -13,82 +13,100 @@
         </md-toolbar>
 
         <md-dialog-content class="md-padding">
-            <md-autocomplete flex 
-            md-selected-item="vm.payload.authority" 
-            md-search-text="authoritySearch"
-            md-items="auth in vm.propertyFilter(vm.properties['emailAuthorities'],authoritySearch)"
-            md-item-text="auth"
-            md-min-length="0" 
-            md-floating-label="Myndighed"
-            md-clear-button="true"
-            md-require-match="true"
-            required>
-            <md-item-template>
-                <span md-highlight-text="authoritySearch" md-highlight-flags="gi">{{auth}}</span>
-            </md-item-template>
-        </md-autocomplete>
+            <md-autocomplete flex
+                             md-selected-item="vm.payload.authority"
+                             md-search-text="authoritySearch"
+                             md-items="auth in vm.propertyFilter(vm.properties['emailAuthorities'],authoritySearch)"
+                             md-item-text="auth"
+                             md-min-length="0"
+                             md-floating-label="Myndighed"
+                             md-clear-button="true"
+                             md-require-match="true"
+                             required>
+                <md-item-template>
+                    <span md-highlight-text="authoritySearch" md-highlight-flags="gi">{{auth}}</span>
+                </md-item-template>
+            </md-autocomplete>
 
-        <md-input-container class="md-block">
-            <label>Emne</label>
-            <input ng-model="vm.payload.subject" required>
-          </md-input-container>
+            <md-dialog-content class="md-padding">
+                <md-autocomplete flex
+                                 md-selected-item="vm.payload.bcc"
+                                 md-search-text="authoritySearchcc"
+                                 md-items="authcc in vm.propertyFilter(vm.properties['emailAuthorities'],authoritySearchcc)"
+                                 md-item-text="authcc"
+                                 md-min-length="0"
+                                 md-floating-label="Cc"
+                                 md-clear-button="true"
+                                 md-require-match="false">
+                    <md-item-template>
+                        <span md-highlight-text="authoritySearch" md-highlight-flags="gi">{{authcc}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+
+                <md-input-container class="md-block">
+                    <label>Emne</label>
+                    <input ng-model="vm.payload.subject" required>
+                </md-input-container>
 
 
 
-            <md-input-container>standardtekst:
-                <select ng-model="vm.selectedDefaultBody" class="md-block">
-                    <option ng-repeat="x in vm.defaultBodyText" value="{{x.model}}">{{x.model}} </option>
-                </select>
-                <!--            <md-checkbox ng-model="vm.payload.defaultbody">standardtekst</md-checkbox>-->
-            </md-input-container>
-
-
-            <md-checkbox ng-show="vm.showSignitureCheckBox" ng-model="vm.payload.useSignature">Anvend indskannet signatur</md-checkbox>
 
 
 
+                <md-input-container>standardtekst:
+                    <select ng-model="vm.selectedDefaultBody" class="md-block">
+                        <option ng-repeat="x in vm.defaultBodyText" value="{{x.model}}">{{x.model}} </option>
+                    </select>
+                    <!--            <md-checkbox ng-model="vm.payload.defaultbody">standardtekst</md-checkbox>-->
+                </md-input-container>
+
+
+                <md-checkbox ng-show="vm.showSignitureCheckBox" ng-model="vm.payload.useSignature">Anvend indskannet signatur</md-checkbox>
 
 
 
-        <md-input-container class="md-block">
-          <label>Besked</label>
 
-          <textarea class="textarea-highlight" ng-model="vm.payload.body" rows="10" required></textarea>
-        </md-input-container>
 
-          vedhæftede filer:
-          <p ng-repeat="file in vm.selectedFiles"><em>{{file.name}}</em></p>
 
-        </md-dialog-content>
+                <md-input-container class="md-block">
+                    <label>Besked</label>
 
-        <md-dialog-actions>
-            <md-button 
-                ng-show="vm.payload.useSignature"
-                ng-if="!vm.loading"
-                ng-click="vm.preview()"
-                class="md-primary" 
-                aria-label="{{'COMMON.SEND' | translate}}"
-            >
-                {{'COMMON.PREVIEWSIGNATURE' | translate}}
-            </md-button>
-            <md-button
-                    ng-if="!vm.loading"
-                    ng-click="vm.cancel()"
-                    class="md-primary"
-                    aria-label="{{'COMMON.SEND' | translate}}"
-            >
-                Fortryd
-            </md-button>
-            <md-button
-                    ng-if="!vm.loading"
-                    ng-disabled="authorityMailForm.$invalid"
-                    type="submit"
-                    class="md-primary"
-                    aria-label="{{'COMMON.SEND' | translate}}"
-            >
-                {{'COMMON.SEND' | translate}}
-            </md-button>
-            <md-progress-circular ng-if="vm.loading" md-mode="indeterminate"></md-progress-circular>
-        </md-dialog-actions>
+                    <textarea class="textarea-highlight" ng-model="vm.payload.body" rows="10" required></textarea>
+                </md-input-container>
+
+                vedhæftede filer:
+                <p ng-repeat="file in vm.selectedFiles"><em>{{file.name}}</em></p>
+
+            </md-dialog-content>
+
+            <md-dialog-actions>
+                <md-button
+                        ng-show="vm.payload.useSignature"
+                        ng-if="!vm.loading"
+                        ng-click="vm.preview()"
+                        class="md-primary"
+                        aria-label="{{'COMMON.SEND' | translate}}"
+                >
+                    {{'COMMON.PREVIEWSIGNATURE' | translate}}
+                </md-button>
+                <md-button
+                        ng-if="!vm.loading"
+                        ng-click="vm.cancel()"
+                        class="md-primary"
+                        aria-label="{{'COMMON.SEND' | translate}}"
+                >
+                    Fortryd
+                </md-button>
+                <md-button
+                        ng-if="!vm.loading"
+                        ng-disabled="authorityMailForm.$invalid"
+                        type="submit"
+                        class="md-primary"
+                        aria-label="{{'COMMON.SEND' | translate}}"
+                >
+                    {{'COMMON.SEND' | translate}}
+                </md-button>
+                <md-progress-circular ng-if="vm.loading" md-mode="indeterminate"></md-progress-circular>
+            </md-dialog-actions>
     </form>
 </md-dialog>

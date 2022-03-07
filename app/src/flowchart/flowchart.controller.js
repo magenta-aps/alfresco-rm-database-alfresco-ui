@@ -87,6 +87,16 @@ function FlowChartController($scope, $stateParams, $translate, HeaderService, Fl
   vm.clickefternavn = false;
   vm.clickfornavn = false;
 
+  vm.idToMark = "";
+
+  vm.clickColor = clickColor;
+
+  function clickColor(id) {
+      vm.idToMark = id;
+
+
+  }
+
 
 
     vm.visitate = visitate;

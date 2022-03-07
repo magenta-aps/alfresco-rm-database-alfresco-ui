@@ -1,12 +1,14 @@
 'use strict'
 
 
+
+
 angular.module('openDeskApp.documents')
   .controller('DocumentController', DocumentController);
 
 
 function DocumentController($scope, documentService, $stateParams, $state,
-  documentPreviewService, alfrescoDownloadService, $window, HeaderService,$location, $mdDialog, authService) {
+  documentPreviewService, alfrescoDownloadService, $window, HeaderService,$location, $mdDialog, authService, $http) {
 
   var vm = this;
 
@@ -20,6 +22,8 @@ function DocumentController($scope, documentService, $stateParams, $state,
   vm.canRevertDocument = authService.isAuthorized('SiteEntryLockManager');
   vm.showBackToSearch = $stateParams.showBackToSearch;
   vm.showBackToCase = $stateParams.showBackToCase;
+
+
 
   if ($location.search().latest == undefined) {
     vm.latest = true;
@@ -309,6 +313,8 @@ function DocumentController($scope, documentService, $stateParams, $state,
   }
 
 
+
+
   function acceptEditVersionDialog() {
 
       var selectedVersion = $location.search().version
@@ -320,6 +326,8 @@ function DocumentController($scope, documentService, $stateParams, $state,
           $window.location.href = '#!/dokument/' + selectedDocumentNode;
         })
     }
+
+
 
 
 
