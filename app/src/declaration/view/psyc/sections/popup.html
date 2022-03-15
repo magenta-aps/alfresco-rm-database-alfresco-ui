@@ -9,9 +9,11 @@
 
 
             <div>
-                <div ng-repeat="i in vm.items" | chunkBy: 3 >
-                    <md-input-container class="md-block">
-                        <md-checkbox aria-label="aktiveret" ng-model="i.id"> {{i.name}} </md-checkbox>
+                <div ng-repeat="block in vm.items | chunkBy:3">
+                    <md-input-container>
+                        <md-checkbox aria-label="aktiveret" ng-model="block[0].id"> {{block[0].name}} </md-checkbox>
+                        <md-checkbox aria-label="aktiveret" ng-model="block[1].id"> {{block[1].name}} </md-checkbox>
+                        <md-checkbox aria-label="aktiveret" ng-model="block[2].id"> {{block[2].name}}} </md-checkbox>
                     </md-input-container>
                 </div>
             </div>
