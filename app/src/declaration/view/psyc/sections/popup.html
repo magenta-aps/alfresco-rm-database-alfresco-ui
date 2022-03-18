@@ -1,25 +1,42 @@
+<html>
 <md-card>
     <md-card-title>
         <md-card-title-text>
-            <span class="md-headline">Psykiatriske interviews og ratingscales</span>
+            <span class="md-headline">{{vm.selectedInstrumentName}} <md-button ng-click="vm.save()"> gem</md-button> </span>
         </md-card-title-text>
     </md-card-title>
     <md-card-content>
-        <div layout="row">
 
+
+
+
+        <div layout="row">
 
             <div>
                 <div ng-repeat="block in vm.items | chunkBy:3">
-                    <md-input-container>
-                        <md-checkbox aria-label="aktiveret" ng-model="block[0].id"> {{block[0].name}} </md-checkbox>
-                        <md-checkbox aria-label="aktiveret" ng-model="block[1].id"> {{block[1].name}} </md-checkbox>
-                        <md-checkbox aria-label="aktiveret" ng-model="block[2].id"> {{block[2].name}}} </md-checkbox>
-                    </md-input-container>
+
+<!--                        <input id="{{ block[0].id }}" type="checkbox" ng-model="vm.selectedValues.block[0].id" ng-click="vm.clicked(block[0].id, $event)" /><label  title="Tolk" >{{block[0].name}}  {{block[0].id}} </label>-->
+<!--                        <input id="{{ block[1].id }}" type="checkbox" ng-model="block[1].id"  ng-click="vm.clicked(block[1].id, $event)" /><label  title="Tolk" >{{block[1].name}}  {{block[1].id}} </label>-->
+<!--                        <input id="{{ block[2].id }}" type="checkbox" ng-model="block[2].id"  ng-click="vm.clicked(block[2].id, $event)" /><label  title="Tolk" >{{block[2].name}} {{block[2].id}} </label>-->
+                        <md-checkbox aria-label="aktiveret"  ng-model="myCountry.selected[block[0].id]" ng-true-value="true" ng-false-value="false" >{{block[0].name}}</md-checkbox>
+                        <md-checkbox aria-label="aktiveret"  ng-model="myCountry.selected[block[1].id]" ng-true-value="true" ng-false-value="false"> {{block[1].name}}</md-checkbox>
+                        <md-checkbox aria-label="aktiveret"  ng-model="myCountry.selected[block[2].id]" ng-true-value="true" ng-false-value="false"> {{block[2].name}}</md-checkbox>
+<!--                        <md-checkbox aria-label="aktiveret"  ng-click="vm.clicked(block[1].id)"> {{block[1].name}} {{block[1].id}} </md-checkbox>-->
+<!--                        <md-checkbox aria-label="aktiveret"  ng-click="vm.clicked(block[2].id)"> {{block[2].name}} {{block[2].id}} </md-checkbox>-->
+
+                    <!--                        <md-checkbox aria-label="aktiveret"  ng-model="vm.selectedValues{{block[0].id}}" ng-click="vm.clicked(block[0].id)"> {{block[0].name}} {{block[0].id}} </md-checkbox>-->
+                    <!--                        <md-checkbox aria-label="aktiveret"  ng-click="vm.clicked(block[1].id)"> {{block[1].name}} {{block[1].id}} </md-checkbox>-->
+                    <!--                        <md-checkbox aria-label="aktiveret"  ng-click="vm.clicked(block[2].id)"> {{block[2].name}} {{block[2].id}} </md-checkbox>-->
+
                 </div>
             </div>
 
 
-
+<!--            <div ng-repeat="block in vm.items | chunkBy:3 ">-->
+<!--                <label><input type="checkbox" ng-model="myCountry.selected[block[0].id]" ng-true-value="'{{block[0].name}}'" ng-false-value="''">{{block[0].name}}</label>-->
+<!--                <label><input type="checkbox" ng-model="myCountry.selected[block[1].id]" ng-true-value="'{{block[1].name}}'" ng-false-value="''">{{block[1].name}}</label>-->
+<!--                <label><input type="checkbox" ng-model="myCountry.selected[block[2].id]" ng-true-value="'{{block[2].name}}'" ng-false-value="''">{{block[2].name}}</label>-->
+<!--            </div>-->
         </div>
 
 <!--        <div layout="row">-->
@@ -50,4 +67,6 @@
 
 <!--        </div>-->
     </md-card-content>
+
 </md-card>
+</html>
