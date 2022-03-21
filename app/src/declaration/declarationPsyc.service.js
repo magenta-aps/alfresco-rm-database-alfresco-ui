@@ -10,7 +10,9 @@ function DeclarationPsycService($http, $filter) {
 
   var service = {
     test2 : test2,
-    getInstruments : getInstruments
+    getInstruments : getInstruments,
+    getOverViewData : getOverViewData,
+    getDetailViewData : getDetailViewData
   };
 
   return service;
@@ -26,17 +28,11 @@ function DeclarationPsycService($http, $filter) {
   }
 
   function test2() {
-    console.log("hej morakker");
+
 
     return $http.post("/alfresco/s/database/retspsyk/psyc", {
-
       "properties": {"method" : "test", "gaf" : "kat"}
-
     }).then(function (response) {
-
-      console.log("response");
-      console.log(response.data);
-
       return response.data;
     });
   }
@@ -48,4 +44,28 @@ function DeclarationPsycService($http, $filter) {
         return response.data;
       });
   }
+
+  function getOverViewData(caseNumber) {
+    return $http.post("/alfresco/s/database/retspsyk/psyc", {
+      "properties" : {"method" : "getInstrumentsForOverview", "caseid" : caseNumber}
+    }).then(function (response) {
+      console.log("response for getOverViewData")
+      console.log(response)
+      return response.data;
+    });
+  }
+
+  function getDetailViewData(caseNumber, instrument) {
+    return $http.post("/alfresco/s/database/retspsyk/psyc", {
+      "properties" : {"method" : "getInstrumentsForDetailview", "caseid" : caseNumber, "instrument" : instrument}
+    }).then(function (response) {
+      console.log("response for getDetail")
+      console.log(response)
+      return response.data;
+    });
+  }
+
+
+
+
 }

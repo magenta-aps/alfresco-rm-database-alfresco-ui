@@ -23,7 +23,7 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
   vm.PROP_PSYC_LIBRARY_PSYCH_MALERING = "psykologisk_vurdering_af_forekomst_af_malingering";
   vm.PROP_PSYC_LIBRARY_KONKLUSION_TAGS = "konklusion_tags";
 
-
+  vm.PsycInstruments = "";
   vm.selectedValues = [];
 
   // Mappings
@@ -34,8 +34,9 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
   }
 
   setupMappings();
-
   caseValues();
+
+  setupOverview();
 
 
   function caseValues() {
@@ -102,21 +103,44 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
   vm.getInstrumentByName = getInstrumentByName;
 
 
-  function setupPsykologiskUndersoegelsestype() {
+  function setupOverview() {
+
+    // need or nice? er der for mange valg til at man kan vise det på en overskuelig måde? måske, nøjes med popup
+
+    DeclarationPsycService.getOverViewData($stateParams.caseid).then(function (response) {
+      console.log("setupOverview");
+      console.log("result")
+      console.log(response)
+      vm.PsycInstruments = response[vm.PROP_PSYC_LIBRARY_PSYCH_TYPE]["nameList"];
+
+      console.log("hvad er vm.PsycInstruments");
+      console.log(vm.PsycInstruments);
+
+    });
   }
 
-  function viewButton(instruments) {
-      vm.items = getInstrumentByName(instruments);
-      vm.selectedInstrumentName = vm.titleMappings[instruments];
+  function viewButton(instrument) {
+      vm.items = getInstrumentByName(instrument);
+      console.log("hvad er items");
+
+      vm.selectedInstrumentName = vm.titleMappings[instrument];
 
 
-      console.log("vm.psycPropertyValues")
-      console.log(vm.psycPropertyValues);
+    DeclarationPsycService.getDetailViewData($stateParams.caseid, instrument).then(function (response) {
+      console.log("detailview for :" + instrument);
+      console.log(response)
+      vm.items = response.data;
 
-      // console.log("vm.titleMappings[instruments];");
-      // console.log(vm.titleMappings[instruments]);
-      // console.log("vm.selectedInstrumentName");
-      // console.log(vm.selectedInstrumentName);
+      for (let i=0; i<= vm.items.length-1;i++) {
+        console.log(vm.items[i]);
+        $scope.myCountry.selected[vm.items[i].id] = vm.items[i].val
+      }
+
+
+    });
+
+
+
 
       $mdDialog.show({
         templateUrl: 'app/src/declaration/view/psyc/sections/popup.html',
