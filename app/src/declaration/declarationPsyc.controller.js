@@ -11,6 +11,9 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
   console.log("yellow from psycController");
 
 
+  vm.selectedInstrument = "";
+  vm.selectedInstrumentName = "";
+
   vm.PROP_PSYC_LIBRARY_PSYCH_TYPE = "psykologisk_undersoegelsestype";
 
   vm.PROP_PSYC_LIBRARY_INTERVIEWRATING = "psykiatriske_interviews_og_ratingscales";
@@ -29,8 +32,14 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
   // Mappings
   vm.titleMappings = {};
 
+  $scope.myCountry = {
+    selected:{}
+  };
+
+
   function setupMappings() {
-    vm.titleMappings[vm.PROP_PSYC_LIBRARY_PSYCH_TYPE] = "testtest";
+    vm.titleMappings[vm.PROP_PSYC_LIBRARY_PSYCH_TYPE] = "Psykologisk undersøgelsestype";
+    vm.titleMappings[vm.PROP_PSYC_LIBRARY_INTERVIEWRATING] = "Psykiatriske interviews og ratingscales";
   }
 
   setupMappings();
@@ -54,6 +63,32 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
     console.log("myCountry.selected");
     console.log($scope.myCountry.selected);
 
+    let val = $scope.myCountry.selected;
+
+
+    let selectedIds = undefined;
+
+    for (const [key, value] of Object.entries(val)) {
+      console.log(`${key}: ${value}`);
+
+      if (value) {
+        if (selectedIds == undefined) {
+          selectedIds = key;
+        }
+        else {
+          selectedIds = selectedIds + "," + key;
+        }
+      }
+    }
+
+
+    DeclarationPsycService.saveDetailViewData($stateParams.caseid, vm.selectedInstrument, selectedIds).then(function (response) {
+      console.log("svar fra saveDetailsViewData");
+      console.log(response);
+
+      $mdDialog.cancel();
+
+    });
   }
 
   vm.save = save;
@@ -68,12 +103,16 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
     console.log("vm.selectedValues");
     console.log(vm.selectedValues);
 
+    DeclarationPsycService.getOverViewData($stateParams.caseid).then(function (response) {
+
+    });
+
+
+
 
   }
 
-  $scope.myCountry = {
-    selected:{}
-  };
+
 
 
 
@@ -120,10 +159,18 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
   }
 
   function viewButton(instrument) {
-      vm.items = getInstrumentByName(instrument);
-      console.log("hvad er items");
+      // console.log("hvad er items");
 
-      vm.selectedInstrumentName = vm.titleMappings[instrument];
+
+    $scope.myCountry = {
+      selected:{}
+    };
+
+    console.log("er Mycountry nulstillet?")
+    console.log($scope.myCountry.selected)
+
+    vm.selectedInstrument = instrument;
+    vm.selectedInstrumentName = vm.titleMappings[instrument];
 
 
     DeclarationPsycService.getDetailViewData($stateParams.caseid, instrument).then(function (response) {
@@ -131,10 +178,25 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
       console.log(response)
       vm.items = response.data;
 
-      for (let i=0; i<= vm.items.length-1;i++) {
-        console.log(vm.items[i]);
-        $scope.myCountry.selected[vm.items[i].id] = vm.items[i].val
+
+      if (vm.items != undefined) {
+        for (let i=0; i<= vm.items.length-1;i++) {
+          console.log(vm.items[i]);
+          $scope.myCountry.selected[vm.items[i].id] = vm.items[i].val
+        }
       }
+      // else {
+      //   vm.items = getInstrumentByName(instrument);
+      //
+      //   // set all to false as default
+      //   for (let i=0; i<= vm.items.length-1;i++) {
+      //     console.log(vm.items[i]);
+      //     $scope.myCountry.selected[vm.items[i].id] = vm.items[i].val
+      //   }
+      //
+      // }
+
+
 
 
     });

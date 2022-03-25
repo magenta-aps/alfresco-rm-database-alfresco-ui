@@ -12,7 +12,8 @@ function DeclarationPsycService($http, $filter) {
     test2 : test2,
     getInstruments : getInstruments,
     getOverViewData : getOverViewData,
-    getDetailViewData : getDetailViewData
+    getDetailViewData : getDetailViewData,
+    saveDetailViewData : saveDetailViewData
   };
 
   return service;
@@ -58,6 +59,23 @@ function DeclarationPsycService($http, $filter) {
   function getDetailViewData(caseNumber, instrument) {
     return $http.post("/alfresco/s/database/retspsyk/psyc", {
       "properties" : {"method" : "getInstrumentsForDetailview", "caseid" : caseNumber, "instrument" : instrument}
+    }).then(function (response) {
+      console.log("response for getDetail")
+      console.log(response)
+      return response.data;
+    });
+  }
+
+  function saveDetailViewData(caseNumber, instrument, selected) {
+
+    let ids = "";
+    //
+    // for (const sel of selected) {
+    //   ids = ids + (sel.)
+    // }
+
+    return $http.post("/alfresco/s/database/retspsyk/psyc", {
+      "properties" : {"method" : "saveInstrumentsForDetailview", "caseid" : caseNumber, "instrument" : instrument, "selected" : selected}
     }).then(function (response) {
       console.log("response for getDetail")
       console.log(response)
