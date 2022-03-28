@@ -4,7 +4,7 @@ angular
   .module('openDeskApp.declaration')
   .controller('DeclarationPsycController', PsycController);
 
-function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toast, ContentService, HeaderService, $state, DeclarationPsycService) {
+function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toast, ContentService, HeaderService, $state, DeclarationPsycService, $templateCache) {
   var vm = this;
   vm.psycPropertyValues = undefined;
 
@@ -86,6 +86,12 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
       console.log("svar fra saveDetailsViewData");
       console.log(response);
 
+      $scope.myCountry = {
+        selected:{}
+      };
+
+      // needed or else the template shows a glimse of the old template before drawing the new
+      $templateCache.removeAll();
       $mdDialog.cancel();
 
     });
@@ -142,20 +148,23 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
   vm.getInstrumentByName = getInstrumentByName;
 
 
+  // need to be rewritten - each category needs to be checked if at least one checkbox has been selected. Then it should be marked - perhaps
+  // with a bold font.
+
   function setupOverview() {
 
     // need or nice? er der for mange valg til at man kan vise det på en overskuelig måde? måske, nøjes med popup
 
-    DeclarationPsycService.getOverViewData($stateParams.caseid).then(function (response) {
-      console.log("setupOverview");
-      console.log("result")
-      console.log(response)
-      vm.PsycInstruments = response[vm.PROP_PSYC_LIBRARY_PSYCH_TYPE]["nameList"];
-
-      console.log("hvad er vm.PsycInstruments");
-      console.log(vm.PsycInstruments);
-
-    });
+    // DeclarationPsycService.getOverViewData($stateParams.caseid).then(function (response) {
+    //   console.log("setupOverview");
+    //   console.log("result")
+    //   console.log(response)
+    //   vm.PsycInstruments = response[vm.PROP_PSYC_LIBRARY_PSYCH_TYPE]["nameList"];
+    //
+    //   console.log("hvad er vm.PsycInstruments");
+    //   console.log(vm.PsycInstruments);
+    //
+    // });
   }
 
   function viewButton(instrument) {
@@ -208,10 +217,21 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
         templateUrl: 'app/src/declaration/view/psyc/sections/popup.html',
         scope: $scope, // use parent scope in template
         preserveScope: true, // do not forget this if use parent scope
-        clickOutsideToClose: true
+        clickOutsideToClose: false
       });
   }
 
   vm.viewButton = viewButton;
+
+  function cancelDialog() {
+    $scope.myCountry = {
+      selected:{}
+    };
+
+    // needed or else the template shows a glimse of the old template before drawing the new
+    $templateCache.removeAll();
+    $mdDialog.cancel();
+  }
+  vm.cancelDialog = cancelDialog;
 
 }
