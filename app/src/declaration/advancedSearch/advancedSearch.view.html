@@ -422,6 +422,34 @@
 
                             </md-card-content>
                     </md-card>
+
+                    <md-card flex>
+
+                    <md-card-content>
+
+
+<!--                        som udgangspunkt tom - ved valg kommer popop automatisk -->
+
+                    <md-input-container class="md-block">
+                        <label>Psykologiske tests</label>
+                        <md-select ng-model="searchParams.psyktests" ng-change="vm.pop()">
+                            <md-option ng-value="'1'" >Psykologisk undersøgelsestype</md-option>
+                            <md-option ng-value="'2'" >Psykiatriske interviews og ratingscales</md-option>
+                            <md-option ng-value="'3'" >Kognitive og neuropsykologiske præstationstests</md-option>
+                            <md-option ng-value="'4'" >Implicitte (projektive) tests</md-option>
+                            <md-option ng-value="'5'" >Eksplicitte (spørgeskema) tests</md-option>
+                            <md-option ng-value="'5'" >Instrumenter for indikation på malingering</md-option>
+                            <md-option ng-value="'5'" >Risikovurderingsinstrumenter</md-option>
+                            <md-option ng-value="'5'" >Psykologisk vurdering af forekomst af malingering</md-option>
+                            <md-option ng-value="'5'" >Konklusion på psykologisk undersøgelse</md-option>
+                        </md-select>
+                    </md-input-container>
+
+
+
+                    </md-card-content>
+                    </md-card>
+
                 </div>
 
             </div>

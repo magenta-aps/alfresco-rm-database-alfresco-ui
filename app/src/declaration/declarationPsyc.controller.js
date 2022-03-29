@@ -153,18 +153,20 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
 
   function setupOverview() {
 
-    // need or nice? er der for mange valg til at man kan vise det på en overskuelig måde? måske, nøjes med popup
+   // lav kald til backend og hent true:false for om en kategori skal skrives med fed
 
-    // DeclarationPsycService.getOverViewData($stateParams.caseid).then(function (response) {
-    //   console.log("setupOverview");
-    //   console.log("result")
-    //   console.log(response)
-    //   vm.PsycInstruments = response[vm.PROP_PSYC_LIBRARY_PSYCH_TYPE]["nameList"];
-    //
-    //   console.log("hvad er vm.PsycInstruments");
-    //   console.log(vm.PsycInstruments);
-    //
-    // });
+    DeclarationPsycService.getOverViewData("26").then(function (response) {
+      console.log("response")
+      console.log(response);
+    });
+
+
+
+
+
+
+    // sæt boolean værdi for bold for alle 8 felter
+
   }
 
   function viewButton(instrument) {

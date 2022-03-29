@@ -140,6 +140,18 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
     }
 
 
+  vm.pop = function(){
+    alert("value changed-->" + $scope.searchParams.psyktests);
+    if ($scope.searchParams.psyktests==1){
+      vm.otherFunction();
+    }
+  };
+
+  vm.otherFunction = function(){
+    alert("in the other function");
+  };
+
+
 
   function givenDeclaration() {
     $scope.searchParams.doctor = '';
