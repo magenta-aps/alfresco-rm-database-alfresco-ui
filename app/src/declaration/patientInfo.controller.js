@@ -52,6 +52,18 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		// return defer.promise;
 	};
 
+
+//show/hide flag for normal or bua users
+	DeclarationService.isBUAUser().then(function(response) {
+		console.log("to be bua or not to be?...");
+		console.log(response);
+
+
+		vm.isBua = response;
+
+	});
+
+
 	vm.waitPromiseNormal = function(declarationSettings_, state) {
 		vm.declarationState = state;
 		HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings_)
