@@ -29,6 +29,19 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
   vm.PsycInstruments = "";
   vm.selectedValues = [];
 
+  vm.oneormorePsykologiskUnder = false;
+
+  vm.oneormoreRisikoVurdering = false;
+  vm.oneormoreIndiMalering = false;
+  vm.oneormoreEksTest = false;
+  vm.oneormoreImpTest = false;
+  vm.oneormoreKognitive = false;
+  vm.oneormorePsykInter = false;
+
+  vm.oneormoreForeMalering = false;
+  vm.oneormoreKonklusion = false;
+
+
   // Mappings
   vm.titleMappings = {};
 
@@ -39,13 +52,25 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
 
   function setupMappings() {
     vm.titleMappings[vm.PROP_PSYC_LIBRARY_PSYCH_TYPE] = "Psykologisk undersøgelsestype";
+
     vm.titleMappings[vm.PROP_PSYC_LIBRARY_INTERVIEWRATING] = "Psykiatriske interviews og ratingscales";
+    vm.titleMappings[vm.PROP_PSYC_LIBRARY_KOGNITIV] = "Kognitive og neuropsykologiske præstationstests";
+    vm.titleMappings[vm.PROP_PSYC_LIBRARY_IMPLECITE] = "Implicitte (projektive) tests";
+    vm.titleMappings[vm.PROP_PSYC_LIBRARY_EXPLICIT] = "Eksplicitte (spørgeskema) tests";
+    vm.titleMappings[vm.PROP_PSYC_LIBRARY_MALERING] = "Instrumenter for indikation på malingering";
+    vm.titleMappings[vm.PROP_PSYC_LIBRARY_RISIKO] = "Risikovurderingsinstrumenter";
+
+    vm.titleMappings[vm.PROP_PSYC_LIBRARY_PSYCH_MALERING] = "Psykologisk vurdering af forekomst af malingering";
+    vm.titleMappings[vm.PROP_PSYC_LIBRARY_KONKLUSION_TAGS] = "Standard formuleringer";
+
   }
 
   setupMappings();
   caseValues();
 
   setupOverview();
+
+  activate();
 
 
   function caseValues() {
@@ -66,13 +91,14 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
     let val = $scope.myCountry.selected;
 
 
-    let selectedIds = undefined;
+    let selectedIds = "";
 
     for (const [key, value] of Object.entries(val)) {
+      console.log("hvad er der valgt? : ");
       console.log(`${key}: ${value}`);
 
       if (value) {
-        if (selectedIds == undefined) {
+        if (selectedIds == "") {
           selectedIds = key;
         }
         else {
@@ -94,6 +120,8 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
       $templateCache.removeAll();
       $mdDialog.cancel();
 
+      activate();
+
     });
   }
 
@@ -109,15 +137,34 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
     console.log("vm.selectedValues");
     console.log(vm.selectedValues);
 
-    DeclarationPsycService.getOverViewData($stateParams.caseid).then(function (response) {
-
-    });
-
-
-
-
   }
 
+
+
+
+  function activate() {
+    DeclarationPsycService.getOverViewData($stateParams.caseid).then(function (response) {
+
+      console.log("opslag for overbliksbillede: ");
+      console.log(response);
+
+      vm.oneormorePsykologiskUnder = response[vm.PROP_PSYC_LIBRARY_PSYCH_TYPE];
+
+      vm.oneormoreRisikoVurdering = response[vm.PROP_PSYC_LIBRARY_RISIKO];
+      vm.oneormoreIndiMalering = response[vm.PROP_PSYC_LIBRARY_MALERING];
+      vm.oneormoreEksTest = response[vm.PROP_PSYC_LIBRARY_EXPLICIT];
+      vm.oneormoreImpTest = response[vm.PROP_PSYC_LIBRARY_IMPLECITE];
+      vm.oneormoreKognitive = response[vm.PROP_PSYC_LIBRARY_KOGNITIV];
+      vm.oneormorePsykInter = response[vm.PROP_PSYC_LIBRARY_INTERVIEWRATING];
+
+      vm.oneormoreForeMalering = response[vm.PROP_PSYC_LIBRARY_PSYCH_MALERING];
+      vm.oneormoreKonklusion = response[vm.PROP_PSYC_LIBRARY_KONKLUSION_TAGS];
+
+      console.log("vm.oneormorePsykologiskUnder")
+      console.log(vm.oneormorePsykologiskUnder);
+
+    });
+  }
 
 
 
@@ -177,18 +224,11 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
       selected:{}
     };
 
-    console.log("er Mycountry nulstillet?")
-    console.log($scope.myCountry.selected)
-
     vm.selectedInstrument = instrument;
     vm.selectedInstrumentName = vm.titleMappings[instrument];
 
-
     DeclarationPsycService.getDetailViewData($stateParams.caseid, instrument).then(function (response) {
-      console.log("detailview for :" + instrument);
-      console.log(response)
       vm.items = response.data;
-
 
       if (vm.items != undefined) {
         for (let i=0; i<= vm.items.length-1;i++) {
@@ -196,24 +236,7 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
           $scope.myCountry.selected[vm.items[i].id] = vm.items[i].val
         }
       }
-      // else {
-      //   vm.items = getInstrumentByName(instrument);
-      //
-      //   // set all to false as default
-      //   for (let i=0; i<= vm.items.length-1;i++) {
-      //     console.log(vm.items[i]);
-      //     $scope.myCountry.selected[vm.items[i].id] = vm.items[i].val
-      //   }
-      //
-      // }
-
-
-
-
     });
-
-
-
 
       $mdDialog.show({
         templateUrl: 'app/src/declaration/view/psyc/sections/popup.html',

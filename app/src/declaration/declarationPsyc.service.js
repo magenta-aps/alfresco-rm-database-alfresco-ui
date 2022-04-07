@@ -13,6 +13,7 @@ function DeclarationPsycService($http, $filter) {
     getInstruments : getInstruments,
     getOverViewData : getOverViewData,
     getDetailViewData : getDetailViewData,
+    getAdvancedSearchInstrument : getAdvancedSearchInstrument,
     saveDetailViewData : saveDetailViewData
   };
 
@@ -59,6 +60,16 @@ function DeclarationPsycService($http, $filter) {
   function getDetailViewData(caseNumber, instrument) {
     return $http.post("/alfresco/s/database/retspsyk/psyc", {
       "properties" : {"method" : "getInstrumentsForDetailview", "caseid" : caseNumber, "instrument" : instrument}
+    }).then(function (response) {
+      console.log("response for getDetail")
+      console.log(response)
+      return response.data;
+    });
+  }
+
+  function getAdvancedSearchInstrument(instrument) {
+    return $http.post("/alfresco/s/database/retspsyk/psyc", {
+      "properties" : {"method" : "getInstrumentsForAdvancedSearch", "instrument" : instrument}
     }).then(function (response) {
       console.log("response for getDetail")
       console.log(response)

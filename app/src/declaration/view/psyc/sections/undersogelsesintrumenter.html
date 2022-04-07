@@ -1,3 +1,10 @@
+<style>
+    .oneormore {
+        font-weight: bold;
+    }
+</style>
+
+
 <md-card>
     <md-card-title>
         <md-card-title-text>
@@ -8,8 +15,9 @@
         <div layout="row">
 
             <md-input-container class="md-block" flex>
-                <label>Psykiatriske interviews og ratingscales</label>
-                <input ng-model="case.cprNumber" maxlength="10" minlength="10" ng-disabled="!editPatientData" name="cprNo">
+                <label ng-show="vm.oneormorePsykInter" class="oneormore" >Psykiatriske interviews og ratingscales</label>
+                <label ng-hide="vm.oneormorePsykInter" >Psykiatriske interviews og ratingscales</label>
+                <input ng-model="case.cprNumber" maxlength="10" minlength="10" ng-disabled="!editPatientData" name="cprNo" ng-disabled="true">
             </md-input-container>
 
             <md-button class="md-icon-button" ng-click="vm.viewButton(vm.PROP_PSYC_LIBRARY_INTERVIEWRATING)" ">
@@ -21,8 +29,9 @@
         <div layout="row">
 
             <md-input-container class="md-block" flex>
-                <label>Kognitive og neuropsykologiske præstationstests</label>
-                <input ng-model="case.cprNumber" maxlength="10" minlength="10" ng-disabled="!editPatientData" name="cprNo">
+                <label ng-show="vm.oneormoreKognitive" class="oneormore" >Kognitive og neuropsykologiske præstationstests</label>
+                <label ng-hide="vm.oneormoreKognitive" >Kognitive og neuropsykologiske præstationstests</label>
+                <input ng-model="case.cprNumber" maxlength="10" minlength="10" ng-disabled="!editPatientData" name="cprNo" ng-disabled="true">
             </md-input-container>
 
             <md-button class="md-icon-button" ng-click="vm.viewButton(vm.PROP_PSYC_LIBRARY_KOGNITIV)" ">
@@ -34,8 +43,9 @@
         <div layout="row">
 
             <md-input-container class="md-block" flex>
-                <label>Implicitte (projektive) tests</label>
-                <input ng-model="case.cprNumber" maxlength="10" minlength="10" ng-disabled="!editPatientData" name="cprNo">
+                <label ng-show="vm.oneormoreImpTest" class="oneormore" >Implicitte (projektive) tests</label>
+                <label ng-hide="vm.oneormoreImpTest">Implicitte (projektive) tests</label>
+                <input ng-model="case.cprNumber" maxlength="10" minlength="10" ng-disabled="!editPatientData" name="cprNo" ng-disabled="true">
             </md-input-container>
 
             <md-button class="md-icon-button" ng-click="vm.viewButton(vm.PROP_PSYC_LIBRARY_IMPLECITE)" ">
@@ -47,8 +57,9 @@
         <div layout="row">
 
             <md-input-container class="md-block" flex>
-                <label>Eksplicitte (spørgeskema) tests</label>
-                <input ng-model="case.cprNumber" maxlength="10" minlength="10" ng-disabled="!editPatientData" name="cprNo">
+                <label ng-show="vm.oneormoreEksTest" class="oneormore" >Eksplicitte (spørgeskema) tests</label>
+                <label ng-hide="vm.oneormoreEksTest">Eksplicitte (spørgeskema) tests</label>
+                <input ng-model="case.cprNumber" maxlength="10" minlength="10" ng-disabled="!editPatientData" name="cprNo" ng-disabled="true">
             </md-input-container>
 
             <md-button class="md-icon-button" ng-click="vm.viewButton(vm.PROP_PSYC_LIBRARY_EXPLICIT)" ">
@@ -60,8 +71,9 @@
         <div layout="row">
 
             <md-input-container class="md-block" flex>
-                <label>Instrumenter for indikation på malingering</label>
-                <input ng-model="case.cprNumber" maxlength="10" minlength="10" ng-disabled="!editPatientData" name="cprNo">
+                <label ng-show="vm.oneormoreIndiMalering" class="oneormore" >Instrumenter for indikation på malingering</label>
+                <label ng-hide="vm.oneormoreIndiMalering" >Instrumenter for indikation på malingering</label>
+                <input ng-model="case.cprNumber" maxlength="10" minlength="10" ng-disabled="!editPatientData" name="cprNo" ng-disabled="true">
             </md-input-container>
 
             <md-button class="md-icon-button" ng-click="vm.viewButton(vm.PROP_PSYC_LIBRARY_MALERING)" ">
@@ -73,8 +85,10 @@
         <div layout="row">
 
             <md-input-container class="md-block" flex>
-                <label>Risikovurderingsinstrumenter</label>
-                <input ng-model="case.cprNumber" maxlength="10" minlength="10" ng-disabled="!editPatientData" name="cprNo">
+                <label ng-show="vm.oneormoreRisikoVurdering" class="oneormore">Risikovurderingsinstrumenter</label>
+                <label ng-hide="vm.oneormoreRisikoVurdering" >Risikovurderingsinstrumenter</label>
+
+                <input ng-model="case.cprNumber" maxlength="10" minlength="10" ng-disabled="!editPatientData" name="cprNo" ng-disabled="true">
             </md-input-container>
 
             <md-button class="md-icon-button" ng-click="vm.viewButton(vm.PROP_PSYC_LIBRARY_RISIKO)" ">

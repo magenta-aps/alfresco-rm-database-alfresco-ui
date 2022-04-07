@@ -4,7 +4,7 @@ angular
   .module('openDeskApp.declaration')
   .controller('AdvancedSearchController', AdvancedSearchController);
 
-function AdvancedSearchController($scope, $state, $translate, DeclarationService, filterService, propertyService, HeaderService, $filter, $stateParams) {
+function AdvancedSearchController($scope, $state, $templateCache, $mdDialog, $translate, DeclarationService, filterService, propertyService, HeaderService, $filter, $stateParams, DeclarationPsycService) {
 
   var vm = this;
 
@@ -45,6 +45,42 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
   vm.selectedSUPERVISOR = null;
   vm.selectedSanctionProposal = null;
 
+  vm.PROP_PSYC_LIBRARY_PSYCH_TYPE = "psykologisk_undersoegelsestype";
+
+  vm.PROP_PSYC_LIBRARY_INTERVIEWRATING = "psykiatriske_interviews_og_ratingscales";
+  vm.PROP_PSYC_LIBRARY_KOGNITIV = "kognitive_og_neuropsykologiske_praestationstests";
+  vm.PROP_PSYC_LIBRARY_IMPLECITE = "implicitte_projektive_tests";
+  vm.PROP_PSYC_LIBRARY_EXPLICIT = "eksplicitte_spoergeskema_tests";
+  vm.PROP_PSYC_LIBRARY_MALERING = "instrumenter_for_indikation_på_malingering";
+  vm.PROP_PSYC_LIBRARY_RISIKO = "risikovurderingsinstrumenter";
+
+  vm.PROP_PSYC_LIBRARY_PSYCH_MALERING = "psykologisk_vurdering_af_forekomst_af_malingering";
+  vm.PROP_PSYC_LIBRARY_KONKLUSION_TAGS = "konklusion_tags";
+
+  // Mappings
+  vm.titleMappings = {};
+
+  vm.searchInstrumentsQuery = {};
+
+  function setupMappings() {
+    vm.titleMappings[vm.PROP_PSYC_LIBRARY_PSYCH_TYPE] = "Psykologisk undersøgelsestype";
+
+    vm.titleMappings[vm.PROP_PSYC_LIBRARY_INTERVIEWRATING] = "Psykiatriske interviews og ratingscales";
+    vm.titleMappings[vm.PROP_PSYC_LIBRARY_KOGNITIV] = "Kognitive og neuropsykologiske præstationstests";
+    vm.titleMappings[vm.PROP_PSYC_LIBRARY_IMPLECITE] = "Implicitte (projektive) tests";
+    vm.titleMappings[vm.PROP_PSYC_LIBRARY_EXPLICIT] = "Eksplicitte (spørgeskema) tests";
+    vm.titleMappings[vm.PROP_PSYC_LIBRARY_MALERING] = "Instrumenter for indikation på malingering";
+    vm.titleMappings[vm.PROP_PSYC_LIBRARY_RISIKO] = "Risikovurderingsinstrumenter";
+
+    vm.titleMappings[vm.PROP_PSYC_LIBRARY_PSYCH_MALERING] = "Psykologisk vurdering af forekomst af malingering";
+    vm.titleMappings[vm.PROP_PSYC_LIBRARY_KONKLUSION_TAGS] = "Standard formuleringer";
+  }
+
+  $scope.myInstrument = {
+    selected:{}
+  };
+
+  setupMappings();
 
   $scope.searchParams.bua = "PS";
   $scope.searchParams.closed = "CLOSED";
@@ -141,11 +177,75 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
 
 
   vm.pop = function(){
-    alert("value changed-->" + $scope.searchParams.psyktests);
-    if ($scope.searchParams.psyktests==1){
-      vm.otherFunction();
-    }
+
+    viewInstrument($scope.searchParams.psyktests);
+
+    // if ($scope.searchParams.psyktests==1){
+    //   viewInstrument(vm.PROP_PSYC_LIBRARY_PSYCH_TYPE);
+    // }
+
   };
+
+  function close() {
+    // needed or else the template shows a glimse of the old template before drawing the new
+    $templateCache.removeAll();
+    $mdDialog.cancel();
+    vm.searchInstrumentsQuery[vm.selectedInstrument] = $scope.myInstrument.selected;
+    $scope.myInstrument.selected = {};
+    console.log("vm.searchInstrumentsQuery");
+    console.log("vm.searchInstrumentsQuery");
+    console.log(vm.searchInstrumentsQuery);
+
+  }
+  vm.close = close;
+
+  function viewInstrument(instrument) {
+    vm.selectedInstrument = instrument;
+    vm.selectedInstrumentName = vm.titleMappings[instrument];
+
+    // check if instruments have been selected
+
+    console.log("hvad er $scope.myInstrument.selected")
+    console.log(vm.searchInstrumentsQuery[instrument])
+
+    if (vm.searchInstrumentsQuery[instrument] != undefined) {
+      $scope.myInstrument.selected = vm.searchInstrumentsQuery[instrument];
+
+      DeclarationPsycService.getAdvancedSearchInstrument(instrument).then(function (response) {
+        vm.items = response.data;
+      });
+
+    }
+    else {
+      DeclarationPsycService.getAdvancedSearchInstrument(instrument).then(function (response) {
+        vm.items = response.data;
+
+        if (vm.items != undefined) {
+          for (let i=0; i<= vm.items.length-1;i++) {
+            console.log(vm.items[i]);
+            $scope.myInstrument.selected[vm.items[i].id] = vm.items[i].val
+          }
+        }
+      });
+    }
+
+    // if ($scope.myInstrument.selected.length > 0) {
+    //   console.log("der er valgt noget")
+    // }
+    // else {
+    //   console.log("der er ikke valgt noget")
+    // }
+
+
+
+    $mdDialog.show({
+      templateUrl: 'app/src/declaration/view/psyc/sections/popupSearch.html',
+      scope: $scope, // use parent scope in template
+      preserveScope: true, // do not forget this if use parent scope
+      clickOutsideToClose: false
+    });
+  }
+
 
   vm.otherFunction = function(){
     alert("in the other function");
@@ -193,10 +293,11 @@ function AdvancedSearchController($scope, $state, $translate, DeclarationService
     console.log("hvad er preview");
     console.log(preview);
 
-
     if (preview) {
       query.preview = "true";
     }
+
+    query.instruments = vm.searchInstrumentsQuery;
 
     DeclarationService.advancedSearch(skip, max, query)
       .then(response => {

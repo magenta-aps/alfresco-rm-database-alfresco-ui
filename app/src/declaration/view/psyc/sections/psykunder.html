@@ -1,3 +1,9 @@
+<style>
+    .oneormore {
+        font-weight: bold;
+        }
+</style>
+
 <md-card>
     <md-card-title>
         <md-card-title-text>
@@ -8,8 +14,11 @@
         <div layout="row">
 
             <md-input-container class="md-block" flex>
-                <label>psykologisk undersøgelsestype</label>
-                <input ng-model="vm.PsycInstruments" maxlength="10" minlength="10" name="psychInstruments">
+                <label ng-show="vm.oneormorePsykologiskUnder" class="oneormore">psykologisk undersøgelsestype</label>
+                <label ng-hide="vm.oneormorePsykologiskUnder" >psykologisk undersøgelsestype</label>
+
+
+                <input ng-model="vm.PsycInstruments" maxlength="10" minlength="10" name="psychInstruments" ng-disabled="true">
             </md-input-container>
 
             <md-button class="md-icon-button" ng-click="vm.viewButton(vm.PROP_PSYC_LIBRARY_PSYCH_TYPE)" ">
