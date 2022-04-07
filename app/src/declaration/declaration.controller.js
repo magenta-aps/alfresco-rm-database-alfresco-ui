@@ -63,6 +63,8 @@ function DeclarationController($scope, propertyService, $rootScope, HeaderServic
 
 
 
+
+
   $scope.clearList = clearList;
 
   $scope.showMailAttachments = false;

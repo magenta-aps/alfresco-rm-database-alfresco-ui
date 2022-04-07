@@ -40,6 +40,7 @@
             </md-input-container>
         </div>
 
+        <div ng-hide="vm.isBua">
         <md-autocomplete flex 
             md-selected-item="case.ethnicity" 
             md-search-text="ethnicitySearch"
@@ -54,7 +55,9 @@
                 <span md-highlight-text="ethnicitySearch" md-highlight-flags="gi">{{ethnicity}}</span>
             </md-item-template>
         </md-autocomplete>
+        </div>
 
+        <div ng-hide="vm.isBua">
         <md-autocomplete flex 
             md-selected-item="case.motherEthnicity" 
             md-search-text="motherEthnicitySearch"
@@ -69,7 +72,9 @@
                 <span md-highlight-text="motherEthnicitySearch" md-highlight-flags="gi">{{ethnicity}}</span>
             </md-item-template>
         </md-autocomplete>
+        </div>
 
+        <div ng-hide="vm.isBua">
         <md-autocomplete flex 
             md-selected-item="case.fatherEthnicity" 
             md-search-text="fatherEthnicitySearch"
@@ -84,5 +89,6 @@
                 <span md-highlight-text="fatherEthnicitySearch" md-highlight-flags="gi">{{ethnicity}}</span>
             </md-item-template>
         </md-autocomplete>
+        </div>
     </md-card-content>
 </md-card>

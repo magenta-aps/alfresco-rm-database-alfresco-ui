@@ -22,7 +22,8 @@ function DeclarationService($http, $filter) {
     makeBerigtigelsesDocument: makeBerigtigelsesDocument,
     makeSuppleredeUdtDocument: makeSuppleredeUdtDocument,
     getStateOfDeclaration: getStateOfDeclaration,
-    undoCloseCaseEntry: undoCloseCaseEntry
+    undoCloseCaseEntry: undoCloseCaseEntry,
+    isBUAUser: isBUAUser
   };
 
   return service;
@@ -35,6 +36,12 @@ function DeclarationService($http, $filter) {
     });
 
     return res;
+  }
+
+  function isBUAUser() {
+    return $http.get('/alfresco/s/usertype').then(function (response) {
+      return response.data.bua;
+    })
   }
 
   function getEntry(caseNumber) {
