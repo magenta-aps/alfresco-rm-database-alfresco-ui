@@ -51,8 +51,6 @@ function DeclarationPsycService($http, $filter) {
     return $http.post("/alfresco/s/database/retspsyk/psyc", {
       "properties" : {"method" : "getInstrumentsForOverview", "caseid" : caseNumber}
     }).then(function (response) {
-      console.log("response for getOverViewData")
-      console.log(response)
       return response.data;
     });
   }
@@ -61,8 +59,6 @@ function DeclarationPsycService($http, $filter) {
     return $http.post("/alfresco/s/database/retspsyk/psyc", {
       "properties" : {"method" : "getInstrumentsForDetailview", "caseid" : caseNumber, "instrument" : instrument}
     }).then(function (response) {
-      console.log("response for getDetail")
-      console.log(response)
       return response.data;
     });
   }
@@ -71,25 +67,14 @@ function DeclarationPsycService($http, $filter) {
     return $http.post("/alfresco/s/database/retspsyk/psyc", {
       "properties" : {"method" : "getInstrumentsForAdvancedSearch", "instrument" : instrument}
     }).then(function (response) {
-      console.log("response for getDetail")
-      console.log(response)
       return response.data;
     });
   }
 
   function saveDetailViewData(caseNumber, instrument, selected) {
-
-    let ids = "";
-    //
-    // for (const sel of selected) {
-    //   ids = ids + (sel.)
-    // }
-
     return $http.post("/alfresco/s/database/retspsyk/psyc", {
       "properties" : {"method" : "saveInstrumentsForDetailview", "caseid" : caseNumber, "instrument" : instrument, "selected" : selected}
     }).then(function (response) {
-      console.log("response for getDetail")
-      console.log(response)
       return response.data;
     });
   }

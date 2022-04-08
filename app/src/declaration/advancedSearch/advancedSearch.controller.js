@@ -190,11 +190,15 @@ function AdvancedSearchController($scope, $state, $templateCache, $mdDialog, $tr
     // needed or else the template shows a glimse of the old template before drawing the new
     $templateCache.removeAll();
     $mdDialog.cancel();
+
+
+    // todo check if anything selected and add - dont add a {} empty
+
+    console.log("hvad er $scope.myInstrument.selected");
+    console.log($scope.myInstrument.selected);
+
     vm.searchInstrumentsQuery[vm.selectedInstrument] = $scope.myInstrument.selected;
     $scope.myInstrument.selected = {};
-    console.log("vm.searchInstrumentsQuery");
-    console.log("vm.searchInstrumentsQuery");
-    console.log(vm.searchInstrumentsQuery);
 
   }
   vm.close = close;
@@ -222,21 +226,11 @@ function AdvancedSearchController($scope, $state, $templateCache, $mdDialog, $tr
 
         if (vm.items != undefined) {
           for (let i=0; i<= vm.items.length-1;i++) {
-            console.log(vm.items[i]);
             $scope.myInstrument.selected[vm.items[i].id] = vm.items[i].val
           }
         }
       });
     }
-
-    // if ($scope.myInstrument.selected.length > 0) {
-    //   console.log("der er valgt noget")
-    // }
-    // else {
-    //   console.log("der er ikke valgt noget")
-    // }
-
-
 
     $mdDialog.show({
       templateUrl: 'app/src/declaration/view/psyc/sections/popupSearch.html',
@@ -289,9 +283,6 @@ function AdvancedSearchController($scope, $state, $templateCache, $mdDialog, $tr
 
     query.declarationFromDate= $filter('date')(query.declarationFromDate,'yyyy-MM-dd');
     query.declarationToDate= $filter('date')(query.declarationToDate,'yyyy-MM-dd');
-
-    console.log("hvad er preview");
-    console.log(preview);
 
     if (preview) {
       query.preview = "true";

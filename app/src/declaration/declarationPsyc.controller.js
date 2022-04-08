@@ -7,10 +7,6 @@ angular
 function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toast, ContentService, HeaderService, $state, DeclarationPsycService, $templateCache) {
   var vm = this;
   vm.psycPropertyValues = undefined;
-
-  console.log("yellow from psycController");
-
-
   vm.selectedInstrument = "";
   vm.selectedInstrumentName = "";
 
@@ -66,27 +62,27 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
   }
 
   setupMappings();
-  caseValues();
+  // caseValues();
 
   setupOverview();
 
   activate();
 
 
-  function caseValues() {
-    console.log("loading values for caseid: " + $stateParams.caseid)
-
-    DeclarationPsycService.getInstruments("26").then(function (response) {
-      console.log("response")
-      console.log(response);
-    });
-
-
-  }
+  // function caseValues() {
+  //   console.log("loading values for caseid: " + $stateParams.caseid)
+  //
+  //   DeclarationPsycService.getInstruments("26").then(function (response) {
+  //     console.log("response")
+  //     console.log(response);
+  //   });
+  //
+  //
+  // }
 
   function save() {
-    console.log("myCountry.selected");
-    console.log($scope.myCountry.selected);
+    // console.log("myCountry.selected");
+    // console.log($scope.myCountry.selected);
 
     let val = $scope.myCountry.selected;
 
@@ -94,8 +90,7 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
     let selectedIds = "";
 
     for (const [key, value] of Object.entries(val)) {
-      console.log("hvad er der valgt? : ");
-      console.log(`${key}: ${value}`);
+      // response for getOverViewData
 
       if (value) {
         if (selectedIds == "") {
@@ -109,9 +104,6 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
 
 
     DeclarationPsycService.saveDetailViewData($stateParams.caseid, vm.selectedInstrument, selectedIds).then(function (response) {
-      console.log("svar fra saveDetailsViewData");
-      console.log(response);
-
       $scope.myCountry = {
         selected:{}
       };
@@ -131,11 +123,11 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
 
   function clicked(i) {
 
-    console.log("i");
-    console.log(i);
-
-    console.log("vm.selectedValues");
-    console.log(vm.selectedValues);
+    // console.log("i");
+    // console.log(i);
+    //
+    // console.log("vm.selectedValues");
+    // console.log(vm.selectedValues);
 
   }
 
@@ -145,8 +137,8 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
   function activate() {
     DeclarationPsycService.getOverViewData($stateParams.caseid).then(function (response) {
 
-      console.log("opslag for overbliksbillede: ");
-      console.log(response);
+      // console.log("opslag for overbliksbillede: ");
+      // console.log(response);
 
       vm.oneormorePsykologiskUnder = response[vm.PROP_PSYC_LIBRARY_PSYCH_TYPE];
 
@@ -160,8 +152,8 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
       vm.oneormoreForeMalering = response[vm.PROP_PSYC_LIBRARY_PSYCH_MALERING];
       vm.oneormoreKonklusion = response[vm.PROP_PSYC_LIBRARY_KONKLUSION_TAGS];
 
-      console.log("vm.oneormorePsykologiskUnder")
-      console.log(vm.oneormorePsykologiskUnder);
+      // console.log("vm.oneormorePsykologiskUnder")
+      // console.log(vm.oneormorePsykologiskUnder);
 
     });
   }
@@ -232,7 +224,7 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
 
       if (vm.items != undefined) {
         for (let i=0; i<= vm.items.length-1;i++) {
-          console.log(vm.items[i]);
+          // console.log(vm.items[i]);
           $scope.myCountry.selected[vm.items[i].id] = vm.items[i].val
         }
       }
