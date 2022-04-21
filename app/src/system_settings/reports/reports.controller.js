@@ -20,6 +20,7 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
   vm.createdToDate = null;
 
   vm.disableVentetiderButton = true;
+    vm.waitingCriteria = "1";
 
     $scope.$watch('vm.createdFromDate', function (newVal) {
         if (newVal) {
@@ -122,7 +123,8 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
       $http.post("/alfresco/s/database/retspsyk/reports", {
           "method": "waitingtime",
           "createdFrom": $filter('date')(vm.createdFromDate,'yyyy-MM-dd'),
-          "createdTo": postVarTO
+          "createdTo": postVarTO,
+          "statusCriteria" : vm.waitingCriteria
       }).then(function (response) {
           vm.reportStarted = false;
 
