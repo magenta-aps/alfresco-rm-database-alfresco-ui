@@ -71,6 +71,7 @@
     "UNDOCLOSECASE": "Annullér afslutning af sagen",
     "UNLOCK": "Redigér",
     "UNLOCK_BOTTON": "Næste",
+    "UNLOCK_UNABLE": "Sagen kan ikke afsluttes",
     "REOPEN": "Genåben",
     "DECLARATION_CLOSED": "Sagen er afsluttet",
     "DECLARATION_OPEN_SUPL_UDTL": "Genåbnet til suppl. udt.",

@@ -1,0 +1,65 @@
+<style>
+    .mailtestheader {
+        position: relative;
+        text-align: center;
+        width: 200px;
+        margin-top: 25px;
+    }
+
+    .md-buttonmini {
+        width: 15px;
+        height: 20px;
+        line-height: 20px;
+        min-height: 20px;
+        vertical-align: top;
+        font-size: 10px;
+        padding: 0 0;
+        margin: 0;
+    }
+
+    .unable {
+        position: relative;
+        padding: 15px;
+        text-align: left;
+        width: 250px;
+        padding-left: 15px;
+    }
+
+
+</style>
+
+
+<md-dialog aria-label="genåben sagen">
+    <form name="lockDeclarationForm" ng-submit="unlockCase()">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{'DECLARATION.UNLOCK_UNABLE' | translate}}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <i class="material-icons" aria-label="Luk dialogboks">close</i>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <div class="unable">
+            <br>
+            <b>Sagen kan ikke afsluttes, da følgende felter skal være udfyldt:</b>
+            <br><br>
+            Placering og sanktionsforslag
+            <br><br>
+            Hoveddiagnose
+            <br><br>
+            Observation påbegyndt og erklæring afgivet
+
+
+        </div>
+
+
+        <md-dialog-actions>
+            <md-button ng-disabled="lockDeclarationForm.$invalid" type="submit" class="md-primary md-text-icon-button">
+                <md-icon>close</md-icon> {{'COMMON.CLOSE' | translate}}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
