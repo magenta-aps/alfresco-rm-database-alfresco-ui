@@ -33,9 +33,24 @@
                 <label>Til</label>
                 <md-datepicker ng-model="vm.createdToDate"></md-datepicker>
             </md-input-container>
+
+            <div>
+            <md-input-container class="md-block">
+                <label>Type</label>
+                <md-select ng-model="vm.waitingCriteria">
+                    <md-option ng-value="'1'" >Alle</md-option>
+                    <md-option ng-value="'2'" >Ambulant</md-option>
+                    <md-option ng-value="'3'">Indlagt</md-option>
+                </md-select>
+            </md-input-container>
+            </div>
+
         </div>
 
 <!--        <md-button ng-disabled="vm.disableVentetiderButton" ng-click="vm.ventetidsrapport()" >Klik for at lave en ventetidsrapport</md-button>-->
+
+
+
         <md-button  ng-disabled="vm.reportStarted" ng-click="vm.ventetidsrapport()" >Klik for at lave en ventetidsrapport</md-button>
 
 <!--        <md-button  ng-click="vm.testMail()" >Klik for at sende en testmail med en rapport over aktive ventetider de sidste 14 dage</md-button>-->
