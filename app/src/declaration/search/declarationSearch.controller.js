@@ -32,8 +32,9 @@ function DeclarationSearchController($scope, $state, DeclarationService, authSer
 
   }
 
+  // #49698 problems with Observands with to many contacts - increased to 8.
   function getEntries(query) {
-      return DeclarationService.getAutoComleteEntries(0, 5, query)
+      return DeclarationService.getAutoComleteEntries(0, 8, query)
       .then(function (response) {
         return response.entries;
       })
