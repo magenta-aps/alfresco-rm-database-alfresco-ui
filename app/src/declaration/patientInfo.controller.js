@@ -317,12 +317,67 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	}
 
 	function lockCaseDialog() {
-		$mdDialog.show({
-			templateUrl: 'app/src/declaration/view/lock-dialog.html',
-			scope: $scope, // use parent scope in template
-			preserveScope: true, // do not forget this if use parent scope
-			clickOutsideToClose: true
-		});
+
+
+		// tjek om alt er udfyldt - #49701
+
+		console.log("$scope.case");
+		console.log($scope.case);
+
+
+
+
+
+		if (vm.isBua) {
+			// #49701 mandatory
+			if ($scope.case.placement == undefined || $scope.case.sanctionProposal == undefined ||
+
+				$scope.case.mainCharge == undefined ||
+
+				$scope.case.observationDate == undefined ||  $scope.case.declarationDate == undefined
+			) {
+				$mdDialog.show({
+					templateUrl: 'app/src/declaration/view/unabletolockBUA.html',
+					scope: $scope, // use parent scope in template
+					preserveScope: true, // do not forget this if use parent scope
+					clickOutsideToClose: true
+				});
+			}
+			else {
+				$mdDialog.show({
+					templateUrl: 'app/src/declaration/view/unabletolock.html',
+					scope: $scope, // use parent scope in template
+					preserveScope: true, // do not forget this if use parent scope
+					clickOutsideToClose: true
+				});
+			}
+		}
+		else {
+			// #49701 mandatory
+			if ($scope.case.ethnicity == undefined || $scope.case.motherEthnicity == undefined || $scope.case.fatherEthnicity == undefined ||
+
+				$scope.case.placement == undefined || $scope.case.sanctionProposal == undefined ||
+
+				$scope.case.mainCharge == undefined ||
+
+				$scope.case.observationDate == undefined ||  $scope.case.declarationDate == undefined
+			) {
+				$mdDialog.show({
+					templateUrl: 'app/src/declaration/view/unabletolock.html',
+					scope: $scope, // use parent scope in template
+					preserveScope: true, // do not forget this if use parent scope
+					clickOutsideToClose: true
+				});
+			}
+			else {
+				$mdDialog.show({
+					templateUrl: 'app/src/declaration/view/lock-dialog.html',
+					scope: $scope, // use parent scope in template
+					preserveScope: true, // do not forget this if use parent scope
+					clickOutsideToClose: true
+				});
+			}
+		}
 	}
 
 	function lockCase() {
