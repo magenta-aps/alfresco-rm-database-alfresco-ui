@@ -6,7 +6,7 @@
   "repository": "https://github.com/magenta-aps/OpenDESK-UI",
   "license": "MIT",
   "devDependencies": {
-    "bower": "^1.8.13",
+    "bower": "^1.8.14",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "~3.1.0",
     "gulp-change": "^1.0.0",
@@ -40,8 +40,9 @@
   "dependencies": {
     "angular-popeye": "^1.0.5",
     "del": "^6.0.0",
+    "file-saver": "^1.2.0",
     "gulp-cli": "^2.3.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.3",
     "print-js": "^1.6.0"
   }
 }
