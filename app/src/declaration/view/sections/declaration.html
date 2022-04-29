@@ -2,6 +2,11 @@
     .md-virtual-repeat-container.md-autocomplete-suggestions-container {
         width:700px !important;
     }
+
+    .ghostbusters {
+        background-color: red;
+    }
+
 </style>
 
 
@@ -12,6 +17,8 @@
         </md-card-title-text>
     </md-card-title>
     <md-card-content>
+
+        <div ng-hide="vm.afslutwarning_placement">
         <div>
         <md-autocomplete flex
             md-selected-item="case.placement"
@@ -29,11 +36,33 @@
         </md-autocomplete>
         <md-tooltip md-direction="top" md-delay="500" ng-if="case.placement != null">{{case.placement}}</md-tooltip>
         </div>
+        </div>
+
+        <div ng-show="vm.afslutwarning_placement">
+            <div class="ghostbusters">
+            <div>
+                <md-autocomplete flex
+                                 md-selected-item="case.placement"
+                                 md-search-text="placementSearch"
+                                 md-items="placement in propertyFilter(propertyValues['placement'],placementSearch)"
+                                 md-item-text="placement"
+                                 md-min-length="0"
+                                 md-floating-label="Placering"
+                                 ng-disabled="!editPatientData"
+                                 md-clear-button="editPatientData"
+                                 md-require-match="true">
+                    <md-item-template>
+                        <span md-highlight-text="placementSearch" md-highlight-flags="gi">{{placement}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+                <md-tooltip md-direction="top" md-delay="500" ng-if="case.placement != null">{{case.placement}}</md-tooltip>
+            </div>
+        </div>
+        </div>
 
 
 
         <div ng-show="editPatientData">
-
             <md-autocomplete flex
                              md-selected-item="case.sanctionProposal"
                              md-search-text="sanctionProposalSearch"
@@ -52,12 +81,24 @@
         </div>
 
 
-
+        <div ng-hide="vm.afslutwarning_sanktionsforslag">
         <div ng-show="!editPatientData">
             <md-input-container class="md-block">
                 <label>Sanktionsforslag</label>
                 <textarea  ng-model="case.sanctionProposal" ng-disabled="!editPatientData" ></textarea>
             </md-input-container>
+        </div>
+        </div>
+
+        <div ng-show="vm.afslutwarning_sanktionsforslag">
+            <div class="ghostbusters">
+            <div ng-show="!editPatientData">
+                <md-input-container class="md-block">
+                    <label>Sanktionsforslag</label>
+                    <textarea  ng-model="case.sanctionProposal" ng-disabled="!editPatientData" ></textarea>
+                </md-input-container>
+            </div>
+          </div>
         </div>
 
 

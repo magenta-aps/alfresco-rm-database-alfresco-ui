@@ -31,10 +31,24 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 	vm.isOpenForTMPEdit = false;
 
+
 	vm.afslutwarning_referingAgency = false;
 	vm.afslutwarning_journalNumber = false;
 	vm.afslutwarning_rulingCourt = false;
 	vm.afslutwarning_rulingDate = false;
+
+	vm.afslutwarning_etnicitet = false;
+	vm.afslutwarning_etnicitetMother = false;
+	vm.afslutwarning_etnicitetFather = false;
+
+	vm.afslutwarning_placement = false;
+	vm.afslutwarning_sanktionsforslag = false;
+
+	vm.afslutwarning_mainCharge = false;
+
+	vm.afslutwarning_observationDate = false;
+	vm.afslutwarning_declarationDate = false;
+
 
 	vm.waitPromiseSupopl = function(state) {
 		if ($scope.case.closedWithoutDeclaration) {
@@ -352,13 +366,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 		// tjek om alt er udfyldt - #49701
 
-		console.log("$scope.case");
-		console.log($scope.case);
-
-
-
-
-
 		if (vm.isBua) {
 			// #49701 mandatory
 			if ($scope.case.placement == undefined || $scope.case.sanctionProposal == undefined ||
@@ -367,12 +374,23 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 				$scope.case.observationDate == undefined ||  $scope.case.declarationDate == undefined
 			) {
-				$mdDialog.show({
-					templateUrl: 'app/src/declaration/view/unabletolockBUA.html',
-					scope: $scope, // use parent scope in template
-					preserveScope: true, // do not forget this if use parent scope
-					clickOutsideToClose: true
-				});
+
+
+				vm.afslutwarning_placement = ($scope.case.placement == undefined);
+				vm.afslutwarning_sanktionsforslag = ($scope.case.sanctionProposal == undefined);
+
+				vm.afslutwarning_mainCharge = ($scope.case.mainCharge == undefined);
+
+				vm.afslutwarning_observationDate = ($scope.case.observationDate == undefined);
+				vm.afslutwarning_declarationDate = ($scope.case.declarationDate == undefined);
+
+
+				// $mdDialog.show({
+				// 	templateUrl: 'app/src/declaration/view/unabletolockBUA.html',
+				// 	scope: $scope, // use parent scope in template
+				// 	preserveScope: true, // do not forget this if use parent scope
+				// 	clickOutsideToClose: true
+				// });
 			}
 			else {
 				$mdDialog.show({
@@ -381,6 +399,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 					preserveScope: true, // do not forget this if use parent scope
 					clickOutsideToClose: true
 				});
+
+
+
 			}
 		}
 		else {
@@ -393,12 +414,26 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 				$scope.case.observationDate == undefined ||  $scope.case.declarationDate == undefined
 			) {
-				$mdDialog.show({
-					templateUrl: 'app/src/declaration/view/unabletolock.html',
-					scope: $scope, // use parent scope in template
-					preserveScope: true, // do not forget this if use parent scope
-					clickOutsideToClose: true
-				});
+
+				Toast.show('Følgende felter mangler at blive udfyldt');
+				vm.afslutwarning_etnicitet = ($scope.case.ethnicity == undefined);
+				vm.afslutwarning_etnicitetMother = ($scope.case.motherEthnicity == undefined);
+				vm.afslutwarning_etnicitetFather = ($scope.case.fatherEthnicity == undefined);
+
+				vm.afslutwarning_placement = ($scope.case.placement == undefined);
+				vm.afslutwarning_sanktionsforslag = ($scope.case.sanctionProposal == undefined);
+
+				vm.afslutwarning_mainCharge = ($scope.case.mainCharge == undefined);
+
+				vm.afslutwarning_observationDate = ($scope.case.observationDate == undefined);
+				vm.afslutwarning_declarationDate = ($scope.case.declarationDate == undefined);
+
+				// $mdDialog.show({
+				// 	templateUrl: 'app/src/declaration/view/unabletolock.html',
+				// 	scope: $scope, // use parent scope in template
+				// 	preserveScope: true, // do not forget this if use parent scope
+				// 	clickOutsideToClose: true
+				// });
 			}
 			else {
 				$mdDialog.show({
@@ -446,6 +481,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	$scope.canAccessUndoCloseCase = canAccessUndoCloseCase;
 
     $scope.unlockCase = function () {
+console.log("duff");
 
 		if (($scope.unlockCaseParams == 'undoCloseCase')) {
 			$mdDialog.cancel();
@@ -693,8 +729,10 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 				})
 	}
 
-	$scope.cancel = function () {
-		$mdDialog.cancel();
+	$scope.afbryd = function () {
+    	console.log("true");
+		vm.afslutwarning = true;
+        $mdDialog.cancel();
 	}
 }
 
