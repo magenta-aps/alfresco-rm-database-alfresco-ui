@@ -32,6 +32,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	vm.isOpenForTMPEdit = false;
 
 	vm.afslutwarning_referingAgency = false;
+	vm.afslutwarning_journalNumber = false;
+	vm.afslutwarning_rulingCourt = false;
+	vm.afslutwarning_rulingDate = false;
 
 	vm.waitPromiseSupopl = function(state) {
 		if ($scope.case.closedWithoutDeclaration) {
@@ -97,18 +100,33 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 		// check if all mandatory fields have been completed
 
+		if ($scope.case.referingAgency == undefined || $scope.case.journalNumber == undefined
+		) {
 
-		if ()
+			Toast.show('Følgende felter mangler at blive udfyldt');
+			vm.afslutwarning_referingAgency = ($scope.case.referingAgency == undefined);
+			vm.afslutwarning_journalNumber = ($scope.case.journalNumber == undefined);
 
-			vm.afslutwarning_referingAgency
+			if ($scope.case.declarationType == 'kendelse') {
+				vm.afslutwarning_rulingDate = ($scope.case.rulingDate == undefined);
+				vm.afslutwarning_rulingCourt = ($scope.case.rulingCourt == undefined);
+			}
 
 
 
 
-		DeclarationService.makeDeclarationDocument($scope.case)
-			.then(function (response) {
-				$state.go('document', { doc: response.id });
-			});
+		}
+		else  {
+			DeclarationService.makeDeclarationDocument($scope.case)
+				.then(function (response) {
+					$state.go('document', { doc: response.id });
+				});
+		}
+
+
+
+
+
 	}
 
 	function makeBrevDocument() {
