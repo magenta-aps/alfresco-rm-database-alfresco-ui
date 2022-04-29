@@ -31,6 +31,8 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 	vm.isOpenForTMPEdit = false;
 
+	vm.afslutwarning_referingAgency = false;
+
 	vm.waitPromiseSupopl = function(state) {
 		if ($scope.case.closedWithoutDeclaration) {
 			$scope.closeCaseParams = {closed : 'no-declaration'}
@@ -92,6 +94,17 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	activated();
 
 	function makeDeclarationDocument() {
+
+		// check if all mandatory fields have been completed
+
+
+		if ()
+
+			vm.afslutwarning_referingAgency
+
+
+
+
 		DeclarationService.makeDeclarationDocument($scope.case)
 			.then(function (response) {
 				$state.go('document', { doc: response.id });

@@ -1,3 +1,9 @@
+<style>
+    .ghostbusters {
+        background-color: red;
+    }
+</style>
+
 <md-card>
     <md-card-title>
         <md-card-title-text>
@@ -5,6 +11,8 @@
         </md-card-title-text>
     </md-card-title>
     <md-card-content>
+
+        <div ng-hide="vm.afslutwarning_referingAgency">
         <div>
             <!--            <md-autocomplete flex md-selected-item="case.referingAgency" md-search-text="agencySearch" md-items="agency in agents"-->
             <md-autocomplete flex md-selected-item="case.referingAgency" md-search-text="agencySearch" md-items="agency in propertyFilter(agents,agencySearch)"
@@ -15,6 +23,23 @@
                 </md-item-template>
             </md-autocomplete>
             <md-tooltip md-direction="top" md-delay="500" ng-if="case.referingAgency != null">{{case.referingAgency}}</md-tooltip>
+        </div>
+        </div>
+
+        <div ng-show="vm.afslutwarning_referingAgency">
+            <div class="ghostbusters">
+            <div>
+                <!--            <md-autocomplete flex md-selected-item="case.referingAgency" md-search-text="agencySearch" md-items="agency in agents"-->
+                <md-autocomplete flex md-selected-item="case.referingAgency" md-search-text="agencySearch" md-items="agency in propertyFilter(agents,agencySearch)"
+                                 md-item-text="agency" md-min-length="0" md-floating-label="Henvisende instans" ng-disabled="!editPatientData"
+                                 md-clear-button="editPatientData" md-require-match="true">
+                    <md-item-template>
+                        <span md-highlight-text="agencySearch" md-highlight-flags="gi">{{agency}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+                <md-tooltip md-direction="top" md-delay="500" ng-if="case.referingAgency != null">{{case.referingAgency}}</md-tooltip>
+            </div>
+            </div>
         </div>
 
 
