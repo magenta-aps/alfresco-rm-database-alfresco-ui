@@ -1,3 +1,9 @@
+<style>
+    .ghostbusters {
+        background-color: red;
+}
+</style>
+
 <md-card>
     <md-card-title>
         <md-card-title-text>
@@ -40,40 +46,87 @@
             </md-input-container>
         </div>
 
-        <div ng-hide="vm.isBua">
-        <md-autocomplete flex 
-            md-selected-item="case.ethnicity" 
-            md-search-text="ethnicitySearch"
-            md-items="ethnicity in propertyFilter(propertyValues['ethnicity'],ethnicitySearch)" 
-            md-item-text="ethnicity" 
-            md-min-length="0" 
-            md-floating-label="Etnicitet"
-            ng-disabled="!editPatientData"
-            md-clear-button="editPatientData"
-            md-require-match="true">
-            <md-item-template>
-                <span md-highlight-text="ethnicitySearch" md-highlight-flags="gi">{{ethnicity}}</span>
-            </md-item-template>
-        </md-autocomplete>
+        <div ng-hide="vm.afslutwarning_etnicitet">
+            <div ng-hide="vm.isBua">
+            <md-autocomplete flex
+                md-selected-item="case.ethnicity"
+                md-search-text="ethnicitySearch"
+                md-items="ethnicity in propertyFilter(propertyValues['ethnicity'],ethnicitySearch)"
+                md-item-text="ethnicity"
+                md-min-length="0"
+                md-floating-label="Etnicitet"
+                ng-disabled="!editPatientData"
+                md-clear-button="editPatientData"
+                md-require-match="true">
+                <md-item-template>
+                    <span md-highlight-text="ethnicitySearch" md-highlight-flags="gi">{{ethnicity}}</span>
+                </md-item-template>
+            </md-autocomplete>
+            </div>
         </div>
 
-        <div ng-hide="vm.isBua">
-        <md-autocomplete flex 
-            md-selected-item="case.motherEthnicity" 
-            md-search-text="motherEthnicitySearch"
-            md-items="ethnicity in propertyFilter(propertyValues['ethnicity'],motherEthnicitySearch)" 
-            md-item-text="ethnicity" 
-            md-min-length="0" 
-            md-floating-label="Mors etnicitet"
-            ng-disabled="!editPatientData"
-            md-clear-button="editPatientData"
-            md-require-match="true">
-            <md-item-template>
-                <span md-highlight-text="motherEthnicitySearch" md-highlight-flags="gi">{{ethnicity}}</span>
-            </md-item-template>
-        </md-autocomplete>
+        <div ng-show="vm.afslutwarning_etnicitet">
+            <div class="ghostbusters">
+                <div ng-hide="vm.isBua">
+                    <md-autocomplete flex
+                                     md-selected-item="case.ethnicity"
+                                     md-search-text="ethnicitySearch"
+                                     md-items="ethnicity in propertyFilter(propertyValues['ethnicity'],ethnicitySearch)"
+                                     md-item-text="ethnicity"
+                                     md-min-length="0"
+                                     md-floating-label="Etnicitet"
+                                     ng-disabled="!editPatientData"
+                                     md-clear-button="editPatientData"
+                                     md-require-match="true">
+                        <md-item-template>
+                            <span md-highlight-text="ethnicitySearch" md-highlight-flags="gi">{{ethnicity}}</span>
+                        </md-item-template>
+                    </md-autocomplete>
+                </div>
+            </div>
         </div>
 
+        <div ng-hide="vm.afslutwarning_etnicitetMother">
+            <div ng-hide="vm.isBua">
+            <md-autocomplete flex
+                md-selected-item="case.motherEthnicity"
+                md-search-text="motherEthnicitySearch"
+                md-items="ethnicity in propertyFilter(propertyValues['ethnicity'],motherEthnicitySearch)"
+                md-item-text="ethnicity"
+                md-min-length="0"
+                md-floating-label="Mors etnicitet"
+                ng-disabled="!editPatientData"
+                md-clear-button="editPatientData"
+                md-require-match="true">
+                <md-item-template>
+                    <span md-highlight-text="motherEthnicitySearch" md-highlight-flags="gi">{{ethnicity}}</span>
+                </md-item-template>
+            </md-autocomplete>
+            </div>
+        </div>
+
+        <div ng-show="vm.afslutwarning_etnicitetMother">
+            <div class="ghostbusters">
+            <div ng-hide="vm.isBua">
+                <md-autocomplete flex
+                                 md-selected-item="case.motherEthnicity"
+                                 md-search-text="motherEthnicitySearch"
+                                 md-items="ethnicity in propertyFilter(propertyValues['ethnicity'],motherEthnicitySearch)"
+                                 md-item-text="ethnicity"
+                                 md-min-length="0"
+                                 md-floating-label="Mors etnicitet"
+                                 ng-disabled="!editPatientData"
+                                 md-clear-button="editPatientData"
+                                 md-require-match="true">
+                    <md-item-template>
+                        <span md-highlight-text="motherEthnicitySearch" md-highlight-flags="gi">{{ethnicity}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+            </div>
+            </div>
+        </div>
+
+        <div ng-show="vm.afslutwarning_etnicitetFather">
         <div ng-hide="vm.isBua">
         <md-autocomplete flex 
             md-selected-item="case.fatherEthnicity" 
@@ -90,5 +143,30 @@
             </md-item-template>
         </md-autocomplete>
         </div>
+        </div>
+
+        <div ng-show="vm.afslutwarning_etnicitetFather">
+            <div class="ghostbusters">
+            <div ng-hide="vm.isBua">
+                <md-autocomplete flex
+                                 md-selected-item="case.fatherEthnicity"
+                                 md-search-text="fatherEthnicitySearch"
+                                 md-items="ethnicity in propertyFilter(propertyValues['ethnicity'],fatherEthnicitySearch)"
+                                 md-item-text="ethnicity"
+                                 md-min-length="0"
+                                 md-floating-label="Fars etnicitet"
+                                 ng-disabled="!editPatientData"
+                                 md-clear-button="editPatientData"
+                                 md-require-match="true">
+                    <md-item-template>
+                        <span md-highlight-text="fatherEthnicitySearch" md-highlight-flags="gi">{{ethnicity}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+            </div>
+        </div>
+        </div>
+
+
+
     </md-card-content>
 </md-card>

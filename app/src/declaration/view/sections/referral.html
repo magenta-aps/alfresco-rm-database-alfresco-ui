@@ -1,3 +1,9 @@
+<style>
+    .ghostbusters {
+        background-color: red;
+    }
+</style>
+
 <md-card>
     <md-card-title>
         <md-card-title-text>
@@ -25,6 +31,7 @@
             </md-input-container>
         </div>
 
+        <div ng-hide="vm.afslutwarning_mainCharge">
         <div>
             <md-autocomplete flex md-selected-item="case.mainCharge" md-search-text="mainChargeSearch" md-items="mainCarge in propertyFilter(propertyValues['mainCharge'],mainChargeSearch)"
                 md-item-text="mainCarge" md-min-length="0" md-floating-label="Hovedsigtelse" ng-disabled="!editPatientData"
@@ -34,6 +41,22 @@
                 </md-item-template>
             </md-autocomplete>
             <md-tooltip md-direction="top" md-delay="500" ng-if="case.mainCharge != null">{{case.mainCharge}}</md-tooltip>
+        </div>
+        </div>
+
+        <div ng-show="vm.afslutwarning_mainCharge">
+            <div class="ghostbusters">
+            <div>
+                <md-autocomplete flex md-selected-item="case.mainCharge" md-search-text="mainChargeSearch" md-items="mainCarge in propertyFilter(propertyValues['mainCharge'],mainChargeSearch)"
+                                 md-item-text="mainCarge" md-min-length="0" md-floating-label="Hovedsigtelse" ng-disabled="!editPatientData"
+                                 md-clear-button="editPatientData" md-require-match="true">
+                    <md-item-template>
+                        <span md-highlight-text="mainChargeSearch" md-highlight-flags="gi">{{mainCarge}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+                <md-tooltip md-direction="top" md-delay="500" ng-if="case.mainCharge != null">{{case.mainCharge}}</md-tooltip>
+            </div>
+        </div>
         </div>
 
         <md-autocomplete flex md-selected-item="case.status" md-search-text="statusSearch" md-items="status in propertyFilter(propertyValues['status'],statusSearch)"
