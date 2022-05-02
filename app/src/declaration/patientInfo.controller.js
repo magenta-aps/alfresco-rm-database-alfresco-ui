@@ -76,16 +76,12 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	DeclarationService.isBUAUser().then(function(response) {
 		console.log("to be bua or not to be?...");
 		console.log(response);
-
-
 		vm.isBua = response;
-
 	});
-
 
 	vm.waitPromiseNormal = function(declarationSettings_, state) {
 		vm.declarationState = state;
-		HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings_)
+		HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false)
 		HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
 		HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
 		HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
@@ -126,8 +122,8 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 				vm.afslutwarning_rulingCourt = ($scope.case.rulingCourt == undefined);
 			}
 
-
-
+			// scroll down
+			window.scrollBy(0,650);
 
 		}
 		else  {
@@ -136,11 +132,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 					$state.go('document', { doc: response.id });
 				});
 		}
-
-
-
-
-
 	}
 
 	function makeBrevDocument() {
@@ -297,7 +288,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 						vm.waitPromiseNormal(declarationSettings, stateReponse.data.state);
 					}
 					else {
-						HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings)
+						HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false)
 						HeaderService.addAction('Opret brev', 'description', makeBrevDocument)
 						HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
 						HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
@@ -363,87 +354,112 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 	function lockCaseDialog() {
 
-
-		// tjek om alt er udfyldt - #49701
-
-		if (vm.isBua) {
-			// #49701 mandatory
-			if ($scope.case.placement == undefined || $scope.case.sanctionProposal == undefined ||
-
-				$scope.case.mainCharge == undefined ||
-
-				$scope.case.observationDate == undefined ||  $scope.case.declarationDate == undefined
-			) {
+		// if case is locked for edit - show who and exit
 
 
-				vm.afslutwarning_placement = ($scope.case.placement == undefined);
-				vm.afslutwarning_sanktionsforslag = ($scope.case.sanctionProposal == undefined);
+		DeclarationService.get($stateParams.caseid)
+			.then(function (response) {
+				vm.createdDateBeforeEdit = response.creationDate;
+				vm.declaratiotionDateBeforeEdit = response.declarationDate;
 
-				vm.afslutwarning_mainCharge = ($scope.case.mainCharge == undefined);
+				var currentUser = authService.getUserInfo().user.userName;
 
-				vm.afslutwarning_observationDate = ($scope.case.observationDate == undefined);
-				vm.afslutwarning_declarationDate = ($scope.case.declarationDate == undefined);
+				if (response.locked4edit) {
+					if (currentUser != $scope.case.locked4editBy) {
+						alert("sagen er låst for redigering af " + response.locked4editBy + " og kan ikke afsluttes før brugeren vælger gem.");
+						return false;
+					}
+				}
+				else {
+// tjek om alt er udfyldt - #49701
 
+					if (vm.isBua) {
+						// #49701 mandatory
+						if ($scope.case.placement == undefined || $scope.case.sanctionProposal == undefined ||
 
-				// $mdDialog.show({
-				// 	templateUrl: 'app/src/declaration/view/unabletolockBUA.html',
-				// 	scope: $scope, // use parent scope in template
-				// 	preserveScope: true, // do not forget this if use parent scope
-				// 	clickOutsideToClose: true
-				// });
-			}
-			else {
-				$mdDialog.show({
-					templateUrl: 'app/src/declaration/view/unabletolock.html',
-					scope: $scope, // use parent scope in template
-					preserveScope: true, // do not forget this if use parent scope
-					clickOutsideToClose: true
-				});
+							$scope.case.mainCharge == undefined ||
 
+							$scope.case.observationDate == undefined ||  $scope.case.declarationDate == undefined
+						) {
 
 
-			}
-		}
-		else {
-			// #49701 mandatory
-			if ($scope.case.ethnicity == undefined || $scope.case.motherEthnicity == undefined || $scope.case.fatherEthnicity == undefined ||
+							vm.afslutwarning_placement = ($scope.case.placement == undefined);
+							vm.afslutwarning_sanktionsforslag = ($scope.case.sanctionProposal == undefined);
 
-				$scope.case.placement == undefined || $scope.case.sanctionProposal == undefined ||
+							vm.afslutwarning_mainCharge = ($scope.case.mainCharge == undefined);
 
-				$scope.case.mainCharge == undefined ||
+							vm.afslutwarning_observationDate = ($scope.case.observationDate == undefined);
+							vm.afslutwarning_declarationDate = ($scope.case.declarationDate == undefined);
 
-				$scope.case.observationDate == undefined ||  $scope.case.declarationDate == undefined
-			) {
 
-				Toast.show('Følgende felter mangler at blive udfyldt');
-				vm.afslutwarning_etnicitet = ($scope.case.ethnicity == undefined);
-				vm.afslutwarning_etnicitetMother = ($scope.case.motherEthnicity == undefined);
-				vm.afslutwarning_etnicitetFather = ($scope.case.fatherEthnicity == undefined);
+							// $mdDialog.show({
+							// 	templateUrl: 'app/src/declaration/view/unabletolockBUA.html',
+							// 	scope: $scope, // use parent scope in template
+							// 	preserveScope: true, // do not forget this if use parent scope
+							// 	clickOutsideToClose: true
+							// });
+						}
+						else {
+							$mdDialog.show({
+								templateUrl: 'app/src/declaration/view/unabletolock.html',
+								scope: $scope, // use parent scope in template
+								preserveScope: true, // do not forget this if use parent scope
+								clickOutsideToClose: true
+							});
 
-				vm.afslutwarning_placement = ($scope.case.placement == undefined);
-				vm.afslutwarning_sanktionsforslag = ($scope.case.sanctionProposal == undefined);
 
-				vm.afslutwarning_mainCharge = ($scope.case.mainCharge == undefined);
 
-				vm.afslutwarning_observationDate = ($scope.case.observationDate == undefined);
-				vm.afslutwarning_declarationDate = ($scope.case.declarationDate == undefined);
+						}
+					}
+					else {
+						// #49701 mandatory
+						if ($scope.case.ethnicity == undefined || $scope.case.motherEthnicity == undefined || $scope.case.fatherEthnicity == undefined ||
 
-				// $mdDialog.show({
-				// 	templateUrl: 'app/src/declaration/view/unabletolock.html',
-				// 	scope: $scope, // use parent scope in template
-				// 	preserveScope: true, // do not forget this if use parent scope
-				// 	clickOutsideToClose: true
-				// });
-			}
-			else {
-				$mdDialog.show({
-					templateUrl: 'app/src/declaration/view/lock-dialog.html',
-					scope: $scope, // use parent scope in template
-					preserveScope: true, // do not forget this if use parent scope
-					clickOutsideToClose: true
-				});
-			}
-		}
+							$scope.case.placement == undefined || $scope.case.sanctionProposal == undefined ||
+
+							$scope.case.mainCharge == undefined ||
+
+							$scope.case.observationDate == undefined ||  $scope.case.declarationDate == undefined
+						) {
+
+							Toast.show('Følgende felter mangler at blive udfyldt');
+							vm.afslutwarning_etnicitet = ($scope.case.ethnicity == undefined);
+							vm.afslutwarning_etnicitetMother = ($scope.case.motherEthnicity == undefined);
+							vm.afslutwarning_etnicitetFather = ($scope.case.fatherEthnicity == undefined);
+
+							vm.afslutwarning_placement = ($scope.case.placement == undefined);
+							vm.afslutwarning_sanktionsforslag = ($scope.case.sanctionProposal == undefined);
+
+							vm.afslutwarning_mainCharge = ($scope.case.mainCharge == undefined);
+
+							vm.afslutwarning_observationDate = ($scope.case.observationDate == undefined);
+							vm.afslutwarning_declarationDate = ($scope.case.declarationDate == undefined);
+
+							// $mdDialog.show({
+							// 	templateUrl: 'app/src/declaration/view/unabletolock.html',
+							// 	scope: $scope, // use parent scope in template
+							// 	preserveScope: true, // do not forget this if use parent scope
+							// 	clickOutsideToClose: true
+							// });
+						}
+						else {
+							$mdDialog.show({
+								templateUrl: 'app/src/declaration/view/lock-dialog.html',
+								scope: $scope, // use parent scope in template
+								preserveScope: true, // do not forget this if use parent scope
+								clickOutsideToClose: true
+							});
+						}
+					}
+				}
+			});
+
+
+
+
+
+
+
 	}
 
 	function lockCase() {
