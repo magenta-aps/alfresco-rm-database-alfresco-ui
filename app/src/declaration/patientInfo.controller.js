@@ -110,8 +110,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 		// check if all mandatory fields have been completed
 
-		if ($scope.case.referingAgency == undefined || $scope.case.journalNumber == undefined
-		) {
+		if ($scope.case.referingAgency == undefined || $scope.case.journalNumber == undefined) {
 
 			Toast.show('Følgende felter mangler at blive udfyldt');
 			vm.afslutwarning_referingAgency = ($scope.case.referingAgency == undefined);
@@ -122,15 +121,27 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 				vm.afslutwarning_rulingCourt = ($scope.case.rulingCourt == undefined);
 			}
 
+
 			// scroll down
 			window.scrollBy(0,650);
 
 		}
 		else  {
-			DeclarationService.makeDeclarationDocument($scope.case)
-				.then(function (response) {
-					$state.go('document', { doc: response.id });
-				});
+			if ($scope.case.declarationType == 'kendelse' && ($scope.case.rulingDate == undefined || $scope.case.rulingCourt == undefined)) {
+				vm.afslutwarning_rulingDate = ($scope.case.rulingDate == undefined);
+				vm.afslutwarning_rulingCourt = ($scope.case.rulingCourt == undefined);
+
+				console.log("hvad er vm.afslutwarning_rulingCourt");
+				console.log(vm.afslutwarning_rulingCourt);
+
+				Toast.show('Følgende felter mangler at blive udfyldt');
+			}
+			else {
+				DeclarationService.makeDeclarationDocument($scope.case)
+					.then(function (response) {
+						$state.go('document', {doc: response.id});
+					});
+			}
 		}
 	}
 

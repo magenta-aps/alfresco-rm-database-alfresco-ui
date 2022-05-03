@@ -1,7 +1,11 @@
 <style>
-    /*ghostbusters {*/
-    /*    background-color: red;*/
-    /*}*/
+    .ghostbusters * input {
+        color: red !important;
+    }
+
+    .ghostbusters * label {
+        color: red !important;
+    }
 </style>
 
 <md-card>
@@ -131,6 +135,7 @@
                     </md-input-container>
                 </div>
             </div>
+            </div>
 
 
 
@@ -147,9 +152,9 @@
                     <label>Retten i</label>
                     <input ng-model="case.rulingCourt" ng-disabled="!editPatientData">
                 </md-input-container>
+                </div>
             </div>
-            </div>
-
+        </div>
         </div>
     </md-card-content>
 </md-card>
