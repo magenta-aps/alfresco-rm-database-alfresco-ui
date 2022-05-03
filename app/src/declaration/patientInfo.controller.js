@@ -333,8 +333,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 		// tjek om alt er udfyldt - #49701
 
-		console.log("$scope.case");
-		console.log($scope.case);
+		console.log("$scope.$scope.case.sanctionProposal$scope.case.sanctionProposal");
+		console.log($scope.case.sanctionProposal);
+
 
 
 
@@ -393,6 +394,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 				vm.afslutwarning_placement = ($scope.case.placement == undefined);
 				vm.afslutwarning_sanktionsforslag = ($scope.case.sanctionProposal == undefined);
+				console.log("hvad er vm.afslutwarning_sanktionsforslag");
+				console.log(vm.afslutwarning_sanktionsforslag);
+
 
 				vm.afslutwarning_mainCharge = ($scope.case.mainCharge == undefined);
 
