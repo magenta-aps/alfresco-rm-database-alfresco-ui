@@ -1,8 +1,13 @@
 <style>
-    .ghostbusters {
-        background-color: red;
-}
+    .ghostbusters * input {
+        color: red !important;
+    }
+
+    .ghostbusters * label {
+        color: red !important;
+    }
 </style>
+
 
 <md-card>
     <md-card-title>
@@ -48,6 +53,7 @@
 
         <div ng-hide="vm.afslutwarning_etnicitet">
             <div ng-hide="vm.isBua">
+                <div>
             <md-autocomplete flex
                 md-selected-item="case.ethnicity"
                 md-search-text="ethnicitySearch"
@@ -63,12 +69,13 @@
                 </md-item-template>
             </md-autocomplete>
             </div>
+            </div>
         </div>
 
         <div ng-show="vm.afslutwarning_etnicitet">
             <div class="ghostbusters">
                 <div ng-hide="vm.isBua">
-                    <md-autocomplete flex
+                    <md-autocomplete  flex
                                      md-selected-item="case.ethnicity"
                                      md-search-text="ethnicitySearch"
                                      md-items="ethnicity in propertyFilter(propertyValues['ethnicity'],ethnicitySearch)"
@@ -126,7 +133,7 @@
             </div>
         </div>
 
-        <div ng-show="vm.afslutwarning_etnicitetFather">
+        <div ng-hide="vm.afslutwarning_etnicitetFather">
         <div ng-hide="vm.isBua">
         <md-autocomplete flex 
             md-selected-item="case.fatherEthnicity" 

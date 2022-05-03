@@ -357,6 +357,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		// if case is locked for edit - show who and exit
 
 
+
 		DeclarationService.get($stateParams.caseid)
 			.then(function (response) {
 				vm.createdDateBeforeEdit = response.creationDate;
@@ -453,7 +454,6 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 					}
 				}
 			});
-
 
 
 
