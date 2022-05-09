@@ -4,12 +4,16 @@ angular
     .module('openDeskApp.systemsettings')
     .controller('SystemSettingsController', SystemSettingsCtrl);
 
-function SystemSettingsCtrl($scope, $translate, authService, HeaderService) {
+function SystemSettingsCtrl($scope, $translate, authService, HeaderService, $http) {
     var vm = this;
 
     $scope.templateSites = [];
 
     vm.changePageHeading = changePageHeading;
+    vm.bua = true;
+
+    isBUAUser();
+
 
     HeaderService.resetActions();
     HeaderService.setTitle($translate.instant('ADMIN.ADMINISTRATION'));
@@ -22,4 +26,12 @@ function SystemSettingsCtrl($scope, $translate, authService, HeaderService) {
         $scope.userRoles = authService.getUserRoles();
     }
     getUserRoles();
+
+    function isBUAUser() {
+        return $http.get('/alfresco/s/usertype').then(function (response) {
+            if (!response.data.bua) {
+                vm.bua = false;
+            };
+        })
+    }
 }
