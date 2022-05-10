@@ -41,6 +41,7 @@
     "angular-filter": "^0.5.17",
     "angular-popeye": "^1.0.5",
     "del": "^6.0.0",
+    "filter": "^0.1.1",
     "gulp-cli": "^2.3.0",
     "moment": "^2.29.1",
     "print-js": "^1.6.0"
