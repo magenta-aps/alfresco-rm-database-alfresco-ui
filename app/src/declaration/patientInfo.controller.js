@@ -640,9 +640,9 @@ console.log("duff");
 					vm.afslutwarning_observationDate = ($scope.case.observationDate == undefined);
 
 
-					$scope.case.closedWithoutDeclarationReason = "";
-					$scope.case.closedWithoutDeclarationSentTo = "";
-					$scope.case.returnOfDeclarationDate = "";
+					$scope.case.closedWithoutDeclarationReason = undefined;
+					$scope.case.closedWithoutDeclarationSentTo = undefined;
+					$scope.case.returnOfDeclarationDate = undefined;
 					$scope.case.closedWithoutDeclaration = false;
 					$scope.case.closed = false;
 
@@ -683,14 +683,17 @@ console.log("duff");
 
 					vm.afslutwarning_placement = ($scope.case.placement == undefined);
 					vm.afslutwarning_sanktionsforslag = ($scope.case.sanctionProposal == undefined);
-					console.log("hvad er vm.afslutwarning_sanktionsforslag");
-					console.log(vm.afslutwarning_sanktionsforslag);
-
 
 					vm.afslutwarning_mainCharge = ($scope.case.mainCharge == undefined);
 
 					vm.afslutwarning_observationDate = ($scope.case.observationDate == undefined);
 					vm.afslutwarning_declarationDate = ($scope.case.declarationDate == undefined);
+
+					$scope.case.closedWithoutDeclarationReason = undefined;
+					$scope.case.closedWithoutDeclarationSentTo = undefined;
+					$scope.case.returnOfDeclarationDate = undefined;
+					$scope.case.closedWithoutDeclaration = false;
+					$scope.case.closed = false;
 
 					$mdDialog.cancel();
 					Toast.show('Følgende felter mangler at blive udfyldt');
