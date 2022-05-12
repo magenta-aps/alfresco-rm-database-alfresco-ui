@@ -70,7 +70,20 @@ function config($stateProvider, USER_ROLES) {
             controller: 'ReportsController as vm'
           }
         }
-      })
+        }) .state('administration.deleteobs', {
+      url: '/deleteobs',
+      params: {
+        authorizedRoles: [USER_ROLES.templateFolderValueManager],
+        path: "/Sites/retspsyk/deleteobs",
+        breadcrumbPath: []
+      },
+      views: {
+        'systemsetting-view': {
+          templateUrl: 'app/src/system_settings/deleteobs/deleteobs.html',
+          controller: 'DeleteobsController as vm'
+        }
+      }
+    })
     .state('administration.ethnicities', {
       url: '/etniciteter',
       params: {
