@@ -364,113 +364,12 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	}
 
 	function lockCaseDialog() {
-
-		// if case is locked for edit - show who and exit
-
-
-
-		DeclarationService.get($stateParams.caseid)
-			.then(function (response) {
-				vm.createdDateBeforeEdit = response.creationDate;
-				vm.declaratiotionDateBeforeEdit = response.declarationDate;
-
-				var currentUser = authService.getUserInfo().user.userName;
-
-				if (response.locked4edit) {
-					if (currentUser != $scope.case.locked4editBy) {
-						alert("sagen er låst for redigering af " + response.locked4editBy + " og kan ikke afsluttes før brugeren vælger gem.");
-						return false;
-					}
-				}
-				else {
-// tjek om alt er udfyldt - #49701
-
-					if (vm.isBua) {
-						// #49701 mandatory
-						if ($scope.case.placement == undefined || $scope.case.sanctionProposal == undefined ||
-
-							$scope.case.mainCharge == undefined ||
-
-							$scope.case.observationDate == undefined ||  $scope.case.declarationDate == undefined
-						) {
-
-
-							vm.afslutwarning_placement = ($scope.case.placement == undefined);
-							vm.afslutwarning_sanktionsforslag = ($scope.case.sanctionProposal == undefined);
-
-							vm.afslutwarning_mainCharge = ($scope.case.mainCharge == undefined);
-
-							vm.afslutwarning_observationDate = ($scope.case.observationDate == undefined);
-							vm.afslutwarning_declarationDate = ($scope.case.declarationDate == undefined);
-
-
-							// $mdDialog.show({
-							// 	templateUrl: 'app/src/declaration/view/unabletolockBUA.html',
-							// 	scope: $scope, // use parent scope in template
-							// 	preserveScope: true, // do not forget this if use parent scope
-							// 	clickOutsideToClose: true
-							// });
-						}
-						else {
-							$mdDialog.show({
-								templateUrl: 'app/src/declaration/view/unabletolock.html',
-								scope: $scope, // use parent scope in template
-								preserveScope: true, // do not forget this if use parent scope
-								clickOutsideToClose: true
-							});
-
-
-
-						}
-					}
-					else {
-						// #49701 mandatory
-						if ($scope.case.ethnicity == undefined || $scope.case.motherEthnicity == undefined || $scope.case.fatherEthnicity == undefined ||
-
-							$scope.case.placement == undefined || $scope.case.sanctionProposal == undefined ||
-
-							$scope.case.mainCharge == undefined ||
-
-							$scope.case.observationDate == undefined ||  $scope.case.declarationDate == undefined
-						) {
-
-							Toast.show('Følgende felter mangler at blive udfyldt');
-							vm.afslutwarning_etnicitet = ($scope.case.ethnicity == undefined);
-							vm.afslutwarning_etnicitetMother = ($scope.case.motherEthnicity == undefined);
-							vm.afslutwarning_etnicitetFather = ($scope.case.fatherEthnicity == undefined);
-
-							vm.afslutwarning_placement = ($scope.case.placement == undefined);
-							vm.afslutwarning_sanktionsforslag = ($scope.case.sanctionProposal == undefined);
-
-							vm.afslutwarning_mainCharge = ($scope.case.mainCharge == undefined);
-
-							vm.afslutwarning_observationDate = ($scope.case.observationDate == undefined);
-							vm.afslutwarning_declarationDate = ($scope.case.declarationDate == undefined);
-
-							// $mdDialog.show({
-							// 	templateUrl: 'app/src/declaration/view/unabletolock.html',
-							// 	scope: $scope, // use parent scope in template
-							// 	preserveScope: true, // do not forget this if use parent scope
-							// 	clickOutsideToClose: true
-							// });
-						}
-						else {
-							$mdDialog.show({
-								templateUrl: 'app/src/declaration/view/lock-dialog.html',
-								scope: $scope, // use parent scope in template
-								preserveScope: true, // do not forget this if use parent scope
-								clickOutsideToClose: true
-							});
-						}
-					}
-				}
-			});
-
-
-
-
-
-
+				$mdDialog.show({
+					templateUrl: 'app/src/declaration/view/lock-dialog.html',
+					scope: $scope, // use parent scope in template
+					preserveScope: true, // do not forget this if use parent scope
+					clickOutsideToClose: true
+				});
 	}
 
 	function lockCase() {
@@ -728,6 +627,8 @@ console.log("duff");
 	}
 
 	$scope.closeCase = function () {
+
+
 		$scope.case.locked4edit = false;
 		$scope.case.locked4editBy = {};
 		$scope.case.closed = true;
@@ -745,15 +646,118 @@ console.log("duff");
 		$scope.case.closedWithoutDeclarationSentTo = $scope.closeCaseParams.sentTo;
 		$scope.case.returnOfDeclarationDate = $scope.closeCaseParams.returnOfDeclarationDate;
 
-		DeclarationService.update($scope.case)
+
+		// check mandatory fields
+		// first, make a check if user wants to close with or without declaration
+
+		if (!vm.isBua) {
+			if ($scope.case.closedWithoutDeclaration) {
+
+				// #49701 mandatory
+				if ($scope.case.ethnicity == undefined || $scope.case.motherEthnicity == undefined || $scope.case.fatherEthnicity == undefined ||
+
+					$scope.case.placement == undefined || $scope.case.sanctionProposal == undefined ||
+
+					$scope.case.mainCharge == undefined ||
+
+					$scope.case.observationDate == undefined
+				) {
+
+
+					vm.afslutwarning_etnicitet = ($scope.case.ethnicity == undefined);
+					vm.afslutwarning_etnicitetMother = ($scope.case.motherEthnicity == undefined);
+					vm.afslutwarning_etnicitetFather = ($scope.case.fatherEthnicity == undefined);
+
+					vm.afslutwarning_placement = ($scope.case.placement == undefined);
+
+					console.log("hvad er $scope.case.sanctionProposal")
+					console.log($scope.case.sanctionProposal)
+
+					vm.afslutwarning_sanktionsforslag = ($scope.case.sanctionProposal == undefined);
+					vm.afslutwarning_mainCharge = ($scope.case.mainCharge == undefined);
+
+					vm.afslutwarning_observationDate = ($scope.case.observationDate == undefined);
+
+
+					$scope.case.closedWithoutDeclarationReason = undefined;
+					$scope.case.closedWithoutDeclarationSentTo = undefined
+					$scope.case.returnOfDeclarationDate = undefined
+					$scope.case.closedWithoutDeclaration = false;
+					$scope.case.closed = false;
+
+
+					$mdDialog.cancel();
+					Toast.show('Følgende felter mangler at blive udfyldt');
+				}
+				else {
+					DeclarationService.update($scope.case)
+						.then(function () {
+
+							// HeaderService.resetActions();
+							// HeaderService.setClosed(true);
+							// activated();
+							// $mdDialog.cancel();
+							$state.go('declaration.show', { caseid: $scope.case.caseNumber, enforceSolarDelay: false }, {reload: true});
+						})
+				}
+			}
+			else {
+				// #49701 mandatory
+				if ($scope.case.ethnicity == undefined || $scope.case.motherEthnicity == undefined || $scope.case.fatherEthnicity == undefined ||
+
+					$scope.case.placement == undefined || $scope.case.sanctionProposal == undefined ||
+
+					$scope.case.mainCharge == undefined ||
+
+					$scope.case.observationDate == undefined ||  $scope.case.declarationDate == undefined
+				) {
+
+
+					vm.afslutwarning_etnicitet = ($scope.case.ethnicity == undefined);
+					vm.afslutwarning_etnicitetMother = ($scope.case.motherEthnicity == undefined);
+					vm.afslutwarning_etnicitetFather = ($scope.case.fatherEthnicity == undefined);
+
+					vm.afslutwarning_placement = ($scope.case.placement == undefined);
+					vm.afslutwarning_sanktionsforslag = ($scope.case.sanctionProposal == undefined);
+
+					vm.afslutwarning_mainCharge = ($scope.case.mainCharge == undefined);
+
+					vm.afslutwarning_observationDate = ($scope.case.observationDate == undefined);
+					vm.afslutwarning_declarationDate = ($scope.case.declarationDate == undefined);
+
+					$scope.case.closedWithoutDeclarationReason = undefined;
+					$scope.case.closedWithoutDeclarationSentTo = undefined
+					$scope.case.returnOfDeclarationDate = undefined
+					$scope.case.closedWithoutDeclaration = false;
+					$scope.case.closed = false;
+
+					$mdDialog.cancel();
+					Toast.show('Følgende felter mangler at blive udfyldt');
+				}
+				else {
+					DeclarationService.update($scope.case)
+						.then(function () {
+
+							// HeaderService.resetActions();
+							// HeaderService.setClosed(true);
+							// activated();
+							// $mdDialog.cancel();
+							$state.go('declaration.show', { caseid: $scope.case.caseNumber, enforceSolarDelay: false }, {reload: true});
+						})
+				}
+			}
+		}
+		else {
+			DeclarationService.update($scope.case)
 				.then(function () {
 
-				// HeaderService.resetActions();
-				// HeaderService.setClosed(true);
-				// activated();
-				// $mdDialog.cancel();
-				$state.go('declaration.show', { caseid: $scope.case.caseNumber, enforceSolarDelay: false }, {reload: true});
+					// HeaderService.resetActions();
+					// HeaderService.setClosed(true);
+					// activated();
+					// $mdDialog.cancel();
+					$state.go('declaration.show', { caseid: $scope.case.caseNumber, enforceSolarDelay: false }, {reload: true});
 				})
+		}
 	}
 
 	$scope.afbryd = function () {
