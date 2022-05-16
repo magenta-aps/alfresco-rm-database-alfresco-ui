@@ -86,14 +86,16 @@
         </div>
 
         <div ng-show="vm.afslutwarning_sanktionsforslag">
-            <div class="ghostbusters">
+
             <div ng-show="!editPatientData">
+                <div class="ghostbusters">
                 <md-input-container class="md-block">
                     <label>Sanktionsforslag</label>
                     <textarea  ng-model="case.sanctionProposal" ng-disabled="!editPatientData" ></textarea>
                 </md-input-container>
+                </div>
             </div>
-          </div>
+
         </div>
 
 

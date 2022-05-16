@@ -618,52 +618,15 @@ console.log("duff");
 		if (!vm.isBua) {
 			if ($scope.case.closedWithoutDeclaration) {
 
-				// #49701 mandatory
-				if ($scope.case.ethnicity == undefined || $scope.case.motherEthnicity == undefined || $scope.case.fatherEthnicity == undefined ||
+				DeclarationService.update($scope.case)
+					.then(function () {
 
-					$scope.case.placement == undefined || $scope.case.sanctionProposal == undefined ||
-
-					$scope.case.mainCharge == undefined ||
-
-					$scope.case.observationDate == undefined
-				) {
-
-
-					vm.afslutwarning_etnicitet = ($scope.case.ethnicity == undefined);
-					vm.afslutwarning_etnicitetMother = ($scope.case.motherEthnicity == undefined);
-					vm.afslutwarning_etnicitetFather = ($scope.case.fatherEthnicity == undefined);
-
-					vm.afslutwarning_placement = ($scope.case.placement == undefined);
-					vm.afslutwarning_sanktionsforslag = ($scope.case.sanctionProposal == undefined);
-					vm.afslutwarning_mainCharge = ($scope.case.mainCharge == undefined);
-
-					vm.afslutwarning_observationDate = ($scope.case.observationDate == undefined);
-
-
-					$scope.case.closedWithoutDeclarationReason = undefined;
-					$scope.case.closedWithoutDeclarationSentTo = undefined;
-					$scope.case.returnOfDeclarationDate = undefined;
-					$scope.case.closedWithoutDeclaration = false;
-					$scope.case.closed = false;
-
-
-					$mdDialog.cancel();
-					Toast.show('Følgende felter mangler at blive udfyldt');
-				}
-				else {
-
-					console.log("ikke gå her....")
-
-					DeclarationService.update($scope.case)
-						.then(function () {
-
-							// HeaderService.resetActions();
-							// HeaderService.setClosed(true);
-							// activated();
-							// $mdDialog.cancel();
-							$state.go('declaration.show', { caseid: $scope.case.caseNumber, enforceSolarDelay: false }, {reload: true});
-						})
-				}
+						// HeaderService.resetActions();
+						// HeaderService.setClosed(true);
+						// activated();
+						// $mdDialog.cancel();
+						$state.go('declaration.show', { caseid: $scope.case.caseNumber, enforceSolarDelay: false }, {reload: true});
+					})
 			}
 			else {
 				// #49701 mandatory
