@@ -35,6 +35,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	vm.afslutwarning_journalNumber = false;
 	vm.afslutwarning_rulingCourt = false;
 	vm.afslutwarning_rulingDate = false;
+	vm.afslutwarning_mainCharge = false;
+	vm.afslutwarning_status = false;
+
 
 	vm.waitPromiseSupopl = function(state) {
 		if ($scope.case.closedWithoutDeclaration) {
@@ -100,11 +103,14 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 		// check if all mandatory fields have been completed
 
-		if ($scope.case.referingAgency == undefined || $scope.case.journalNumber == undefined) {
+		if ($scope.case.referingAgency == undefined || $scope.case.journalNumber == undefined ||
+			$scope.case.mainCharge == undefined || $scope.case.status == undefined		   ) {
 
 			Toast.show('Følgende felter mangler at blive udfyldt');
 			vm.afslutwarning_referingAgency = ($scope.case.referingAgency == undefined);
 			vm.afslutwarning_journalNumber = ($scope.case.journalNumber == undefined);
+			vm.afslutwarning_mainCharge = ($scope.case.mainCharge == undefined);
+			vm.afslutwarning_status = ($scope.case.status == undefined);
 
 			if ($scope.case.declarationType == 'kendelse') {
 				vm.afslutwarning_rulingDate = ($scope.case.rulingDate == undefined);
