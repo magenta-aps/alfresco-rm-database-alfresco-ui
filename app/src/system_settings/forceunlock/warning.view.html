@@ -1,0 +1,36 @@
+<md-dialog aria-label="upload-files">
+    <form name="uploadForm" ng-submit="dum()">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{'COMMON.DELETEOBS' | translate  }}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="vm.cancelDialog()">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content class="md-padding">
+
+
+
+            <ul>
+          Ophæv lås på observanden med cpr: {{ cpr }}, navn: {{ navn }} og sagsnummer: {{ sagsnr}}
+            </ul>
+
+        </md-dialog-content>
+
+        <md-dialog-actions>
+
+
+            <md-button class="md-primary" ng-click="vm.removeLock();">
+                LÅS OP
+            </md-button>
+
+            <md-button class="md-primary" ng-click="vm.cancelDialog();" >
+                {{'COMMON.CANCEL'  | translate }}
+            </md-button>
+
+        </md-dialog-actions>
+    </form>
+</md-dialog>

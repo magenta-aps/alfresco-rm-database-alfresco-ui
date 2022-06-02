@@ -2,9 +2,9 @@
 
 angular
   .module('openDeskApp.systemsettings')
-  .controller('DeleteobsController', DeleteobsController);
+  .controller('ForceunlockController', ForceunlockController);
 
-function DeleteobsController($scope, $stateParams, $mdDialog, ContentService, HeaderService, $http, $filter, alfrescoDownloadService, $state ) {
+function ForceunlockController($scope, $stateParams, $mdDialog, ContentService, HeaderService, $http, $filter, alfrescoDownloadService, $state ) {
   var vm = this;
 
   $scope.folderUuid = [];
@@ -21,7 +21,8 @@ function DeleteobsController($scope, $stateParams, $mdDialog, ContentService, He
 
   vm.disableVentetiderButton = true;
 
-    console.log("jeg er deleteobss")
+  console.log("jeg er forceunlock")
+
 
     $scope.$watch('vm.createdFromDate', function (newVal) {
         if (newVal) {
@@ -137,9 +138,12 @@ function DeleteobsController($scope, $stateParams, $mdDialog, ContentService, He
 
   function verifyDataAndGetName() {
 
+console.log("forceunlock");
+console.log("forceunlock");
+console.log("forceunlock");
+console.log("forceunlock");
 
-      console.log("hey, nu slettes der...")
-      console.log(vm.sagsnr)
+
       console.log(vm.cpr)
 
       // kald backend
@@ -149,7 +153,7 @@ function DeleteobsController($scope, $stateParams, $mdDialog, ContentService, He
           "caseNumber":  vm.sagsnr,
           "cpr": vm.cpr
       }).then(function (response) {
-          console.log("heytilbage")
+          console.log("heytilbage, nu kører vi i forceunlock")
           console.log(response.data.found);
 
           $scope.cpr = vm.cpr.substring(0,6) + "-" + vm.cpr.substring(6,12);
@@ -161,8 +165,8 @@ function DeleteobsController($scope, $stateParams, $mdDialog, ContentService, He
               $scope.deleteObs = vm.deleteObs;
 
               $mdDialog.show({
-                  templateUrl: 'app/src/system_settings/deleteobs/warning.view.html',
-                  controller: 'DeleteobsController as vm',
+                  templateUrl: 'app/src/system_settings/forceunlock/warning.view.html',
+                  controller: 'ForceunlockController as vm',
                   clickOutsideToClose: true,
                   scope: $scope, // use parent scope in template
                   preserveScope: true, // do not forget this if use parent scope
@@ -182,20 +186,27 @@ function DeleteobsController($scope, $stateParams, $mdDialog, ContentService, He
   }
   vm.verifyDataAndGetName = verifyDataAndGetName;
 
-  function deleteObs() {
-      $http.post("/alfresco/s/database/retspsyk/deleteobservand", {
-          "method": "delete",
-          "caseNumber":  vm.sagsnr,
-          "cpr": vm.cpr
+  function removeLock() {
+
+      console.log("bliver removelock kaldt?");
+
+      $http.post("/alfresco/s/database/retspsyk/flowchart", {
+          "properties": {"method" : "resetEditLock", "caseNumber" : vm.sagsnr, "cpr" : vm.cpr},
       }).then(function (response) {
-          console.log("response fra deleteObs");
+          console.log("response fra forceunlock");
           console.log(response);
           $mdDialog.cancel();
       });
-
-
   }
-  vm.deleteObs = deleteObs;
+
+  vm.removeLock = removeLock;
+
+
+  function dum() {
+      console.log("hej dum");
+  }
+
+  vm.dum = dum;
 
   function cancelDialog () {
        $mdDialog.cancel();
