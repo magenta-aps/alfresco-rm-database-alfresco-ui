@@ -4,7 +4,7 @@ angular
   .module('openDeskApp.systemsettings')
   .controller('ForceunlockController', ForceunlockController);
 
-function ForceunlockController($scope, $stateParams, $mdDialog, ContentService, HeaderService, $http, $filter, alfrescoDownloadService, $state ) {
+function ForceunlockController($scope, $stateParams, $mdDialog, ContentService, HeaderService, $http, $filter, alfrescoDownloadService, $state, Toast ) {
   var vm = this;
 
   $scope.folderUuid = [];
@@ -191,22 +191,16 @@ console.log("forceunlock");
       console.log("bliver removelock kaldt?");
 
       $http.post("/alfresco/s/database/retspsyk/flowchart", {
-          "properties": {"method" : "resetEditLock", "caseNumber" : vm.sagsnr, "cpr" : vm.cpr},
+          "properties": {"method" : "resetEditLock", "caseNumber" : $scope.sagsnr, "cpr" : $scope.cpr},
       }).then(function (response) {
           console.log("response fra forceunlock");
           console.log(response);
+          Toast.show('Låsen blev fjernet');
           $mdDialog.cancel();
       });
   }
 
   vm.removeLock = removeLock;
-
-
-  function dum() {
-      console.log("hej dum");
-  }
-
-  vm.dum = dum;
 
   function cancelDialog () {
        $mdDialog.cancel();
