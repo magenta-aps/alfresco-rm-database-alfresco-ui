@@ -145,7 +145,9 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 			else {
 				DeclarationService.makeDeclarationDocument($scope.case)
 					.then(function (response) {
-						$state.go('document', {doc: response.id});
+
+						Toast.show('Erklæringsdokumentet blev oprettet');
+						// $state.go('document', {doc: response.id});
 					});
 			}
 		}
