@@ -31,6 +31,28 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 
 	vm.isOpenForTMPEdit = false;
 
+
+	vm.afslutwarning_referingAgency = false;
+	vm.afslutwarning_journalNumber = false;
+	vm.afslutwarning_rulingCourt = false;
+	vm.afslutwarning_rulingDate = false;
+	vm.afslutwarning_mainCharge = false;
+	vm.afslutwarning_status = false;
+
+
+	vm.afslutwarning_etnicitet = false;
+	vm.afslutwarning_etnicitetMother = false;
+	vm.afslutwarning_etnicitetFather = false;
+
+	vm.afslutwarning_placement = false;
+	vm.afslutwarning_sanktionsforslag = false;
+
+	vm.afslutwarning_mainCharge = false;
+
+	vm.afslutwarning_observationDate = false;
+	vm.afslutwarning_declarationDate = false;
+
+
 	vm.waitPromiseSupopl = function(state) {
 		if ($scope.case.closedWithoutDeclaration) {
 			$scope.closeCaseParams = {closed : 'no-declaration'}
@@ -57,16 +79,12 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	DeclarationService.isBUAUser().then(function(response) {
 		console.log("to be bua or not to be?...");
 		console.log(response);
-
-
 		vm.isBua = response;
-
 	});
-
 
 	vm.waitPromiseNormal = function(declarationSettings_, state) {
 		vm.declarationState = state;
-		HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings_)
+		HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false)
 		HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
 		HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
 		HeaderService.addAction('COMMON.EDIT', 'edit', editCase);
@@ -92,10 +110,45 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	activated();
 
 	function makeDeclarationDocument() {
-		DeclarationService.makeDeclarationDocument($scope.case)
-			.then(function (response) {
-				$state.go('document', { doc: response.id });
-			});
+
+		// check if all mandatory fields have been completed
+
+		if ($scope.case.referingAgency == undefined || $scope.case.journalNumber == undefined ||
+			$scope.case.mainCharge == undefined || $scope.case.status == undefined		   ) {
+
+			Toast.show('Følgende felter mangler at blive udfyldt');
+			vm.afslutwarning_referingAgency = ($scope.case.referingAgency == undefined);
+			vm.afslutwarning_journalNumber = ($scope.case.journalNumber == undefined);
+			vm.afslutwarning_mainCharge = ($scope.case.mainCharge == undefined);
+			vm.afslutwarning_status = ($scope.case.status == undefined);
+
+			if ($scope.case.declarationType == 'kendelse') {
+				vm.afslutwarning_rulingDate = ($scope.case.rulingDate == undefined);
+				vm.afslutwarning_rulingCourt = ($scope.case.rulingCourt == undefined);
+			}
+
+
+			// scroll down
+			window.scrollBy(0,650);
+
+		}
+		else  {
+			if ($scope.case.declarationType == 'kendelse' && ($scope.case.rulingDate == undefined || $scope.case.rulingCourt == undefined)) {
+				vm.afslutwarning_rulingDate = ($scope.case.rulingDate == undefined);
+				vm.afslutwarning_rulingCourt = ($scope.case.rulingCourt == undefined);
+
+				console.log("hvad er vm.afslutwarning_rulingCourt");
+				console.log(vm.afslutwarning_rulingCourt);
+
+				Toast.show('Følgende felter mangler at blive udfyldt');
+			}
+			else {
+				DeclarationService.makeDeclarationDocument($scope.case)
+					.then(function (response) {
+						$state.go('document', {doc: response.id});
+					});
+			}
+		}
 	}
 
 	function makeBrevDocument() {
@@ -252,7 +305,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 						vm.waitPromiseNormal(declarationSettings, stateReponse.data.state);
 					}
 					else {
-						HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false, declarationSettings)
+						HeaderService.addAction('Opret erklæring', 'description', makeDeclarationDocument, false)
 						HeaderService.addAction('Opret brev', 'description', makeBrevDocument)
 						HeaderService.addAction('Genvej til flowchart', 'bar_chart', shortcutToFlowchart);
 						HeaderService.addAction('DECLARATION.LOCK', 'lock', lockCaseDialog);
@@ -317,11 +370,30 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	}
 
 	function lockCaseDialog() {
-		$mdDialog.show({
-			templateUrl: 'app/src/declaration/view/lock-dialog.html',
-			scope: $scope, // use parent scope in template
-			preserveScope: true, // do not forget this if use parent scope
-			clickOutsideToClose: true
+
+		DeclarationService.get($stateParams.caseid)
+			.then(function (response) {
+				vm.createdDateBeforeEdit = response.creationDate;
+				vm.declaratiotionDateBeforeEdit = response.declarationDate;
+
+				var currentUser = authService.getUserInfo().user.userName;
+
+				if (response.locked4edit) {
+					if (currentUser != $scope.case.locked4editBy) {
+						alert("sagen er låst for redigering af " + response.locked4editBy + " og kan ikke afsluttes før brugeren vælger gem.");
+						return false;
+					}
+				}
+				else {
+					$mdDialog.show({
+						templateUrl: 'app/src/declaration/view/lock-dialog.html',
+						scope: $scope, // use parent scope in template
+						preserveScope: true, // do not forget this if use parent scope
+						clickOutsideToClose: true
+					});
+				}
+
+
 		});
 	}
 
@@ -360,6 +432,7 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	$scope.canAccessUndoCloseCase = canAccessUndoCloseCase;
 
     $scope.unlockCase = function () {
+console.log("duff");
 
 		if (($scope.unlockCaseParams == 'undoCloseCase')) {
 			$mdDialog.cancel();
@@ -579,6 +652,8 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 	}
 
 	$scope.closeCase = function () {
+
+
 		$scope.case.locked4edit = false;
 		$scope.case.locked4editBy = {};
 		$scope.case.closed = true;
@@ -596,19 +671,89 @@ function PatientInfoController($scope, $state, $stateParams, $mdDialog, Declarat
 		$scope.case.closedWithoutDeclarationSentTo = $scope.closeCaseParams.sentTo;
 		$scope.case.returnOfDeclarationDate = $scope.closeCaseParams.returnOfDeclarationDate;
 
-		DeclarationService.update($scope.case)
+
+		// check mandatory fields
+		// first, make a check if user wants to close with or without declaration
+
+		if (!vm.isBua) {
+			if ($scope.case.closedWithoutDeclaration) {
+
+				DeclarationService.update($scope.case)
+					.then(function () {
+
+						// HeaderService.resetActions();
+						// HeaderService.setClosed(true);
+						// activated();
+						// $mdDialog.cancel();
+						$state.go('declaration.show', { caseid: $scope.case.caseNumber, enforceSolarDelay: false }, {reload: true});
+					})
+
+			}
+			else {
+				// #49701 mandatory
+				if ($scope.case.ethnicity == undefined || $scope.case.motherEthnicity == undefined || $scope.case.fatherEthnicity == undefined ||
+
+					$scope.case.placement == undefined || $scope.case.sanctionProposal == undefined ||
+
+					$scope.case.mainCharge == undefined ||
+
+					$scope.case.observationDate == undefined ||  $scope.case.declarationDate == undefined
+				) {
+
+
+					vm.afslutwarning_etnicitet = ($scope.case.ethnicity == undefined);
+					vm.afslutwarning_etnicitetMother = ($scope.case.motherEthnicity == undefined);
+					vm.afslutwarning_etnicitetFather = ($scope.case.fatherEthnicity == undefined);
+
+					vm.afslutwarning_placement = ($scope.case.placement == undefined);
+					vm.afslutwarning_sanktionsforslag = ($scope.case.sanctionProposal == undefined);
+
+					vm.afslutwarning_mainCharge = ($scope.case.mainCharge == undefined);
+
+					vm.afslutwarning_observationDate = ($scope.case.observationDate == undefined);
+					vm.afslutwarning_declarationDate = ($scope.case.declarationDate == undefined);
+
+					$scope.case.closedWithoutDeclarationReason = undefined;
+
+					$scope.case.closedWithoutDeclarationSentTo = undefined;
+					$scope.case.returnOfDeclarationDate = undefined;
+
+					$scope.case.closedWithoutDeclaration = false;
+					$scope.case.closed = false;
+
+					$mdDialog.cancel();
+					Toast.show('Følgende felter mangler at blive udfyldt');
+				}
+				else {
+					DeclarationService.update($scope.case)
+						.then(function () {
+
+							// HeaderService.resetActions();
+							// HeaderService.setClosed(true);
+							// activated();
+							// $mdDialog.cancel();
+							$state.go('declaration.show', { caseid: $scope.case.caseNumber, enforceSolarDelay: false }, {reload: true});
+						})
+				}
+			}
+		}
+		else {
+			DeclarationService.update($scope.case)
 				.then(function () {
 
-				// HeaderService.resetActions();
-				// HeaderService.setClosed(true);
-				// activated();
-				// $mdDialog.cancel();
-				$state.go('declaration.show', { caseid: $scope.case.caseNumber, enforceSolarDelay: false }, {reload: true});
+					// HeaderService.resetActions();
+					// HeaderService.setClosed(true);
+					// activated();
+					// $mdDialog.cancel();
+					$state.go('declaration.show', { caseid: $scope.case.caseNumber, enforceSolarDelay: false }, {reload: true});
 				})
+		}
 	}
 
-	$scope.cancel = function () {
-		$mdDialog.cancel();
+	$scope.afbryd = function () {
+    	console.log("true");
+		vm.afslutwarning = true;
+        $mdDialog.cancel();
 	}
 }
 

@@ -2,9 +2,9 @@
 
 angular
   .module('openDeskApp.systemsettings')
-  .controller('ReportsController', ReportsController);
+  .controller('DeleteobsController', DeleteobsController);
 
-function ReportsController($scope, $stateParams, ContentService, HeaderService, $http, $filter, alfrescoDownloadService, $state ) {
+function DeleteobsController($scope, $stateParams, $mdDialog, ContentService, HeaderService, $http, $filter, alfrescoDownloadService, $state ) {
   var vm = this;
 
   $scope.folderUuid = [];
@@ -20,7 +20,6 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
   vm.createdToDate = null;
 
   vm.disableVentetiderButton = true;
-    vm.waitingCriteria = "1";
 
     $scope.$watch('vm.createdFromDate', function (newVal) {
         if (newVal) {
@@ -123,8 +122,7 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
       $http.post("/alfresco/s/database/retspsyk/reports", {
           "method": "waitingtime",
           "createdFrom": $filter('date')(vm.createdFromDate,'yyyy-MM-dd'),
-          "createdTo": postVarTO,
-          "statusCriteria" : vm.waitingCriteria
+          "createdTo": postVarTO
       }).then(function (response) {
           vm.reportStarted = false;
 
@@ -134,6 +132,75 @@ function ReportsController($scope, $stateParams, ContentService, HeaderService, 
   }
 
     vm.ventetidsrapport = ventetidsRapport;
+
+  function verifyDataAndGetName() {
+
+
+      console.log("hey, nu slettes der...")
+      console.log(vm.sagsnr)
+      console.log(vm.cpr)
+
+      // kald backend
+
+      $http.post("/alfresco/s/database/retspsyk/deleteobservand", {
+          "method": "confirm",
+          "caseNumber":  vm.sagsnr,
+          "cpr": vm.cpr
+      }).then(function (response) {
+          console.log("heytilbage")
+          console.log(response.data.found);
+
+          $scope.cpr = vm.cpr.substring(0,6) + "-" + vm.cpr.substring(6,12);
+          $scope.sagsnr = vm.sagsnr;
+
+          if (response.data.found) {
+
+              $scope.navn = response.data.navn;
+              $scope.deleteObs = vm.deleteObs;
+
+              $mdDialog.show({
+                  templateUrl: 'app/src/system_settings/deleteobs/warning.view.html',
+                  controller: 'DeleteobsController as vm',
+                  clickOutsideToClose: true,
+                  scope: $scope, // use parent scope in template
+                  preserveScope: true, // do not forget this if use parent scope
+              });
+
+          }
+          else {
+              alert ("mismatch mellem cpr og sagsnummer");
+          }
+
+
+      });
+
+
+
+
+  }
+  vm.verifyDataAndGetName = verifyDataAndGetName;
+
+  function deleteObs() {
+      $http.post("/alfresco/s/database/retspsyk/deleteobservand", {
+          "method": "delete",
+          "caseNumber":  vm.sagsnr,
+          "cpr": vm.cpr
+      }).then(function (response) {
+          console.log("response fra deleteObs");
+          console.log(response);
+          $mdDialog.cancel();
+      });
+
+
+  }
+  vm.deleteObs = deleteObs;
+
+  function cancelDialog () {
+       $mdDialog.cancel();
+  }
+
+  vm.cancelDialog = cancelDialog;
+
 
 
 

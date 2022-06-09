@@ -1,3 +1,13 @@
+<style>
+    .ghostbusters * input {
+        color: red !important;
+    }
+
+    .ghostbusters * label {
+        color: red !important;
+    }
+</style>
+
 <md-card>
     <md-card-title>
         <md-card-title-text>
@@ -5,6 +15,8 @@
         </md-card-title-text>
     </md-card-title>
     <md-card-content>
+
+        <div ng-hide="vm.afslutwarning_referingAgency">
         <div>
             <!--            <md-autocomplete flex md-selected-item="case.referingAgency" md-search-text="agencySearch" md-items="agency in agents"-->
             <md-autocomplete flex md-selected-item="case.referingAgency" md-search-text="agencySearch" md-items="agency in propertyFilter(agents,agencySearch)"
@@ -16,15 +28,45 @@
             </md-autocomplete>
             <md-tooltip md-direction="top" md-delay="500" ng-if="case.referingAgency != null">{{case.referingAgency}}</md-tooltip>
         </div>
+        </div>
 
+        <div ng-show="vm.afslutwarning_referingAgency">
+            <div class="ghostbusters">
+            <div>
+                <!--            <md-autocomplete flex md-selected-item="case.referingAgency" md-search-text="agencySearch" md-items="agency in agents"-->
+                <md-autocomplete flex md-selected-item="case.referingAgency" md-search-text="agencySearch" md-items="agency in propertyFilter(agents,agencySearch)"
+                                 md-item-text="agency" md-min-length="0" md-floating-label="Henvisende instans" ng-disabled="!editPatientData"
+                                 md-clear-button="editPatientData" md-require-match="true">
+                    <md-item-template>
+                        <span md-highlight-text="agencySearch" md-highlight-flags="gi">{{agency}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+                <md-tooltip md-direction="top" md-delay="500" ng-if="case.referingAgency != null">{{case.referingAgency}}</md-tooltip>
+            </div>
+            </div>
+        </div>
 
+        <div ng-hide="vm.afslutwarning_journalNumber">
         <div>
             <md-input-container class="md-block">
                 <label>Journalnummer</label>
                 <input ng-model="case.journalNumber" ng-disabled="!editPatientData">
             </md-input-container>
         </div>
+        </div>
 
+        <div ng-show="vm.afslutwarning_journalNumber">
+            <div class="ghostbusters">
+            <div>
+                <md-input-container class="md-block">
+                    <label>Journalnummer</label>
+                    <input ng-model="case.journalNumber" ng-disabled="!editPatientData">
+                </md-input-container>
+            </div>
+        </div>
+        </div>
+
+        <div ng-hide="vm.afslutwarning_mainCharge">
         <div>
             <md-autocomplete flex md-selected-item="case.mainCharge" md-search-text="mainChargeSearch" md-items="mainCarge in propertyFilter(propertyValues['mainCharge'],mainChargeSearch)"
                 md-item-text="mainCarge" md-min-length="0" md-floating-label="Hovedsigtelse" ng-disabled="!editPatientData"
@@ -35,14 +77,44 @@
             </md-autocomplete>
             <md-tooltip md-direction="top" md-delay="500" ng-if="case.mainCharge != null">{{case.mainCharge}}</md-tooltip>
         </div>
+        </div>
 
-        <md-autocomplete flex md-selected-item="case.status" md-search-text="statusSearch" md-items="status in propertyFilter(propertyValues['status'],statusSearch)"
-            md-item-text="status" md-min-length="0" md-floating-label="Status" ng-disabled="!editPatientData"
-            md-clear-button="editPatientData" md-require-match="true">
-            <md-item-template>
-                <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
-            </md-item-template>
-        </md-autocomplete>
+        <div ng-show="vm.afslutwarning_mainCharge">
+            <div class="ghostbusters">
+            <div>
+                <md-autocomplete flex md-selected-item="case.mainCharge" md-search-text="mainChargeSearch" md-items="mainCarge in propertyFilter(propertyValues['mainCharge'],mainChargeSearch)"
+                                 md-item-text="mainCarge" md-min-length="0" md-floating-label="Hovedsigtelse" ng-disabled="!editPatientData"
+                                 md-clear-button="editPatientData" md-require-match="true">
+                    <md-item-template>
+                        <span md-highlight-text="mainChargeSearch" md-highlight-flags="gi">{{mainCarge}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+                <md-tooltip md-direction="top" md-delay="500" ng-if="case.mainCharge != null">{{case.mainCharge}}</md-tooltip>
+            </div>
+        </div>
+        </div>
+
+        <div ng-hide="vm.afslutwarning_status">
+            <md-autocomplete flex md-selected-item="case.status" md-search-text="statusSearch" md-items="status in propertyFilter(propertyValues['status'],statusSearch)"
+                md-item-text="status" md-min-length="0" md-floating-label="Status" ng-disabled="!editPatientData"
+                md-clear-button="editPatientData" md-require-match="true">
+                <md-item-template>
+                    <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
+                </md-item-template>
+            </md-autocomplete>
+        </div>
+
+        <div ng-show="vm.afslutwarning_status">
+        <div class="ghostbusters">
+            <md-autocomplete flex md-selected-item="case.status" md-search-text="statusSearch" md-items="status in propertyFilter(propertyValues['status'],statusSearch)"
+                             md-item-text="status" md-min-length="0" md-floating-label="Status" ng-disabled="!editPatientData"
+                             md-clear-button="editPatientData" md-require-match="true">
+                <md-item-template>
+                    <span md-highlight-text="statusSearch" md-highlight-flags="gi">{{status}}</span>
+                </md-item-template>
+            </md-autocomplete>
+        </div>
+        </div>
 
         <div>
         <md-input-container class="md-block">
@@ -56,17 +128,47 @@
             <md-radio-button value="samtykke">Samtykke</md-radio-button>
         </md-radio-group>
 
+
         <div ng-if="case.declarationType === 'kendelse'">
+
+            <div ng-hide="vm.afslutwarning_rulingDate">
             <div layout="row">
                 <md-input-container flex>
                     <label>Kendelsesdato</label>
                     <md-datepicker ng-model="case.rulingDate" ng-disabled="!editPatientData"></md-datepicker>
                 </md-input-container>
             </div>
+            </div>
+
+            <div ng-show="vm.afslutwarning_rulingDate">
+                <div class="ghostbusters">
+                <div layout="row">
+                    <md-input-container flex>
+                        <label>Kendelsesdato</label>
+                        <md-datepicker ng-model="case.rulingDate" ng-disabled="!editPatientData"></md-datepicker>
+                    </md-input-container>
+                </div>
+            </div>
+            </div>
+
+
+
+            <div ng-hide="vm.afslutwarning_rulingCourt">
             <md-input-container class="md-block">
                 <label>Retten i</label>
                 <input ng-model="case.rulingCourt" ng-disabled="!editPatientData">
             </md-input-container>
+            </div>
+
+            <div ng-show="vm.afslutwarning_rulingCourt">
+                <div class="ghostbusters">
+                <md-input-container class="md-block">
+                    <label>Retten i</label>
+                    <input ng-model="case.rulingCourt" ng-disabled="!editPatientData">
+                </md-input-container>
+                </div>
+            </div>
+        </div>
         </div>
     </md-card-content>
 </md-card>
