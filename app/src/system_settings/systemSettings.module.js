@@ -83,7 +83,20 @@ function config($stateProvider, USER_ROLES) {
           controller: 'DeleteobsController as vm'
         }
       }
-    })
+    }).state('administration.psyckeywords', {
+    url: '/psyckeywords',
+    params: {
+      authorizedRoles: [USER_ROLES.templateFolderValueManager],
+      path: "/Sites/retspsyk/psyckeywords",
+      breadcrumbPath: []
+    },
+    views: {
+      'systemsetting-view': {
+        templateUrl: 'app/src/system_settings/psyckeywords/psyckeywords.html',
+        controller: 'PsyckeywordsController as vm'
+      }
+    }
+  })
     .state('administration.ethnicities', {
       url: '/etniciteter',
       params: {
