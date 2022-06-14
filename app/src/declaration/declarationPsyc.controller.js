@@ -238,6 +238,77 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
       });
   }
 
+  function viewButton2(instrument) {
+    // console.log("hvad er items");
+
+
+    $scope.myCountry = {
+      selected:{}
+    };
+
+    vm.selectedInstrument = instrument;
+    vm.selectedInstrumentName = vm.titleMappings[instrument];
+
+    DeclarationPsycService.getDetailViewData($stateParams.caseid, instrument).then(function (response) {
+      vm.items = response.data;
+      let numberOfItems = vm.items.length-1;
+      let itemsInEachColumn = Math.ceil(numberOfItems / 3);
+
+      vm.columnOneLength = itemsInEachColumn;
+      vm.columnTwoLength = itemsInEachColumn + vm.columnOneLength;
+      vm.columnThreeLength = itemsInEachColumn;
+
+      vm.itemsColumnOne = new Array();
+      vm.itemsColumnTwo = new Array()
+      vm.itemsColumnTree = new Array();
+
+      // setup each column
+      if (vm.items != undefined) {
+
+        for (let i=0; i<= vm.columnOneLength-1;i++) {
+          vm.itemsColumnOne.push(vm.items[i]);
+        }
+
+        for (let i=vm.columnOneLength; i<= vm.columnTwoLength-1;i++) {
+          vm.itemsColumnTwo.push(vm.items[i]);
+        }
+
+        for (let i=vm.columnTwoLength; i<= vm.items.length-1;i++) {
+          vm.itemsColumnTree.push(vm.items[i]);
+        }
+
+      }
+
+
+      console.log("antal:");
+      console.log(vm.items.length-1)
+
+      console.log("itemsInEachColumn:");
+      console.log(itemsInEachColumn)
+
+      if (vm.items != undefined) {
+        for (let i=0; i<= vm.items.length-1;i++) {
+          // console.log(vm.items[i]);
+          $scope.myCountry.selected[vm.items[i].id] = vm.items[i].val
+        }
+      }
+    });
+
+    $mdDialog.show({
+      templateUrl: 'app/src/declaration/view/psyc/sections/popup2.html',
+      scope: $scope, // use parent scope in template
+      preserveScope: true, // do not forget this if use parent scope
+      clickOutsideToClose: false
+    });
+  }
+
+  vm.viewButton2 = viewButton2;
+
+
+
+
+
+
   vm.viewButton = viewButton;
 
   function cancelDialog() {
