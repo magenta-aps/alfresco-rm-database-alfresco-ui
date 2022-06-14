@@ -37,6 +37,8 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
   vm.oneormoreForeMalering = false;
   vm.oneormoreKonklusion = false;
 
+  vm.conclusionText = "";
+
 
   // Mappings
   vm.titleMappings = {};
@@ -156,6 +158,16 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
       // console.log(vm.oneormorePsykologiskUnder);
 
     });
+
+
+    DeclarationPsycService.getKonklusionText($stateParams.caseid).then(function (response) {
+      console.log("hej fra getKonklusionText")
+      console.log(response);
+
+      vm.conclusionText = response.data;
+
+    });
+
   }
 
 
@@ -321,5 +333,20 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
     $mdDialog.cancel();
   }
   vm.cancelDialog = cancelDialog;
+
+  function saveConclusionText() {
+    console.log("jeg gemmer nu.... på sag: " + $stateParams.caseid);
+    console.log(vm.conclusionText)
+
+    DeclarationPsycService.saveKonklusionText($stateParams.caseid, vm.conclusionText).then( function (response) {
+      console.log("svar fra gem");
+      console.log(response);
+
+      Toast.show('Teksten er gemt');
+    } )
+  }
+
+  vm.saveConclusionText = saveConclusionText;
+
 
 }

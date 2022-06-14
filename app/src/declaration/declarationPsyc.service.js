@@ -14,7 +14,9 @@ function DeclarationPsycService($http, $filter) {
     getOverViewData : getOverViewData,
     getDetailViewData : getDetailViewData,
     getAdvancedSearchInstrument : getAdvancedSearchInstrument,
-    saveDetailViewData : saveDetailViewData
+    saveDetailViewData : saveDetailViewData,
+    saveKonklusionText : saveKonklusionText,
+    getKonklusionText : getKonklusionText
   };
 
   return service;
@@ -78,6 +80,29 @@ function DeclarationPsycService($http, $filter) {
       return response.data;
     });
   }
+
+  function saveKonklusionText(caseNumber, text) {
+    return $http.post("/alfresco/s/database/retspsyk/psyc", {
+      "properties" : {"method" : "saveKonklusionText", "caseid" : caseNumber, "newValue" : text}
+    }).then(function (response) {
+      return response.data;
+    });
+  }
+
+  function getKonklusionText(caseNumber) {
+    return $http.post("/alfresco/s/database/retspsyk/psyc", {
+      "properties" : {"method" : "getKonklusionText", "caseid" : caseNumber}
+    }).then(function (response) {
+
+      console.log("har jeg fået en værdi tilbage som kan bruges?")
+      console.log(response)
+
+      return response.data;
+    });
+  }
+
+
+
 
 
 
