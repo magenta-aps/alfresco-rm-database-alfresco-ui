@@ -47,6 +47,9 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
     selected:{}
   };
 
+  vm.showSave = false;
+  vm.disableTextArea = true;
+
 
   function setupMappings() {
     vm.titleMappings[vm.PROP_PSYC_LIBRARY_PSYCH_TYPE] = "Psykologisk undersøgelsestype";
@@ -263,12 +266,30 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
 
     DeclarationPsycService.getDetailViewData($stateParams.caseid, instrument).then(function (response) {
       vm.items = response.data;
-      let numberOfItems = vm.items.length-1;
-      let itemsInEachColumn = Math.ceil(numberOfItems / 3);
+      let numberOfItems = vm.items.length;
+
+      console.log("vm.items: ");
+      console.log(vm.items);
+
+      console.log("vm.items.length: ");
+      console.log(vm.items.length);
+
+      let tmp = numberOfItems / 3;
+      console.log("hvad er tmp + ")
+
+      let itemsInEachColumn = Math.ceil(tmp);
 
       vm.columnOneLength = itemsInEachColumn;
       vm.columnTwoLength = itemsInEachColumn + vm.columnOneLength;
       vm.columnThreeLength = itemsInEachColumn;
+
+      console.log("vm.columnOneLength");
+      console.log(vm.columnOneLength);
+      console.log("vm.columnTowoLength");
+      console.log(vm.columnTwoLength);
+      console.log("vm.columnThreeLength");
+      console.log(vm.columnThreeLength);
+
 
       vm.itemsColumnOne = new Array();
       vm.itemsColumnTwo = new Array()
@@ -293,7 +314,7 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
 
 
       console.log("antal:");
-      console.log(vm.items.length-1)
+      console.log(vm.items.length)
 
       console.log("itemsInEachColumn:");
       console.log(itemsInEachColumn)
@@ -316,11 +337,6 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
 
   vm.viewButton2 = viewButton2;
 
-
-
-
-
-
   vm.viewButton = viewButton;
 
   function cancelDialog() {
@@ -335,12 +351,9 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
   vm.cancelDialog = cancelDialog;
 
   function saveConclusionText() {
-    console.log("jeg gemmer nu.... på sag: " + $stateParams.caseid);
-    console.log(vm.conclusionText)
-
     DeclarationPsycService.saveKonklusionText($stateParams.caseid, vm.conclusionText).then( function (response) {
-      console.log("svar fra gem");
-      console.log(response);
+      vm.showSave = false;
+      vm.disableTextArea = true;
 
       Toast.show('Teksten er gemt');
     } )

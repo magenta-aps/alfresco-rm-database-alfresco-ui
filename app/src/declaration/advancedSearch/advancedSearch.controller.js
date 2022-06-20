@@ -209,9 +209,6 @@ function AdvancedSearchController($scope, $state, $templateCache, $mdDialog, $tr
 
     // check if instruments have been selected
 
-    console.log("hvad er $scope.myInstrument.selected")
-    console.log(vm.searchInstrumentsQuery[instrument])
-
     if (vm.searchInstrumentsQuery[instrument] != undefined) {
       $scope.myInstrument.selected = vm.searchInstrumentsQuery[instrument];
 
