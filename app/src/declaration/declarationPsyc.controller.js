@@ -275,9 +275,10 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
       console.log(vm.items.length);
 
       let tmp = numberOfItems / 3;
-      console.log("hvad er tmp + ")
+      console.log("hvad er tmp + " + tmp)
 
       let itemsInEachColumn = Math.ceil(tmp);
+      console.log("items in each column" + itemsInEachColumn);
 
       vm.columnOneLength = itemsInEachColumn;
       vm.columnTwoLength = itemsInEachColumn + vm.columnOneLength;
@@ -306,10 +307,18 @@ function PsycController($scope, $mdDialog, $stateParams, DeclarationService, Toa
           vm.itemsColumnTwo.push(vm.items[i]);
         }
 
+        console.log("hvad er columnTwoLength");
+        console.log(vm.columnTwoLength);
+
+        console.log("vm.items.length-1");
+        console.log(vm.items.length-1);
+
+
+
         for (let i=vm.columnTwoLength; i<= vm.items.length-1;i++) {
+          console.log("number of times called, count me: ");
           vm.itemsColumnTree.push(vm.items[i]);
         }
-
       }
 
 

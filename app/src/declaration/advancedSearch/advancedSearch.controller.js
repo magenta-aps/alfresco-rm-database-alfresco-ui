@@ -57,6 +57,11 @@ function AdvancedSearchController($scope, $state, $templateCache, $mdDialog, $tr
   vm.PROP_PSYC_LIBRARY_PSYCH_MALERING = "psykologisk_vurdering_af_forekomst_af_malingering";
   vm.PROP_PSYC_LIBRARY_KONKLUSION_TAGS = "konklusion_tags";
 
+
+  $scope.myCountry = {
+    selected:{}
+  };
+
   // Mappings
   vm.titleMappings = {};
 
@@ -198,6 +203,10 @@ function AdvancedSearchController($scope, $state, $templateCache, $mdDialog, $tr
     console.log($scope.myInstrument.selected);
 
     vm.searchInstrumentsQuery[vm.selectedInstrument] = $scope.myInstrument.selected;
+
+    console.log("hvad er der i searchInstrumentQuery")
+    console.log(vm.searchInstrumentsQuery);
+
     $scope.myInstrument.selected = {};
 
   }
@@ -209,11 +218,76 @@ function AdvancedSearchController($scope, $state, $templateCache, $mdDialog, $tr
 
     // check if instruments have been selected
 
+    console.log("hvad er der i vm.searchInstrumentsQuery[instrument]");
+    console.log(vm.searchInstrumentsQuery[instrument]);
+
+    // check if this is the first time the instrument is choosen
     if (vm.searchInstrumentsQuery[instrument] != undefined) {
       $scope.myInstrument.selected = vm.searchInstrumentsQuery[instrument];
 
       DeclarationPsycService.getAdvancedSearchInstrument(instrument).then(function (response) {
+
+        console.log("havd er response")
+        console.log(response);
+
         vm.items = response.data;
+
+        // add logic for correct column sorting
+
+        let numberOfItems = vm.items.length;
+
+        console.log("vm.items: ");
+        console.log(vm.items);
+
+        console.log("vm.items.length: ");
+        console.log(vm.items.length);
+
+        let tmp = numberOfItems / 3;
+        console.log("hvad er tmp + ")
+
+        let itemsInEachColumn = Math.ceil(tmp);
+
+        vm.columnOneLength = itemsInEachColumn;
+        vm.columnTwoLength = itemsInEachColumn + vm.columnOneLength;
+        vm.columnThreeLength = itemsInEachColumn;
+
+        console.log("vm.columnOneLength");
+        console.log(vm.columnOneLength);
+        console.log("vm.columnTowoLength");
+        console.log(vm.columnTwoLength);
+        console.log("vm.columnThreeLength");
+        console.log(vm.columnThreeLength);
+
+
+        vm.itemsColumnOne = new Array();
+        vm.itemsColumnTwo = new Array()
+        vm.itemsColumnTree = new Array();
+
+        // setup each column
+        if (vm.items != undefined) {
+
+          for (let i=0; i<= vm.columnOneLength-1;i++) {
+            vm.itemsColumnOne.push(vm.items[i]);
+          }
+
+          for (let i=vm.columnOneLength; i<= vm.columnTwoLength-1;i++) {
+            vm.itemsColumnTwo.push(vm.items[i]);
+          }
+
+          for (let i=vm.columnTwoLength; i<= vm.items.length-1;i++) {
+            vm.itemsColumnTree.push(vm.items[i]);
+          }
+        }
+
+
+        console.log("antal:");
+        console.log(vm.items.length)
+
+        console.log("itemsInEachColumn:");
+        console.log(itemsInEachColumn)
+
+        // end column sorting logic
+
       });
 
     }
@@ -221,13 +295,58 @@ function AdvancedSearchController($scope, $state, $templateCache, $mdDialog, $tr
       DeclarationPsycService.getAdvancedSearchInstrument(instrument).then(function (response) {
         vm.items = response.data;
 
+        console.log("havd er response i else")
+        console.log(response);
+
         if (vm.items != undefined) {
           for (let i=0; i<= vm.items.length-1;i++) {
             $scope.myInstrument.selected[vm.items[i].id] = vm.items[i].val
           }
         }
+
+        // add logic for correct column sorting
+
+        let numberOfItems = vm.items.length;
+
+        let tmp = numberOfItems / 3;
+        let itemsInEachColumn = Math.ceil(tmp);
+
+        vm.columnOneLength = itemsInEachColumn;
+        vm.columnTwoLength = itemsInEachColumn + vm.columnOneLength;
+        vm.columnThreeLength = itemsInEachColumn;
+
+        vm.itemsColumnOne = new Array();
+        vm.itemsColumnTwo = new Array()
+        vm.itemsColumnTree = new Array();
+
+        // setup each column
+        if (vm.items != undefined) {
+
+          for (let i=0; i<= vm.columnOneLength-1;i++) {
+            vm.itemsColumnOne.push(vm.items[i]);
+          }
+
+          for (let i=vm.columnOneLength; i<= vm.columnTwoLength-1;i++) {
+            vm.itemsColumnTwo.push(vm.items[i]);
+          }
+
+          for (let i=vm.columnTwoLength; i<= vm.items.length-1;i++) {
+            vm.itemsColumnTree.push(vm.items[i]);
+          }
+        }
+
+        // end column sorting logic
+
+
       });
+
+
+
+
+
     }
+
+
 
     $mdDialog.show({
       templateUrl: 'app/src/declaration/view/psyc/sections/popupSearch.html',
